@@ -16,10 +16,14 @@ namespace GameLogic
             protected string _textureName;
             protected SpriteBatch _spriteBatch;
             protected Texture2D _texture;
-            protected Rectangle _rect;
+
+            //указываются в SimUnits
             protected Vector2 _position;
+            protected Vector2 _size;
+
+            protected Rectangle _rect; //формируется из _position и _size для отрисовки, в DisplayUnits
+
             protected Camera _camera;
-            protected bool _usingRect; //true, если используем Rectangle; false, если используем Vector2
 
             public Vector2 ParallaxSpeed;
 
@@ -29,10 +33,10 @@ namespace GameLogic
             public ParallaxBackgroundItem(string textureName, float xParallaxSpeed, int layer, Vector2 position, Camera camera, SpriteBatch spriteBatch)
                 : this(textureName, new Vector2(xParallaxSpeed, 1.0f), layer, position, camera, spriteBatch) { }
 
-            public ParallaxBackgroundItem(string textureName, float xParallaxSpeed, int layer, Rectangle rect, Camera camera, SpriteBatch spriteBatch)
-                : this(textureName, new Vector2(xParallaxSpeed, 1.0f), layer, rect, camera, spriteBatch) { }
+            public ParallaxBackgroundItem(string textureName, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, Camera camera, SpriteBatch spriteBatch)
+                : this(textureName, new Vector2(xParallaxSpeed, 1.0f), layer, position, size, camera, spriteBatch) { }
 
-            public ParallaxBackgroundItem(string textureName, Vector2 parallaxSpeed, int layer, Camera camera, SpriteBatch spriteBatch)
+            protected ParallaxBackgroundItem(string textureName, Vector2 parallaxSpeed, int layer, Camera camera, SpriteBatch spriteBatch)
             {
                 this._textureName = textureName;
                 this.ParallaxSpeed = parallaxSpeed;
@@ -46,15 +50,15 @@ namespace GameLogic
             public ParallaxBackgroundItem(string textureName, Vector2 parallaxSpeed, int layer, Vector2 position, Camera camera, SpriteBatch spriteBatch)
                 : this(textureName, parallaxSpeed, layer, camera, spriteBatch)
             {
-                _usingRect = false;
                 this._position = position;
+                this._size = Vector2.Zero;
             }
 
-            public ParallaxBackgroundItem(string textureName, Vector2 parallaxSpeed, int layer, Rectangle rect, Camera camera, SpriteBatch spriteBatch)
+            public ParallaxBackgroundItem(string textureName, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, Camera camera, SpriteBatch spriteBatch)
                 : this(textureName, parallaxSpeed, layer, camera, spriteBatch)
             {
-                _usingRect = true;
-                this._rect = rect;
+                this._position = position;
+                this._size = size;
             }
 
             public void Initialize()
@@ -64,6 +68,14 @@ namespace GameLogic
             public void LoadContent(ContentManager content)
             {
                 _texture = content.Load<Texture2D>(_textureName);
+                //Если пользователь не указал размер, то он автоматически присваивается равным размеру текстуры
+                if (_size == Vector2.Zero)
+                    _size = ConvertUnits.ToSimUnits(_texture.Width, _texture.Height);
+
+                //Рассчитываем прямоугольник для отрисовки
+                Vector2 displayPosition = ConvertUnits.ToDisplayUnits(_position);
+                Vector2 displaySize = ConvertUnits.ToDisplayUnits(_size);
+                this._rect = new Rectangle((int)displayPosition.X, (int)displayPosition.Y, (int)displaySize.X, (int)displaySize.Y);
             }
 
             public virtual void Draw(GameTime gameTime)
@@ -71,11 +83,7 @@ namespace GameLogic
                 if (Visible)
                 {
                     _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                    if (_usingRect)
-                        _spriteBatch.Draw(_texture, _rect, Color.White);
-                    else
-                        _spriteBatch.Draw(_texture, _position, Color.White);
-
+                    _spriteBatch.Draw(_texture, _rect, Color.White);
                     _spriteBatch.End();
                 }
             }

@@ -32,16 +32,13 @@ namespace GameLogic
                 _body.LinearDamping = linearDamping;
             }
 
-            public ParallaxBackgroundDynamicItem(World world, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, string textureName, Vector2 ParallaxSpeed, int layer, Vector2 position, Camera camera, SpriteBatch spriteBatch)
-                : base(textureName, ParallaxSpeed, layer, position, camera, spriteBatch)
+            public ParallaxBackgroundDynamicItem(World world, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, string textureName, Vector2 parallaxSpeed, int layer, Vector2 position, Camera camera, SpriteBatch spriteBatch)
+                : this(world, angularVelocity, angularDamping, linearVelocity, linearDamping, textureName, parallaxSpeed, layer, position, Vector2.Zero, camera, spriteBatch) { }
+
+            public ParallaxBackgroundDynamicItem(World world, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, string textureName, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, Camera camera, SpriteBatch spriteBatch)
+                : base(textureName, parallaxSpeed, layer, position, size, camera, spriteBatch)
             {
                 CreateBody(world, position, angularVelocity, angularDamping, linearVelocity, linearDamping);
-            }
-
-            public ParallaxBackgroundDynamicItem(World world, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, string textureName, Vector2 parallaxSpeed, int layer, Rectangle rect, Camera camera, SpriteBatch spriteBatch)
-                : base(textureName, parallaxSpeed, layer, camera, spriteBatch)
-            {
-                CreateBody(world, new Vector2(rect.Left, rect.Top), angularVelocity, angularDamping, linearVelocity, linearDamping);
             }
 
             public override void Draw(GameTime gameTime)
@@ -49,11 +46,7 @@ namespace GameLogic
                 if (Visible)
                 {
                     _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                    if (_usingRect)
-                        _spriteBatch.Draw(_texture, _rect, null, Color.White, _body.Rotation, _body.Position, SpriteEffects.None, 0);
-                    else
-                        _spriteBatch.Draw(_texture, _position, Color.White);
-
+                    _spriteBatch.Draw(_texture, _rect, null, Color.White, _body.Rotation, ConvertUnits.ToDisplayUnits(_body.Position), SpriteEffects.None, 0);
                     _spriteBatch.End();
                 }
             }

@@ -19,17 +19,17 @@ namespace WindowsGame1
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
         
-        Camera camera;
-        ParallaxBackground background;
+        Camera _camera;
+        ParallaxBackground _background;
 
-        World world;
+        World _world;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -42,29 +42,31 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = 600;
-            graphics.PreferredBackBufferHeight = 480;
-            graphics.ApplyChanges();
+            _graphics.PreferredBackBufferWidth = 600;
+            _graphics.PreferredBackBufferHeight = 480;
+            ConvertUnits.SetDisplayUnitToSimUnitRatio(_graphics.PreferredBackBufferHeight / 30);
+
+            _graphics.ApplyChanges();
             int width = GraphicsDevice.Viewport.Width * 2;
             int height = GraphicsDevice.Viewport.Height;
 
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(width / 2.0f, 0), Limits = new Rectangle(0, 0, width, height) };
-            background = new ParallaxBackground(camera, spriteBatch);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(width / 2.0f, 0), Limits = new Rectangle(0, 0, width, height) };
+            _background = new ParallaxBackground(_camera, _spriteBatch);
 
-            background.AddBackground("sky", 0.1f, 0, new Rectangle(0, 0, width, height));
+            _background.AddBackground("sky", 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(width, height));
 
             Random random = new Random();
 
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 1; j <= 4; j++)
-                    background.AddBackground(String.Format("cloud{0}", j), (float)random.NextDouble(), 4*i + j, new Vector2(random.Next(width), random.Next(height)));
+                    _background.AddBackground(String.Format("cloud{0}", j), (float)random.NextDouble(), 4*i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(height)));
             }
 
-            background.AddBackground("balloon", 1.0f, 13, new Rectangle(500, 100, 100 + 100, 200 + 135));
+            _background.AddBackground("balloon", 1.0f, 13, ConvertUnits.ToSimUnits(500, 100), ConvertUnits.ToSimUnits(100 + 100, 200 + 135));
 
-            world = new World(new Vector2(0, 9.81f));
+            _world = new World(new Vector2(0, 9.81f));
 
             base.Initialize();
         }
@@ -77,7 +79,7 @@ namespace WindowsGame1
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
-            background.LoadContent(Content);
+            _background.LoadContent(Content);
         }
 
         /// <summary>
@@ -101,28 +103,28 @@ namespace WindowsGame1
                 this.Exit();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                camera.Move(new Vector2(-5.0f, 0));
+                _camera.Move(new Vector2(-5.0f, 0));
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                camera.Move(new Vector2(5.0f, 0));
+                _camera.Move(new Vector2(5.0f, 0));
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                camera.Move(new Vector2(0, -5.0f));
+                _camera.Move(new Vector2(0, -5.0f));
             if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                camera.Move(new Vector2(0, 5.0f));
+                _camera.Move(new Vector2(0, 5.0f));
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
-                camera.Zoom += 0.01f;
+                _camera.Zoom += 0.01f;
             if (Keyboard.GetState().IsKeyDown(Keys.S))
-                camera.Zoom -= 0.01f;
+                _camera.Zoom -= 0.01f;
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
-                camera.Rotation += 0.01f;
+                _camera.Rotation += 0.01f;
             if (Keyboard.GetState().IsKeyDown(Keys.A))
-                camera.Rotation -= 0.01f;
+                _camera.Rotation -= 0.01f;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                camera.Zoom = 1.0f;
-                camera.Rotation = 0;
+                _camera.Zoom = 1.0f;
+                _camera.Rotation = 0;
             }
 
             // TODO: Add your update logic here
@@ -139,7 +141,7 @@ namespace WindowsGame1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            background.Draw(gameTime);
+            _background.Draw(gameTime);
 
             base.Draw(gameTime);
         }

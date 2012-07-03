@@ -7,6 +7,7 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using GameLogic;
 
 namespace WindowsGame1
 {
