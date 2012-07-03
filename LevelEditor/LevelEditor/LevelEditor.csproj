@@ -87,13 +87,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ContentBuilder\LevelEditorContentBuilder.csproj">
-      <Project>{0BB08547-8092-467D-B4E1-6F5E9F692AE0}</Project>
-      <Name>LevelEditorContentBuilder</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="LevelEditorContentBuilder\LevelEditorContentBuilder.csproj">
+      <Project>{5180E9F3-78F2-4464-BC37-B39FE6B9BC22}</Project>
+      <Name>LevelEditorContentBuilder</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
