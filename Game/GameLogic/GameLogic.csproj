@@ -67,12 +67,8 @@
     <Compile Include="IUpdateableVisualComponent.cs" />
     <Compile Include="IVisualComponent.cs" />
     <Compile Include="ParallaxBackground.cs" />
-    <Compile Include="ParallaxBackgroundDynamicItem.cs">
-      <DependentUpon>ParallaxBackground.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ParallaxBackgroundItem.cs">
-      <DependentUpon>ParallaxBackground.cs</DependentUpon>
-    </Compile>
+    <Compile Include="ParallaxBackgroundDynamicItem.cs" />
+    <Compile Include="ParallaxBackgroundItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

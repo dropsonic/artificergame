@@ -60,7 +60,7 @@ namespace WindowsGame1
             _background.AddBackground("sky", 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(1000, 512));
 
             Random random = new Random();
-            
+
             //Статичные параллаксные облака
             for (int i = 0; i < 2; i++)
             {
