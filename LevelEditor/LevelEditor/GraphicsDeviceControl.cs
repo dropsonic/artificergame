@@ -12,6 +12,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Graphics;
+
+
 #endregion
 
 namespace WinFormsGraphicsDevice
@@ -35,7 +37,7 @@ namespace WinFormsGraphicsDevice
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
-
+        Timer timer = new Timer();
 
         #endregion
 
@@ -84,6 +86,9 @@ namespace WinFormsGraphicsDevice
                 // Register the service, so components like ContentManager can find it.
                 services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
 
+                timer.Tick += new EventHandler(DrawFrame);
+                timer.Interval = 10;
+                timer.Enabled = true;
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
             }
@@ -113,9 +118,9 @@ namespace WinFormsGraphicsDevice
 
 
         /// <summary>
-        /// Redraws the control in response to a WinForms paint message.
+        /// Redraws the control in certain time intervals, instead of paint message//protected override void OnPaint(PaintEventArgs e)
         /// </summary>
-        protected override void OnPaint(PaintEventArgs e)
+        void DrawFrame(Object bject, EventArgs e)
         {
             string beginDrawError = BeginDraw();
 
@@ -128,10 +133,9 @@ namespace WinFormsGraphicsDevice
             else
             {
                 // If BeginDraw failed, show an error message using System.Drawing.
-                PaintUsingSystemDrawing(e.Graphics, beginDrawError);
+                PaintUsingSystemDrawing(this.CreateGraphics(), beginDrawError);
             }
         }
-
 
         /// <summary>
         /// Attempts to begin drawing the control. Returns an error message string
