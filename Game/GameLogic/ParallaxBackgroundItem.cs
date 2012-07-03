@@ -22,6 +22,7 @@ namespace GameLogic
             protected Vector2 _size;
 
             protected Rectangle _rect; //формируется из _position и _size для отрисовки, в DisplayUnits
+            protected Vector2 _displaySize;
 
             protected Camera _camera;
 
@@ -74,8 +75,8 @@ namespace GameLogic
 
                 //Рассчитываем прямоугольник для отрисовки
                 Vector2 displayPosition = ConvertUnits.ToDisplayUnits(_position);
-                Vector2 displaySize = ConvertUnits.ToDisplayUnits(_size);
-                this._rect = new Rectangle((int)displayPosition.X, (int)displayPosition.Y, (int)displaySize.X, (int)displaySize.Y);
+                _displaySize = ConvertUnits.ToDisplayUnits(_size);
+                this._rect = new Rectangle((int)displayPosition.X, (int)displayPosition.Y, (int)_displaySize.X, (int)_displaySize.Y);
             }
 
             public virtual void Draw(GameTime gameTime)

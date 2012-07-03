@@ -46,7 +46,9 @@ namespace GameLogic
                 if (Visible)
                 {
                     _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                    _spriteBatch.Draw(_texture, _rect, null, Color.White, _body.Rotation, ConvertUnits.ToDisplayUnits(_body.Position), SpriteEffects.None, 0);
+                    Vector2 displayPosition = ConvertUnits.ToDisplayUnits(_body.Position);
+                    _rect = new Rectangle((int)displayPosition.X, (int)displayPosition.Y, (int)_displaySize.X, (int)_displaySize.Y);
+                    _spriteBatch.Draw(_texture, _rect, null, Color.White, _body.Rotation, _size / 2, SpriteEffects.None, 0);
                     _spriteBatch.End();
                 }
             }

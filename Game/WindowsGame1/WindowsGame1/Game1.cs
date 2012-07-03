@@ -54,19 +54,29 @@ namespace WindowsGame1
             _camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(width / 2.0f, 0), Limits = new Rectangle(0, 0, width, height) };
             _background = new ParallaxBackground(_camera, _spriteBatch);
 
-            _background.AddBackground("sky", 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(width, height));
+            //Самый задний фон - картинка
+            _background.AddBackground("sky", 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(1000, 512));
 
             Random random = new Random();
-
-            for (int i = 0; i < 3; i++)
+            
+            //Статичные параллаксные облака
+            for (int i = 0; i < 2; i++)
             {
-                for (int j = 1; j <= 4; j++)
-                    _background.AddBackground(String.Format("cloud{0}", j), (float)random.NextDouble(), 4*i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(height)));
+                for (int j = 1; j <= 3; j++)
+                    _background.AddBackground(String.Format("cloud{0}", j), (float)random.NextDouble(), 3*i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(200)));
             }
-
-            _background.AddBackground("balloon", 1.0f, 13, ConvertUnits.ToSimUnits(500, 100), ConvertUnits.ToSimUnits(100 + 100, 200 + 135));
+            
+            //Воздушный шар
+            _background.AddBackground("balloon", 1.0f, 10, ConvertUnits.ToSimUnits(500, 0), ConvertUnits.ToSimUnits(100 + 100, 200 + 135));
 
             _world = new World(new Vector2(0, 9.81f));
+
+            //Динамичные параллаксные облака
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 1; j <= 3; j++)
+                    _background.AddDynamicBackground(_world, 0f, new Vector2((float)random.NextDouble() * 4, 0), String.Format("cloud{0}", j), (float)random.NextDouble(), 10 + 3 * i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(200)));
+            }
 
             base.Initialize();
         }
@@ -127,7 +137,7 @@ namespace WindowsGame1
                 _camera.Rotation = 0;
             }
 
-            // TODO: Add your update logic here
+            _world.Step(MathHelper.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
 
             base.Update(gameTime);
         }
