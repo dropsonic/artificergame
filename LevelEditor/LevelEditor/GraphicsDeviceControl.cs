@@ -37,7 +37,7 @@ namespace WinFormsGraphicsDevice
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
-        Timer timer = new Timer();
+        public Timer timer = new Timer();
 
         #endregion
 
