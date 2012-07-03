@@ -42,6 +42,8 @@ namespace WindowsGame1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            _world = new World(new Vector2(0, 9.81f));
+
             _graphics.PreferredBackBufferWidth = 600;
             _graphics.PreferredBackBufferHeight = 480;
             ConvertUnits.SetDisplayUnitToSimUnitRatio(_graphics.PreferredBackBufferHeight / 30);
@@ -52,7 +54,7 @@ namespace WindowsGame1
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(width / 2.0f, 0), Limits = new Rectangle(0, 0, width, height) };
-            _background = new ParallaxBackground(_camera, _spriteBatch);
+            _background = new ParallaxBackground(_world, _camera, _spriteBatch);
 
             //Самый задний фон - картинка
             _background.AddBackground("sky", 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(1000, 512));
@@ -69,13 +71,11 @@ namespace WindowsGame1
             //Воздушный шар
             _background.AddBackground("balloon", 1.0f, 10, ConvertUnits.ToSimUnits(500, 0), ConvertUnits.ToSimUnits(100 + 100, 200 + 135));
 
-            _world = new World(new Vector2(0, 9.81f));
-
             //Динамичные параллаксные облака
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 1; j <= 3; j++)
-                    _background.AddDynamicBackground(_world, 0f, new Vector2((float)random.NextDouble() * 4, 0), String.Format("cloud{0}", j), (float)random.NextDouble(), 10 + 3 * i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(200)));
+                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), String.Format("cloud{0}", j), (float)random.NextDouble(), 10 + 3 * i + j, ConvertUnits.ToSimUnits(random.Next(width), random.Next(200)));
             }
 
             base.Initialize();
