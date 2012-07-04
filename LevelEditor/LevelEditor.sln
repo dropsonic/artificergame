@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugView XNA", "DebugView 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugView XNA Content", "DebugView XNA\Content\DebugView XNA Content.contentproj", "{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "LevelEditorContent", "LevelEditor\LevelEditorContent\LevelEditorContent.contentproj", "{214977BD-9002-4FBB-ADD8-CD564F5B37AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditorContent", "LevelEditor\LevelEditorContent\LevelEditorContent.contentproj", "{214977BD-9002-4FBB-ADD8-CD564F5B37AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditorContentBuilder", "LevelEditor\LevelEditorContentBuilder\LevelEditorContentBuilder.csproj", "{426BE8CB-9299-4C10-BE10-7ABD71539CAD}"
 EndProject
@@ -26,18 +26,21 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5892243-198E-4717-9492-02440573E7F1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Debug|Any CPU.Build.0 = Debug|x86
 		{C5892243-198E-4717-9492-02440573E7F1}.Debug|x86.ActiveCfg = Debug|x86
 		{C5892243-198E-4717-9492-02440573E7F1}.Debug|x86.Build.0 = Debug|x86
 		{C5892243-198E-4717-9492-02440573E7F1}.Release|Any CPU.ActiveCfg = Release|x86
 		{C5892243-198E-4717-9492-02440573E7F1}.Release|x86.ActiveCfg = Release|x86
 		{C5892243-198E-4717-9492-02440573E7F1}.Release|x86.Build.0 = Release|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Any CPU.Build.0 = Debug|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.ActiveCfg = Debug|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.Build.0 = Debug|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Any CPU.ActiveCfg = Release|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.ActiveCfg = Release|x86
 		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.Build.0 = Release|x86
 		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Any CPU.Build.0 = Debug|x86
 		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|x86.ActiveCfg = Debug|x86
 		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|x86.Build.0 = Debug|x86
 		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|Any CPU.ActiveCfg = Release|x86
@@ -52,6 +55,7 @@ Global
 		{214977BD-9002-4FBB-ADD8-CD564F5B37AB}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{214977BD-9002-4FBB-ADD8-CD564F5B37AB}.Release|x86.ActiveCfg = Debug|Any CPU
 		{426BE8CB-9299-4C10-BE10-7ABD71539CAD}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{426BE8CB-9299-4C10-BE10-7ABD71539CAD}.Debug|Any CPU.Build.0 = Debug|x86
 		{426BE8CB-9299-4C10-BE10-7ABD71539CAD}.Debug|x86.ActiveCfg = Debug|x86
 		{426BE8CB-9299-4C10-BE10-7ABD71539CAD}.Debug|x86.Build.0 = Debug|x86
 		{426BE8CB-9299-4C10-BE10-7ABD71539CAD}.Release|Any CPU.ActiveCfg = Release|x86
