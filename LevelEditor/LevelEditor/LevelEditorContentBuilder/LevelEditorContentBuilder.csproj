@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{5180E9F3-78F2-4464-BC37-B39FE6B9BC22}</ProjectGuid>
+    <ProjectGuid>{426BE8CB-9299-4C10-BE10-7ABD71539CAD}</ProjectGuid>
     <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -14,7 +14,7 @@
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>Reach</XnaProfile>
-    <XnaCrossPlatformGroupID>2c9ed572-c1c6-4f08-9f91-052d6e76b30d</XnaCrossPlatformGroupID>
+    <XnaCrossPlatformGroupID>3eba54d2-ed3f-4cca-aae6-f5c53913029b</XnaCrossPlatformGroupID>
     <XnaOutputType>Library</XnaOutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LevelEditorContent\LevelEditorContent.contentproj">
-      <Project>{B4740FA6-E5EF-4694-BC7B-3460580F9F2B}</Project>
+      <Project>{214977BD-9002-4FBB-ADD8-CD564F5B37AB}</Project>
       <Name>LevelEditorContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>

@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 // On Windows, the following GUID is for the ID of the typelib if this
 // project is exposed to COM. On other platforms, it unique identifies the
 // title storage container when deploying this assembly to the device.
-[assembly: Guid("25af1881-87b7-4faa-a062-a963a7d1de85")]
+[assembly: Guid("87d55989-8aab-43b7-a666-58777a7a33d4")]
 
 // Version information for an assembly consists of the following four values:
 //

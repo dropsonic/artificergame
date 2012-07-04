@@ -10,10 +10,10 @@
 #region Using Statements
 using System;
 using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
-
 #endregion
 
 namespace WinFormsGraphicsDevice
@@ -37,8 +37,9 @@ namespace WinFormsGraphicsDevice
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
-        public Timer timer = new Timer();
-
+        protected Timer frameTimer = new Timer();
+        //around 60fps
+        private int fps = 100;
         #endregion
 
         #region Properties
@@ -86,11 +87,12 @@ namespace WinFormsGraphicsDevice
                 // Register the service, so components like ContentManager can find it.
                 services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
 
-                timer.Tick += new EventHandler(DrawFrame);
-                timer.Interval = 10;
-                timer.Enabled = true;
+                frameTimer.Tick += new EventHandler(CalculateFrame);
+                frameTimer.Interval = (int)((float)1000/(float)fps);
+                frameTimer.Enabled = true;
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
+                LoadContent();
             }
 
             base.OnCreateControl();
@@ -120,13 +122,14 @@ namespace WinFormsGraphicsDevice
         /// <summary>
         /// Redraws the control in certain time intervals, instead of paint message//protected override void OnPaint(PaintEventArgs e)
         /// </summary>
-        void DrawFrame(Object bject, EventArgs e)
+        void CalculateFrame(Object bject, EventArgs e)
         {
             string beginDrawError = BeginDraw();
 
             if (string.IsNullOrEmpty(beginDrawError))
             {
                 // Draw the control using the GraphicsDevice.
+                Update();
                 Draw();
                 EndDraw();
             }
@@ -295,11 +298,20 @@ namespace WinFormsGraphicsDevice
         /// </summary>
         protected abstract void Initialize();
 
+        /// <summary>
+        /// Derived classes override this to load content.
+        /// </summary>
+        protected abstract void LoadContent();
 
         /// <summary>
         /// Derived classes override this to draw themselves using the GraphicsDevice.
         /// </summary>
         protected abstract void Draw();
+
+        /// <summary>
+        /// Derived classes override this to update themselves using the GraphicsDevice.
+        /// </summary>
+        protected new abstract void Update();
 
 
         #endregion

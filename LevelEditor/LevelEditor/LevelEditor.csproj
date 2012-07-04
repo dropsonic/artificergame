@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -92,7 +93,7 @@
       <Name>Farseer Physics XNA</Name>
     </ProjectReference>
     <ProjectReference Include="LevelEditorContentBuilder\LevelEditorContentBuilder.csproj">
-      <Project>{5180E9F3-78F2-4464-BC37-B39FE6B9BC22}</Project>
+      <Project>{426BE8CB-9299-4C10-BE10-7ABD71539CAD}</Project>
       <Name>LevelEditorContentBuilder</Name>
     </ProjectReference>
   </ItemGroup>
