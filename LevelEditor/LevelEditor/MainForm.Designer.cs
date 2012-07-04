@@ -33,43 +33,46 @@ namespace WindowsFormsApplication1
         {
             this.GraphicDevicePanel = new System.Windows.Forms.Panel();
             this.xnaScreen = new WinFormsGraphicsDevice.XnaScreen();
+            this.GraphicDevicePanel.SuspendLayout();
             this.SuspendLayout();
-            
             // 
             // GraphicDevicePanel
             // 
             this.GraphicDevicePanel.AutoScroll = true;
-            this.GraphicDevicePanel.Location = new System.Drawing.Point(260, 54);
-            this.GraphicDevicePanel.Name = "GraphicDevicePanel";
-            this.GraphicDevicePanel.Size = new System.Drawing.Size(602, 499);
-            this.GraphicDevicePanel.TabIndex = 0;
             this.GraphicDevicePanel.Controls.Add(this.xnaScreen);
+            this.GraphicDevicePanel.Location = new System.Drawing.Point(355, 154);
+            this.GraphicDevicePanel.Name = "GraphicDevicePanel";
+            this.GraphicDevicePanel.Size = new System.Drawing.Size(523, 334);
+            this.GraphicDevicePanel.TabIndex = 3;
             // 
-            // XnaScreen
+            // xnaScreen
             // 
-            this.xnaScreen.Dock = System.Windows.Forms.DockStyle.None;
             this.xnaScreen.Location = new System.Drawing.Point(0, 0);
-            this.xnaScreen.Name = "XnaScreen";
+            this.xnaScreen.Name = "xnaScreen";
             this.xnaScreen.Size = new System.Drawing.Size(1280, 720);
-            this.xnaScreen.TabIndex = 0;
-            this.xnaScreen.Text = "XnaScreen";
+            this.xnaScreen.TabIndex = 1;
+            this.xnaScreen.Text = "xnaScreen1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1098, 701);
+            this.ClientSize = new System.Drawing.Size(1302, 708);
             this.Controls.Add(this.GraphicDevicePanel);
             this.Name = "MainForm";
             this.Text = "LevelEditor";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.GraphicDevicePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private XnaScreen xnaScreen;
+
         private System.Windows.Forms.Panel GraphicDevicePanel;
+        private XnaScreen xnaScreen;
+
+
     }
 }
 

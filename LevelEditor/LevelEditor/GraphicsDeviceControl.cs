@@ -29,7 +29,7 @@ namespace WinFormsGraphicsDevice
     /// a Windows Form. Derived classes can override the Initialize and Draw
     /// methods to add their own drawing code.
     /// </summary>
-    abstract public class GraphicsDeviceControl : Control
+    public abstract class GraphicsDeviceControl : Control
     {
         #region Fields
 
@@ -120,24 +120,32 @@ namespace WinFormsGraphicsDevice
 
 
         /// <summary>
-        /// Redraws the control in certain time intervals, instead of paint message//protected override void OnPaint(PaintEventArgs e)
+        /// Redraws the control in certain time intervals
         /// </summary>
-        void CalculateFrame(Object bject, EventArgs e)
+        void CalculateFrame(Object obj, EventArgs e)
         {
             string beginDrawError = BeginDraw();
 
             if (string.IsNullOrEmpty(beginDrawError))
             {
                 // Draw the control using the GraphicsDevice.
-                Update();
+                UpdateFrame();
                 Draw();
                 EndDraw();
             }
             else
             {
                 // If BeginDraw failed, show an error message using System.Drawing.
-                PaintUsingSystemDrawing(this.CreateGraphics(), beginDrawError);
+                PaintUsingSystemDrawing(CreateGraphics(), beginDrawError);
+                
             }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // If we have no graphics device, we must be running in the designer.
+            if (DesignMode && graphicsDeviceService == null)
+                PaintUsingSystemDrawing(e.Graphics, Text + "\n\n" + GetType());
         }
 
         /// <summary>
@@ -147,12 +155,6 @@ namespace WinFormsGraphicsDevice
         /// </summary>
         string BeginDraw()
         {
-            // If we have no graphics device, we must be running in the designer.
-            if (graphicsDeviceService == null)
-            {
-                return Text + "\n\n" + GetType();
-            }
-
             // Make sure the graphics device is big enough, and is not lost.
             string deviceResetError = HandleDeviceReset();
 
@@ -311,7 +313,7 @@ namespace WinFormsGraphicsDevice
         /// <summary>
         /// Derived classes override this to update themselves using the GraphicsDevice.
         /// </summary>
-        protected new abstract void Update();
+        protected abstract void UpdateFrame();
 
 
         #endregion

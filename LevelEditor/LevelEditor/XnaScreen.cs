@@ -20,11 +20,6 @@ namespace WinFormsGraphicsDevice
         SpriteBatch spriteBatch;
         SpriteFont font;
         
-
-        /// <summary>
-        /// Initializes the control, creating the ContentManager
-        /// and using it to load a SpriteFont.
-        /// </summary>
         protected override void Initialize()
         {
             content = new ContentManager(Services, "LevelEditorContent");
@@ -38,9 +33,7 @@ namespace WinFormsGraphicsDevice
         {
             
         }
-        /// <summary>
-        /// Disposes the control, unloading the ContentManager.
-        /// </summary>
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -51,18 +44,18 @@ namespace WinFormsGraphicsDevice
             base.Dispose(disposing);
         }
 
-
-        protected override void Update()
+        
+        protected override void UpdateFrame()
         {
             
         }
-        /// <summary>
-        /// Draws the control, using SpriteBatch and SpriteFont.
-        /// </summary>
+        
         protected override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
- 
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, "Empty message", Vector2.Zero, Color.Red);
+            spriteBatch.End();
         }
     }
 }
