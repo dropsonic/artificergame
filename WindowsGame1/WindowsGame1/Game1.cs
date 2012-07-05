@@ -73,15 +73,17 @@ namespace WindowsGame1
             
             //Загружаем контент
             Texture2D sky = Content.Load<Texture2D>("sky");
-            Texture2D[] clouds = new Texture2D[4];
+            Sprite[] clouds = new Sprite[4];
             for (int i = 0; i < 4; i++)
-                clouds[i] = Content.Load<Texture2D>(String.Format("cloud{0}", i+1));
+                clouds[i] = new Sprite(Content.Load<Texture2D>(String.Format("cloud{0}", i+1)));
 
             Texture2D balloon = Content.Load<Texture2D>("balloon");
 
             //Формируем фон
             //Самый задний фон - картинка
-            _background.AddBackground(new Sprite(sky), 0.1f, 0, Vector2.Zero, ConvertUnits.ToSimUnits(1000, 512));
+            int skyWidth = 1000;
+            int skyHeight = 512;
+            _background.AddBackground(new Sprite(sky), 0.1f, 0, ConvertUnits.ToSimUnits(skyWidth/2, skyHeight/2), ConvertUnits.ToSimUnits(skyWidth, skyHeight));
 
             Random random = new Random();
 
@@ -93,13 +95,18 @@ namespace WindowsGame1
             }*/
             
             //Воздушный шар
-            _background.AddBackground(new Sprite(balloon), 1.0f, 10, ConvertUnits.ToSimUnits(500, 0), ConvertUnits.ToSimUnits(100 + 100, 200 + 135));
+            int balloonWidth = 100 + 100;
+            int balloonHeight = 200 + 135;
+            _background.AddBackground(new Sprite(balloon), 1.0f, 10, ConvertUnits.ToSimUnits(500 + balloonWidth / 2, balloonHeight / 2), ConvertUnits.ToSimUnits(balloonWidth, balloonHeight));
 
             //Динамичные параллаксные облака
             for (int i = 0; i < 2; i++)
             {
                 for (int j = 1; j <= 4; j++)
-                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), new Sprite(clouds[j-1]), (float)random.NextDouble(), 10 + 4 * i + j, ConvertUnits.ToSimUnits(random.Next(_width), random.Next(200)));
+                {
+                    Vector2 cloudPos = new Vector2(random.Next(_width), random.Next(200)) + clouds[j - 1].Origin / 2;
+                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), clouds[j - 1], (float)random.NextDouble() / 3, 10 + 4 * i + j, ConvertUnits.ToSimUnits(cloudPos));
+                }
             }
         }
 

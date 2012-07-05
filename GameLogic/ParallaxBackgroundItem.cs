@@ -117,8 +117,8 @@ namespace GameLogic
             if (Visible)
             {
                 _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                //_spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, 0f, _sprite.Origin, SpriteEffects.None, 0);
-                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White);
+                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, 0f, _sprite.Origin, SpriteEffects.None, 0);
+                //_spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White);
                 _spriteBatch.End();
             }
         }
