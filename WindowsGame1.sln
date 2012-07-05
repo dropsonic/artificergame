@@ -1,0 +1,107 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame1", "WindowsGame1\WindowsGame1\WindowsGame1.csproj", "{E7944AE1-8005-476E-B093-22DD3F4F0677}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame1Content", "WindowsGame1\WindowsGame1Content\WindowsGame1Content.contentproj", "{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farseer Physics XNA", "Farseer Physics Engine 3.3.1 Samples XNA\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj", "{0A850700-1ABB-4288-A391-6726B90EBEB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugView XNA", "Farseer Physics Engine 3.3.1 Samples XNA\DebugView XNA\DebugView XNA.csproj", "{FC7845FA-13FE-4FF8-822A-A577F3F59B00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugView XNA Content", "Farseer Physics Engine 3.3.1 Samples XNA\DebugView XNA\Content\DebugView XNA Content.contentproj", "{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLogic", "GameLogic\GameLogic.csproj", "{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{807B699E-BD95-4E81-9504-8AF380A523A4}"
+	ProjectSection(SolutionItems) = preProject
+		Schemes.simp = Schemes.simp
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Windows Phone = Debug|Windows Phone
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Windows Phone = Release|Windows Phone
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|Windows Phone.Build.0 = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|x86.ActiveCfg = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Debug|x86.Build.0 = Debug|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|Any CPU.ActiveCfg = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|Windows Phone.ActiveCfg = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|Windows Phone.Build.0 = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|x86.ActiveCfg = Release|x86
+		{E7944AE1-8005-476E-B093-22DD3F4F0677}.Release|x86.Build.0 = Release|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Debug|x86.ActiveCfg = Debug|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Release|Any CPU.ActiveCfg = Release|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Release|Windows Phone.ActiveCfg = Release|x86
+		{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}.Release|x86.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.Build.0 = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Any CPU.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Windows Phone.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.Build.0 = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|x86.ActiveCfg = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Debug|x86.Build.0 = Debug|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|Any CPU.ActiveCfg = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|Windows Phone.ActiveCfg = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|x86.ActiveCfg = Release|x86
+		{FC7845FA-13FE-4FF8-822A-A577F3F59B00}.Release|x86.Build.0 = Release|x86
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Debug|Windows Phone.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Release|Windows Phone.ActiveCfg = Debug|Any CPU
+		{AC26EDE1-2A42-4A57-BEEE-9603FCAC9317}.Release|x86.ActiveCfg = Debug|Any CPU
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|Windows Phone.ActiveCfg = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|x86.ActiveCfg = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Debug|x86.Build.0 = Debug|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|Any CPU.ActiveCfg = Release|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|Windows Phone.ActiveCfg = Release|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|x86.ActiveCfg = Release|x86
+		{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
