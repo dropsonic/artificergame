@@ -70,12 +70,13 @@ namespace GameLogic
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
             : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size) { }
 
+
         /// <param name="parent">Родительский элемент - фон.</param>
         /// <param name="sprite">Спрайт.</param>
         /// <param name="parallaxSpeed">Скорость параллакса. (1.0f, 1.0f), если параллакса нет.</param>
         /// <param name="layer">Слой.</param>
         /// <param name="defaultSize">true, если принимать размер текстуры за размер объекта.</param>
-        protected ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, bool defaultSize = true)
+        protected ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, bool defaultSize)
         {
             this._parallaxBackground = parent;
             this._sprite = sprite;
@@ -83,6 +84,7 @@ namespace GameLogic
             this.DrawOrder = layer;
             this._camera = parent.Camera;
             this._spriteBatch = parent.SpriteBatch;
+            this._position = position;
 
             if (defaultSize)
                 //По умолчанию размер равен размеру текстуры в SimUnits
@@ -91,16 +93,13 @@ namespace GameLogic
             Visible = true;
         }
 
+
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
-            : this(parent, sprite, parallaxSpeed, layer)
-        {
-            this._position = position;
-        }
+            : this(parent, sprite, parallaxSpeed, layer, position, true) { }
 
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
-            : this(parent, sprite, parallaxSpeed, layer, false)
+            : this(parent, sprite, parallaxSpeed, layer, position, false)
         {
-            this._position = position;
             Size = size;
         }
 
@@ -118,7 +117,8 @@ namespace GameLogic
             if (Visible)
             {
                 _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, 0f, _sprite.Origin, SpriteEffects.None, 0);
+                //_spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, 0f, _sprite.Origin, SpriteEffects.None, 0);
+                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White);
                 _spriteBatch.End();
             }
         }

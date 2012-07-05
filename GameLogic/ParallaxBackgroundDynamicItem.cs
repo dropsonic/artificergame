@@ -31,7 +31,11 @@ namespace GameLogic
         }
 
         public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
-            : this(parent, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, parallaxSpeed, layer, position, Vector2.Zero) { }
+            : base(parent, sprite, parallaxSpeed, layer, position)
+        {
+            _world = parent.World;
+            CreateBody(position, angularVelocity, angularDamping, linearVelocity, linearDamping);
+        }
 
         public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
             : base(parent, sprite, parallaxSpeed, layer, position, size)
