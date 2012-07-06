@@ -105,7 +105,7 @@ namespace WindowsGame1
                 for (int j = 1; j <= 4; j++)
                 {
                     Vector2 cloudPos = new Vector2(random.Next(_width), random.Next(200)) + clouds[j - 1].Origin / 2;
-                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), clouds[j - 1], (float)random.NextDouble() / 3, 10 + 4 * i + j, ConvertUnits.ToSimUnits(cloudPos));
+                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), clouds[j - 1], (float)random.NextDouble() / 3, 10 + 4 * i + j, ConvertUnits.ToSimUnits(cloudPos), (float)random.NextDouble() * MathHelper.Pi);
                 }
             }
         }

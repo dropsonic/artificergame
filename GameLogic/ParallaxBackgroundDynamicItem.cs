@@ -28,7 +28,21 @@ namespace GameLogic
             _body.AngularDamping = angularDamping;
             _body.LinearVelocity = linearVelocity;
             _body.LinearDamping = linearDamping;
+
+            _body.Rotation = _rotation;
         }
+
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position)
+            : this(parent, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position) { }
+
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, float rotation)
+            : this(parent, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, rotation) { }
+
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
+            : this(parent, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size) { }
+
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : this(parent, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size, rotation) { }
 
         public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
             : base(parent, sprite, parallaxSpeed, layer, position)
@@ -37,8 +51,22 @@ namespace GameLogic
             CreateBody(position, angularVelocity, angularDamping, linearVelocity, linearDamping);
         }
 
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, float rotation)
+            : base(parent, sprite, parallaxSpeed, layer, position, rotation)
+        {
+            _world = parent.World;
+            CreateBody(position, angularVelocity, angularDamping, linearVelocity, linearDamping);
+        }
+
         public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
             : base(parent, sprite, parallaxSpeed, layer, position, size)
+        {
+            _world = parent.World;
+            CreateBody(position, angularVelocity, angularDamping, linearVelocity, linearDamping);
+        }
+
+        public ParallaxBackgroundDynamicItem(ParallaxBackground parent, float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : base(parent, sprite, parallaxSpeed, layer, position, size, rotation)
         {
             _world = parent.World;
             CreateBody(position, angularVelocity, angularDamping, linearVelocity, linearDamping);

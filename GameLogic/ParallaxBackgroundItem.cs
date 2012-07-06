@@ -30,6 +30,8 @@ namespace GameLogic
         protected Vector2 _position;
         protected Vector2 _size;
 
+        protected float _rotation; //в радианах
+
         protected Rectangle _rect; //формируется из _position и _size для отрисовки, в DisplayUnits
         protected Vector2 _displaySize; //_size в DisplayUnits
 
@@ -61,14 +63,26 @@ namespace GameLogic
             }
         }
 
+        public float Rotation
+        {
+            get { return _rotation; }
+            set { _rotation = value; }
+        }
+
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer)
             : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, Vector2.Zero) { }
 
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position)
             : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position) { }
 
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, float rotation)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, rotation) { }
+
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
             : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size, rotation) { }
 
 
         /// <param name="parent">Родительский элемент - фон.</param>
@@ -85,6 +99,7 @@ namespace GameLogic
             this._camera = parent.Camera;
             this._spriteBatch = parent.SpriteBatch;
             this._position = position;
+            this._rotation = 0f;
 
             if (defaultSize)
                 //По умолчанию размер равен размеру текстуры в SimUnits
@@ -97,13 +112,25 @@ namespace GameLogic
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
             : this(parent, sprite, parallaxSpeed, layer, position, true) { }
 
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, float rotation)
+            : this(parent, sprite, parallaxSpeed, layer, position, true) 
+        {
+            this._rotation = rotation;
+        }
+
         public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
             : this(parent, sprite, parallaxSpeed, layer, position, false)
         {
             Size = size;
         }
 
-        protected virtual void CalculateRect()
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : this(parent, sprite, parallaxSpeed, layer, position, size)
+        {
+            this._rotation = rotation;
+        }
+
+        protected void CalculateRect()
         {
             //Рассчитываем прямоугольник для отрисовки
             Vector2 displayPosition = ConvertUnits.ToDisplayUnits(_position);
@@ -117,7 +144,7 @@ namespace GameLogic
             if (Visible)
             {
                 _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, 0f, _sprite.Origin, SpriteEffects.None, 0);
+                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, _rotation, _sprite.Origin, SpriteEffects.None, 0);
                 //_spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White);
                 _spriteBatch.End();
             }
