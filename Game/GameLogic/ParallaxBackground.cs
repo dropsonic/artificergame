@@ -17,14 +17,18 @@ namespace GameLogic
     /// </remarks>
     public class ParallaxBackground : IDrawable
     {
-        private SortedList<int, ParallaxBackgroundItem> _backgrounds;
+        private List<ParallaxBackgroundItem> _backgrounds;
+        private bool _sorted; //показывает, отсортированы ли элементы фона по DrawOrder
+
         private World _world;
         private Camera _camera;
         private SpriteBatch _spriteBatch;
 
         public ParallaxBackground(World world, Camera camera, SpriteBatch spriteBatch)
         {
-            _backgrounds = new SortedList<int, ParallaxBackgroundItem>();
+            _backgrounds = new List<ParallaxBackgroundItem>();
+            _sorted = true;
+
             this._world = world;
             this._camera = camera;
             this._spriteBatch = spriteBatch;
@@ -32,7 +36,7 @@ namespace GameLogic
             Visible = true;
         }
 
-        public SortedList<int, ParallaxBackgroundItem> Backgrounds
+        public List<ParallaxBackgroundItem> Backgrounds
         {
             get { return _backgrounds; }
             set { _backgrounds = value; }
@@ -59,7 +63,8 @@ namespace GameLogic
         #region AddBackground
         private void AddBackground(ParallaxBackgroundItem background)
         {
-            _backgrounds.Add(background.DrawOrder, background);
+            _backgrounds.Add(background);
+            _sorted = false;
         }
 
         public void AddBackground(Sprite sprite, float xParallaxSpeed, int layer)
@@ -118,92 +123,104 @@ namespace GameLogic
         #endregion
 
         #region AddDynamicBackground
-        private void AddDynamicBackground(ParallaxBackgroundDynamicItem background)
-        {
-            _backgrounds.Add(background.DrawOrder, background);
-        }
-
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, xParallaxSpeed, layer, position);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, xParallaxSpeed, layer, position, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, xParallaxSpeed, layer, position, size);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, xParallaxSpeed, layer, position, size, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, parallaxSpeed, layer, position);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, parallaxSpeed, layer, position, size);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, parallaxSpeed, layer, position, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, float angularDamping, Vector2 linearVelocity, float linearDamping, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, angularDamping, linearVelocity, linearDamping, sprite, parallaxSpeed, layer, position, size, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, Vector2 linearVelocity, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, 0, linearVelocity, 0, sprite, xParallaxSpeed, layer, position);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, Vector2 linearVelocity, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, 0, linearVelocity, 0, sprite, xParallaxSpeed, layer, position, size);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, Vector2 linearVelocity, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, 0, linearVelocity, 0, sprite, xParallaxSpeed, layer, position, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
 
         public void AddDynamicBackground(float angularVelocity, Vector2 linearVelocity, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
         {
             ParallaxBackgroundDynamicItem background = new ParallaxBackgroundDynamicItem(this, angularVelocity, 0, linearVelocity, 0, sprite, xParallaxSpeed, layer, position, size, rotation);
-            AddDynamicBackground(background);
+            AddBackground(background);
         }
         #endregion
 
+        /// <summary>
+        /// Сортирует все элементы фона по их DrawOrder.
+        /// </summary>
+        private void SortBackgrounds()
+        {
+            _backgrounds.Sort((x, y) => Comparer<int>.Default.Compare(x.DrawOrder, y.DrawOrder));
+            _sorted = true;
+        }
+
         public void Draw(GameTime gameTime)
         {
-            if (Visible)
+            if (_sorted)
             {
-                /*for (int i = 0; i < _backgrounds.Count; i++)
-                    _backgrounds[i].Draw(gameTime);*/
-                foreach (var background in _backgrounds)
-                    background.Value.Draw(gameTime);
+                if (Visible)
+                {
+                    /*for (int i = 0; i < _backgrounds.Count; i++)
+                        _backgrounds[i].Draw(gameTime);*/
+                    foreach (var background in _backgrounds)
+                        background.Draw(gameTime);
+                }
+            }
+            else
+            {
+                SortBackgrounds();
+                Draw(gameTime);
             }
         }
 
