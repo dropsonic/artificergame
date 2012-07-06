@@ -173,6 +173,7 @@ namespace LevelEditor
             this.xnaScreen1.Size = new System.Drawing.Size(1280, 1000);
             this.xnaScreen1.TabIndex = 0;
             this.xnaScreen1.Text = "xnaScreen1";
+            
             // 
             // tabControl2
             // 

@@ -2,6 +2,7 @@
 using System.Threading;
 using LevelEditor;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using System;
 namespace LevelEditor
 {
@@ -10,7 +11,6 @@ namespace LevelEditor
         private static ContentManagerService contentManagerService;
         private ContentManager content;
         private ServiceContainer services;
-        static string rootDirectory = "LevelEditorContent";
         public ContentManager Content
         {
             get { return content; }
@@ -43,7 +43,7 @@ namespace LevelEditor
         {
             if (contentManagerService == null)
             {
-                contentManagerService = new ContentManagerService(graphicsDeviceService, rootDirectory);
+                contentManagerService = new ContentManagerService(graphicsDeviceService, GetContentPath());
             }
             return contentManagerService;
         }
@@ -57,5 +57,9 @@ namespace LevelEditor
             return contentManagerService;
         }
 
+        public static string GetContentPath()
+        {
+            return Environment.CurrentDirectory+"\\Content";
+        }
     }
 }
