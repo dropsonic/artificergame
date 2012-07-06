@@ -12,7 +12,7 @@ namespace GameLogic
     public abstract class GameObject : IVisualComponent
     {
         public Body ObjectBody;
-        public Texture2D Texture;
+        public Sprite Sprite;
 
         private byte _layer = 0;
         public byte Layer
@@ -28,10 +28,10 @@ namespace GameLogic
             this.ObjectBody = body;
         }
 
-        public GameObject(Body body, Texture2D texture)
+        public GameObject(Body body, Sprite sprite)
         {
             this.ObjectBody = body;
-            this.Texture = texture;
+            this.Sprite = sprite;
         }
 
         #region IVisualComponent

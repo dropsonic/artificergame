@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameLogic
 {
-    public class ParallaxBackgroundItem : IVisualComponent
+    public class ParallaxBackgroundItem : IDrawable
     {
         protected ParallaxBackground _parallaxBackground;
 
@@ -24,76 +24,128 @@ namespace GameLogic
         protected Camera _camera;
         protected SpriteBatch _spriteBatch;
 
-        protected string _textureName;
-        protected Texture2D _texture;
+        protected Sprite _sprite;
 
         //указываются в SimUnits
         protected Vector2 _position;
         protected Vector2 _size;
 
+        protected float _rotation; //в радианах
+
         protected Rectangle _rect; //формируется из _position и _size для отрисовки, в DisplayUnits
-        protected Vector2 _displaySize;
+        protected Vector2 _displaySize; //_size в DisplayUnits
 
         public Vector2 ParallaxSpeed;
 
-        public ParallaxBackgroundItem(ParallaxBackground parent, string textureName, float xParallaxSpeed, int layer)
-            : this(parent, textureName, new Vector2(xParallaxSpeed, 1.0f), layer, Vector2.Zero) { }
+        public Vector2 Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
 
-        public ParallaxBackgroundItem(ParallaxBackground parent, string textureName, float xParallaxSpeed, int layer, Vector2 position)
-            : this(parent, textureName, new Vector2(xParallaxSpeed, 1.0f), layer, position) { }
+        public Vector2 Size
+        {
+            get { return _size; }
+            set 
+            { 
+                _size = value;
+                CalculateRect();
+            }
+        }
 
-        public ParallaxBackgroundItem(ParallaxBackground parent, string textureName, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
-            : this(parent, textureName, new Vector2(xParallaxSpeed, 1.0f), layer, position, size) { }
+        public Sprite Sprite
+        {
+            get { return _sprite; }
+            set 
+            { 
+                _sprite = value;
+                CalculateRect();
+            }
+        }
 
-        protected ParallaxBackgroundItem(ParallaxBackground parent, string textureName, Vector2 parallaxSpeed, int layer)
+        public float Rotation
+        {
+            get { return _rotation; }
+            set { _rotation = value; }
+        }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, Vector2.Zero) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, float rotation)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, rotation) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, float xParallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : this(parent, sprite, new Vector2(xParallaxSpeed, 1.0f), layer, position, size, rotation) { }
+
+
+        /// <param name="parent">Родительский элемент - фон.</param>
+        /// <param name="sprite">Спрайт.</param>
+        /// <param name="parallaxSpeed">Скорость параллакса. (1.0f, 1.0f), если параллакса нет.</param>
+        /// <param name="layer">Слой.</param>
+        /// <param name="defaultSize">true, если принимать размер текстуры за размер объекта.</param>
+        protected ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, bool defaultSize)
         {
             this._parallaxBackground = parent;
-            this._textureName = textureName;
+            this._sprite = sprite;
             this.ParallaxSpeed = parallaxSpeed;
-            DrawOrder = layer;
+            this.DrawOrder = layer;
             this._camera = parent.Camera;
             this._spriteBatch = parent.SpriteBatch;
+            this._position = position;
+            this._rotation = 0f;
+
+            if (defaultSize)
+                //По умолчанию размер равен размеру текстуры в SimUnits
+                Size = ConvertUnits.ToSimUnits(sprite.Texture.Width, sprite.Texture.Height);
 
             Visible = true;
         }
 
-        public ParallaxBackgroundItem(ParallaxBackground parent, string textureName, Vector2 parallaxSpeed, int layer, Vector2 position)
-            : this(parent, textureName, parallaxSpeed, layer)
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position)
+            : this(parent, sprite, parallaxSpeed, layer, position, true) { }
+
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, float rotation)
+            : this(parent, sprite, parallaxSpeed, layer, position, true) 
         {
-            this._position = position;
-            this._size = Vector2.Zero;
+            this._rotation = rotation;
         }
 
-        public ParallaxBackgroundItem(ParallaxBackground parent, string textureName, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
-            : this(parent, textureName, parallaxSpeed, layer)
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size)
+            : this(parent, sprite, parallaxSpeed, layer, position, false)
         {
-            this._position = position;
-            this._size = size;
+            Size = size;
         }
 
-        public void Initialize()
+        public ParallaxBackgroundItem(ParallaxBackground parent, Sprite sprite, Vector2 parallaxSpeed, int layer, Vector2 position, Vector2 size, float rotation)
+            : this(parent, sprite, parallaxSpeed, layer, position, size)
         {
+            this._rotation = rotation;
         }
 
-        public void LoadContent(ContentManager content)
+        protected void CalculateRect()
         {
-            _texture = content.Load<Texture2D>(_textureName);
-            //Если пользователь не указал размер, то он автоматически присваивается равным размеру текстуры
-            if (_size == Vector2.Zero)
-                _size = ConvertUnits.ToSimUnits(_texture.Width, _texture.Height);
-
             //Рассчитываем прямоугольник для отрисовки
             Vector2 displayPosition = ConvertUnits.ToDisplayUnits(_position);
             _displaySize = ConvertUnits.ToDisplayUnits(_size);
             this._rect = new Rectangle((int)displayPosition.X, (int)displayPosition.Y, (int)_displaySize.X, (int)_displaySize.Y);
         }
 
+        #region IDrawable
         public virtual void Draw(GameTime gameTime)
         {
             if (Visible)
             {
                 _spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, _camera.GetViewMatrix(ParallaxSpeed));
-                _spriteBatch.Draw(_texture, _rect, Color.White);
+                _spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White, _rotation, _sprite.Origin, SpriteEffects.None, 0);
+                //_spriteBatch.Draw(_sprite.Texture, _rect, null, Color.White);
                 _spriteBatch.End();
             }
         }
@@ -105,5 +157,6 @@ namespace GameLogic
         public bool Visible { get; set; }
 
         public event EventHandler<EventArgs> VisibleChanged;
+        #endregion
     }
 }
