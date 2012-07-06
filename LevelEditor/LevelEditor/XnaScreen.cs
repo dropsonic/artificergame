@@ -7,26 +7,16 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace WinFormsGraphicsDevice
 {
-    /// <summary>
-    /// Example control inherits from GraphicsDeviceControl, which allows it to
-    /// render using a GraphicsDevice. This control shows how to use ContentManager
-    /// inside a WinForms application. It loads a SpriteFont object through the
-    /// ContentManager, then uses a SpriteBatch to draw text. The control is not
-    /// animated, so it only redraws itself in response to WinForms paint messages.
-    /// </summary>
     class XnaScreen : GraphicsDeviceControl
     {
-        ContentManager content;
         SpriteBatch spriteBatch;
         SpriteFont font;
         
         protected override void Initialize()
         {
-            content = new ContentManager(Services, "LevelEditorContent");
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            font = content.Load<SpriteFont>("Segoe14");
+            font = Content.Load<SpriteFont>("Segoe14");
         }
 
         protected override void LoadContent()
@@ -38,7 +28,7 @@ namespace WinFormsGraphicsDevice
         {
             if (disposing)
             {
-                content.Unload();
+                Content.Unload();
             }
 
             base.Dispose(disposing);

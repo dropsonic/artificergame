@@ -22,6 +22,7 @@ namespace WinFormsGraphicsDevice
     // types. To avoid conflicts, we specify exactly which ones to use.
     using Color = System.Drawing.Color;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
+using Microsoft.Xna.Framework.Content;
 
 
     /// <summary>
@@ -37,6 +38,7 @@ namespace WinFormsGraphicsDevice
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
+        ContentManagerService contentManagerService;
         protected Timer frameTimer = new Timer();
         //around 60fps
         private int fps = 100;
@@ -53,19 +55,10 @@ namespace WinFormsGraphicsDevice
             get { return graphicsDeviceService.GraphicsDevice; }
         }
 
-
-        /// <summary>
-        /// Gets an IServiceProvider containing our IGraphicsDeviceService.
-        /// This can be used with components such as the ContentManager,
-        /// which use this service to look up the GraphicsDevice.
-        /// </summary>
-        public ServiceContainer Services
+        public ContentManager Content
         {
-            get { return services; }
+            get { return contentManagerService.ContentManager; }
         }
-
-        ServiceContainer services = new ServiceContainer();
-
 
         #endregion
 
@@ -84,8 +77,7 @@ namespace WinFormsGraphicsDevice
                                                                      ClientSize.Width,
                                                                      ClientSize.Height);
 
-                // Register the service, so components like ContentManager can find it.
-                services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
+                contentManagerService = ContentManagerService.GetContentManagerService(graphicsDeviceService, "LevelEditorContent");
 
                 frameTimer.Tick += new EventHandler(CalculateFrame);
                 frameTimer.Interval = (int)((float)1000/(float)fps);
