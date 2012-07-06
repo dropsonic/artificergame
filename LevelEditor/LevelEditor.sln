@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\LevelEditor.csproj", "{C5892243-198E-4717-9492-02440573E7F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farseer Physics XNA", "Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj", "{0A850700-1ABB-4288-A391-6726B90EBEB9}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "LevelEditorContent", "LevelEditorContent\LevelEditorContent.contentproj", "{17D7FD3F-D9D5-4B50-A2AD-77FDAA569550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditorContentBuilder", "LevelEditorContentBuilder\LevelEditorContentBuilder.csproj", "{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5892243-198E-4717-9492-02440573E7F1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Debug|x86.ActiveCfg = Debug|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Debug|x86.Build.0 = Debug|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Release|Any CPU.ActiveCfg = Release|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Release|x86.ActiveCfg = Release|x86
+		{C5892243-198E-4717-9492-02440573E7F1}.Release|x86.Build.0 = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.ActiveCfg = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Debug|x86.Build.0 = Debug|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|Any CPU.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.ActiveCfg = Release|x86
+		{0A850700-1ABB-4288-A391-6726B90EBEB9}.Release|x86.Build.0 = Release|x86
+		{17D7FD3F-D9D5-4B50-A2AD-77FDAA569550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D7FD3F-D9D5-4B50-A2AD-77FDAA569550}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{17D7FD3F-D9D5-4B50-A2AD-77FDAA569550}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D7FD3F-D9D5-4B50-A2AD-77FDAA569550}.Release|x86.ActiveCfg = Debug|Any CPU
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Debug|x86.ActiveCfg = Debug|x86
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Debug|x86.Build.0 = Debug|x86
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Release|Any CPU.ActiveCfg = Release|x86
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Release|x86.ActiveCfg = Release|x86
+		{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
