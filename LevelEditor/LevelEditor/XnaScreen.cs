@@ -5,7 +5,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision.Shapes;
 
-namespace WinFormsGraphicsDevice
+namespace LevelEditor
 {
     class XnaScreen : GraphicsDeviceControl
     {

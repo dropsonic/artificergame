@@ -1,5 +1,5 @@
-﻿using WinFormsGraphicsDevice;
-namespace WindowsFormsApplication1
+﻿using LevelEditor;
+namespace LevelEditor
 {
     partial class MainForm
     {
@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.xnaScreen1 = new WinFormsGraphicsDevice.XnaScreen();
+            this.xnaScreen1 = new LevelEditor.XnaScreen();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();

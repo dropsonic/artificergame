@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace WinFormsGraphicsDevice
+namespace LevelEditor
 {
     // System.Drawing and the XNA Framework both define Color and Rectangle
     // types. To avoid conflicts, we specify exactly which ones to use.
@@ -57,7 +57,7 @@ using Microsoft.Xna.Framework.Content;
 
         public ContentManager Content
         {
-            get { return contentManagerService.ContentManager; }
+            get { return contentManagerService.Content; }
         }
 
         #endregion
@@ -77,7 +77,7 @@ using Microsoft.Xna.Framework.Content;
                                                                      ClientSize.Width,
                                                                      ClientSize.Height);
 
-                contentManagerService = ContentManagerService.GetContentManagerService(graphicsDeviceService, "LevelEditorContent");
+                contentManagerService = ContentManagerService.GetContentManagerService(graphicsDeviceService);
 
                 frameTimer.Tick += new EventHandler(CalculateFrame);
                 frameTimer.Interval = (int)((float)1000/(float)fps);
