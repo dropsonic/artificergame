@@ -61,7 +61,7 @@ namespace GameLogic
         }
 
         #region AddBackground
-        private void AddBackground(ParallaxBackgroundItem background)
+        public void AddBackground(ParallaxBackgroundItem background)
         {
             _backgrounds.Add(background);
             _sorted = false;
