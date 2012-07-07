@@ -30,7 +30,7 @@ namespace LevelEditor
             {
                 // If the build succeeded, use the ContentManager to
                 // load the temporary .xnb file that we just created.
-                xnaScreen1.texture = ContentManagerService.GetContentManagerService().Content.Load<Texture2D>("texture");
+                xnaScreen.texture = ContentManagerService.GetContentManagerService().Content.Load<Texture2D>("texture");
             }
             else
             {
