@@ -653,6 +653,17 @@ namespace FarseerPhysics.Dynamics
 
         public bool IsSensor
         {
+            get
+            {
+                if (FixtureList.Count == 0)
+                    return false;
+
+                bool result = true;
+                for (int i = 0; i < FixtureList.Count; i++)
+                    result = result & FixtureList[i].IsSensor;
+
+                return result;
+            }
             set
             {
                 for (int i = 0; i < FixtureList.Count; i++)
