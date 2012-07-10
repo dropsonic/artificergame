@@ -1139,7 +1139,7 @@
           </authors>
           <description />
           <creation-date>07/08/2012 15:26:46</creation-date>
-          <change-date>07/08/2012 21:09:20</change-date>
+          <change-date>07/09/2012 22:24:10</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
@@ -1366,6 +1366,28 @@
               <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
             </relation>
           </item>
+          <item id="ddip339861867910424530_962764658827715461" cid="CMT003" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 19:45:40">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>GameObject может состоять из нескольких Body и нескольких Joint'ов.
+Делятся на:
+   1. объекты, которые может размещать игрок;
+   2. объекты, которые расположены на уровне:
+         2.1. на которые игрок не может влиять напрямую
+         2.2. на которые игрок может влиять напрямую</comment>
+          </item>
+          <item id="ddip339861867910424530_220058205306400236" cid="CMT004" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 22:24:10">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>Пользователь - тот, кто использует редактор.
+Игрок - тот, кто использует игру.</comment>
+          </item>
         </abstract-items>
         <layer name="Default" visible="true" enabled="true" locked="false">
           <item id="ddip339861867910424530_592213481125627882" iid="149d309f5ac24dffa02c2e87cd891d0e" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/08/2012 15:27:25" order-index="0" type="entity">
@@ -1450,6 +1472,12 @@
             </layout>
             <relation from="ddip339861867910424530_876664756111757846" from-iid="ad9cb42b80aa4c9e907920c33954d906" to="ddip339861867910424530_592213481125627882" to-iid="149d309f5ac24dffa02c2e87cd891d0e" />
             <role-positions start-role="25,15" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="25,-15" />
+          </item>
+          <item id="ddip339861867910424530_962764658827715461" iid="46424b5e1a0f41f2ab95c4bdd2593ab4" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/09/2012 19:45:40" order-index="14" type="entity">
+            <layout ax="554" ay="380" awidth="319" aheight="200" x="554" y="380" width="319" height="200" />
+          </item>
+          <item id="ddip339861867910424530_220058205306400236" iid="17568db1e70941d9bb6326dda4285acf" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/09/2012 22:24:10" order-index="15" type="entity">
+            <layout ax="5" ay="61" awidth="195" aheight="101" x="5" y="61" width="195" height="101" />
           </item>
         </layer>
       </diagram>
