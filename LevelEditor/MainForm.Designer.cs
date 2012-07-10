@@ -40,13 +40,17 @@ namespace LevelEditor
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.shapeBox = new System.Windows.Forms.ComboBox();
+            this.previewScreen = new LevelEditor.PreviewScreen();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.xnaScreen = new LevelEditor.XnaScreen();
+            this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.materialBox = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -127,6 +131,9 @@ namespace LevelEditor
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.materialBox);
+            this.tabPage1.Controls.Add(this.shapeBox);
+            this.tabPage1.Controls.Add(this.previewScreen);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -134,6 +141,23 @@ namespace LevelEditor
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // shapeBox
+            // 
+            this.shapeBox.FormattingEnabled = true;
+            this.shapeBox.Location = new System.Drawing.Point(6, 299);
+            this.shapeBox.Name = "shapeBox";
+            this.shapeBox.Size = new System.Drawing.Size(284, 21);
+            this.shapeBox.TabIndex = 1;
+            // 
+            // previewScreen
+            // 
+            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.previewScreen.Location = new System.Drawing.Point(3, 3);
+            this.previewScreen.Name = "previewScreen";
+            this.previewScreen.Size = new System.Drawing.Size(290, 290);
+            this.previewScreen.TabIndex = 0;
+            this.previewScreen.Text = "previewScreen";
             // 
             // tabPage2
             // 
@@ -163,6 +187,15 @@ namespace LevelEditor
             this.splitContainer1.SplitterDistance = 851;
             this.splitContainer1.TabIndex = 1;
             // 
+            // xnaScreen
+            // 
+            this.xnaScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xnaScreen.Location = new System.Drawing.Point(0, 0);
+            this.xnaScreen.Name = "xnaScreen";
+            this.xnaScreen.Size = new System.Drawing.Size(851, 765);
+            this.xnaScreen.TabIndex = 1;
+            this.xnaScreen.Text = "xnaScreen";
+            // 
             // propertyGrid
             // 
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -171,14 +204,13 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
-            // xnaScreen
+            // materialBox
             // 
-            this.xnaScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xnaScreen.Location = new System.Drawing.Point(0, 0);
-            this.xnaScreen.Name = "xnaScreen";
-            this.xnaScreen.Size = new System.Drawing.Size(851, 765);
-            this.xnaScreen.TabIndex = 1;
-            this.xnaScreen.Text = "xnaScreen1";
+            this.materialBox.FormattingEnabled = true;
+            this.materialBox.Location = new System.Drawing.Point(6, 326);
+            this.materialBox.Name = "materialBox";
+            this.materialBox.Size = new System.Drawing.Size(284, 21);
+            this.materialBox.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -196,6 +228,7 @@ namespace LevelEditor
             this.menuStrip.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -220,6 +253,9 @@ namespace LevelEditor
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PropertyGrid propertyGrid;
         private XnaScreen xnaScreen;
+        private System.Windows.Forms.ComboBox shapeBox;
+        private PreviewScreen previewScreen;
+        private System.Windows.Forms.ComboBox materialBox;
 
 
     }

@@ -57,7 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentBuilder.cs" />
-    <Compile Include="ContentManagerService.cs" />
+    <Compile Include="ContentService.cs" />
+    <Compile Include="PreviewScreen.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ErrorLogger.cs" />
     <Compile Include="XnaScreen.cs">
       <SubType>Component</SubType>
@@ -110,9 +113,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="q3.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\acid.jpg" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\blank.png" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\dots.png" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\pavement.png" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\rust.jpg" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\squares.png" />
+    <Content Include="Content %28Runtime Build%29\Textures\Materials\waves.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

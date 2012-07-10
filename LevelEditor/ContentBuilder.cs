@@ -191,6 +191,14 @@ namespace LevelEditor
             projectItems.Add(item);
         }
 
+        public void AddTextures(string[] textures)
+        {
+            foreach (string texture in textures)
+            {
+                this.Add(texture, "Textures/Materials/"+Path.GetFileName(texture).Split('.')[0] ,null, "TextureProcessor");
+            }
+            
+        }
 
         /// <summary>
         /// Removes all content files from the MSBuild project.
@@ -231,7 +239,6 @@ namespace LevelEditor
             {
                 return string.Join("\n", errorLogger.Errors.ToArray());
             }
-
             return null;
         }
 

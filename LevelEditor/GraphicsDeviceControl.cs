@@ -38,7 +38,7 @@ using Microsoft.Xna.Framework.Content;
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
-        ContentManagerService contentManagerService;
+        ContentService contentService;
         protected Timer frameTimer = new Timer();
         //around 60fps
         private int fps = 100;
@@ -57,7 +57,7 @@ using Microsoft.Xna.Framework.Content;
 
         public ContentManager Content
         {
-            get { return contentManagerService.Content; }
+            get { return contentService.Content; }
         }
 
         #endregion
@@ -77,7 +77,7 @@ using Microsoft.Xna.Framework.Content;
                                                                      ClientSize.Width,
                                                                      ClientSize.Height);
 
-                contentManagerService = ContentManagerService.GetContentManagerService(graphicsDeviceService);
+                contentService = ContentService.GetContentService(graphicsDeviceService);
 
                 frameTimer.Tick += new EventHandler(CalculateFrame);
                 frameTimer.Interval = (int)((float)1000/(float)fps);
@@ -171,7 +171,11 @@ using Microsoft.Xna.Framework.Content;
             viewport.MinDepth = 0;
             viewport.MaxDepth = 1;
 
+            
+            //TODO: разобраться в исключении при сворачивании окна
             GraphicsDevice.Viewport = viewport;
+            
+
 
             return null;
         }

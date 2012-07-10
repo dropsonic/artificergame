@@ -92,8 +92,9 @@
       <Name>GameLogic</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsGame1Content\WindowsGame1Content.contentproj">
-      <Name>WindowsGame1Content</Name>
+      <Name>WindowsGame1Content %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+      <Project>{E9C5B7DA-EE99-4846-9FA3-5785BDC54CCB}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
