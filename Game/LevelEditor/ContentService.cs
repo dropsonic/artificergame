@@ -4,25 +4,25 @@ using LevelEditor;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System;
+using System.Collections.Generic;
 namespace LevelEditor
 {
-    class ContentManagerService
+    class ContentService
     {
-        private static ContentManagerService contentManagerService;
+        private static ContentService contentService;
         private ContentManager content;
         private ServiceContainer services;
         public ContentManager Content
         {
             get { return content; }
         }
-
         //IServiceProvider containing IGraphicsDeviceService. This can be used with components such as the ContentManager, which use this service to look up the GraphicsDevice.
         public ServiceContainer Services
         {
             get { return services; }
         }
 
-        private ContentManagerService(IGraphicsDeviceService graphicsDeviceService, string rootDir)
+        private ContentService(IGraphicsDeviceService graphicsDeviceService, string rootDir)
         {
             services = new ServiceContainer();
             // Register the service, so ContentManager can find it.
@@ -30,31 +30,31 @@ namespace LevelEditor
             content = new ContentManager(Services, rootDir);
         }
 
-        public static ContentManagerService GetContentManagerService(IGraphicsDeviceService graphicsDeviceService,string rootDir)
+        public static ContentService GetContentService(IGraphicsDeviceService graphicsDeviceService,string rootDir)
         {
-            if (contentManagerService == null)
+            if (contentService == null)
             {
-                contentManagerService = new ContentManagerService(graphicsDeviceService, rootDir);
+                contentService = new ContentService(graphicsDeviceService, rootDir);
             }
-            return contentManagerService;
+            return contentService;
         }
 
-        public static ContentManagerService GetContentManagerService(IGraphicsDeviceService graphicsDeviceService)
+        public static ContentService GetContentService(IGraphicsDeviceService graphicsDeviceService)
         {
-            if (contentManagerService == null)
+            if (contentService == null)
             {
-                contentManagerService = new ContentManagerService(graphicsDeviceService, GetContentPath());
+                contentService = new ContentService(graphicsDeviceService, GetContentPath());
             }
-            return contentManagerService;
+            return contentService;
         }
 
-        public static ContentManagerService GetContentManagerService()
+        public static ContentService GetContentService()
         {
-            if (contentManagerService == null)
+            if (contentService == null)
             {
                 throw new Exception("No GraphicsDeviceService initialized");
             }
-            return contentManagerService;
+            return contentService;
         }
 
         public static string GetContentPath()

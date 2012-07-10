@@ -7,10 +7,11 @@ using FarseerPhysics.Collision.Shapes;
 
 namespace LevelEditor
 {
-    class XnaScreen : GraphicsDeviceControl
+    class PreviewScreen : GraphicsDeviceControl
     {
         SpriteBatch spriteBatch;
         SpriteFont font;
+        public Texture2D texture;
         public string message = "Empty Message";
         protected override void Initialize()
         {
@@ -45,7 +46,16 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, message, Vector2.Zero, Color.Black);
+
+            if (texture != null)
+            {
+                spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            }
+            else
+            {
+                spriteBatch.DrawString(font, message, Vector2.Zero, Color.Red);
+            }
+            
             spriteBatch.End();
         }
     }
