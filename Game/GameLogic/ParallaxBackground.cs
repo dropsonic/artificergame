@@ -36,12 +36,17 @@ namespace GameLogic
             Visible = true;
         }
 
-        public List<ParallaxBackgroundItem> Backgrounds
+        /// <summary>
+        /// Возвращает элемент фона по индексу.
+        /// </summary>
+        /// <param name="index">Индекс элемента.</param>
+        /// <seealso cref="http://msdn.microsoft.com/en-us/library/6x16t2tx.aspx"/>
+        public ParallaxBackgroundItem this[int index]
         {
-            get { return _backgrounds; }
+            get { return _backgrounds[index]; }
             set 
             { 
-                _backgrounds = value;
+                _backgrounds[index] = value;
                 _sorted = false;
             }
         }
