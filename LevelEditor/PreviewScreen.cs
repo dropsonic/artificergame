@@ -31,8 +31,6 @@ namespace LevelEditor
                 materials.Add(System.IO.Path.GetFileName(material).Split('.')[0]);
             }
             assetCreator.LoadContent(ContentService.GetContentService().Content, materials);
-
-            SetPreview(ObjectType.Rectangle, "acid", Color.White);
         }
 
         protected override void LoadContent()
