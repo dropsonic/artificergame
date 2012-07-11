@@ -61,5 +61,11 @@ namespace LevelEditor
         {
             return Environment.CurrentDirectory+"\\Content";
         }
+
+        public static string GetMaterial(string material = null)
+        {
+            return "Textures\\Materials\\"+material;
+        }
+
     }
 }
