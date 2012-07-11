@@ -15,9 +15,12 @@ using FarseerTools;
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
+    using System.Reflection;
     public partial class MainForm : Form
     {
         ContentBuilder builder;
+        readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(prop => prop.PropertyType == typeof(Color))
+                .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
         
         public MainForm()
         {
@@ -51,21 +54,17 @@ namespace LevelEditor
                 shapeBox.Items.Add(obj);
             }
 
-             // Get all of the public static properties
-            System.Reflection.PropertyInfo[] properties = typeof(Color).GetProperties(System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.Static);
-            foreach(System.Reflection.PropertyInfo propertyInfo in properties)
+            foreach (string colorName in colorDictionary.Keys)
             {
-                // Check to make sure the property has a get method, and returns type "Color"
-                if (propertyInfo.GetGetMethod() != null && propertyInfo.PropertyType == typeof(Color))
-                { 
-                    colorBox.Items.Add(propertyInfo.Name);
-                }
+                colorBox.Items.Add(colorName);
             }
         }
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            previewScreen.SetPreview(ObjectType.Rectangle, materialBox.SelectedItem.ToString(), Color.White);
+            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem!=null)
+                previewScreen.SetPreview((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()]);
+            
         }
     }
 }
