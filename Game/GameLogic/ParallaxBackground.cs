@@ -39,7 +39,11 @@ namespace GameLogic
         public List<ParallaxBackgroundItem> Backgrounds
         {
             get { return _backgrounds; }
-            set { _backgrounds = value; }
+            set 
+            { 
+                _backgrounds = value;
+                _sorted = false;
+            }
         }
 
         public World World
