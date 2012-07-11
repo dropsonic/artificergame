@@ -24,7 +24,7 @@ namespace LevelEditor
 
             assetCreator = new AssetCreator(this.GraphicsDevice);
             assetCreator.LoadContent(ContentService.GetContentService().Content);
-            SetPreview(ObjectType.Circle, MaterialType.Acid, Color.White);
+            SetPreview(ObjectType.Star, MaterialType.Rust, Color.White);
         }
 
         protected override void LoadContent()

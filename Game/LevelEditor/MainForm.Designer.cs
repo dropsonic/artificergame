@@ -40,13 +40,14 @@ namespace LevelEditor
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.materialBox = new System.Windows.Forms.ComboBox();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.previewScreen = new LevelEditor.PreviewScreen();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.xnaScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.materialBox = new System.Windows.Forms.ComboBox();
+            this.colorBox = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -131,6 +132,7 @@ namespace LevelEditor
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.colorBox);
             this.tabPage1.Controls.Add(this.materialBox);
             this.tabPage1.Controls.Add(this.shapeBox);
             this.tabPage1.Controls.Add(this.previewScreen);
@@ -141,6 +143,14 @@ namespace LevelEditor
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // materialBox
+            // 
+            this.materialBox.FormattingEnabled = true;
+            this.materialBox.Location = new System.Drawing.Point(6, 326);
+            this.materialBox.Name = "materialBox";
+            this.materialBox.Size = new System.Drawing.Size(284, 21);
+            this.materialBox.TabIndex = 2;
             // 
             // shapeBox
             // 
@@ -204,13 +214,13 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
-            // materialBox
+            // colorBox
             // 
-            this.materialBox.FormattingEnabled = true;
-            this.materialBox.Location = new System.Drawing.Point(6, 326);
-            this.materialBox.Name = "materialBox";
-            this.materialBox.Size = new System.Drawing.Size(284, 21);
-            this.materialBox.TabIndex = 2;
+            this.colorBox.FormattingEnabled = true;
+            this.colorBox.Location = new System.Drawing.Point(6, 359);
+            this.colorBox.Name = "colorBox";
+            this.colorBox.Size = new System.Drawing.Size(284, 21);
+            this.colorBox.TabIndex = 3;
             // 
             // MainForm
             // 
@@ -256,6 +266,7 @@ namespace LevelEditor
         private System.Windows.Forms.ComboBox shapeBox;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.ComboBox materialBox;
+        private System.Windows.Forms.ComboBox colorBox;
 
 
     }
