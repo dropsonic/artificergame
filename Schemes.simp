@@ -33,10 +33,31 @@
       <type id="float" name="float" description="" />
       <type id="ContentManager" name="ContentManager" description="" />
       <type id="World" name="World" description="" />
+      <type id="Camera" name="Camera" description="" />
+      <type id="SpriteBatch" name="SpriteBatch" description="" />
+      <type id="Sprite" name="Sprite" description="" />
+      <type id="Body" name="Body" description="" />
+      <type id="GameTime" name="GameTime" description="" />
     </custom-types>
   </types>
   <filters />
-  <items />
+  <items>
+    <item id="di352495443841200139" cid="CMT002" type="comment" name="Comment" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:08:34">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+      <comment>Теоретически, GameLevel тоже должен реализовать интерфейс IDrawable, но с другой стороны кроме метода Draw ему оттуда больше ничего не нужно.</comment>
+    </item>
+    <item id="di263426977800697140" cid="CN003" type="comment-connector" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:08:34">
+      <stereotypes />
+      <tagged-values />
+      <associated-diagrams />
+      <owned-items />
+      <style class="default" />
+    </item>
+  </items>
   <models>
     <model id="p649500931454055354" name="Model 1" type="model" namespace="" order-index="0">
       <meta>
@@ -1139,7 +1160,7 @@
           </authors>
           <description />
           <creation-date>07/08/2012 15:26:46</creation-date>
-          <change-date>07/09/2012 22:24:10</change-date>
+          <change-date>07/11/2012 22:09:13</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
@@ -1147,17 +1168,95 @@
           <item id="ddip339861867910424530_592213481125627882" cid="C002" type="class" name="GameLevel" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 15:27:25">
             <stereotypes />
             <tagged-values />
+            <documentation>
+              <text>
+                <content>
+                  <p index="0">
+                    <t />
+                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                      <text>
+                        <solid-brush color="#FF000000" />
+                      </text>
+                    </style>
+                  </p>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
             <associated-diagrams />
             <owned-items />
             <style class="default" />
             <attributes>
-              <attribute id="a7a77970f131748cea96d36aed65b2096119" name="World" type="World" type-id="World" visibility="public" abstract="false" virtual="false">
+              <attribute id="a7a77970f131748cea96d36aed65b2096119" name="_world" type="World" type-id="World" visibility="private" abstract="false" virtual="false">
                 <stereotypes />
               </attribute>
+              <attribute id="a5eee406b041c4a3783a2cb2af9cd791b124" name="_camera" type="Camera" type-id="Camera" visibility="private" abstract="false" virtual="false">
+                <stereotypes />
+                <documentation>
+                  <text>
+                    <content>
+                      <p index="0">
+                        <t />
+                        <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                          <text>
+                            <solid-brush color="#FF000000" />
+                          </text>
+                        </style>
+                      </p>
+                    </content>
+                  </text>
+                </documentation>
+              </attribute>
+              <attribute id="af53b11f49306426d9d1f761fbc715812407" name="_spriteBatch" type="SpriteBatch" type-id="SpriteBatch" visibility="private" abstract="false" virtual="false">
+                <stereotypes />
+                <documentation>
+                  <text>
+                    <content>
+                      <p index="0">
+                        <t />
+                        <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                          <text>
+                            <solid-brush color="#FF000000" />
+                          </text>
+                        </style>
+                      </p>
+                    </content>
+                  </text>
+                </documentation>
+              </attribute>
             </attributes>
-            <operations />
+            <operations>
+              <operation id="o7f12663232884a7289b9cb0141517d7f223" name="Draw" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
+                <parameters>
+                  <parameter id="" name="gameTime" type="GameTime" type-id="GameTime" default-value="" />
+                </parameters>
+                <stereotypes />
+                <documentation>
+                  <text>
+                    <content>
+                      <p index="0">
+                        <t />
+                        <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                          <text>
+                            <solid-brush color="#FF000000" />
+                          </text>
+                        </style>
+                      </p>
+                    </content>
+                  </text>
+                </documentation>
+                <source-codes>
+                  <source-code language="ActionScript" />
+                </source-codes>
+              </operation>
+            </operations>
             <template-parameters>
-              <source-codes />
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
             </template-parameters>
           </item>
           <item id="ddip339861867910424530_283148809888201087" cid="C003" type="class" name="ParallaxBackground" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 15:27:58">
@@ -1195,7 +1294,7 @@
               <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
             </relation>
           </item>
-          <item id="ddip339861867910424530_539002575172553017" cid="REL001" type="relationship" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:32">
+          <item id="ddip339861867910424530_539002575172553017" cid="REL001" type="relationship" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:32">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
@@ -1208,6 +1307,143 @@
           </item>
           <item id="ddip339861867910424530_876664756111757846" cid="C005" type="class" name="GameObject" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 15:34:34">
             <stereotypes />
+            <tagged-values />
+            <documentation>
+              <text>
+                <content />
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes />
+            <operations />
+            <template-parameters>
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
+            </template-parameters>
+          </item>
+          <item id="ddip339861867910424530_227521645558280188" cid="C001" type="class" name="ParallaxBackgroundDynamicItem" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:36">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes />
+            <operations />
+            <template-parameters>
+              <source-codes />
+            </template-parameters>
+          </item>
+          <item id="ddip339861867910424530_351780707565265631" cid="GNR001" type="generalization" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:52">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+          </item>
+          <item id="ddip339861867910424530_820317714766493281" cid="CMT001" type="comment" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:06">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>Статичный объект фона</comment>
+          </item>
+          <item id="di266904435746186132" cid="CN002" type="comment-connector" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:27">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+          </item>
+          <item id="ddip339861867910424530_883810735648674738" cid="CMT002" type="comment" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:43">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>Динамичный объект фона</comment>
+          </item>
+          <item id="di237074670855711635" cid="CN003" type="comment-connector" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:54">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+          </item>
+          <item id="ddip339861867910424530_814904377232268435" cid="REL002" type="relationship" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:09:20">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <relation from="ddip339861867910424530_876664756111757846" to="ddip339861867910424530_592213481125627882">
+              <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+              <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
+            </relation>
+          </item>
+          <item id="ddip339861867910424530_962764658827715461" cid="CMT003" type="comment" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 19:45:40">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>GameObject может состоять из нескольких Body и нескольких Joint'ов.
+Делятся на:
+   1. объекты, которые может размещать игрок;
+   2. объекты, которые расположены на уровне:
+         2.1. на которые игрок не может влиять напрямую
+         2.2. на которые игрок может влиять напрямую</comment>
+          </item>
+          <item id="ddip339861867910424530_220058205306400236" cid="CMT004" type="comment" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 22:24:10">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <comment>Пользователь - тот, кто использует редактор.
+Игрок - тот, кто использует игру.</comment>
+          </item>
+          <item id="ddip339861867910424530_424937430625941966" cid="C001" type="class" name="GameObjectPart" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 21:34:54">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes>
+              <attribute id="a8ac92a035db44008aa8d0d72dc51c043650" name="Sprite" type="Sprite" type-id="Sprite" visibility="public" abstract="false" virtual="false">
+                <stereotypes />
+              </attribute>
+              <attribute id="a0071468486e24fe495d746f2af5194d5897" name="Body" type="Body" type-id="Body" visibility="public" abstract="false" virtual="false">
+                <stereotypes />
+              </attribute>
+            </attributes>
+            <operations />
+            <template-parameters>
+              <source-codes />
+            </template-parameters>
+          </item>
+          <item id="ddip339861867910424530_383220562903258747" cid="REL002" type="relationship" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 21:35:23">
+            <stereotypes />
+            <tagged-values />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <relation from="ddip339861867910424530_424937430625941966" to="ddip339861867910424530_876664756111757846">
+              <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+              <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
+            </relation>
+          </item>
+          <item id="ddip339861867910424530_339358247811768237" cid="C002" type="class" name="Joint" style-class="" is-abstract="true" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:02:16">
+            <stereotypes>
+              <stereotype name="Farseer" />
+            </stereotypes>
             <tagged-values />
             <documentation>
               <text>
@@ -1231,167 +1467,95 @@
             <owned-items />
             <style class="default" />
             <attributes />
-            <operations>
-              <operation id="o3710fd53ad334c0a911229ffb606368d892" name="GameObject" type="" type-id="" visibility="public" abstract="false" virtual="false" static="false">
-                <parameters>
-                  <parameter id="" name="World" type="World" type-id="World" default-value="" />
-                </parameters>
-                <stereotypes>
-                  <stereotype>constructor</stereotype>
-                </stereotypes>
-                <documentation>
-                  <text>
-                    <definition>
-                      <sections>
-                        <section name="">
-                          <header>
-                            <text>
-                              <content>
-                                <p index="0">
-                                  <t />
-                                  <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                                    <text>
-                                      <solid-brush color="#FF000000" />
-                                    </text>
-                                  </style>
-                                </p>
-                              </content>
-                            </text>
-                          </header>
-                          <footer>
-                            <text>
-                              <content>
-                                <p index="0">
-                                  <t />
-                                  <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                                    <text>
-                                      <solid-brush color="#FF000000" />
-                                    </text>
-                                  </style>
-                                </p>
-                              </content>
-                            </text>
-                          </footer>
-                          <default-page>
-                            <page size="21,29.7" header-offset="15" footer-offset="15" unit="mm">
-                              <margins left="20" right="20" top="20" bottom="20" />
-                            </page>
-                          </default-page>
-                        </section>
-                      </sections>
-                      <pages />
-                    </definition>
-                    <content>
-                      <paragraph line-spacing="1">
-                        <p index="0">
-                          <t />
-                          <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
-                            <text>
-                              <solid-brush color="#FF000000" />
-                            </text>
-                          </style>
-                        </p>
-                      </paragraph>
-                    </content>
-                  </text>
-                </documentation>
-                <source-codes>
-                  <source-code language="ActionScript" />
-                </source-codes>
-              </operation>
-            </operations>
+            <operations />
             <template-parameters>
               <source-codes>
                 <source-code language="ActionScript" />
               </source-codes>
             </template-parameters>
           </item>
-          <item id="ddip339861867910424530_227521645558280188" cid="C001" type="class" name="ParallaxBackgroundDynamicItem" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:36">
+          <item id="ddip339861867910424530_825949926481214349" cid="REL004" type="relationship" name="_joints" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:02:41">
             <stereotypes />
             <tagged-values />
+            <documentation>
+              <text>
+                <content>
+                  <p index="0">
+                    <t />
+                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                      <text>
+                        <solid-brush color="#FF000000" />
+                      </text>
+                    </style>
+                  </p>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <relation from="ddip339861867910424530_339358247811768237" to="ddip339861867910424530_876664756111757846">
+              <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
+              <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
+            </relation>
+          </item>
+          <item id="ddip339861867910424530_910016834181298395" cid="C003" type="class" name="IDrawable" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:05:33">
+            <stereotypes>
+              <stereotype name="interface" />
+              <stereotype name="XNA" />
+            </stereotypes>
+            <tagged-values />
+            <documentation>
+              <text>
+                <content>
+                  <p index="0">
+                    <t />
+                    <style font-name="Arial" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                      <text>
+                        <solid-brush color="#FF000000" />
+                      </text>
+                    </style>
+                  </p>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
             <associated-diagrams />
             <owned-items />
             <style class="default" />
             <attributes />
             <operations />
             <template-parameters>
-              <source-codes />
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
             </template-parameters>
           </item>
-          <item id="ddip339861867910424530_351780707565265631" cid="GNR001" type="generalization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:06:52">
+          <item id="ddip339861867910424530_744907145763367313" cid="REA001" type="realization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:05:47">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
             <owned-items />
             <style class="default" />
           </item>
-          <item id="ddip339861867910424530_820317714766493281" cid="CMT001" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:06">
+          <item id="ddip339861867910424530_958762986133171637" cid="REA002" type="realization" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/11/2012 22:05:49">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
             <owned-items />
             <style class="default" />
-            <comment>Статичный объект фона</comment>
-          </item>
-          <item id="di266904435746186132" cid="CN002" type="comment-connector" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:27">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-          </item>
-          <item id="ddip339861867910424530_883810735648674738" cid="CMT002" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:43">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <comment>Динамичный объект фона</comment>
-          </item>
-          <item id="di237074670855711635" cid="CN003" type="comment-connector" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:08:54">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-          </item>
-          <item id="ddip339861867910424530_814904377232268435" cid="REL002" type="relationship" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/08/2012 21:09:20">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <relation from="ddip339861867910424530_876664756111757846" to="ddip339861867910424530_592213481125627882">
-              <start-role id="" name="" multiplicity="" navigability="" association-type="association" visibility="private" />
-              <end-role id="" name="" multiplicity="" navigability="" association-type="composition" visibility="private" />
-            </relation>
-          </item>
-          <item id="ddip339861867910424530_962764658827715461" cid="CMT003" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 19:45:40">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <comment>GameObject может состоять из нескольких Body и нескольких Joint'ов.
-Делятся на:
-   1. объекты, которые может размещать игрок;
-   2. объекты, которые расположены на уровне:
-         2.1. на которые игрок не может влиять напрямую
-         2.2. на которые игрок может влиять напрямую</comment>
-          </item>
-          <item id="ddip339861867910424530_220058205306400236" cid="CMT004" type="comment" name="" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="07/09/2012 22:24:10">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
-            <comment>Пользователь - тот, кто использует редактор.
-Игрок - тот, кто использует игру.</comment>
           </item>
         </abstract-items>
         <layer name="Default" visible="true" enabled="true" locked="false">
           <item id="ddip339861867910424530_592213481125627882" iid="149d309f5ac24dffa02c2e87cd891d0e" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/08/2012 15:27:25" order-index="0" type="entity">
-            <layout ax="286" ay="157" awidth="140" aheight="123" x="286" y="157" width="0" height="123" />
+            <layout ax="274" ay="146" awidth="163" aheight="141" x="274" y="146" width="163" height="141" />
             <class />
           </item>
           <item id="ddip339861867910424530_283148809888201087" iid="fafc56f3dea44981bcec98e21dd4ae5a" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/08/2012 15:27:58" order-index="1" type="entity">
@@ -1403,10 +1567,10 @@
             <class />
           </item>
           <item id="ddip339861867910424530_742107489142670658" iid="2a01997df7a548cf8d91343f91f56c01" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/08/2012 15:28:36" order-index="3" type="relation">
-            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="356" y1="374" x2="356" y2="280" start-border-pos="0.125" end-border-pos="0.625">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="356" y1="374" x2="356" y2="287" start-border-pos="0.125" end-border-pos="0.625766871165644">
               <points>
                 <point x="356" y="374" />
-                <point x="356" y="280" />
+                <point x="356" y="287" />
               </points>
             </layout>
             <relation from="ddip339861867910424530_283148809888201087" from-iid="fafc56f3dea44981bcec98e21dd4ae5a" to="ddip339861867910424530_592213481125627882" to-iid="149d309f5ac24dffa02c2e87cd891d0e" />
@@ -1464,20 +1628,82 @@
             <relation from="ddip339861867910424530_883810735648674738" from-iid="9ac0bf6be32b40908b457a7f2616e21f" to="ddip339861867910424530_227521645558280188" to-iid="e5193ea145084d80a29ec784914ee70b" />
           </item>
           <item id="ddip339861867910424530_814904377232268435" iid="c6e9a6232c3f448c929f359b1b71eccb" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/08/2012 21:09:20" order-index="13" type="relation">
-            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="564" y1="218" x2="426" y2="218" start-border-pos="0.875" end-border-pos="0.373983739837398">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="564" y1="217" x2="437" y2="217" start-border-pos="0.874213123321533" end-border-pos="0.375146689989888">
               <points>
-                <point x="564" y="218" />
-                <point x="426" y="218" />
+                <point x="564" y="217" />
+                <point x="437" y="217" />
               </points>
             </layout>
             <relation from="ddip339861867910424530_876664756111757846" from-iid="ad9cb42b80aa4c9e907920c33954d906" to="ddip339861867910424530_592213481125627882" to-iid="149d309f5ac24dffa02c2e87cd891d0e" />
             <role-positions start-role="25,15" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="25,-15" />
           </item>
           <item id="ddip339861867910424530_962764658827715461" iid="46424b5e1a0f41f2ab95c4bdd2593ab4" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/09/2012 19:45:40" order-index="14" type="entity">
-            <layout ax="554" ay="380" awidth="319" aheight="200" x="554" y="380" width="319" height="200" />
+            <layout ax="612" ay="543" awidth="319" aheight="200" x="612" y="543" width="319" height="200" />
           </item>
           <item id="ddip339861867910424530_220058205306400236" iid="17568db1e70941d9bb6326dda4285acf" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/09/2012 22:24:10" order-index="15" type="entity">
             <layout ax="5" ay="61" awidth="195" aheight="101" x="5" y="61" width="195" height="101" />
+          </item>
+          <item id="ddip339861867910424530_424937430625941966" iid="3f66fd6cd0ae4a80b17c52f78a0a3d88" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 21:34:54" order-index="16" type="entity">
+            <layout ax="804" ay="165" awidth="140" aheight="107" x="804" y="165" width="0" height="107" />
+            <class />
+          </item>
+          <item id="ddip339861867910424530_383220562903258747" iid="7aa4530be42e48a688b3df3d5ed1a10f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 21:35:23" order-index="17" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="804" y1="218" x2="704" y2="218" start-border-pos="0.873831775700935" end-border-pos="0.375">
+              <points>
+                <point x="804" y="218" />
+                <point x="704" y="218" />
+              </points>
+            </layout>
+            <relation from="ddip339861867910424530_424937430625941966" from-iid="3f66fd6cd0ae4a80b17c52f78a0a3d88" to="ddip339861867910424530_876664756111757846" to-iid="ad9cb42b80aa4c9e907920c33954d906" />
+            <role-positions start-role="25,15" end-role="25,15" start-multiplicity="25,-15" end-multiplicity="25,-15" />
+          </item>
+          <item id="ddip339861867910424530_339358247811768237" iid="933cb7e7b376463ba4320a4e7dab4500" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:02:16" order-index="18" type="entity">
+            <layout ax="564" ay="8" awidth="140" aheight="54" x="564" y="8" width="0" height="54" />
+            <class />
+          </item>
+          <item id="ddip339861867910424530_825949926481214349" iid="d54b227fffdc4509a05b7315bb981d8f" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:02:41" order-index="19" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="27,-6" x1="634" y1="62" x2="634" y2="138" start-border-pos="0.625" end-border-pos="0.125">
+              <points>
+                <point x="634" y="62" />
+                <point x="634" y="138" />
+              </points>
+            </layout>
+            <relation from="ddip339861867910424530_339358247811768237" from-iid="933cb7e7b376463ba4320a4e7dab4500" to="ddip339861867910424530_876664756111757846" to-iid="ad9cb42b80aa4c9e907920c33954d906" />
+            <role-positions start-role="25,15" end-role="25,15" start-multiplicity="22,-64" end-multiplicity="25,-15" />
+          </item>
+          <item id="ddip339861867910424530_910016834181298395" iid="94fca7a6a43746658486a77026183427" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:05:33" order-index="20" type="entity">
+            <layout ax="698" ay="385" awidth="140" aheight="63" x="698" y="385" width="0" height="63" />
+            <class />
+          </item>
+          <item id="ddip339861867910424530_744907145763367313" iid="3b32b20a1dcd479d87b1d2b1993b52af" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:05:47" order-index="21" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="845" y1="272" x2="785" y2="385" start-border-pos="0.5733765738351" end-border-pos="0.154635620117188">
+              <points>
+                <point x="845" y="272" />
+                <point x="785" y="385" />
+              </points>
+            </layout>
+            <relation from="ddip339861867910424530_424937430625941966" from-iid="3f66fd6cd0ae4a80b17c52f78a0a3d88" to="ddip339861867910424530_910016834181298395" to-iid="94fca7a6a43746658486a77026183427" />
+          </item>
+          <item id="ddip339861867910424530_958762986133171637" iid="62cb4f887d1a4953bcd18314fa9ada50" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:05:49" order-index="22" type="relation">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="688" y1="298" x2="747" y2="385" start-border-pos="0.721681104387556" end-border-pos="0.0875360761369978">
+              <points>
+                <point x="688" y="298" />
+                <point x="747" y="385" />
+              </points>
+            </layout>
+            <relation from="ddip339861867910424530_876664756111757846" from-iid="ad9cb42b80aa4c9e907920c33954d906" to="ddip339861867910424530_910016834181298395" to-iid="94fca7a6a43746658486a77026183427" />
+          </item>
+          <item id="di352495443841200139" iid="abcb0ccc7c584d5a88405130dd7d2fd0" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:08:34" order-index="23" type="entity">
+            <layout ax="249.5" ay="-34" awidth="213" aheight="120" x="249.5" y="-34" width="213" height="120" />
+          </item>
+          <item id="di263426977800697140" iid="8084921161144cfead50298ae34a9871" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="07/11/2012 22:08:34" order-index="24" type="comment-connector">
+            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" x1="356" y1="86" x2="356" y2="146" start-border-pos="0.625" end-border-pos="0.125766871165644">
+              <points>
+                <point x="356" y="86" />
+                <point x="356" y="146" />
+              </points>
+            </layout>
+            <relation from="di352495443841200139" from-iid="abcb0ccc7c584d5a88405130dd7d2fd0" to="ddip339861867910424530_592213481125627882" to-iid="149d309f5ac24dffa02c2e87cd891d0e" />
           </item>
         </layer>
       </diagram>
