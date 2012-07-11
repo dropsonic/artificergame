@@ -60,10 +60,12 @@
     <Compile Include="ContentService.cs" />
     <Compile Include="PreviewScreen.cs">
       <SubType>Component</SubType>
+      <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorLogger.cs" />
     <Compile Include="XnaScreen.cs">
       <SubType>Component</SubType>
+      <DependentUpon>GraphicsDeviceControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ServiceContainer.cs" />
     <Compile Include="GraphicsDeviceService.cs" />
@@ -106,6 +108,10 @@
     <ProjectReference Include="..\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FarseerTools\FarseerTools.csproj">
+      <Project>{A875A73C-7870-4A79-81CD-BEA7DC8CCBD5}</Project>
+      <Name>FarseerTools</Name>
     </ProjectReference>
     <ProjectReference Include="..\LevelEditorContentBuilder\LevelEditorContentBuilder.csproj">
       <Project>{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}</Project>

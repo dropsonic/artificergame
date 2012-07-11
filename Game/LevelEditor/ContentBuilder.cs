@@ -191,11 +191,11 @@ namespace LevelEditor
             projectItems.Add(item);
         }
 
-        public void AddTextures(string[] textures)
+        public void AddMaterials(string[] materials)
         {
-            foreach (string texture in textures)
+            foreach (string material in materials)
             {
-                this.Add(texture, "Textures/Materials/"+Path.GetFileName(texture).Split('.')[0] ,null, "TextureProcessor");
+                this.Add(material, ContentService.GetMaterial() + Path.GetFileName(material).Split('.')[0], null, "TextureProcessor");
             }
             
         }

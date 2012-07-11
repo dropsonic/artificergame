@@ -29,7 +29,8 @@ namespace LevelEditor
         private void MainForm_Load(object sender, EventArgs e)
         {
             builder = new ContentBuilder(ContentService.GetContentPath());
-            builder.AddTextures(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
+            //source for textures
+            builder.AddMaterials(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
             string buildError = builder.Build();
 
             if (!string.IsNullOrEmpty(buildError))
@@ -37,7 +38,7 @@ namespace LevelEditor
                 MessageBox.Show(buildError, "Error");
             }
 
-            foreach (string material in Directory.GetFiles(Environment.CurrentDirectory+"\\Content\\Textures\\Materials"))
+            foreach (string material in Directory.GetFiles(ContentService.GetContentPath() + "\\" + ContentService.GetMaterial()))
             {
                 materialBox.Items.Add(Path.GetFileName(material).Split('.')[0]);
             }
