@@ -190,7 +190,9 @@ namespace LevelEditor
 
             projectItems.Add(item);
         }
-
+        /// <summary>
+        /// Add materials(full path)
+        /// </summary>
         public void AddMaterials(string[] materials)
         {
             foreach (string material in materials)

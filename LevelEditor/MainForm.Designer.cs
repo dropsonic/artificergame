@@ -37,9 +37,13 @@ namespace LevelEditor
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.previewTab = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.colorBox = new System.Windows.Forms.ComboBox();
             this.materialBox = new System.Windows.Forms.ComboBox();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.previewScreen = new LevelEditor.PreviewScreen();
@@ -47,11 +51,10 @@ namespace LevelEditor
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.xnaScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.colorBox = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tableLayoutPanel.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.previewTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -104,61 +107,102 @@ namespace LevelEditor
             this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanel
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.50466F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.49534F));
-            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.splitContainer1, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1444, 771);
-            this.tableLayoutPanel1.TabIndex = 5;
+            this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.50466F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.49534F));
+            this.tableLayoutPanel.Controls.Add(this.tabControl, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
+            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 1;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 771);
+            this.tableLayoutPanel.TabIndex = 5;
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(304, 765);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl.Controls.Add(this.previewTab);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(3, 3);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(304, 765);
+            this.tabControl.TabIndex = 0;
             // 
-            // tabPage1
+            // previewTab
             // 
-            this.tabPage1.Controls.Add(this.colorBox);
-            this.tabPage1.Controls.Add(this.materialBox);
-            this.tabPage1.Controls.Add(this.shapeBox);
-            this.tabPage1.Controls.Add(this.previewScreen);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(296, 739);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.previewTab.Controls.Add(this.label3);
+            this.previewTab.Controls.Add(this.label2);
+            this.previewTab.Controls.Add(this.label1);
+            this.previewTab.Controls.Add(this.colorBox);
+            this.previewTab.Controls.Add(this.materialBox);
+            this.previewTab.Controls.Add(this.shapeBox);
+            this.previewTab.Controls.Add(this.previewScreen);
+            this.previewTab.Location = new System.Drawing.Point(4, 22);
+            this.previewTab.Name = "previewTab";
+            this.previewTab.Padding = new System.Windows.Forms.Padding(3);
+            this.previewTab.Size = new System.Drawing.Size(296, 739);
+            this.previewTab.TabIndex = 0;
+            this.previewTab.Text = "Preview";
+            this.previewTab.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 380);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(31, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Color";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 340);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Material";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 300);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Shape";
+            // 
+            // colorBox
+            // 
+            this.colorBox.FormattingEnabled = true;
+            this.colorBox.Location = new System.Drawing.Point(3, 396);
+            this.colorBox.Name = "colorBox";
+            this.colorBox.Size = new System.Drawing.Size(284, 21);
+            this.colorBox.TabIndex = 3;
+            this.colorBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // materialBox
             // 
             this.materialBox.FormattingEnabled = true;
-            this.materialBox.Location = new System.Drawing.Point(6, 326);
+            this.materialBox.Location = new System.Drawing.Point(3, 356);
             this.materialBox.Name = "materialBox";
             this.materialBox.Size = new System.Drawing.Size(284, 21);
             this.materialBox.TabIndex = 2;
+            this.materialBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // shapeBox
             // 
             this.shapeBox.FormattingEnabled = true;
-            this.shapeBox.Location = new System.Drawing.Point(6, 299);
+            this.shapeBox.Location = new System.Drawing.Point(3, 316);
             this.shapeBox.Name = "shapeBox";
             this.shapeBox.Size = new System.Drawing.Size(284, 21);
             this.shapeBox.TabIndex = 1;
+            this.shapeBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // previewScreen
             // 
@@ -214,21 +258,13 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
-            // colorBox
-            // 
-            this.colorBox.FormattingEnabled = true;
-            this.colorBox.Location = new System.Drawing.Point(6, 359);
-            this.colorBox.Name = "colorBox";
-            this.colorBox.Size = new System.Drawing.Size(284, 21);
-            this.colorBox.TabIndex = 3;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(1444, 795);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
@@ -236,9 +272,10 @@ namespace LevelEditor
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.previewTab.ResumeLayout(false);
+            this.previewTab.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -256,9 +293,9 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage previewTab;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PropertyGrid propertyGrid;
@@ -267,6 +304,9 @@ namespace LevelEditor
         private PreviewScreen previewScreen;
         private System.Windows.Forms.ComboBox materialBox;
         private System.Windows.Forms.ComboBox colorBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
 
 
     }
