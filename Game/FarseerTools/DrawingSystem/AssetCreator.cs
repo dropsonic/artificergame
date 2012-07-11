@@ -11,20 +11,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace FarseerTools
 {
-    public enum MaterialType
-    {
-        Blank,
-        Dots,
-        Squares,
-        Waves,
-        Pavement,
-        Acid,
-        Rust
-    }
-
     public enum ObjectType
     {
         Circle,
+        Ellipse,
         Rectangle,
         Gear,
         Star
@@ -36,7 +26,7 @@ namespace FarseerTools
 
         private GraphicsDevice _device;
         private BasicEffect _effect;
-        private Dictionary<MaterialType, Texture2D> _materials = new Dictionary<MaterialType, Texture2D>();
+        private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
 
         public AssetCreator(GraphicsDevice device)
         {
@@ -64,19 +54,15 @@ namespace FarseerTools
             return ConvertUnits.ToDisplayUnits(b.Position - lBound) + new Vector2(1f);
         }
 
-        public void LoadContent(ContentManager contentManager)
+        public void LoadContent(ContentManager contentManager, List<string> materials)
         {
-            _materials[MaterialType.Blank] = contentManager.Load<Texture2D>("Textures/Materials/blank");
-            _materials[MaterialType.Dots] = contentManager.Load<Texture2D>("Textures/Materials/dots");
-            _materials[MaterialType.Squares] = contentManager.Load<Texture2D>("Textures/Materials/squares");
-            _materials[MaterialType.Waves] = contentManager.Load<Texture2D>("Textures/Materials/waves");
-            _materials[MaterialType.Pavement] = contentManager.Load<Texture2D>("Textures/Materials/pavement");
-            _materials[MaterialType.Acid] = contentManager.Load<Texture2D>("Textures/Materials/acid");
-            _materials[MaterialType.Rust] = contentManager.Load<Texture2D>("Textures/Materials/rust");
-
+             foreach (string material in materials)
+            {
+                _materials[material] = contentManager.Load<Texture2D>("Textures/Materials/"+material);
+            }
         }
 
-        public Texture2D TextureFromShape(Shape shape, MaterialType type, Color color, float materialScale)
+        public Texture2D TextureFromShape(Shape shape, string type, Color color, float materialScale)
         {
             switch (shape.ShapeType)
             {
@@ -89,7 +75,7 @@ namespace FarseerTools
             }
         }
 
-        public Texture2D TextureFromVertices(Vertices vertices, MaterialType type, Color color, float materialScale)
+        public Texture2D TextureFromVertices(Vertices vertices, string type, Color color, float materialScale)
         {
             // copy vertices
             Vertices verts = new Vertices(vertices);
@@ -149,12 +135,12 @@ namespace FarseerTools
                                  _materials[type], verticesFill, verticesOutline);
         }
 
-        public Texture2D CircleTexture(float radius, MaterialType type, Color color, float materialScale)
+        public Texture2D CircleTexture(float radius, string type, Color color, float materialScale)
         {
             return EllipseTexture(radius, radius, type, color, materialScale);
         }
 
-        public Texture2D EllipseTexture(float radiusX, float radiusY, MaterialType type, Color color,
+        public Texture2D EllipseTexture(float radiusX, float radiusY, string type, Color color,
                                         float materialScale)
         {
             VertexPositionColorTexture[] verticesFill = new VertexPositionColorTexture[3 * (CircleSegments - 2)];
@@ -252,7 +238,7 @@ namespace FarseerTools
         //ADDED0: new function to make textures from fixture lists.
         /// <summary>Takes a list of fixtures with convex polygons.</summary>
         /// <returns>Returns Texture2D.</returns>
-        public Texture2D TextureFromFixtures(List<Fixture> fixtures, MaterialType type, Color color, float materialScale)
+        public Texture2D TextureFromFixtures(List<Fixture> fixtures, string type, Color color, float materialScale)
         {
             AABB collisionBox  = ((PolygonShape)fixtures[0].Shape).Vertices.GetCollisionBox();
             List<VertexPositionColorTexture[]> verticesFill = new List<VertexPositionColorTexture[]>();

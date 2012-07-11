@@ -6,6 +6,8 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Collision.Shapes;
 using FarseerTools;
 using FarseerPhysics.Common;
+using System.IO;
+using System.Collections.Generic;
 
 namespace LevelEditor
 {
@@ -23,8 +25,14 @@ namespace LevelEditor
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
             assetCreator = new AssetCreator(this.GraphicsDevice);
-            assetCreator.LoadContent(ContentService.GetContentService().Content);
-            SetPreview(ObjectType.Star, MaterialType.Rust, Color.White);
+            List<string> materials = new List<string>();
+            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
+            {
+                materials.Add(System.IO.Path.GetFileName(material).Split('.')[0]);
+            }
+            assetCreator.LoadContent(ContentService.GetContentService().Content, materials);
+
+            SetPreview(ObjectType.Rectangle, "acid", Color.White);
         }
 
         protected override void LoadContent()
@@ -42,7 +50,7 @@ namespace LevelEditor
             base.Dispose(disposing);
         }
 
-        public void SetPreview(ObjectType objectType, MaterialType material, Color color)
+        public void SetPreview(ObjectType objectType, string material, Color color)
         {
             float radius = 1;
             switch (objectType)

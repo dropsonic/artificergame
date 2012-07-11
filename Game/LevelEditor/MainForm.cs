@@ -40,8 +40,8 @@ namespace LevelEditor
             {
                 MessageBox.Show(buildError, "Error");
             }
-
-            foreach (string material in Directory.GetFiles(ContentService.GetContentPath() + "\\" + ContentService.GetMaterial()))
+            
+            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
                 materialBox.Items.Add(Path.GetFileName(material).Split('.')[0]);
             }
@@ -61,6 +61,11 @@ namespace LevelEditor
                     colorBox.Items.Add(propertyInfo.Name);
                 }
             }
+        }
+
+        private void HandlePreview(object sender, EventArgs e)
+        {
+            previewScreen.SetPreview(ObjectType.Rectangle, materialBox.SelectedItem.ToString(), Color.White);
         }
     }
 }
