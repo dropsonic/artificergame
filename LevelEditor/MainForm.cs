@@ -6,12 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using FarseerTools;
 
 namespace LevelEditor
 {
+    using Color = Microsoft.Xna.Framework.Color;
     public partial class MainForm : Form
     {
         ContentBuilder builder;
@@ -43,8 +46,21 @@ namespace LevelEditor
                 materialBox.Items.Add(Path.GetFileName(material).Split('.')[0]);
             }
 
-            
+            foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
+            {
+                shapeBox.Items.Add(obj);
+            }
 
+             // Get all of the public static properties
+            System.Reflection.PropertyInfo[] properties = typeof(Color).GetProperties(System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.Static);
+            foreach(System.Reflection.PropertyInfo propertyInfo in properties)
+            {
+                // Check to make sure the property has a get method, and returns type "Color"
+                if (propertyInfo.GetGetMethod() != null && propertyInfo.PropertyType == typeof(Color))
+                { 
+                    colorBox.Items.Add(propertyInfo.Name);
+                }
+            }
         }
     }
 }
