@@ -40,11 +40,15 @@ namespace LevelEditor
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.previewTab = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
+            this.shapeParameters = new System.Windows.Forms.GroupBox();
+            this.commonParameters = new System.Windows.Forms.GroupBox();
+            this.materialScale = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.colorBox = new System.Windows.Forms.ComboBox();
             this.materialBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.colorBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.previewScreen = new LevelEditor.PreviewScreen();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -55,6 +59,8 @@ namespace LevelEditor
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.previewTab.SuspendLayout();
+            this.commonParameters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.materialScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -135,11 +141,9 @@ namespace LevelEditor
             // 
             // previewTab
             // 
-            this.previewTab.Controls.Add(this.label3);
-            this.previewTab.Controls.Add(this.label2);
+            this.previewTab.Controls.Add(this.shapeParameters);
+            this.previewTab.Controls.Add(this.commonParameters);
             this.previewTab.Controls.Add(this.label1);
-            this.previewTab.Controls.Add(this.colorBox);
-            this.previewTab.Controls.Add(this.materialBox);
             this.previewTab.Controls.Add(this.shapeBox);
             this.previewTab.Controls.Add(this.previewScreen);
             this.previewTab.Location = new System.Drawing.Point(4, 22);
@@ -150,23 +154,83 @@ namespace LevelEditor
             this.previewTab.Text = "Preview";
             this.previewTab.UseVisualStyleBackColor = true;
             // 
+            // shapeParameters
+            // 
+            this.shapeParameters.Location = new System.Drawing.Point(3, 498);
+            this.shapeParameters.Name = "shapeParameters";
+            this.shapeParameters.Size = new System.Drawing.Size(284, 128);
+            this.shapeParameters.TabIndex = 8;
+            this.shapeParameters.TabStop = false;
+            this.shapeParameters.Text = "Shape Parameters";
+            // 
+            // commonParameters
+            // 
+            this.commonParameters.Controls.Add(this.materialScale);
+            this.commonParameters.Controls.Add(this.label4);
+            this.commonParameters.Controls.Add(this.label2);
+            this.commonParameters.Controls.Add(this.materialBox);
+            this.commonParameters.Controls.Add(this.label3);
+            this.commonParameters.Controls.Add(this.colorBox);
+            this.commonParameters.Location = new System.Drawing.Point(3, 343);
+            this.commonParameters.Name = "commonParameters";
+            this.commonParameters.Size = new System.Drawing.Size(281, 149);
+            this.commonParameters.TabIndex = 7;
+            this.commonParameters.TabStop = false;
+            this.commonParameters.Text = "Common Parameters";
+            // 
+            // materialScale
+            // 
+            this.materialScale.DecimalPlaces = 2;
+            this.materialScale.Location = new System.Drawing.Point(6, 116);
+            this.materialScale.Name = "materialScale";
+            this.materialScale.Size = new System.Drawing.Size(120, 20);
+            this.materialScale.TabIndex = 8;
+            this.materialScale.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 99);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Material Scale";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Material";
+            // 
+            // materialBox
+            // 
+            this.materialBox.FormattingEnabled = true;
+            this.materialBox.Location = new System.Drawing.Point(6, 35);
+            this.materialBox.Name = "materialBox";
+            this.materialBox.Size = new System.Drawing.Size(264, 21);
+            this.materialBox.TabIndex = 2;
+            this.materialBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 380);
+            this.label3.Location = new System.Drawing.Point(12, 59);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Color";
             // 
-            // label2
+            // colorBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 340);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Material";
+            this.colorBox.FormattingEnabled = true;
+            this.colorBox.Location = new System.Drawing.Point(6, 75);
+            this.colorBox.Name = "colorBox";
+            this.colorBox.Size = new System.Drawing.Size(264, 21);
+            this.colorBox.TabIndex = 3;
+            this.colorBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label1
             // 
@@ -176,24 +240,6 @@ namespace LevelEditor
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Shape";
-            // 
-            // colorBox
-            // 
-            this.colorBox.FormattingEnabled = true;
-            this.colorBox.Location = new System.Drawing.Point(3, 396);
-            this.colorBox.Name = "colorBox";
-            this.colorBox.Size = new System.Drawing.Size(284, 21);
-            this.colorBox.TabIndex = 3;
-            this.colorBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
-            // 
-            // materialBox
-            // 
-            this.materialBox.FormattingEnabled = true;
-            this.materialBox.Location = new System.Drawing.Point(3, 356);
-            this.materialBox.Name = "materialBox";
-            this.materialBox.Size = new System.Drawing.Size(284, 21);
-            this.materialBox.TabIndex = 2;
-            this.materialBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // shapeBox
             // 
@@ -276,6 +322,9 @@ namespace LevelEditor
             this.tabControl.ResumeLayout(false);
             this.previewTab.ResumeLayout(false);
             this.previewTab.PerformLayout();
+            this.commonParameters.ResumeLayout(false);
+            this.commonParameters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.materialScale)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -307,6 +356,10 @@ namespace LevelEditor
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox commonParameters;
+        private System.Windows.Forms.GroupBox shapeParameters;
+        private System.Windows.Forms.NumericUpDown materialScale;
+        private System.Windows.Forms.Label label4;
 
 
     }
