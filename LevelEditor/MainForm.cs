@@ -74,7 +74,21 @@ namespace LevelEditor
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            
+            //
+            //NumericUpDown. height(width) must be > radius*2
+            //
+            if (sender.GetType() == typeof(NumericUpDown))
+            {
+                if (capsuleHeight.Value <= capsuleBottomRadius.Value * 2 || capsuleHeight.Value <= capsuleTopRadius.Value * 2 ||
+                    roundedRectangleHeight.Value < roundedRectangleYRadius.Value*2 ||roundedRectangleWidth.Value < roundedRectangleXRadius.Value*2)
+                {
+                    ((NumericUpDown)sender).Value = Decimal.Parse(((NumericUpDown)sender).Text);
+                }
+                
+            }
+            //
+            //shapeParameters switch
+            //
             if (sender == shapeBox)
             {
                 this.shapeParameters.Text = "Shape Parameters - " + shapeBox.SelectedItem.ToString();
@@ -107,50 +121,47 @@ namespace LevelEditor
 
                 }
             }
-            try
+
+            //
+            //SetPreview
+            //
+            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem!=null)
             {
-                if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
+                switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
-                    switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
-                    {
-                        case ObjectType.Arc:
-                            previewScreen.SetArcPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(arcDegrees.Value.ToString()), int.Parse(arcSides.Value.ToString()), float.Parse(arcRadius.Value.ToString()));
-                            break;
-                        case ObjectType.Capsule:
-                            previewScreen.SetCapsulePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
-                            break;
-                        case ObjectType.Circle:
-                            previewScreen.SetCirclePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(circleRadius.Value.ToString()));
-                            break;
-                        case ObjectType.CustomShape:
+                    case ObjectType.Arc:
+                        previewScreen.SetArcPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(arcDegrees.Value.ToString()),int.Parse(arcSides.Value.ToString()),float.Parse(arcRadius.Value.ToString()));
+                        break;
+                    case ObjectType.Capsule:
+                        previewScreen.SetCapsulePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
+                        break;
+                    case ObjectType.Circle:
+                        previewScreen.SetCirclePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(circleRadius.Value.ToString()));
+                        break;
+                    case ObjectType.CustomShape:
 
-                            break;
-                        case ObjectType.Ellipse:
-                            previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
-                            break;
-                        case ObjectType.Gear:
-                            previewScreen.SetGearPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
-                            break;
-                        case ObjectType.Rectangle:
-                            previewScreen.SetRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(rectangleWidth.Value.ToString()), float.Parse(rectangleHeight.Value.ToString()));
-                            break;
-                        case ObjectType.RoundedRectangle:
-                            previewScreen.SetRoundedRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                                float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
-                            break;
-
-                    }
+                        break;
+                    case ObjectType.Ellipse:
+                        previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(ellipseXRadius.Value.ToString()),float.Parse(ellipseYRadius.Value.ToString()),int.Parse(ellipseNumberOfEdges.Value.ToString()));
+                        break;
+                    case ObjectType.Gear:
+                        previewScreen.SetGearPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
+                            float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
+                        break;
+                    case ObjectType.Rectangle:
+                        previewScreen.SetRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(rectangleWidth.Value.ToString()),float.Parse(rectangleHeight.Value.ToString()));
+                        break;
+                    case ObjectType.RoundedRectangle:
+                        previewScreen.SetRoundedRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(roundedRectangleWidth.Value.ToString()),float.Parse(roundedRectangleHeight.Value.ToString()),float.Parse(roundedRectangleXRadius.Value.ToString()),float.Parse(roundedRectangleYRadius.Value.ToString()),int.Parse(roundedRectangleSegments.Value.ToString()));
+                        break;
+                 
                 }
-            }
-            catch (Exception ex)
-            {
-                
             }
         }
 
