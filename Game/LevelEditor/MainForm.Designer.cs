@@ -321,6 +321,7 @@ namespace LevelEditor
             this.Name = "MainForm";
             this.Text = "LevelEditor";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.tableLayoutPanel.ResumeLayout(false);

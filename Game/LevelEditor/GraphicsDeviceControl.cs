@@ -40,6 +40,10 @@ using Microsoft.Xna.Framework.Content;
         GraphicsDeviceService graphicsDeviceService;
         ContentService contentService;
         protected Timer frameTimer = new Timer();
+        public Timer FrameTimer
+        { 
+            get { return frameTimer; } 
+        }
         //around 60fps
         private int fps = 100;
         #endregion
