@@ -2,76 +2,106 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
-using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics.Joints;
 
 namespace GameLogic
 {
-    /// <summary>
-    /// Игровой уровень.
-    /// </summary>
-    public class GameLevel : IUpdateableVisualComponent
+    public class GameLevel : IDrawable
     {
-        public List<GameObject> Objects = new List<GameObject>();
+        private World _world;
+        private Camera _camera;
+        private SpriteBatch _spriteBatch;
 
-        public World FarseerWorld;
+        private List<GameObject> _objects;
+        private bool _sorted; //показывает, отсортирован ли список по DrawOrder элементов
 
-        public GameLevel(World world)
+        private List<Joint> _joints; //список joint'ов между игровыми объектами
+
+        public World World
         {
-            this.FarseerWorld = world;
+            get { return _world; }
+            set { _world = value; }
         }
 
-        public void LoadContent(ContentManager content)
+        public Camera Camera
         {
-            for (int i = 0; i < Objects.Count; i++)
-                Objects[i].LoadContent(content);
+            get { return _camera; }
+            set { _camera = value; }
         }
 
-        public void Initialize()
+        public SpriteBatch SpriteBatch
         {
-            for (int i = 0; i < Objects.Count; i++)
-                Objects[i].Initialize();
+            get { return _spriteBatch; }
+            set { _spriteBatch = value; }
         }
 
-        public bool Enabled
+        public GameObject this[int index]
         {
-            get { throw new NotImplementedException(); }
+            get { return _objects[index]; }
+            set
+            {
+                _objects[index] = value;
+                _sorted = false;
+            }
         }
 
-        public event EventHandler<EventArgs> EnabledChanged;
-
-        public void Update(GameTime gameTime)
+        public GameLevel(World world, Camera camera, SpriteBatch spriteBatch)
         {
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            FarseerWorld.Step(dt);
+            _objects = new List<GameObject>();
+            _sorted = true;
+
+            _joints = new List<Joint>();
+
+            _world = world;
+            _camera = camera;
+            _spriteBatch = spriteBatch;
         }
 
-        public int UpdateOrder
+        public void AddObject(GameObject gameObject)
         {
-            get { throw new NotImplementedException(); }
+            _objects.Add(gameObject);
+            _sorted = false;
         }
 
-        public event EventHandler<EventArgs> UpdateOrderChanged;
+        public void AddJoint(Joint joint)
+        {
+            _joints.Add(joint);
+        }
 
+        /// <summary>
+        /// Сортирует все игровые объекты по их DrawOrder.
+        /// </summary>
+        private void SortObjects()
+        {
+            _objects.Sort((x, y) => Comparer<int>.Default.Compare(x.DrawOrder, y.DrawOrder));
+            _sorted = true;
+        }
+
+        #region IDrawable
         public void Draw(GameTime gameTime)
         {
-            for (int i = 0; i < Objects.Count; i++)
-                Objects[i].Draw(gameTime);
+            if (_sorted)
+            {
+                foreach (var gameObject in _objects)
+                    gameObject.Draw(gameTime);
+            }
+            else
+            {
+                SortObjects();
+                Draw(gameTime);
+            }
         }
 
-        public int DrawOrder
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int DrawOrder { get; set; }
 
         public event EventHandler<EventArgs> DrawOrderChanged;
 
-        public bool Visible
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool Visible { get; set; }
 
         public event EventHandler<EventArgs> VisibleChanged;
+        #endregion
     }
 }
