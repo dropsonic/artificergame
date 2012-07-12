@@ -25,9 +25,16 @@ namespace LevelEditor
         public MainForm()
         {
             InitializeComponent();
-            this.materialScale.Increment = 0.1M;
+            Initialize();
+        }
+        void Initialize()
+        {
+
+            
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             
+            levelScreen.message = "Level";
+            objectScreen.message = "GameObject";
         }
 
         string GetParent(string path, int nesting)
@@ -63,9 +70,6 @@ namespace LevelEditor
             {
                 colorBox.Items.Add(colorName);
             }
-
-            levelScreen.message = "Level";
-            objectScreen.message = "GameObject";
         }
 
         private void HandlePreview(object sender, EventArgs e)
