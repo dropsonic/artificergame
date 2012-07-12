@@ -40,9 +40,17 @@ namespace LevelEditor
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
-            this.previewScreen1 = new LevelEditor.PreviewScreen();
+            this.previewScreen = new LevelEditor.PreviewScreen();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
+            this.circleTab = new System.Windows.Forms.TabPage();
+            this.ellipseTab = new System.Windows.Forms.TabPage();
+            this.arcTab = new System.Windows.Forms.TabPage();
+            this.gearTab = new System.Windows.Forms.TabPage();
+            this.capsuleTab = new System.Windows.Forms.TabPage();
+            this.rectangleTab = new System.Windows.Forms.TabPage();
+            this.roundedRectangleTab = new System.Windows.Forms.TabPage();
+            this.customShapeTab = new System.Windows.Forms.TabPage();
             this.commonParameters = new System.Windows.Forms.GroupBox();
             this.materialScale = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -60,11 +68,15 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.label5 = new System.Windows.Forms.Label();
+            this.circleRadius = new System.Windows.Forms.NumericUpDown();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.previewPage.SuspendLayout();
             this.shapeParameters.SuspendLayout();
+            this.shapeParametersControl.SuspendLayout();
+            this.circleTab.SuspendLayout();
             this.commonParameters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -74,6 +86,7 @@ namespace LevelEditor
             this.tabControl1.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -150,7 +163,7 @@ namespace LevelEditor
             // 
             // previewPage
             // 
-            this.previewPage.Controls.Add(this.previewScreen1);
+            this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
             this.previewPage.Controls.Add(this.label1);
@@ -163,34 +176,125 @@ namespace LevelEditor
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
             // 
-            // previewScreen1
+            // previewScreen
             // 
-            this.previewScreen1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.previewScreen1.Location = new System.Drawing.Point(3, 3);
-            this.previewScreen1.Name = "previewScreen1";
-            this.previewScreen1.Size = new System.Drawing.Size(290, 290);
-            this.previewScreen1.TabIndex = 9;
-            this.previewScreen1.Text = "previewScreen1";
+            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.previewScreen.Location = new System.Drawing.Point(3, 3);
+            this.previewScreen.Name = "previewScreen";
+            this.previewScreen.Size = new System.Drawing.Size(290, 290);
+            this.previewScreen.TabIndex = 9;
+            this.previewScreen.Text = "previewScreen";
             // 
             // shapeParameters
             // 
             this.shapeParameters.Controls.Add(this.shapeParametersControl);
             this.shapeParameters.Location = new System.Drawing.Point(3, 498);
             this.shapeParameters.Name = "shapeParameters";
-            this.shapeParameters.Size = new System.Drawing.Size(284, 128);
+            this.shapeParameters.Size = new System.Drawing.Size(284, 196);
             this.shapeParameters.TabIndex = 8;
             this.shapeParameters.TabStop = false;
             this.shapeParameters.Text = "Shape Parameters";
             // 
             // shapeParametersControl
             // 
+            this.shapeParametersControl.Controls.Add(this.circleTab);
+            this.shapeParametersControl.Controls.Add(this.ellipseTab);
+            this.shapeParametersControl.Controls.Add(this.arcTab);
+            this.shapeParametersControl.Controls.Add(this.gearTab);
+            this.shapeParametersControl.Controls.Add(this.capsuleTab);
+            this.shapeParametersControl.Controls.Add(this.rectangleTab);
+            this.shapeParametersControl.Controls.Add(this.roundedRectangleTab);
+            this.shapeParametersControl.Controls.Add(this.customShapeTab);
             this.shapeParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shapeParametersControl.Location = new System.Drawing.Point(3, 16);
             this.shapeParametersControl.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeParametersControl.Multiline = true;
             this.shapeParametersControl.Name = "shapeParametersControl";
             this.shapeParametersControl.SelectedIndex = 0;
-            this.shapeParametersControl.Size = new System.Drawing.Size(278, 109);
+            this.shapeParametersControl.Size = new System.Drawing.Size(278, 177);
             this.shapeParametersControl.TabIndex = 0;
+            // 
+            // circleTab
+            // 
+            this.circleTab.Controls.Add(this.circleRadius);
+            this.circleTab.Controls.Add(this.label5);
+            this.circleTab.Location = new System.Drawing.Point(4, 40);
+            this.circleTab.Name = "circleTab";
+            this.circleTab.Padding = new System.Windows.Forms.Padding(3);
+            this.circleTab.Size = new System.Drawing.Size(270, 133);
+            this.circleTab.TabIndex = 0;
+            this.circleTab.Text = "Circle";
+            this.circleTab.UseVisualStyleBackColor = true;
+            // 
+            // ellipseTab
+            // 
+            this.ellipseTab.Location = new System.Drawing.Point(4, 40);
+            this.ellipseTab.Name = "ellipseTab";
+            this.ellipseTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ellipseTab.Size = new System.Drawing.Size(270, 65);
+            this.ellipseTab.TabIndex = 1;
+            this.ellipseTab.Text = "Ellipse";
+            this.ellipseTab.UseVisualStyleBackColor = true;
+            // 
+            // arcTab
+            // 
+            this.arcTab.Location = new System.Drawing.Point(4, 40);
+            this.arcTab.Name = "arcTab";
+            this.arcTab.Padding = new System.Windows.Forms.Padding(3);
+            this.arcTab.Size = new System.Drawing.Size(270, 65);
+            this.arcTab.TabIndex = 2;
+            this.arcTab.Text = "Arc";
+            this.arcTab.UseVisualStyleBackColor = true;
+            // 
+            // gearTab
+            // 
+            this.gearTab.Location = new System.Drawing.Point(4, 40);
+            this.gearTab.Name = "gearTab";
+            this.gearTab.Padding = new System.Windows.Forms.Padding(3);
+            this.gearTab.Size = new System.Drawing.Size(270, 65);
+            this.gearTab.TabIndex = 3;
+            this.gearTab.Text = "Gear";
+            this.gearTab.UseVisualStyleBackColor = true;
+            // 
+            // capsuleTab
+            // 
+            this.capsuleTab.Location = new System.Drawing.Point(4, 40);
+            this.capsuleTab.Name = "capsuleTab";
+            this.capsuleTab.Padding = new System.Windows.Forms.Padding(3);
+            this.capsuleTab.Size = new System.Drawing.Size(270, 65);
+            this.capsuleTab.TabIndex = 4;
+            this.capsuleTab.Text = "Capsule";
+            this.capsuleTab.UseVisualStyleBackColor = true;
+            // 
+            // rectangleTab
+            // 
+            this.rectangleTab.Location = new System.Drawing.Point(4, 40);
+            this.rectangleTab.Name = "rectangleTab";
+            this.rectangleTab.Padding = new System.Windows.Forms.Padding(3);
+            this.rectangleTab.Size = new System.Drawing.Size(270, 65);
+            this.rectangleTab.TabIndex = 5;
+            this.rectangleTab.Text = "Rectangle";
+            this.rectangleTab.UseVisualStyleBackColor = true;
+            // 
+            // roundedRectangleTab
+            // 
+            this.roundedRectangleTab.Location = new System.Drawing.Point(4, 40);
+            this.roundedRectangleTab.Name = "roundedRectangleTab";
+            this.roundedRectangleTab.Padding = new System.Windows.Forms.Padding(3);
+            this.roundedRectangleTab.Size = new System.Drawing.Size(270, 65);
+            this.roundedRectangleTab.TabIndex = 6;
+            this.roundedRectangleTab.Text = "RoundedRectangle";
+            this.roundedRectangleTab.UseVisualStyleBackColor = true;
+            // 
+            // customShapeTab
+            // 
+            this.customShapeTab.Location = new System.Drawing.Point(4, 40);
+            this.customShapeTab.Name = "customShapeTab";
+            this.customShapeTab.Padding = new System.Windows.Forms.Padding(3);
+            this.customShapeTab.Size = new System.Drawing.Size(270, 65);
+            this.customShapeTab.TabIndex = 7;
+            this.customShapeTab.Text = "CustomShape";
+            this.customShapeTab.UseVisualStyleBackColor = true;
             // 
             // commonParameters
             // 
@@ -373,6 +477,22 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Radius";
+            // 
+            // circleRadius
+            // 
+            this.circleRadius.Location = new System.Drawing.Point(7, 20);
+            this.circleRadius.Name = "circleRadius";
+            this.circleRadius.Size = new System.Drawing.Size(120, 20);
+            this.circleRadius.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -393,6 +513,9 @@ namespace LevelEditor
             this.previewPage.ResumeLayout(false);
             this.previewPage.PerformLayout();
             this.shapeParameters.ResumeLayout(false);
+            this.shapeParametersControl.ResumeLayout(false);
+            this.circleTab.ResumeLayout(false);
+            this.circleTab.PerformLayout();
             this.commonParameters.ResumeLayout(false);
             this.commonParameters.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).EndInit();
@@ -403,6 +526,7 @@ namespace LevelEditor
             this.tabControl1.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,9 +560,19 @@ namespace LevelEditor
         private System.Windows.Forms.TabPage levelPage;
         private System.Windows.Forms.TabPage objectTab;
         private XnaScreen objectScreen;
-        private PreviewScreen previewScreen1;
+        private PreviewScreen previewScreen;
         private XnaScreen levelScreen;
         private WindowsFormsApplication1.TabHiddenHeadersControl shapeParametersControl;
+        private System.Windows.Forms.TabPage circleTab;
+        private System.Windows.Forms.TabPage ellipseTab;
+        private System.Windows.Forms.TabPage arcTab;
+        private System.Windows.Forms.TabPage gearTab;
+        private System.Windows.Forms.TabPage capsuleTab;
+        private System.Windows.Forms.TabPage rectangleTab;
+        private System.Windows.Forms.TabPage roundedRectangleTab;
+        private System.Windows.Forms.TabPage customShapeTab;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown circleRadius;
 
 
     }

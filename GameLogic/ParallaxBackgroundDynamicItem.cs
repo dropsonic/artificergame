@@ -5,6 +5,7 @@ using System.Text;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Factories;
+using FarseerTools;
 using Microsoft.Xna.Framework;
 
 namespace GameLogic
