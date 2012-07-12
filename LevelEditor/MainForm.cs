@@ -162,7 +162,5 @@ namespace LevelEditor
                 objectScreen.FrameTimer.Enabled = true;
             }
         }
-
-
     }
 }
