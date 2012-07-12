@@ -21,9 +21,11 @@ namespace LevelEditor
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+        }
 
+        protected override void LoadContent()
+        {
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
-
             assetCreator = new AssetCreator(this.GraphicsDevice);
             List<string> materials = new List<string>();
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
@@ -31,11 +33,6 @@ namespace LevelEditor
                 materials.Add(System.IO.Path.GetFileName(material).Split('.')[0]);
             }
             assetCreator.LoadContent(ContentService.GetContentService().Content, materials);
-        }
-
-        protected override void LoadContent()
-        {
-            
         }
 
         protected override void Dispose(bool disposing)

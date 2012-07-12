@@ -27,12 +27,24 @@ namespace LevelEditor
             InitializeComponent();
             Initialize();
         }
+
         void Initialize()
         {
+            //
+            //build runtime textures
+            //
+            builder = new ContentBuilder(ContentService.GetContentPath());
+            builder.AddMaterials(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
+            string buildError = builder.Build();
+            if (!string.IsNullOrEmpty(buildError))
+            {
+                MessageBox.Show(buildError, "Error");
+            }
 
-            
+            //
+            //set component parameters
+            //
             this.shapeParametersControl.SelectedTab = this.emptyTab;
-            
             levelScreen.message = "Level";
             objectScreen.message = "GameObject";
         }
@@ -45,16 +57,6 @@ namespace LevelEditor
         private void MainForm_Load(object sender, EventArgs e)
         {
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
-            
-            builder = new ContentBuilder(ContentService.GetContentPath());
-            //source for textures
-            builder.AddMaterials(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
-            string buildError = builder.Build();
-
-            if (!string.IsNullOrEmpty(buildError))
-            {
-                MessageBox.Show(buildError, "Error");
-            }
             
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
