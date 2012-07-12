@@ -2,53 +2,193 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Joints;
+using System.Reflection;
 using FarseerTools;
 
 namespace GameLogic
 {
-    public abstract class GameObject : IVisualComponent
+    public class GameObject : IDrawable
     {
-        public Body ObjectBody;
-        public Sprite Sprite;
+        #region Общие поля и свойства
+        //Список частей объекта
+        private List<GameObjectPart> _parts;
+        private bool _sorted; //показывает, отсортирован ли список по DrawOrder элементов
 
-        private byte _layer = 0;
-        public byte Layer
+        private List<Joint> _joints;
+
+        private SpriteBatch _spriteBatch;
+        private Camera _camera;
+
+        public SpriteBatch SpriteBatch
         {
-            get { return _layer; }
-            set { _layer = value; }
+            get { return _spriteBatch; }
+            set { _spriteBatch = value; }
         }
 
-        public GameObject() { }
+        private Vector2 _origin;
 
-        public GameObject(Body body)
+        /// <summary>
+        /// Центр координат объекта.
+        /// </summary>
+        public Vector2 Origin
         {
-            this.ObjectBody = body;
+            get { return _origin; }
+            set { _origin = value; }
         }
 
-        public GameObject(Body body, Sprite sprite)
+        public GameObjectPart this[int index]
         {
-            this.ObjectBody = body;
-            this.Sprite = sprite;
+            get { return _parts[index]; }
+            set 
+            { 
+                _parts[index] = value;
+                _sorted = false;
+            }
+        }
+        #endregion
+
+        #region Шаблонизация объекта
+        private World _world;
+
+        /// <summary>
+        /// World для создания и хранения в нём всех Body и Joint'ов объекта.
+        /// </summary>
+        public World World
+        {
+            get { return _world; }
+            set { _world = value; }
         }
 
-        #region IVisualComponent
-        public abstract void Initialize();
+        /// <summary>
+        /// Копирует игровой объект в world.
+        /// </summary>
+        /// <param name="world">World, в который требуется скопировать объект.</param>
+        /// <param name="position">Позиция объекта (его точки Origin) в координатах World.</param>
+        public GameObject CopyObjectToWorld(World world, Vector2 position)
+        {
+            //Создаём новый экземпляр GameObject
+            GameObject result = new GameObject(world, _camera, _spriteBatch, position);
 
-        public abstract void LoadContent(ContentManager content);
+            //Копируем joint'ы между частями
+            foreach (var joint in _joints)
+            {
+                Joint newJoint = joint.Clone();
+                result.AddJoint(newJoint);
+                world.AddJoint(newJoint);
+            }
 
-        public abstract void Draw(GameTime gameTime);
+            //Копируем все части
+            foreach (var part in _parts)
+            {
+                GameObjectPart newPart = part.DeepClone(result, world, position);
 
-        public abstract int DrawOrder { get; }
+                //Меняем привязки joint'ов на новые копии body.
+                for (int i = 0; i < _joints.Count; i++)
+                {
+                    if (_joints[i].BodyA == part.Body)
+                        result._joints[i].BodyA = newPart.Body;
+                    else if (_joints[i].BodyB == part.Body)
+                        result._joints[i].BodyB = newPart.Body;
+                }
+                result.AddPart(newPart);
+            }
 
-        public abstract event EventHandler<EventArgs> DrawOrderChanged;
+            return result;
+        }
+        #endregion
 
-        public abstract bool Visible { get; }
+        #region Конструкторы
+        public GameObject(Camera camera, SpriteBatch spriteBatch)
+        {
+            _parts = new List<GameObjectPart>();
+            _sorted = true;
 
-        public abstract event EventHandler<EventArgs> VisibleChanged;
+            _joints = new List<Joint>();
+
+            _origin = Vector2.Zero;
+
+            _spriteBatch = spriteBatch;
+            _camera = camera;
+
+            _world = new World(Vector2.Zero);
+
+            Visible = true;
+        }
+
+        public GameObject(Camera camera, SpriteBatch spriteBatch, Vector2 origin)
+            : this(camera, spriteBatch)
+        {
+            _origin = origin;
+        }
+
+        public GameObject(World world, Camera camera, SpriteBatch spriteBatch)
+            : this(camera, spriteBatch)
+        {
+            _world = world;
+        }
+
+        public GameObject(World world, Camera camera, SpriteBatch spriteBatch, Vector2 origin)
+            : this(world, camera, spriteBatch)
+        {
+            _origin = origin;
+        }
+        #endregion
+
+        #region Добавление и сортировка
+        /// <summary>
+        /// Сортирует все части объекта по их DrawOrder.
+        /// </summary>
+        private void SortParts()
+        {
+            _parts.Sort((x, y) => Comparer<int>.Default.Compare(x.DrawOrder, y.DrawOrder));
+            _sorted = true;
+        }
+
+        public void AddPart(GameObjectPart part)
+        {
+            _parts.Add(part);
+            _sorted = false;
+        }
+
+        public void AddPart(Sprite sprite, Body body)
+        {
+            AddPart(new GameObjectPart(this, sprite, body));
+        }
+
+        public void AddJoint(Joint joint)
+        {
+            _joints.Add(joint);
+        }
+        #endregion
+
+        #region IDrawable
+        public void Draw(GameTime gameTime)
+        {
+            if (_sorted)
+            {
+                SpriteBatch.Begin(0, null, null, null, null, null, _camera.GetViewMatrix());
+                foreach (var part in _parts)
+                    part.Draw(gameTime);
+                SpriteBatch.End();
+            }
+            else
+            {
+                SortParts();
+                Draw(gameTime);
+            }
+        }
+
+        public int DrawOrder { get; set; }
+
+        public event EventHandler<EventArgs> DrawOrderChanged;
+
+        public bool Visible { get; set; }
+
+        public event EventHandler<EventArgs> VisibleChanged;
         #endregion
     }
 }

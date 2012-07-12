@@ -62,6 +62,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="GameLevel.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameObjectPart.cs" />
     <Compile Include="IComponent.cs" />
     <Compile Include="IUpdateableVisualComponent.cs" />
     <Compile Include="IVisualComponent.cs" />
