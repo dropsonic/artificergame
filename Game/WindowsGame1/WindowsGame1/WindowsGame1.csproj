@@ -87,6 +87,10 @@
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\FarseerTools\FarseerTools.csproj">
+      <Project>{A875A73C-7870-4A79-81CD-BEA7DC8CCBD5}</Project>
+      <Name>FarseerTools</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GameLogic\GameLogic.csproj">
       <Project>{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}</Project>
       <Name>GameLogic</Name>

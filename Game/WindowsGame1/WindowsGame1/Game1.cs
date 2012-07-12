@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using GameLogic;
+using FarseerTools;
 
 namespace WindowsGame1
 {
@@ -48,7 +49,7 @@ namespace WindowsGame1
 
             _graphics.PreferredBackBufferWidth = 600;
             _graphics.PreferredBackBufferHeight = 480;
-            ConvertUnits.SetDisplayUnitToSimUnitRatio(_graphics.PreferredBackBufferHeight / 30);
+            ConvertUnits.SetDisplayUnitToSimUnitRatio(_graphics.PreferredBackBufferHeight);
 
             _graphics.ApplyChanges();
             _width = GraphicsDevice.Viewport.Width * 2;
