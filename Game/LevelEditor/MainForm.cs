@@ -26,6 +26,7 @@ namespace LevelEditor
         {
             InitializeComponent();
             this.materialScale.Increment = 0.1M;
+            this.shapeParametersControl.SelectedTab = this.emptyTab;
             
         }
 
@@ -36,6 +37,8 @@ namespace LevelEditor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
+            
             builder = new ContentBuilder(ContentService.GetContentPath());
             //source for textures
             builder.AddMaterials(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
@@ -67,9 +70,77 @@ namespace LevelEditor
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem!=null)
-                previewScreen.SetPreview((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Text));
             
+            if (sender == shapeBox)
+            {
+                this.shapeParameters.Text = "Shape Parameters - " + shapeBox.SelectedItem.ToString();
+                switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
+                {
+                    case ObjectType.Arc:
+                        this.shapeParametersControl.SelectedTab = this.arcTab;
+                        break;
+                    case ObjectType.Capsule:
+                        this.shapeParametersControl.SelectedTab = this.capsuleTab;
+                        break;
+                    case ObjectType.Circle:
+                        this.shapeParametersControl.SelectedTab = this.circleTab;
+                        break;
+                    case ObjectType.CustomShape:
+                        this.shapeParametersControl.SelectedTab = this.customShapeTab;
+                        break;
+                    case ObjectType.Ellipse:
+                        this.shapeParametersControl.SelectedTab = this.ellipseTab;
+                        break;
+                    case ObjectType.Gear:
+                        this.shapeParametersControl.SelectedTab = this.gearTab;
+                        break;
+                    case ObjectType.Rectangle:
+                        this.shapeParametersControl.SelectedTab = this.rectangleTab;
+                        break;
+                    case ObjectType.RoundedRectangle:
+                        this.shapeParametersControl.SelectedTab = this.roundedRectangleTab;
+                        break;
+
+                }
+            }
+            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem!=null)
+            {
+                switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
+                {
+                    case ObjectType.Arc:
+                        previewScreen.SetArcPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(arcDegrees.Value.ToString()),int.Parse(arcSides.Value.ToString()),float.Parse(arcRadius.Value.ToString()));
+                        break;
+                    case ObjectType.Capsule:
+                        previewScreen.SetCapsulePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
+                        break;
+                    case ObjectType.Circle:
+                        previewScreen.SetCirclePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(circleRadius.Value.ToString()));
+                        break;
+                    case ObjectType.CustomShape:
+
+                        break;
+                    case ObjectType.Ellipse:
+                        previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(ellipseXRadius.Value.ToString()),float.Parse(ellipseYRadius.Value.ToString()),int.Parse(ellipseNumberOfEdges.Value.ToString()));
+                        break;
+                    case ObjectType.Gear:
+                        previewScreen.SetGearPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(gearRadius.Value.ToString()),int.Parse(gearNumberOfTeeth.Value.ToString()),float.Parse(gearTipPercentage.Value.ToString()),float.Parse(gearToothHeight.Value.ToString()));
+                        break;
+                    case ObjectType.Rectangle:
+                        previewScreen.SetRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(rectangleWidth.Value.ToString()),float.Parse(rectangleHeight.Value.ToString()));
+                        break;
+                    case ObjectType.RoundedRectangle:
+                        previewScreen.SetRoundedRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()),
+                            float.Parse(roundedRectangleWidth.Value.ToString()),float.Parse(roundedRectangleHeight.Value.ToString()),float.Parse(roundedRectangleXRadius.Value.ToString()),float.Parse(roundedRectangleYRadius.Value.ToString()),int.Parse(roundedRectangleSegments.Value.ToString()));
+                        break;
+                 
+                }
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -87,5 +158,7 @@ namespace LevelEditor
                 objectScreen.FrameTimer.Enabled = true;
             }
         }
+
+
     }
 }
