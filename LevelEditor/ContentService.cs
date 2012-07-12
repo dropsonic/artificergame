@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System;
 using System.Collections.Generic;
+using FarseerTools;
 namespace LevelEditor
 {
     class ContentService
@@ -12,6 +13,12 @@ namespace LevelEditor
         private static ContentService contentService;
         private ContentManager content;
         private ServiceContainer services;
+        private AssetCreator assetCreator;
+
+        public AssetCreator AssetCreator
+        {
+            get { return assetCreator; }
+        }
         public ContentManager Content
         {
             get { return content; }
@@ -28,6 +35,7 @@ namespace LevelEditor
             // Register the service, so ContentManager can find it.
             services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
             content = new ContentManager(Services, rootDir);
+            assetCreator = new AssetCreator(graphicsDeviceService.GraphicsDevice);
         }
 
         public static ContentService GetContentService(IGraphicsDeviceService graphicsDeviceService,string rootDir)

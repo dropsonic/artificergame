@@ -35,6 +35,7 @@ namespace LevelEditor
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -183,7 +184,8 @@ namespace LevelEditor
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createLevelToolStripMenuItem,
-            this.loadLevelToolStripMenuItem});
+            this.loadLevelToolStripMenuItem,
+            this.loadMaterialToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -191,14 +193,21 @@ namespace LevelEditor
             // createLevelToolStripMenuItem
             // 
             this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.createLevelToolStripMenuItem.Text = "Create Level";
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadLevelToolStripMenuItem.Text = "Load Level";
+            // 
+            // loadMaterialToolStripMenuItem
+            // 
+            this.loadMaterialToolStripMenuItem.Name = "loadMaterialToolStripMenuItem";
+            this.loadMaterialToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.loadMaterialToolStripMenuItem.Text = "Load Material";
+            this.loadMaterialToolStripMenuItem.Click += new System.EventHandler(this.loadMaterialToolStripMenuItem_Click);
             // 
             // levelToolStripMenuItem
             // 
@@ -1623,6 +1632,7 @@ namespace LevelEditor
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
         private PreviewScreen previewScreen;
+        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
 
 
     }
