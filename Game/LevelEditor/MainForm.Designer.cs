@@ -308,10 +308,26 @@ namespace LevelEditor
             // 
             // circleRadius
             // 
+            this.circleRadius.DecimalPlaces = 2;
+            this.circleRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.circleRadius.Location = new System.Drawing.Point(7, 20);
+            this.circleRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.circleRadius.Name = "circleRadius";
             this.circleRadius.Size = new System.Drawing.Size(120, 20);
             this.circleRadius.TabIndex = 1;
+            this.circleRadius.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            131072});
             this.circleRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label5
@@ -342,9 +358,19 @@ namespace LevelEditor
             // ellipseNumberOfEdges
             // 
             this.ellipseNumberOfEdges.Location = new System.Drawing.Point(6, 71);
+            this.ellipseNumberOfEdges.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.ellipseNumberOfEdges.Name = "ellipseNumberOfEdges";
             this.ellipseNumberOfEdges.Size = new System.Drawing.Size(120, 20);
             this.ellipseNumberOfEdges.TabIndex = 5;
+            this.ellipseNumberOfEdges.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.ellipseNumberOfEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label8
@@ -358,10 +384,26 @@ namespace LevelEditor
             // 
             // ellipseYRadius
             // 
+            this.ellipseYRadius.DecimalPlaces = 2;
+            this.ellipseYRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.ellipseYRadius.Location = new System.Drawing.Point(143, 20);
+            this.ellipseYRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.ellipseYRadius.Name = "ellipseYRadius";
             this.ellipseYRadius.Size = new System.Drawing.Size(120, 20);
             this.ellipseYRadius.TabIndex = 3;
+            this.ellipseYRadius.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ellipseYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label7
@@ -375,10 +417,26 @@ namespace LevelEditor
             // 
             // ellipseXRadius
             // 
+            this.ellipseXRadius.DecimalPlaces = 2;
+            this.ellipseXRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.ellipseXRadius.Location = new System.Drawing.Point(7, 20);
+            this.ellipseXRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.ellipseXRadius.Name = "ellipseXRadius";
             this.ellipseXRadius.Size = new System.Drawing.Size(120, 20);
             this.ellipseXRadius.TabIndex = 1;
+            this.ellipseXRadius.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
             this.ellipseXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label6
@@ -408,10 +466,26 @@ namespace LevelEditor
             // 
             // arcRadius
             // 
+            this.arcRadius.DecimalPlaces = 2;
+            this.arcRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.arcRadius.Location = new System.Drawing.Point(8, 19);
+            this.arcRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.arcRadius.Name = "arcRadius";
             this.arcRadius.Size = new System.Drawing.Size(120, 20);
             this.arcRadius.TabIndex = 11;
+            this.arcRadius.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.arcRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label9
@@ -426,9 +500,19 @@ namespace LevelEditor
             // arcSides
             // 
             this.arcSides.Location = new System.Drawing.Point(8, 69);
+            this.arcSides.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.arcSides.Name = "arcSides";
             this.arcSides.Size = new System.Drawing.Size(120, 20);
             this.arcSides.TabIndex = 9;
+            this.arcSides.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.arcSides.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label10
@@ -443,9 +527,19 @@ namespace LevelEditor
             // arcDegrees
             // 
             this.arcDegrees.Location = new System.Drawing.Point(143, 19);
+            this.arcDegrees.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
             this.arcDegrees.Name = "arcDegrees";
             this.arcDegrees.Size = new System.Drawing.Size(120, 20);
             this.arcDegrees.TabIndex = 7;
+            this.arcDegrees.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.arcDegrees.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label11
@@ -477,7 +571,18 @@ namespace LevelEditor
             // 
             // gearToothHeight
             // 
+            this.gearToothHeight.DecimalPlaces = 2;
+            this.gearToothHeight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.gearToothHeight.Location = new System.Drawing.Point(140, 72);
+            this.gearToothHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.gearToothHeight.Name = "gearToothHeight";
             this.gearToothHeight.Size = new System.Drawing.Size(120, 20);
             this.gearToothHeight.TabIndex = 13;
@@ -512,9 +617,19 @@ namespace LevelEditor
             // gearNumberOfTeeth
             // 
             this.gearNumberOfTeeth.Location = new System.Drawing.Point(140, 20);
+            this.gearNumberOfTeeth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.gearNumberOfTeeth.Name = "gearNumberOfTeeth";
             this.gearNumberOfTeeth.Size = new System.Drawing.Size(120, 20);
             this.gearNumberOfTeeth.TabIndex = 9;
+            this.gearNumberOfTeeth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.gearNumberOfTeeth.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label13
@@ -528,10 +643,26 @@ namespace LevelEditor
             // 
             // gearRadius
             // 
+            this.gearRadius.DecimalPlaces = 2;
+            this.gearRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.gearRadius.Location = new System.Drawing.Point(4, 20);
+            this.gearRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.gearRadius.Name = "gearRadius";
             this.gearRadius.Size = new System.Drawing.Size(120, 20);
             this.gearRadius.TabIndex = 7;
+            this.gearRadius.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.gearRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label14
@@ -566,9 +697,19 @@ namespace LevelEditor
             // capsuleBottomEdges
             // 
             this.capsuleBottomEdges.Location = new System.Drawing.Point(142, 123);
+            this.capsuleBottomEdges.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.capsuleBottomEdges.Name = "capsuleBottomEdges";
             this.capsuleBottomEdges.Size = new System.Drawing.Size(120, 20);
             this.capsuleBottomEdges.TabIndex = 23;
+            this.capsuleBottomEdges.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.capsuleBottomEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label20
@@ -582,10 +723,25 @@ namespace LevelEditor
             // 
             // capsuleBottomRadius
             // 
+            this.capsuleBottomRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.capsuleBottomRadius.Location = new System.Drawing.Point(6, 123);
+            this.capsuleBottomRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.capsuleBottomRadius.Name = "capsuleBottomRadius";
             this.capsuleBottomRadius.Size = new System.Drawing.Size(120, 20);
             this.capsuleBottomRadius.TabIndex = 21;
+            this.capsuleBottomRadius.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label16
@@ -600,9 +756,19 @@ namespace LevelEditor
             // capsuleTopEdges
             // 
             this.capsuleTopEdges.Location = new System.Drawing.Point(142, 75);
+            this.capsuleTopEdges.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.capsuleTopEdges.Name = "capsuleTopEdges";
             this.capsuleTopEdges.Size = new System.Drawing.Size(120, 20);
             this.capsuleTopEdges.TabIndex = 19;
+            this.capsuleTopEdges.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.capsuleTopEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label17
@@ -616,10 +782,26 @@ namespace LevelEditor
             // 
             // capsuleTopRadius
             // 
+            this.capsuleTopRadius.DecimalPlaces = 2;
+            this.capsuleTopRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.capsuleTopRadius.Location = new System.Drawing.Point(6, 75);
+            this.capsuleTopRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.capsuleTopRadius.Name = "capsuleTopRadius";
             this.capsuleTopRadius.Size = new System.Drawing.Size(120, 20);
             this.capsuleTopRadius.TabIndex = 17;
+            this.capsuleTopRadius.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label18
@@ -633,10 +815,26 @@ namespace LevelEditor
             // 
             // capsuleHeight
             // 
+            this.capsuleHeight.DecimalPlaces = 2;
+            this.capsuleHeight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.capsuleHeight.Location = new System.Drawing.Point(6, 20);
+            this.capsuleHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.capsuleHeight.Name = "capsuleHeight";
             this.capsuleHeight.Size = new System.Drawing.Size(120, 20);
             this.capsuleHeight.TabIndex = 15;
+            this.capsuleHeight.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.capsuleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label19
@@ -664,10 +862,26 @@ namespace LevelEditor
             // 
             // rectangleWidth
             // 
+            this.rectangleWidth.DecimalPlaces = 2;
+            this.rectangleWidth.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.rectangleWidth.Location = new System.Drawing.Point(142, 19);
+            this.rectangleWidth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.rectangleWidth.Name = "rectangleWidth";
             this.rectangleWidth.Size = new System.Drawing.Size(120, 20);
             this.rectangleWidth.TabIndex = 23;
+            this.rectangleWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.rectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label21
@@ -681,10 +895,26 @@ namespace LevelEditor
             // 
             // rectangleHeight
             // 
+            this.rectangleHeight.DecimalPlaces = 2;
+            this.rectangleHeight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.rectangleHeight.Location = new System.Drawing.Point(6, 19);
+            this.rectangleHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.rectangleHeight.Name = "rectangleHeight";
             this.rectangleHeight.Size = new System.Drawing.Size(120, 20);
             this.rectangleHeight.TabIndex = 21;
+            this.rectangleHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.rectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label22
@@ -718,10 +948,26 @@ namespace LevelEditor
             // 
             // roundedRectangleYRadius
             // 
+            this.roundedRectangleYRadius.DecimalPlaces = 2;
+            this.roundedRectangleYRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.roundedRectangleYRadius.Location = new System.Drawing.Point(144, 124);
+            this.roundedRectangleYRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.roundedRectangleYRadius.Name = "roundedRectangleYRadius";
             this.roundedRectangleYRadius.Size = new System.Drawing.Size(120, 20);
             this.roundedRectangleYRadius.TabIndex = 33;
+            this.roundedRectangleYRadius.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label23
@@ -735,10 +981,26 @@ namespace LevelEditor
             // 
             // roundedRectangleXRadius
             // 
+            this.roundedRectangleXRadius.DecimalPlaces = 2;
+            this.roundedRectangleXRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.roundedRectangleXRadius.Location = new System.Drawing.Point(8, 124);
+            this.roundedRectangleXRadius.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.roundedRectangleXRadius.Name = "roundedRectangleXRadius";
             this.roundedRectangleXRadius.Size = new System.Drawing.Size(120, 20);
             this.roundedRectangleXRadius.TabIndex = 31;
+            this.roundedRectangleXRadius.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
             this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label24
@@ -752,10 +1014,26 @@ namespace LevelEditor
             // 
             // roundedRectangleHeight
             // 
+            this.roundedRectangleHeight.DecimalPlaces = 2;
+            this.roundedRectangleHeight.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.roundedRectangleHeight.Location = new System.Drawing.Point(144, 76);
+            this.roundedRectangleHeight.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.roundedRectangleHeight.Name = "roundedRectangleHeight";
             this.roundedRectangleHeight.Size = new System.Drawing.Size(120, 20);
             this.roundedRectangleHeight.TabIndex = 29;
+            this.roundedRectangleHeight.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label25
@@ -769,10 +1047,26 @@ namespace LevelEditor
             // 
             // roundedRectangleWidth
             // 
+            this.roundedRectangleWidth.DecimalPlaces = 2;
+            this.roundedRectangleWidth.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.roundedRectangleWidth.Location = new System.Drawing.Point(8, 76);
+            this.roundedRectangleWidth.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.roundedRectangleWidth.Name = "roundedRectangleWidth";
             this.roundedRectangleWidth.Size = new System.Drawing.Size(120, 20);
             this.roundedRectangleWidth.TabIndex = 27;
+            this.roundedRectangleWidth.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label26
@@ -787,9 +1081,19 @@ namespace LevelEditor
             // roundedRectangleSegments
             // 
             this.roundedRectangleSegments.Location = new System.Drawing.Point(8, 21);
+            this.roundedRectangleSegments.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.roundedRectangleSegments.Name = "roundedRectangleSegments";
             this.roundedRectangleSegments.Size = new System.Drawing.Size(120, 20);
             this.roundedRectangleSegments.TabIndex = 25;
+            this.roundedRectangleSegments.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.roundedRectangleSegments.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label27
@@ -815,10 +1119,26 @@ namespace LevelEditor
             // 
             // customShapeScale
             // 
+            this.customShapeScale.DecimalPlaces = 2;
+            this.customShapeScale.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.customShapeScale.Location = new System.Drawing.Point(4, 20);
+            this.customShapeScale.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.customShapeScale.Name = "customShapeScale";
             this.customShapeScale.Size = new System.Drawing.Size(120, 20);
             this.customShapeScale.TabIndex = 3;
+            this.customShapeScale.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.customShapeScale.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label28
@@ -868,6 +1188,11 @@ namespace LevelEditor
             // materialScale
             // 
             this.materialScale.DecimalPlaces = 2;
+            this.materialScale.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.materialScale.Location = new System.Drawing.Point(6, 116);
             this.materialScale.Name = "materialScale";
             this.materialScale.Size = new System.Drawing.Size(120, 20);
