@@ -140,6 +140,8 @@ namespace LevelEditor
                 }
             }
 
+            shapeBox.Focus();
+
             //
             //SetPreview
             //
