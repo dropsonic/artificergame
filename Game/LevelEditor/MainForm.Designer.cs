@@ -185,6 +185,11 @@ namespace LevelEditor
             this.materialScale.Name = "materialScale";
             this.materialScale.Size = new System.Drawing.Size(120, 20);
             this.materialScale.TabIndex = 8;
+            this.materialScale.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            131072});
             this.materialScale.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label4
