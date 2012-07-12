@@ -48,7 +48,7 @@ namespace LevelEditor
             base.Dispose(disposing);
         }
 
-        public void SetPreview(ObjectType objectType, string material, Color color)
+        public void SetPreview(ObjectType objectType, string material, Color color, float materialScale)
         {
             float radius = 1;
             switch (objectType)
@@ -57,22 +57,22 @@ namespace LevelEditor
                     sprite = new Sprite(assetCreator.CircleTexture(radius, material, color, 0.8f));
                     break;
                 case ObjectType.Rectangle:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(radius / 2f, radius / 2f), material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(radius / 2f, radius / 2f), material, color, materialScale));
                     break;
                  case ObjectType.Gear:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, 10, 100f, 1f), material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, 10, 100f, 1f), material, color, materialScale));
                     break;
                 case ObjectType.Arc:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(270),100,radius), material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(270), 100, radius), material, color, materialScale));
                     break;
                 case ObjectType.Ellipse:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateEllipse(radius*1.5f,radius/1.5f,100),material,color,0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateEllipse(radius * 1.5f, radius / 1.5f, 100), material, color, materialScale));
                     break;
                 case ObjectType.RoundedRectangle:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(radius,radius,0.1f,0.1f,100), material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(radius, radius, 0.1f, 0.1f, 100), material, color, materialScale));
                     break;
                 case ObjectType.Capsule:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateCapsule(radius, radius / 2.5f, 100, radius / 2.5f, 100), material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateCapsule(radius, radius / 2.5f, 100, radius / 2.5f, 100), material, color, materialScale));
                     break;
 
             }
