@@ -626,7 +626,7 @@ namespace LevelEditor
             this.gearNumberOfTeeth.Size = new System.Drawing.Size(120, 20);
             this.gearNumberOfTeeth.TabIndex = 9;
             this.gearNumberOfTeeth.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -1461,7 +1461,6 @@ namespace LevelEditor
         private System.Windows.Forms.TabPage levelPage;
         private System.Windows.Forms.TabPage objectTab;
         private XnaScreen objectScreen;
-        private PreviewScreen previewScreen;
         private XnaScreen levelScreen;
         private WindowsFormsApplication1.TabHiddenHeadersControl shapeParametersControl;
         private System.Windows.Forms.TabPage circleTab;
@@ -1522,6 +1521,7 @@ namespace LevelEditor
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
+        private PreviewScreen previewScreen;
 
 
     }
