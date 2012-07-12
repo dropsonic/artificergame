@@ -54,7 +54,7 @@ namespace LevelEditor
             switch (objectType)
             {
                 case ObjectType.Circle:
-                    sprite = new Sprite(assetCreator.CircleTexture(radius, material, color, 0.8f));
+                    sprite = new Sprite(assetCreator.CircleTexture(radius, material, color, materialScale));
                     break;
                 case ObjectType.Rectangle:
                     sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(radius / 2f, radius / 2f), material, color, materialScale));

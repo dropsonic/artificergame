@@ -26,6 +26,7 @@ namespace LevelEditor
         {
             InitializeComponent();
             this.materialScale.Increment = 0.1M;
+            
         }
 
         string GetParent(string path, int nesting)
@@ -67,7 +68,7 @@ namespace LevelEditor
         private void HandlePreview(object sender, EventArgs e)
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem!=null)
-                previewScreen.SetPreview((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Text));
+                previewScreen1.SetPreview((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Text));
             
         }
 
@@ -75,13 +76,13 @@ namespace LevelEditor
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                previewScreen.FrameTimer.Enabled = false;
+                previewScreen1.FrameTimer.Enabled = false;
                 levelScreen.FrameTimer.Enabled = false;
                 objectScreen.FrameTimer.Enabled = false;
             }
             if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
             {
-                previewScreen.FrameTimer.Enabled = true;
+                previewScreen1.FrameTimer.Enabled = true;
                 levelScreen.FrameTimer.Enabled = true;
                 objectScreen.FrameTimer.Enabled = true;
             }
