@@ -1220,9 +1220,9 @@ namespace FarseerPhysics.Dynamics
             return GetLinearVelocityFromWorldPoint(GetWorldPoint(ref localPoint));
         }
 
-        public Body DeepClone()
+        public Body DeepClone(World world)
         {
-            Body body = Clone();
+            Body body = Clone(world);
 
             for (int i = 0; i < FixtureList.Count; i++)
             {
@@ -1232,10 +1232,15 @@ namespace FarseerPhysics.Dynamics
             return body;
         }
 
-        public Body Clone()
+        public Body DeepClone()
+        {
+            return DeepClone(World);
+        }
+
+        public Body Clone(World world)
         {
             Body body = new Body();
-            body.World = World;
+            body.World = world;
             body.UserData = UserData;
             body.LinearDamping = LinearDamping;
             body.LinearVelocityInternal = LinearVelocityInternal;
@@ -1246,9 +1251,14 @@ namespace FarseerPhysics.Dynamics
             body._bodyType = _bodyType;
             body.Flags = Flags;
 
-            World.AddBody(body);
+            body.World.AddBody(body);
 
             return body;
+        }
+
+        public Body Clone()
+        {
+            return Clone(World);
         }
 
         internal void SynchronizeFixtures()
