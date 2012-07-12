@@ -59,11 +59,17 @@ namespace FarseerTools
 
         public void LoadContent(ContentManager contentManager, List<string> materials)
         {
-             foreach (string material in materials)
+            foreach (string material in materials)
             {
-                _materials[material] = contentManager.Load<Texture2D>("Textures/Materials/"+material);
+                LoadContent(contentManager, material);
             }
         }
+
+        public void LoadContent(ContentManager contentManager, string material)
+        {
+            _materials[material] = contentManager.Load<Texture2D>("Textures/Materials/" + material);
+        }
+
 
         public Texture2D TextureFromShape(Shape shape, string type, Color color, float materialScale)
         {
