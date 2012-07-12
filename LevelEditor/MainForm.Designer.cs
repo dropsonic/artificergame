@@ -44,13 +44,63 @@ namespace LevelEditor
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
             this.circleTab = new System.Windows.Forms.TabPage();
+            this.circleRadius = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.ellipseTab = new System.Windows.Forms.TabPage();
+            this.ellipseNumberOfEdges = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ellipseYRadius = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ellipseXRadius = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             this.arcTab = new System.Windows.Forms.TabPage();
+            this.arcRadius = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.arcSides = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.arcDegrees = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
             this.gearTab = new System.Windows.Forms.TabPage();
+            this.gearToothHeight = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.gearTipPercentage = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.gearNumberOfTeeth = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.gearRadius = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
             this.capsuleTab = new System.Windows.Forms.TabPage();
+            this.capsuleBottomEdges = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.capsuleBottomRadius = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.capsuleTopEdges = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.capsuleTopRadius = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
+            this.capsuleHeight = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
             this.rectangleTab = new System.Windows.Forms.TabPage();
+            this.rectangleWidth = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.rectangleHeight = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
             this.roundedRectangleTab = new System.Windows.Forms.TabPage();
+            this.roundedRectangleYRadius = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
+            this.roundedRectangleXRadius = new System.Windows.Forms.NumericUpDown();
+            this.label24 = new System.Windows.Forms.Label();
+            this.roundedRectangleHeight = new System.Windows.Forms.NumericUpDown();
+            this.label25 = new System.Windows.Forms.Label();
+            this.roundedRectangleWidth = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.roundedRectangleSegments = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
             this.customShapeTab = new System.Windows.Forms.TabPage();
+            this.customShapeScale = new System.Windows.Forms.NumericUpDown();
+            this.label28 = new System.Windows.Forms.Label();
+            this.emptyTab = new System.Windows.Forms.TabPage();
+            this.label29 = new System.Windows.Forms.Label();
             this.commonParameters = new System.Windows.Forms.GroupBox();
             this.materialScale = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -68,8 +118,6 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.label5 = new System.Windows.Forms.Label();
-            this.circleRadius = new System.Windows.Forms.NumericUpDown();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -77,6 +125,38 @@ namespace LevelEditor
             this.shapeParameters.SuspendLayout();
             this.shapeParametersControl.SuspendLayout();
             this.circleTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).BeginInit();
+            this.ellipseTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseNumberOfEdges)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseYRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseXRadius)).BeginInit();
+            this.arcTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.arcRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.arcSides)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.arcDegrees)).BeginInit();
+            this.gearTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gearToothHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearTipPercentage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearNumberOfTeeth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearRadius)).BeginInit();
+            this.capsuleTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleBottomEdges)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleBottomRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleTopEdges)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleTopRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleHeight)).BeginInit();
+            this.rectangleTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rectangleWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rectangleHeight)).BeginInit();
+            this.roundedRectangleTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleYRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleXRadius)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleSegments)).BeginInit();
+            this.customShapeTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customShapeScale)).BeginInit();
+            this.emptyTab.SuspendLayout();
             this.commonParameters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -86,7 +166,6 @@ namespace LevelEditor
             this.tabControl1.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -190,7 +269,7 @@ namespace LevelEditor
             this.shapeParameters.Controls.Add(this.shapeParametersControl);
             this.shapeParameters.Location = new System.Drawing.Point(3, 498);
             this.shapeParameters.Name = "shapeParameters";
-            this.shapeParameters.Size = new System.Drawing.Size(284, 196);
+            this.shapeParameters.Size = new System.Drawing.Size(284, 212);
             this.shapeParameters.TabIndex = 8;
             this.shapeParameters.TabStop = false;
             this.shapeParameters.Text = "Shape Parameters";
@@ -205,96 +284,571 @@ namespace LevelEditor
             this.shapeParametersControl.Controls.Add(this.rectangleTab);
             this.shapeParametersControl.Controls.Add(this.roundedRectangleTab);
             this.shapeParametersControl.Controls.Add(this.customShapeTab);
+            this.shapeParametersControl.Controls.Add(this.emptyTab);
             this.shapeParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shapeParametersControl.Location = new System.Drawing.Point(3, 16);
             this.shapeParametersControl.Margin = new System.Windows.Forms.Padding(0);
             this.shapeParametersControl.Multiline = true;
             this.shapeParametersControl.Name = "shapeParametersControl";
             this.shapeParametersControl.SelectedIndex = 0;
-            this.shapeParametersControl.Size = new System.Drawing.Size(278, 177);
+            this.shapeParametersControl.Size = new System.Drawing.Size(278, 193);
             this.shapeParametersControl.TabIndex = 0;
             // 
             // circleTab
             // 
             this.circleTab.Controls.Add(this.circleRadius);
             this.circleTab.Controls.Add(this.label5);
-            this.circleTab.Location = new System.Drawing.Point(4, 40);
+            this.circleTab.Location = new System.Drawing.Point(4, 58);
             this.circleTab.Name = "circleTab";
             this.circleTab.Padding = new System.Windows.Forms.Padding(3);
-            this.circleTab.Size = new System.Drawing.Size(270, 133);
+            this.circleTab.Size = new System.Drawing.Size(270, 131);
             this.circleTab.TabIndex = 0;
             this.circleTab.Text = "Circle";
             this.circleTab.UseVisualStyleBackColor = true;
             // 
+            // circleRadius
+            // 
+            this.circleRadius.Location = new System.Drawing.Point(7, 20);
+            this.circleRadius.Name = "circleRadius";
+            this.circleRadius.Size = new System.Drawing.Size(120, 20);
+            this.circleRadius.TabIndex = 1;
+            this.circleRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Radius";
+            // 
             // ellipseTab
             // 
-            this.ellipseTab.Location = new System.Drawing.Point(4, 40);
+            this.ellipseTab.Controls.Add(this.ellipseNumberOfEdges);
+            this.ellipseTab.Controls.Add(this.label8);
+            this.ellipseTab.Controls.Add(this.ellipseYRadius);
+            this.ellipseTab.Controls.Add(this.label7);
+            this.ellipseTab.Controls.Add(this.ellipseXRadius);
+            this.ellipseTab.Controls.Add(this.label6);
+            this.ellipseTab.Location = new System.Drawing.Point(4, 58);
             this.ellipseTab.Name = "ellipseTab";
             this.ellipseTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ellipseTab.Size = new System.Drawing.Size(270, 65);
+            this.ellipseTab.Size = new System.Drawing.Size(270, 131);
             this.ellipseTab.TabIndex = 1;
             this.ellipseTab.Text = "Ellipse";
             this.ellipseTab.UseVisualStyleBackColor = true;
             // 
+            // ellipseNumberOfEdges
+            // 
+            this.ellipseNumberOfEdges.Location = new System.Drawing.Point(6, 71);
+            this.ellipseNumberOfEdges.Name = "ellipseNumberOfEdges";
+            this.ellipseNumberOfEdges.Size = new System.Drawing.Size(120, 20);
+            this.ellipseNumberOfEdges.TabIndex = 5;
+            this.ellipseNumberOfEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 55);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(85, 13);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "NumberOfEdges";
+            // 
+            // ellipseYRadius
+            // 
+            this.ellipseYRadius.Location = new System.Drawing.Point(143, 20);
+            this.ellipseYRadius.Name = "ellipseYRadius";
+            this.ellipseYRadius.Size = new System.Drawing.Size(120, 20);
+            this.ellipseYRadius.TabIndex = 3;
+            this.ellipseYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(142, 3);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "yRadius";
+            // 
+            // ellipseXRadius
+            // 
+            this.ellipseXRadius.Location = new System.Drawing.Point(7, 20);
+            this.ellipseXRadius.Name = "ellipseXRadius";
+            this.ellipseXRadius.Size = new System.Drawing.Size(120, 20);
+            this.ellipseXRadius.TabIndex = 1;
+            this.ellipseXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 3);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(45, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "xRadius";
+            // 
             // arcTab
             // 
-            this.arcTab.Location = new System.Drawing.Point(4, 40);
+            this.arcTab.Controls.Add(this.arcRadius);
+            this.arcTab.Controls.Add(this.label9);
+            this.arcTab.Controls.Add(this.arcSides);
+            this.arcTab.Controls.Add(this.label10);
+            this.arcTab.Controls.Add(this.arcDegrees);
+            this.arcTab.Controls.Add(this.label11);
+            this.arcTab.Location = new System.Drawing.Point(4, 58);
             this.arcTab.Name = "arcTab";
             this.arcTab.Padding = new System.Windows.Forms.Padding(3);
-            this.arcTab.Size = new System.Drawing.Size(270, 65);
+            this.arcTab.Size = new System.Drawing.Size(270, 131);
             this.arcTab.TabIndex = 2;
             this.arcTab.Text = "Arc";
             this.arcTab.UseVisualStyleBackColor = true;
             // 
+            // arcRadius
+            // 
+            this.arcRadius.Location = new System.Drawing.Point(8, 19);
+            this.arcRadius.Name = "arcRadius";
+            this.arcRadius.Size = new System.Drawing.Size(120, 20);
+            this.arcRadius.TabIndex = 11;
+            this.arcRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 2);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 13);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Radius";
+            // 
+            // arcSides
+            // 
+            this.arcSides.Location = new System.Drawing.Point(8, 69);
+            this.arcSides.Name = "arcSides";
+            this.arcSides.Size = new System.Drawing.Size(120, 20);
+            this.arcSides.TabIndex = 9;
+            this.arcSides.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 52);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(33, 13);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Sides";
+            // 
+            // arcDegrees
+            // 
+            this.arcDegrees.Location = new System.Drawing.Point(143, 19);
+            this.arcDegrees.Name = "arcDegrees";
+            this.arcDegrees.Size = new System.Drawing.Size(120, 20);
+            this.arcDegrees.TabIndex = 7;
+            this.arcDegrees.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(142, 2);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(47, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Degrees";
+            // 
             // gearTab
             // 
-            this.gearTab.Location = new System.Drawing.Point(4, 40);
+            this.gearTab.Controls.Add(this.gearToothHeight);
+            this.gearTab.Controls.Add(this.label15);
+            this.gearTab.Controls.Add(this.gearTipPercentage);
+            this.gearTab.Controls.Add(this.label12);
+            this.gearTab.Controls.Add(this.gearNumberOfTeeth);
+            this.gearTab.Controls.Add(this.label13);
+            this.gearTab.Controls.Add(this.gearRadius);
+            this.gearTab.Controls.Add(this.label14);
+            this.gearTab.Location = new System.Drawing.Point(4, 58);
             this.gearTab.Name = "gearTab";
             this.gearTab.Padding = new System.Windows.Forms.Padding(3);
-            this.gearTab.Size = new System.Drawing.Size(270, 65);
+            this.gearTab.Size = new System.Drawing.Size(270, 131);
             this.gearTab.TabIndex = 3;
             this.gearTab.Text = "Gear";
             this.gearTab.UseVisualStyleBackColor = true;
             // 
+            // gearToothHeight
+            // 
+            this.gearToothHeight.Location = new System.Drawing.Point(140, 72);
+            this.gearToothHeight.Name = "gearToothHeight";
+            this.gearToothHeight.Size = new System.Drawing.Size(120, 20);
+            this.gearToothHeight.TabIndex = 13;
+            this.gearToothHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(139, 55);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(66, 13);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "ToothHeight";
+            // 
+            // gearTipPercentage
+            // 
+            this.gearTipPercentage.Location = new System.Drawing.Point(6, 72);
+            this.gearTipPercentage.Name = "gearTipPercentage";
+            this.gearTipPercentage.Size = new System.Drawing.Size(120, 20);
+            this.gearTipPercentage.TabIndex = 11;
+            this.gearTipPercentage.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(5, 55);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "TipPercentage";
+            // 
+            // gearNumberOfTeeth
+            // 
+            this.gearNumberOfTeeth.Location = new System.Drawing.Point(140, 20);
+            this.gearNumberOfTeeth.Name = "gearNumberOfTeeth";
+            this.gearNumberOfTeeth.Size = new System.Drawing.Size(120, 20);
+            this.gearNumberOfTeeth.TabIndex = 9;
+            this.gearNumberOfTeeth.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(139, 3);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(83, 13);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "NumberOfTeeth";
+            // 
+            // gearRadius
+            // 
+            this.gearRadius.Location = new System.Drawing.Point(4, 20);
+            this.gearRadius.Name = "gearRadius";
+            this.gearRadius.Size = new System.Drawing.Size(120, 20);
+            this.gearRadius.TabIndex = 7;
+            this.gearRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 3);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "Radius";
+            // 
             // capsuleTab
             // 
-            this.capsuleTab.Location = new System.Drawing.Point(4, 40);
+            this.capsuleTab.Controls.Add(this.capsuleBottomEdges);
+            this.capsuleTab.Controls.Add(this.label20);
+            this.capsuleTab.Controls.Add(this.capsuleBottomRadius);
+            this.capsuleTab.Controls.Add(this.label16);
+            this.capsuleTab.Controls.Add(this.capsuleTopEdges);
+            this.capsuleTab.Controls.Add(this.label17);
+            this.capsuleTab.Controls.Add(this.capsuleTopRadius);
+            this.capsuleTab.Controls.Add(this.label18);
+            this.capsuleTab.Controls.Add(this.capsuleHeight);
+            this.capsuleTab.Controls.Add(this.label19);
+            this.capsuleTab.Location = new System.Drawing.Point(4, 58);
             this.capsuleTab.Name = "capsuleTab";
             this.capsuleTab.Padding = new System.Windows.Forms.Padding(3);
-            this.capsuleTab.Size = new System.Drawing.Size(270, 65);
+            this.capsuleTab.Size = new System.Drawing.Size(270, 131);
             this.capsuleTab.TabIndex = 4;
             this.capsuleTab.Text = "Capsule";
             this.capsuleTab.UseVisualStyleBackColor = true;
             // 
+            // capsuleBottomEdges
+            // 
+            this.capsuleBottomEdges.Location = new System.Drawing.Point(142, 123);
+            this.capsuleBottomEdges.Name = "capsuleBottomEdges";
+            this.capsuleBottomEdges.Size = new System.Drawing.Size(120, 20);
+            this.capsuleBottomEdges.TabIndex = 23;
+            this.capsuleBottomEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(141, 106);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(70, 13);
+            this.label20.TabIndex = 22;
+            this.label20.Text = "BottomEdges";
+            // 
+            // capsuleBottomRadius
+            // 
+            this.capsuleBottomRadius.Location = new System.Drawing.Point(6, 123);
+            this.capsuleBottomRadius.Name = "capsuleBottomRadius";
+            this.capsuleBottomRadius.Size = new System.Drawing.Size(120, 20);
+            this.capsuleBottomRadius.TabIndex = 21;
+            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(5, 106);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(73, 13);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "BottomRadius";
+            // 
+            // capsuleTopEdges
+            // 
+            this.capsuleTopEdges.Location = new System.Drawing.Point(142, 75);
+            this.capsuleTopEdges.Name = "capsuleTopEdges";
+            this.capsuleTopEdges.Size = new System.Drawing.Size(120, 20);
+            this.capsuleTopEdges.TabIndex = 19;
+            this.capsuleTopEdges.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(141, 58);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(56, 13);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "TopEdges";
+            // 
+            // capsuleTopRadius
+            // 
+            this.capsuleTopRadius.Location = new System.Drawing.Point(6, 75);
+            this.capsuleTopRadius.Name = "capsuleTopRadius";
+            this.capsuleTopRadius.Size = new System.Drawing.Size(120, 20);
+            this.capsuleTopRadius.TabIndex = 17;
+            this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(5, 58);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(59, 13);
+            this.label18.TabIndex = 16;
+            this.label18.Text = "TopRadius";
+            // 
+            // capsuleHeight
+            // 
+            this.capsuleHeight.Location = new System.Drawing.Point(6, 20);
+            this.capsuleHeight.Name = "capsuleHeight";
+            this.capsuleHeight.Size = new System.Drawing.Size(120, 20);
+            this.capsuleHeight.TabIndex = 15;
+            this.capsuleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(5, 3);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 14;
+            this.label19.Text = "Height";
+            // 
             // rectangleTab
             // 
-            this.rectangleTab.Location = new System.Drawing.Point(4, 40);
+            this.rectangleTab.Controls.Add(this.rectangleWidth);
+            this.rectangleTab.Controls.Add(this.label21);
+            this.rectangleTab.Controls.Add(this.rectangleHeight);
+            this.rectangleTab.Controls.Add(this.label22);
+            this.rectangleTab.Location = new System.Drawing.Point(4, 58);
             this.rectangleTab.Name = "rectangleTab";
             this.rectangleTab.Padding = new System.Windows.Forms.Padding(3);
-            this.rectangleTab.Size = new System.Drawing.Size(270, 65);
+            this.rectangleTab.Size = new System.Drawing.Size(270, 131);
             this.rectangleTab.TabIndex = 5;
             this.rectangleTab.Text = "Rectangle";
             this.rectangleTab.UseVisualStyleBackColor = true;
             // 
+            // rectangleWidth
+            // 
+            this.rectangleWidth.Location = new System.Drawing.Point(142, 19);
+            this.rectangleWidth.Name = "rectangleWidth";
+            this.rectangleWidth.Size = new System.Drawing.Size(120, 20);
+            this.rectangleWidth.TabIndex = 23;
+            this.rectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(141, 2);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(35, 13);
+            this.label21.TabIndex = 22;
+            this.label21.Text = "Width";
+            // 
+            // rectangleHeight
+            // 
+            this.rectangleHeight.Location = new System.Drawing.Point(6, 19);
+            this.rectangleHeight.Name = "rectangleHeight";
+            this.rectangleHeight.Size = new System.Drawing.Size(120, 20);
+            this.rectangleHeight.TabIndex = 21;
+            this.rectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(5, 2);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(38, 13);
+            this.label22.TabIndex = 20;
+            this.label22.Text = "Height";
+            // 
             // roundedRectangleTab
             // 
-            this.roundedRectangleTab.Location = new System.Drawing.Point(4, 40);
+            this.roundedRectangleTab.Controls.Add(this.roundedRectangleYRadius);
+            this.roundedRectangleTab.Controls.Add(this.label23);
+            this.roundedRectangleTab.Controls.Add(this.roundedRectangleXRadius);
+            this.roundedRectangleTab.Controls.Add(this.label24);
+            this.roundedRectangleTab.Controls.Add(this.roundedRectangleHeight);
+            this.roundedRectangleTab.Controls.Add(this.label25);
+            this.roundedRectangleTab.Controls.Add(this.roundedRectangleWidth);
+            this.roundedRectangleTab.Controls.Add(this.label26);
+            this.roundedRectangleTab.Controls.Add(this.roundedRectangleSegments);
+            this.roundedRectangleTab.Controls.Add(this.label27);
+            this.roundedRectangleTab.Location = new System.Drawing.Point(4, 58);
             this.roundedRectangleTab.Name = "roundedRectangleTab";
             this.roundedRectangleTab.Padding = new System.Windows.Forms.Padding(3);
-            this.roundedRectangleTab.Size = new System.Drawing.Size(270, 65);
+            this.roundedRectangleTab.Size = new System.Drawing.Size(270, 131);
             this.roundedRectangleTab.TabIndex = 6;
             this.roundedRectangleTab.Text = "RoundedRectangle";
             this.roundedRectangleTab.UseVisualStyleBackColor = true;
             // 
+            // roundedRectangleYRadius
+            // 
+            this.roundedRectangleYRadius.Location = new System.Drawing.Point(144, 124);
+            this.roundedRectangleYRadius.Name = "roundedRectangleYRadius";
+            this.roundedRectangleYRadius.Size = new System.Drawing.Size(120, 20);
+            this.roundedRectangleYRadius.TabIndex = 33;
+            this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(143, 107);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(45, 13);
+            this.label23.TabIndex = 32;
+            this.label23.Text = "yRadius";
+            // 
+            // roundedRectangleXRadius
+            // 
+            this.roundedRectangleXRadius.Location = new System.Drawing.Point(8, 124);
+            this.roundedRectangleXRadius.Name = "roundedRectangleXRadius";
+            this.roundedRectangleXRadius.Size = new System.Drawing.Size(120, 20);
+            this.roundedRectangleXRadius.TabIndex = 31;
+            this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(7, 107);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(45, 13);
+            this.label24.TabIndex = 30;
+            this.label24.Text = "xRadius";
+            // 
+            // roundedRectangleHeight
+            // 
+            this.roundedRectangleHeight.Location = new System.Drawing.Point(144, 76);
+            this.roundedRectangleHeight.Name = "roundedRectangleHeight";
+            this.roundedRectangleHeight.Size = new System.Drawing.Size(120, 20);
+            this.roundedRectangleHeight.TabIndex = 29;
+            this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(143, 59);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(38, 13);
+            this.label25.TabIndex = 28;
+            this.label25.Text = "Height";
+            // 
+            // roundedRectangleWidth
+            // 
+            this.roundedRectangleWidth.Location = new System.Drawing.Point(8, 76);
+            this.roundedRectangleWidth.Name = "roundedRectangleWidth";
+            this.roundedRectangleWidth.Size = new System.Drawing.Size(120, 20);
+            this.roundedRectangleWidth.TabIndex = 27;
+            this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(7, 59);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(35, 13);
+            this.label26.TabIndex = 26;
+            this.label26.Text = "Width";
+            // 
+            // roundedRectangleSegments
+            // 
+            this.roundedRectangleSegments.Location = new System.Drawing.Point(8, 21);
+            this.roundedRectangleSegments.Name = "roundedRectangleSegments";
+            this.roundedRectangleSegments.Size = new System.Drawing.Size(120, 20);
+            this.roundedRectangleSegments.TabIndex = 25;
+            this.roundedRectangleSegments.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(7, 4);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(54, 13);
+            this.label27.TabIndex = 24;
+            this.label27.Text = "Segments";
+            // 
             // customShapeTab
             // 
-            this.customShapeTab.Location = new System.Drawing.Point(4, 40);
+            this.customShapeTab.Controls.Add(this.customShapeScale);
+            this.customShapeTab.Controls.Add(this.label28);
+            this.customShapeTab.Location = new System.Drawing.Point(4, 58);
             this.customShapeTab.Name = "customShapeTab";
             this.customShapeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.customShapeTab.Size = new System.Drawing.Size(270, 65);
+            this.customShapeTab.Size = new System.Drawing.Size(270, 131);
             this.customShapeTab.TabIndex = 7;
             this.customShapeTab.Text = "CustomShape";
             this.customShapeTab.UseVisualStyleBackColor = true;
+            // 
+            // customShapeScale
+            // 
+            this.customShapeScale.Location = new System.Drawing.Point(4, 20);
+            this.customShapeScale.Name = "customShapeScale";
+            this.customShapeScale.Size = new System.Drawing.Size(120, 20);
+            this.customShapeScale.TabIndex = 3;
+            this.customShapeScale.ValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(3, 3);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(34, 13);
+            this.label28.TabIndex = 2;
+            this.label28.Text = "Scale";
+            // 
+            // emptyTab
+            // 
+            this.emptyTab.Controls.Add(this.label29);
+            this.emptyTab.Location = new System.Drawing.Point(4, 58);
+            this.emptyTab.Name = "emptyTab";
+            this.emptyTab.Padding = new System.Windows.Forms.Padding(3);
+            this.emptyTab.Size = new System.Drawing.Size(270, 131);
+            this.emptyTab.TabIndex = 8;
+            this.emptyTab.Text = "Empty";
+            this.emptyTab.UseVisualStyleBackColor = true;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(85, 62);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(71, 13);
+            this.label29.TabIndex = 0;
+            this.label29.Text = "Select Shape";
             // 
             // commonParameters
             // 
@@ -477,22 +1031,6 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Radius";
-            // 
-            // circleRadius
-            // 
-            this.circleRadius.Location = new System.Drawing.Point(7, 20);
-            this.circleRadius.Name = "circleRadius";
-            this.circleRadius.Size = new System.Drawing.Size(120, 20);
-            this.circleRadius.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -505,7 +1043,6 @@ namespace LevelEditor
             this.Name = "MainForm";
             this.Text = "LevelEditor";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.tableLayoutPanel.ResumeLayout(false);
@@ -516,6 +1053,46 @@ namespace LevelEditor
             this.shapeParametersControl.ResumeLayout(false);
             this.circleTab.ResumeLayout(false);
             this.circleTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).EndInit();
+            this.ellipseTab.ResumeLayout(false);
+            this.ellipseTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseNumberOfEdges)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseYRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ellipseXRadius)).EndInit();
+            this.arcTab.ResumeLayout(false);
+            this.arcTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.arcRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.arcSides)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.arcDegrees)).EndInit();
+            this.gearTab.ResumeLayout(false);
+            this.gearTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gearToothHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearTipPercentage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearNumberOfTeeth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gearRadius)).EndInit();
+            this.capsuleTab.ResumeLayout(false);
+            this.capsuleTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleBottomEdges)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleBottomRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleTopEdges)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleTopRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.capsuleHeight)).EndInit();
+            this.rectangleTab.ResumeLayout(false);
+            this.rectangleTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rectangleWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rectangleHeight)).EndInit();
+            this.roundedRectangleTab.ResumeLayout(false);
+            this.roundedRectangleTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleYRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleXRadius)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundedRectangleSegments)).EndInit();
+            this.customShapeTab.ResumeLayout(false);
+            this.customShapeTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customShapeScale)).EndInit();
+            this.emptyTab.ResumeLayout(false);
+            this.emptyTab.PerformLayout();
             this.commonParameters.ResumeLayout(false);
             this.commonParameters.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).EndInit();
@@ -526,7 +1103,6 @@ namespace LevelEditor
             this.tabControl1.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.circleRadius)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -573,6 +1149,54 @@ namespace LevelEditor
         private System.Windows.Forms.TabPage customShapeTab;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown circleRadius;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown ellipseNumberOfEdges;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown ellipseYRadius;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown ellipseXRadius;
+        private System.Windows.Forms.NumericUpDown arcRadius;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown arcSides;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown arcDegrees;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown gearTipPercentage;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.NumericUpDown gearNumberOfTeeth;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown gearRadius;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.NumericUpDown gearToothHeight;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.NumericUpDown capsuleBottomRadius;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown capsuleTopEdges;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown capsuleTopRadius;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.NumericUpDown capsuleHeight;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown capsuleBottomEdges;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.NumericUpDown rectangleWidth;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.NumericUpDown rectangleHeight;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown roundedRectangleYRadius;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.NumericUpDown roundedRectangleXRadius;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.NumericUpDown roundedRectangleHeight;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.NumericUpDown roundedRectangleWidth;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.NumericUpDown roundedRectangleSegments;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.NumericUpDown customShapeScale;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TabPage emptyTab;
+        private System.Windows.Forms.Label label29;
 
 
     }

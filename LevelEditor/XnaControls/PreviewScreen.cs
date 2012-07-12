@@ -48,36 +48,34 @@ namespace LevelEditor
             base.Dispose(disposing);
         }
 
-        public void SetPreview(ObjectType objectType, string material, Color color, float materialScale)
+        public void SetCirclePreview(string material, Color color, float materialScale, float radius)
         {
-            float radius = 1;
-            switch (objectType)
-            {
-                case ObjectType.Circle:
-                    sprite = new Sprite(assetCreator.CircleTexture(radius, material, color, materialScale));
-                    break;
-                case ObjectType.Rectangle:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(radius / 2f, radius / 2f), material, color, materialScale));
-                    break;
-                 case ObjectType.Gear:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, 10, 100f, 1f), material, color, materialScale));
-                    break;
-                case ObjectType.Arc:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(270), 100, radius), material, color, materialScale));
-                    break;
-                case ObjectType.Ellipse:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateEllipse(radius * 1.5f, radius / 1.5f, 100), material, color, materialScale));
-                    break;
-                case ObjectType.RoundedRectangle:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(radius, radius, 0.1f, 0.1f, 100), material, color, materialScale));
-                    break;
-                case ObjectType.Capsule:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateCapsule(radius, radius / 2.5f, 100, radius / 2.5f, 100), material, color, materialScale));
-                    break;
-
-            }
+            sprite = new Sprite(assetCreator.CircleTexture(radius, material, color, materialScale));
         }
-
+        public void SetRectanglePreview(string material, Color color, float materialScale, float width, float height)
+        {      
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(width, height), material, color, materialScale));
+        }
+         public void SetGearPreview(string material, Color color, float materialScale, float radius, int numberOfTeeth, float tipPercentage, float toothHeight)
+        {      
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, numberOfTeeth, tipPercentage, toothHeight), material, color, materialScale));
+        } 
+        public void SetArcPreview(string material, Color color, float materialScale, float degrees, int sides, float radius)
+        {      
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(degrees), sides, radius), material, color, materialScale));
+        }
+        public void SetEllipsePreview(string material, Color color, float materialScale, float xRadius, float yRadius, int numberOfEdges)
+        {
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateEllipse(xRadius, yRadius, numberOfEdges), material, color, materialScale));
+        } 
+        public void SetRoundedRectanglePreview(string material, Color color, float materialScale, float width, float height, float xRadius, float yRadius, int segments)
+        {
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(width, height, xRadius, yRadius, segments), material, color, materialScale));
+        }
+        public void SetCapsulePreview(string material, Color color, float materialScale, float height, float topRadius, int topEdges, float bottomRadius, int bottomEdges)   
+        {
+            sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateCapsule(height, topRadius, topEdges, bottomRadius, bottomEdges), material, color, materialScale));
+        }
         
         protected override void UpdateFrame()
         {
