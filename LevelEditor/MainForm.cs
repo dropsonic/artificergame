@@ -67,5 +67,19 @@ namespace LevelEditor
                 previewScreen.SetPreview((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Text));
             
         }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                previewScreen.FrameTimer.Enabled = false;
+                xnaScreen.FrameTimer.Enabled = false;
+            }
+            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
+            {
+                previewScreen.FrameTimer.Enabled = true;
+                xnaScreen.FrameTimer.Enabled = true;
+            }
+        }
     }
 }
