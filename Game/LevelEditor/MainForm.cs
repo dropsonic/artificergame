@@ -19,7 +19,7 @@ namespace LevelEditor
     public partial class MainForm : Form
     {
         ContentBuilder builder;
-        readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where(prop => prop.PropertyType == typeof(Color))
+        readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
         
         public MainForm()

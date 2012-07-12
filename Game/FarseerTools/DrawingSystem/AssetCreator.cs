@@ -15,9 +15,12 @@ namespace FarseerTools
     {
         Circle,
         Ellipse,
-        Rectangle,
+        Arc,
         Gear,
-        Star
+        Capsule,
+        Rectangle,
+        RoundedRectangle,
+        CustomShape
     }
 
     public class AssetCreator
@@ -209,11 +212,10 @@ namespace FarseerTools
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             PresentationParameters pp = _device.PresentationParameters;
             RenderTarget2D texture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
-                                                        DepthFormat.None, pp.MultiSampleCount,
+                                                        DepthFormat.None, 10,
                                                         RenderTargetUsage.DiscardContents);
             _device.RasterizerState = RasterizerState.CullNone;
             _device.SamplerStates[0] = SamplerState.LinearWrap;
-
             _device.SetRenderTarget(texture);
             _device.Clear(Color.Transparent);
             _effect.Projection = Matrix.CreateOrthographic(width + 2f, -height - 2f, 0f, 1f);
