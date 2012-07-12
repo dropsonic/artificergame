@@ -807,7 +807,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label16
             // 
@@ -877,7 +877,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label18
             // 
@@ -915,7 +915,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.capsuleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.capsuleHeight.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label19
             // 
@@ -1063,7 +1063,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label23
             // 
@@ -1101,7 +1101,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label24
             // 
@@ -1139,7 +1139,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label25
             // 
@@ -1177,7 +1177,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label26
             // 
@@ -1375,7 +1375,7 @@ namespace LevelEditor
             this.shapeBox.Name = "shapeBox";
             this.shapeBox.Size = new System.Drawing.Size(284, 21);
             this.shapeBox.TabIndex = 1;
-            this.shapeBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
+            this.shapeBox.SelectedValueChanged += new System.EventHandler(this.ShapeParameterSwitch);
             // 
             // tabPage2
             // 

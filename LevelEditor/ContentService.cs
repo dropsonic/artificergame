@@ -35,7 +35,7 @@ namespace LevelEditor
             // Register the service, so ContentManager can find it.
             services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
             content = new ContentManager(Services, rootDir);
-            assetCreator = new AssetCreator(graphicsDeviceService.GraphicsDevice);
+            assetCreator = new AssetCreator(graphicsDeviceService.GraphicsDevice,content);
         }
 
         public static ContentService GetContentService(IGraphicsDeviceService graphicsDeviceService,string rootDir)
