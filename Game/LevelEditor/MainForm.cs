@@ -59,6 +59,9 @@ namespace LevelEditor
             {
                 colorBox.Items.Add(colorName);
             }
+
+            levelScreen.message = "Level";
+            objectScreen.message = "GameObject";
         }
 
         private void HandlePreview(object sender, EventArgs e)
@@ -73,12 +76,14 @@ namespace LevelEditor
             if (WindowState == FormWindowState.Minimized)
             {
                 previewScreen.FrameTimer.Enabled = false;
-                xnaScreen.FrameTimer.Enabled = false;
+                levelScreen.FrameTimer.Enabled = false;
+                objectScreen.FrameTimer.Enabled = false;
             }
             if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
             {
                 previewScreen.FrameTimer.Enabled = true;
-                xnaScreen.FrameTimer.Enabled = true;
+                levelScreen.FrameTimer.Enabled = true;
+                objectScreen.FrameTimer.Enabled = true;
             }
         }
     }
