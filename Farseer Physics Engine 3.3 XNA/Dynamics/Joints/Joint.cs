@@ -278,5 +278,10 @@ namespace FarseerPhysics.Dynamics.Joints
         /// </summary>
         /// <returns>returns true if the position errors are within tolerance.</returns>
         internal abstract bool SolvePositionConstraints();
+
+        public virtual Joint Clone()
+        {
+            return (Joint)this.MemberwiseClone();
+        }
     }
 }
