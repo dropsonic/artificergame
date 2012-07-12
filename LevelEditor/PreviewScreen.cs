@@ -16,8 +16,8 @@ namespace LevelEditor
         AssetCreator assetCreator;
         SpriteBatch spriteBatch;
         SpriteFont font;
-        public Sprite sprite;
-        public string message = "Empty Message";
+        Sprite sprite;
+        string message = "Select Preview";
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -59,12 +59,22 @@ namespace LevelEditor
                 case ObjectType.Rectangle:
                     sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRectangle(radius / 2f, radius / 2f), material, color, 0.8f));
                     break;
-                case ObjectType.Star:
-                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, 10, 0f, 1f), material, color, 0.8f));
-                    break;
-                case ObjectType.Gear:
+                 case ObjectType.Gear:
                     sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, 10, 100f, 1f), material, color, 0.8f));
                     break;
+                case ObjectType.Arc:
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(270),100,radius), material, color, 0.8f));
+                    break;
+                case ObjectType.Ellipse:
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateEllipse(radius*1.5f,radius/1.5f,100),material,color,0.8f));
+                    break;
+                case ObjectType.RoundedRectangle:
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(radius,radius,0.1f,0.1f,100), material, color, 0.8f));
+                    break;
+                case ObjectType.Capsule:
+                    sprite = new Sprite(assetCreator.TextureFromVertices(PolygonTools.CreateCapsule(radius, radius / 2.5f, 100, radius / 2.5f, 100), material, color, 0.8f));
+                    break;
+
             }
         }
 
@@ -77,16 +87,15 @@ namespace LevelEditor
 
         protected override void Draw()
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
-
             if (sprite.Texture != null)
             {
                 spriteBatch.Draw(sprite.Texture, new Vector2(this.GraphicsDevice.Viewport.Width/2 - sprite.Origin.X, this.GraphicsDevice.Viewport.Height/2 - sprite.Origin.Y), Color.White);
             }
             else
             {
-                spriteBatch.DrawString(font, message, Vector2.Zero, Color.Red);
+                spriteBatch.DrawString(font, message, Vector2.Zero, Color.Black);
             }
             
             spriteBatch.End();
