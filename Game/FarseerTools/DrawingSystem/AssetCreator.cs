@@ -26,7 +26,6 @@ namespace FarseerTools
     public class AssetCreator
     {
         private const int CircleSegments = 32;
-        private ContentManager _content;
         private GraphicsDevice _device;
         private BasicEffect _effect;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
@@ -35,7 +34,6 @@ namespace FarseerTools
         public AssetCreator(GraphicsDevice device, ContentManager content)
         {
             _device = device;
-            _content = content;
             _effect = new BasicEffect(_device);
         }
 
@@ -59,17 +57,9 @@ namespace FarseerTools
             return ConvertUnits.ToDisplayUnits(b.Position - lBound) + new Vector2(1f);
         }
 
-        public void LoadContent(List<string> materials)
+        public void LoadMaterial(string key, Texture2D texture)
         {
-            foreach (string material in materials)
-            {
-                LoadContent(material);
-            }
-        }
-
-        public void LoadContent(string material)
-        {
-            _materials[material] = _content.Load<Texture2D>("Textures/Materials/" + material);
+            _materials[key] = texture;
         }
 
 
