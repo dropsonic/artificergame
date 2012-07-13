@@ -127,6 +127,7 @@ namespace LevelEditor
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
+                
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:

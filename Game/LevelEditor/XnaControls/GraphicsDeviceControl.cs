@@ -175,8 +175,15 @@ using Microsoft.Xna.Framework.Content;
             viewport.MinDepth = 0;
             viewport.MaxDepth = 1;
 
-            
-            GraphicsDevice.Viewport = viewport;
+            try
+            {
+                GraphicsDevice.Viewport = viewport;
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message, "Error");
+                //TODO: errorHandler
+            }
             
 
 

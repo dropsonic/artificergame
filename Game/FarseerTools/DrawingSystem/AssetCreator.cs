@@ -152,7 +152,6 @@ namespace FarseerTools
             radiusX = ConvertUnits.ToDisplayUnits(radiusX);
             radiusY = ConvertUnits.ToDisplayUnits(radiusY);
             materialScale /= _materials[type].Width;
-
             Vector2 start = new Vector2(radiusX, 0f);
 
             for (int i = 0; i < CircleSegments - 2; ++i)
@@ -169,6 +168,7 @@ namespace FarseerTools
                 verticesFill[3 * i + 2].TextureCoordinate = p2 * materialScale;
                 verticesFill[3 * i].Color = verticesFill[3 * i + 1].Color = verticesFill[3 * i + 2].Color = color;
 
+                
                 // outline vertices
                 if (i == 0)
                 {
@@ -208,10 +208,10 @@ namespace FarseerTools
                                         VertexPositionColor[] verticesOutline)
         {
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
-            PresentationParameters pp = _device.PresentationParameters;
             RenderTarget2D texture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
-                                                        DepthFormat.None, 10,
+                                                        DepthFormat.None, 20,
                                                         RenderTargetUsage.DiscardContents);
+
             _device.RasterizerState = RasterizerState.CullNone;
             _device.SamplerStates[0] = SamplerState.LinearWrap;
             _device.SetRenderTarget(texture);
