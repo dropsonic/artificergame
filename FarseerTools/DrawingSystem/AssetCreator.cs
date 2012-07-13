@@ -235,7 +235,7 @@ namespace FarseerTools
             _effect.Techniques[0].Passes[0].Apply();
             _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
             _device.SetRenderTarget(null);
-            return texture;
+             return texture;
         }
 
         private Texture2D RenderTexture(int width, int height, Texture2D texture,
@@ -304,8 +304,6 @@ namespace FarseerTools
             bassicEffect.Texture = texture;
             bassicEffect.Techniques[0].Passes[0].Apply();
             _device.DrawUserPrimitives(PrimitiveType.TriangleStrip, rectangleTexture, 0, 2);
-
-            _device.BlendState = BlendState.AlphaBlend;
             _device.SetRenderTarget(null);
             return outputTexture;
         }
