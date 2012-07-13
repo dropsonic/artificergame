@@ -130,6 +130,9 @@
     <Content Include="Content\Textures\Materials\acid.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Textures\Materials\AlphaSprite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Textures\Materials\blank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

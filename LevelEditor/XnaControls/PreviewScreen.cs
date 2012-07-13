@@ -74,8 +74,8 @@ namespace LevelEditor
 
         protected override void Draw()
         {
-            GraphicsDevice.Clear(Color.White);
-            spriteBatch.Begin();
+            GraphicsDevice.Clear(Color.Gray);
+            spriteBatch.Begin(SpriteSortMode.Immediate,BlendState.NonPremultiplied);
             if (sprite.Texture != null)
             {
                 spriteBatch.Draw(sprite.Texture, new Vector2(this.GraphicsDevice.Viewport.Width/2 - sprite.Origin.X, this.GraphicsDevice.Viewport.Height/2 - sprite.Origin.Y), Color.White);
