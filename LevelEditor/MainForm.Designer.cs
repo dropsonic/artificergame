@@ -810,7 +810,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
+            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
             // 
             // label16
             // 

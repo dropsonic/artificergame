@@ -18,7 +18,7 @@ namespace LevelEditor
 {
     public partial class MainForm : Form
     {
-        AssetCreator assetCreator;
+        AssetCreator _assetCreator;
         readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
         
@@ -28,7 +28,7 @@ namespace LevelEditor
             Initialize();
 
             BlendState state = new BlendState();
-          }
+        }
 
         private void Initialize()
         {
@@ -43,17 +43,16 @@ namespace LevelEditor
             ShowReadyStatus();
         }
 
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             //
             //load assetCreator Materials
             //
-            assetCreator = ContentService.GetContentService().AssetCreator;
+            _assetCreator = ContentService.GetContentService().AssetCreator;
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
                 string filename = System.IO.Path.GetFileName(material).Split('.')[0];
-                assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
+                _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
                 materialBox.Items.Add(filename);
             }
 
@@ -68,43 +67,23 @@ namespace LevelEditor
             }
         }
 
-        string GetParent(string path, int nesting)
+        private void NumericUpDownRadiusValidate(object sender, EventArgs e)
         {
-            return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(),--nesting);
+            try
+            {
+                ValidateShapeRadius();
+                UpdatePreview();
+                ShowReadyStatus();
+            }
+            catch (Exception ex)
+            {
+                ShowErrorStatus(ex);
+            }
         }
 
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
-            this.shapeParameters.Text = "Shape Parameters - " + shapeBox.SelectedItem.ToString();
-            switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
-            {
-                case ObjectType.Arc:
-                    this.shapeParametersControl.SelectedTab = this.arcTab;
-                    break;
-                case ObjectType.Capsule:
-                    this.shapeParametersControl.SelectedTab = this.capsuleTab;
-                    break;
-                case ObjectType.Circle:
-                    this.shapeParametersControl.SelectedTab = this.circleTab;
-                    break;
-                case ObjectType.CustomShape:
-                    this.shapeParametersControl.SelectedTab = this.customShapeTab;
-                    break;
-                case ObjectType.Ellipse:
-                    this.shapeParametersControl.SelectedTab = this.ellipseTab;
-                    break;
-                case ObjectType.Gear:
-                    this.shapeParametersControl.SelectedTab = this.gearTab;
-                    break;
-                case ObjectType.Rectangle:
-                    this.shapeParametersControl.SelectedTab = this.rectangleTab;
-                    break;
-                case ObjectType.RoundedRectangle:
-                    this.shapeParametersControl.SelectedTab = this.roundedRectangleTab;
-                    break;
-
-            }
-
+            SwitchShapeParametersTab((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()));
             shapeBox.Focus();
 
             HandlePreview(sender,e);

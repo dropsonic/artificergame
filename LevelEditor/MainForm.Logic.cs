@@ -13,6 +13,21 @@ namespace LevelEditor
 {
     public partial class MainForm : Form
     {
+        string GetParent(string path, int nesting)
+        {
+            return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
+        }
+
+        private void ValidateShapeRadius()
+        {
+            if ((capsuleHeight.Value <= capsuleBottomRadius.Value * 2) || (capsuleHeight.Value <= capsuleTopRadius.Value * 2))
+                throw new ApplicationException("Capsule height must be greater then 2 minimum radiuses.");
+            if (roundedRectangleHeight.Value < roundedRectangleYRadius.Value * 2)
+                throw new ApplicationException("Rounded rectangle height must be greater then 2 YRadiuses.");
+            if (roundedRectangleWidth.Value < roundedRectangleXRadius.Value * 2)
+                throw new ApplicationException("Rounded rectangle width must be greater then 2 XRadiuses.");
+        }
+
         private void UpdatePreview()
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
@@ -77,13 +92,49 @@ namespace LevelEditor
                     string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
 
                     File.Copy(sourceFile, destFile);
-                    assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(destFile));
+                    _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(destFile));
                     materialBox.Items.Add(filename);
                 }
                 finally
                 {
                     Cursor = Cursors.Arrow;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Переключает видимость вкладки параметров фигуры в зависимости от типа фигуры.
+        /// </summary>
+        /// <param name="shapeType">Тип фигуры.</param>
+        private void SwitchShapeParametersTab(ObjectType shapeType)
+        {
+            this.shapeParameters.Text = "Shape Parameters - " + shapeType.ToString();
+            switch (shapeType)
+            {
+                case ObjectType.Arc:
+                    this.shapeParametersControl.SelectedTab = this.arcTab;
+                    break;
+                case ObjectType.Capsule:
+                    this.shapeParametersControl.SelectedTab = this.capsuleTab;
+                    break;
+                case ObjectType.Circle:
+                    this.shapeParametersControl.SelectedTab = this.circleTab;
+                    break;
+                case ObjectType.CustomShape:
+                    this.shapeParametersControl.SelectedTab = this.customShapeTab;
+                    break;
+                case ObjectType.Ellipse:
+                    this.shapeParametersControl.SelectedTab = this.ellipseTab;
+                    break;
+                case ObjectType.Gear:
+                    this.shapeParametersControl.SelectedTab = this.gearTab;
+                    break;
+                case ObjectType.Rectangle:
+                    this.shapeParametersControl.SelectedTab = this.rectangleTab;
+                    break;
+                case ObjectType.RoundedRectangle:
+                    this.shapeParametersControl.SelectedTab = this.roundedRectangleTab;
+                    break;
             }
         }
 
