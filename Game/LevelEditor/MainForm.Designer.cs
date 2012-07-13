@@ -119,6 +119,7 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -1466,12 +1467,21 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 773);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1444, 22);
+            this.statusStrip1.TabIndex = 6;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1444, 795);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -1633,6 +1643,7 @@ namespace LevelEditor
         private System.Windows.Forms.Label label29;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
 
 
     }
