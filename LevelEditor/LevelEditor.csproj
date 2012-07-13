@@ -121,6 +121,10 @@
       <Project>{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}</Project>
       <Name>LevelEditorContentBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NumericUpDownEx\NumericUpDownEx.csproj">
+      <Project>{05FFAA83-793F-44C9-AB6A-143D132D96D6}</Project>
+      <Name>NumericUpDownEx</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Textures\Materials\acid.jpg">

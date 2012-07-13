@@ -45,65 +45,65 @@ namespace LevelEditor
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
             this.circleTab = new System.Windows.Forms.TabPage();
-            this.circleRadius = new System.Windows.Forms.NumericUpDown();
+            this.circleRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label5 = new System.Windows.Forms.Label();
             this.ellipseTab = new System.Windows.Forms.TabPage();
-            this.ellipseNumberOfEdges = new System.Windows.Forms.NumericUpDown();
+            this.ellipseNumberOfEdges = new System.Windows.Forms.NumericUpDownEx();
             this.label8 = new System.Windows.Forms.Label();
-            this.ellipseYRadius = new System.Windows.Forms.NumericUpDown();
+            this.ellipseYRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label7 = new System.Windows.Forms.Label();
-            this.ellipseXRadius = new System.Windows.Forms.NumericUpDown();
+            this.ellipseXRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label6 = new System.Windows.Forms.Label();
             this.arcTab = new System.Windows.Forms.TabPage();
-            this.arcRadius = new System.Windows.Forms.NumericUpDown();
+            this.arcRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label9 = new System.Windows.Forms.Label();
-            this.arcSides = new System.Windows.Forms.NumericUpDown();
+            this.arcSides = new System.Windows.Forms.NumericUpDownEx();
             this.label10 = new System.Windows.Forms.Label();
-            this.arcDegrees = new System.Windows.Forms.NumericUpDown();
+            this.arcDegrees = new System.Windows.Forms.NumericUpDownEx();
             this.label11 = new System.Windows.Forms.Label();
             this.gearTab = new System.Windows.Forms.TabPage();
-            this.gearToothHeight = new System.Windows.Forms.NumericUpDown();
+            this.gearToothHeight = new System.Windows.Forms.NumericUpDownEx();
             this.label15 = new System.Windows.Forms.Label();
-            this.gearTipPercentage = new System.Windows.Forms.NumericUpDown();
+            this.gearTipPercentage = new System.Windows.Forms.NumericUpDownEx();
             this.label12 = new System.Windows.Forms.Label();
-            this.gearNumberOfTeeth = new System.Windows.Forms.NumericUpDown();
+            this.gearNumberOfTeeth = new System.Windows.Forms.NumericUpDownEx();
             this.label13 = new System.Windows.Forms.Label();
-            this.gearRadius = new System.Windows.Forms.NumericUpDown();
+            this.gearRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label14 = new System.Windows.Forms.Label();
             this.capsuleTab = new System.Windows.Forms.TabPage();
-            this.capsuleBottomEdges = new System.Windows.Forms.NumericUpDown();
+            this.capsuleBottomEdges = new System.Windows.Forms.NumericUpDownEx();
             this.label20 = new System.Windows.Forms.Label();
-            this.capsuleBottomRadius = new System.Windows.Forms.NumericUpDown();
+            this.capsuleBottomRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label16 = new System.Windows.Forms.Label();
-            this.capsuleTopEdges = new System.Windows.Forms.NumericUpDown();
+            this.capsuleTopEdges = new System.Windows.Forms.NumericUpDownEx();
             this.label17 = new System.Windows.Forms.Label();
-            this.capsuleTopRadius = new System.Windows.Forms.NumericUpDown();
+            this.capsuleTopRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label18 = new System.Windows.Forms.Label();
-            this.capsuleHeight = new System.Windows.Forms.NumericUpDown();
+            this.capsuleHeight = new System.Windows.Forms.NumericUpDownEx();
             this.label19 = new System.Windows.Forms.Label();
             this.rectangleTab = new System.Windows.Forms.TabPage();
-            this.rectangleWidth = new System.Windows.Forms.NumericUpDown();
+            this.rectangleWidth = new System.Windows.Forms.NumericUpDownEx();
             this.label21 = new System.Windows.Forms.Label();
-            this.rectangleHeight = new System.Windows.Forms.NumericUpDown();
+            this.rectangleHeight = new System.Windows.Forms.NumericUpDownEx();
             this.label22 = new System.Windows.Forms.Label();
             this.roundedRectangleTab = new System.Windows.Forms.TabPage();
-            this.roundedRectangleYRadius = new System.Windows.Forms.NumericUpDown();
+            this.roundedRectangleYRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label23 = new System.Windows.Forms.Label();
-            this.roundedRectangleXRadius = new System.Windows.Forms.NumericUpDown();
+            this.roundedRectangleXRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label24 = new System.Windows.Forms.Label();
-            this.roundedRectangleHeight = new System.Windows.Forms.NumericUpDown();
+            this.roundedRectangleHeight = new System.Windows.Forms.NumericUpDownEx();
             this.label25 = new System.Windows.Forms.Label();
-            this.roundedRectangleWidth = new System.Windows.Forms.NumericUpDown();
+            this.roundedRectangleWidth = new System.Windows.Forms.NumericUpDownEx();
             this.label26 = new System.Windows.Forms.Label();
-            this.roundedRectangleSegments = new System.Windows.Forms.NumericUpDown();
+            this.roundedRectangleSegments = new System.Windows.Forms.NumericUpDownEx();
             this.label27 = new System.Windows.Forms.Label();
             this.customShapeTab = new System.Windows.Forms.TabPage();
-            this.customShapeScale = new System.Windows.Forms.NumericUpDown();
+            this.customShapeScale = new System.Windows.Forms.NumericUpDownEx();
             this.label28 = new System.Windows.Forms.Label();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.commonParameters = new System.Windows.Forms.GroupBox();
-            this.materialScale = new System.Windows.Forms.NumericUpDown();
+            this.materialScale = new System.Windows.Forms.NumericUpDownEx();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.materialBox = new System.Windows.Forms.ComboBox();
@@ -810,7 +810,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.capsuleBottomRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleBottomRadius_ValueChanging);
             // 
             // label16
             // 
@@ -880,7 +880,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.capsuleTopRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleTopRadius_ValueChanging);
             // 
             // label18
             // 
@@ -918,7 +918,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.capsuleHeight.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.capsuleHeight.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleHeight_ValueChanging);
             // 
             // label19
             // 
@@ -1066,7 +1066,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.roundedRectangleYRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleYRadius_ValueChanging);
             // 
             // label23
             // 
@@ -1104,7 +1104,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.roundedRectangleXRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleXRadius_ValueChanging);
             // 
             // label24
             // 
@@ -1142,7 +1142,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.roundedRectangleHeight.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleHeight_ValueChanging);
             // 
             // label25
             // 
@@ -1180,7 +1180,7 @@ namespace LevelEditor
             0,
             0,
             0});
-            this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.roundedRectangleWidth.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleWidth_ValueChanging);
             // 
             // label26
             // 
@@ -1591,7 +1591,7 @@ namespace LevelEditor
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox commonParameters;
         private System.Windows.Forms.GroupBox shapeParameters;
-        private System.Windows.Forms.NumericUpDown materialScale;
+        private System.Windows.Forms.NumericUpDownEx materialScale;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage levelPage;
@@ -1608,52 +1608,52 @@ namespace LevelEditor
         private System.Windows.Forms.TabPage roundedRectangleTab;
         private System.Windows.Forms.TabPage customShapeTab;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown circleRadius;
+        private System.Windows.Forms.NumericUpDownEx circleRadius;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown ellipseNumberOfEdges;
+        private System.Windows.Forms.NumericUpDownEx ellipseNumberOfEdges;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown ellipseYRadius;
+        private System.Windows.Forms.NumericUpDownEx ellipseYRadius;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown ellipseXRadius;
-        private System.Windows.Forms.NumericUpDown arcRadius;
+        private System.Windows.Forms.NumericUpDownEx ellipseXRadius;
+        private System.Windows.Forms.NumericUpDownEx arcRadius;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown arcSides;
+        private System.Windows.Forms.NumericUpDownEx arcSides;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown arcDegrees;
+        private System.Windows.Forms.NumericUpDownEx arcDegrees;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown gearTipPercentage;
+        private System.Windows.Forms.NumericUpDownEx gearTipPercentage;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown gearNumberOfTeeth;
+        private System.Windows.Forms.NumericUpDownEx gearNumberOfTeeth;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.NumericUpDown gearRadius;
+        private System.Windows.Forms.NumericUpDownEx gearRadius;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.NumericUpDown gearToothHeight;
+        private System.Windows.Forms.NumericUpDownEx gearToothHeight;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown capsuleBottomRadius;
+        private System.Windows.Forms.NumericUpDownEx capsuleBottomRadius;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.NumericUpDown capsuleTopEdges;
+        private System.Windows.Forms.NumericUpDownEx capsuleTopEdges;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.NumericUpDown capsuleTopRadius;
+        private System.Windows.Forms.NumericUpDownEx capsuleTopRadius;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.NumericUpDown capsuleHeight;
+        private System.Windows.Forms.NumericUpDownEx capsuleHeight;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.NumericUpDown capsuleBottomEdges;
+        private System.Windows.Forms.NumericUpDownEx capsuleBottomEdges;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.NumericUpDown rectangleWidth;
+        private System.Windows.Forms.NumericUpDownEx rectangleWidth;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown rectangleHeight;
+        private System.Windows.Forms.NumericUpDownEx rectangleHeight;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.NumericUpDown roundedRectangleYRadius;
+        private System.Windows.Forms.NumericUpDownEx roundedRectangleYRadius;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.NumericUpDown roundedRectangleXRadius;
+        private System.Windows.Forms.NumericUpDownEx roundedRectangleXRadius;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.NumericUpDown roundedRectangleHeight;
+        private System.Windows.Forms.NumericUpDownEx roundedRectangleHeight;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.NumericUpDown roundedRectangleWidth;
+        private System.Windows.Forms.NumericUpDownEx roundedRectangleWidth;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.NumericUpDown roundedRectangleSegments;
+        private System.Windows.Forms.NumericUpDownEx roundedRectangleSegments;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.NumericUpDown customShapeScale;
+        private System.Windows.Forms.NumericUpDownEx customShapeScale;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
