@@ -40,6 +40,7 @@ namespace LevelEditor
             levelScreen.message = "Level";
             objectScreen.message = "GameObject";
 
+            ShowReadyStatus();
         }
 
 
@@ -184,29 +185,65 @@ namespace LevelEditor
 
         private void loadMaterialToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                LoadMaterial();
+            }
+            catch (Exception ex)
+            {
+                ShowErrorStatus(ex);
+            }
+        }
+
+        private void LoadMaterial()
+        {
             OpenFileDialog fileDialog = new OpenFileDialog();
 
             fileDialog.Title = "Load Material";
 
             fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
                                 "All Files (*.*)|*.*";
-
+            
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
 
-                string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
-                string sourceFile = fileDialog.FileName;
-                string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
+                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string sourceFile = fileDialog.FileName;
+                    string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
 
-                File.Copy(sourceFile, destFile);
-                assetCreator.LoadMaterial(filename,ContentService.GetContentService().LoadTexture(destFile));
-                materialBox.Items.Add(filename);
-
-                Cursor = Cursors.Arrow;
+                    File.Copy(sourceFile, destFile);
+                    assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(destFile));
+                    materialBox.Items.Add(filename);
+                }
+                finally
+                {
+                    Cursor = Cursors.Arrow;
+                }
             }
         }
 
+        #region StatusStrip
+        private void ShowErrorStatus(Exception ex)
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.Tomato;
+            toolStripStatusLabel.Image = SystemIcons.Error.ToBitmap();
+            toolStripStatusLabel.Text = String.Format("Error: {0} ({1}, source: {2}).", ex.Message, ex.GetType().Name, ex.Source);
+        }
 
+        private void ShowReadyStatus()
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.LimeGreen;
+            toolStripStatusLabel.Text = "Ready.";
+            toolStripStatusLabel.Image = null;
+        }
+
+        private void toolStripStatusLabel_Click(object sender, EventArgs e)
+        {
+            ShowReadyStatus();
+        }
+        #endregion
     }
 }

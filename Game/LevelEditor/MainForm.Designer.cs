@@ -41,7 +41,6 @@ namespace LevelEditor
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
-            this.previewScreen = new LevelEditor.PreviewScreen();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
             this.circleTab = new System.Windows.Forms.TabPage();
@@ -119,7 +118,8 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -168,6 +168,7 @@ namespace LevelEditor
             this.tabControl1.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -252,7 +253,6 @@ namespace LevelEditor
             // 
             // previewPage
             // 
-            this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
             this.previewPage.Controls.Add(this.label1);
@@ -264,15 +264,6 @@ namespace LevelEditor
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
-            // 
-            // previewScreen
-            // 
-            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.previewScreen.Location = new System.Drawing.Point(3, 3);
-            this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(290, 290);
-            this.previewScreen.TabIndex = 9;
-            this.previewScreen.Text = "previewScreen";
             // 
             // shapeParameters
             // 
@@ -1467,13 +1458,26 @@ namespace LevelEditor
             this.propertyGrid.Size = new System.Drawing.Size(273, 765);
             this.propertyGrid.TabIndex = 0;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 773);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1444, 22);
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 773);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1444, 22);
+            this.statusStrip.TabIndex = 6;
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1398, 17);
+            this.toolStripStatusLabel.Spring = true;
+            this.toolStripStatusLabel.Text = "Ready.";
+            this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripStatusLabel.Click += new System.EventHandler(this.toolStripStatusLabel_Click);
             // 
             // MainForm
             // 
@@ -1481,7 +1485,7 @@ namespace LevelEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1444, 795);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -1548,6 +1552,8 @@ namespace LevelEditor
             this.tabControl1.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1643,7 +1649,8 @@ namespace LevelEditor
         private System.Windows.Forms.Label label29;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
 
 
     }
