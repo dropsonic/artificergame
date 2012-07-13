@@ -213,7 +213,7 @@ namespace FarseerTools
                                                         RenderTargetUsage.DiscardContents);
 
             _device.RasterizerState = RasterizerState.CullNone;
-            _device.SamplerStates[0] = SamplerState.LinearClamp;
+            _device.SamplerStates[0] = SamplerState.LinearWrap;
             _device.SetRenderTarget(texture);
             _device.Clear(Color.Transparent);
             _effect.Projection = Matrix.CreateOrthographic(width + 2f, -height - 2f, 0f, 1f);
