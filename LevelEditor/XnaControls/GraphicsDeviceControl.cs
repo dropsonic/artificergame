@@ -184,8 +184,6 @@ using Microsoft.Xna.Framework.Content;
                 //MessageBox.Show(ex.Message, "Error");
                 //TODO: errorHandler
             }
-            
-
 
             return null;
         }

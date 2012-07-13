@@ -810,7 +810,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.NumericUpDownRadiusValidate);
+            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label16
             // 
@@ -1488,7 +1488,6 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolStripStatusLabel.Click += new System.EventHandler(this.toolStripStatusLabel_Click);
             // 
             // MainForm
             // 

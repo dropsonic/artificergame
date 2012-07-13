@@ -8,8 +8,8 @@
     <ProjectGuid>{C5892243-198E-4717-9492-02440573E7F1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsFormsApplication1</RootNamespace>
-    <AssemblyName>WindowsFormsApplication1</AssemblyName>
+    <RootNamespace>LevelEditor</RootNamespace>
+    <AssemblyName>LevelEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -59,6 +59,9 @@
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
+    <Compile Include="MainForm.Logic.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TabHiddenHeadersControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -120,7 +123,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Textures\Materials\acid.jpg" />
+    <Content Include="Content\Textures\Materials\acid.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Textures\Materials\blank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -130,7 +135,9 @@
     <Content Include="Content\Textures\Materials\pavement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Textures\Materials\rust.jpg" />
+    <Content Include="Content\Textures\Materials\rust.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Textures\Materials\squares.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
