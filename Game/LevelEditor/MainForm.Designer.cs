@@ -121,6 +121,7 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.setAsTextureCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -1285,6 +1286,7 @@ namespace LevelEditor
             // 
             // commonParameters
             // 
+            this.commonParameters.Controls.Add(this.setAsTextureCheck);
             this.commonParameters.Controls.Add(this.materialScale);
             this.commonParameters.Controls.Add(this.label4);
             this.commonParameters.Controls.Add(this.label2);
@@ -1489,6 +1491,17 @@ namespace LevelEditor
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // setAsTextureCheck
+            // 
+            this.setAsTextureCheck.AutoSize = true;
+            this.setAsTextureCheck.Location = new System.Drawing.Point(162, 118);
+            this.setAsTextureCheck.Name = "setAsTextureCheck";
+            this.setAsTextureCheck.Size = new System.Drawing.Size(91, 17);
+            this.setAsTextureCheck.TabIndex = 10;
+            this.setAsTextureCheck.Text = "Set as texture";
+            this.setAsTextureCheck.UseVisualStyleBackColor = true;
+            this.setAsTextureCheck.CheckedChanged += new System.EventHandler(this.setAsTextureCheck_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1661,6 +1674,7 @@ namespace LevelEditor
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private PreviewScreen previewScreen;
+        private System.Windows.Forms.CheckBox setAsTextureCheck;
 
 
     }

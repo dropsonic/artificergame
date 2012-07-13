@@ -39,7 +39,6 @@ namespace LevelEditor
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             levelScreen.message = "Level";
             objectScreen.message = "GameObject";
-
             ShowReadyStatus();
         }
 
@@ -49,6 +48,7 @@ namespace LevelEditor
             //load assetCreator Materials
             //
             _assetCreator = ContentService.GetContentService().AssetCreator;
+            _assetCreator.UseTexture = setAsTextureCheck.Checked;
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
                 string filename = System.IO.Path.GetFileName(material).Split('.')[0];
@@ -115,6 +115,12 @@ namespace LevelEditor
             {
                 ShowErrorStatus(ex);
             }
+        }
+
+        private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            HandlePreview(sender, e);
         }
 
         #region Проверки NumericUpDown для фигур
@@ -195,5 +201,7 @@ namespace LevelEditor
                 ShowReadyStatus();
         }
         #endregion
+
+
     }
 }
