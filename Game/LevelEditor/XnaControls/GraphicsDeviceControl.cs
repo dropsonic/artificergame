@@ -176,7 +176,6 @@ using Microsoft.Xna.Framework.Content;
             viewport.MaxDepth = 1;
 
             
-            //TODO: разобраться в исключении при сворачивании окна
             GraphicsDevice.Viewport = viewport;
             
 
