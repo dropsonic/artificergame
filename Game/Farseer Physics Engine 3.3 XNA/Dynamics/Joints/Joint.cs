@@ -116,6 +116,16 @@ namespace FarseerPhysics.Dynamics.Joints
         /// The previous joint edge in the body's joint list.
         /// </summary>
         public JointEdge Prev;
+
+        public JointEdge Clone()
+        {
+            JointEdge result = new JointEdge();
+            result.Joint = this.Joint;
+            result.Next = this.Next;
+            result.Other = this.Other;
+            result.Prev = this.Prev;
+            return result;
+        }
     }
 
     public abstract class Joint
@@ -281,7 +291,17 @@ namespace FarseerPhysics.Dynamics.Joints
 
         public virtual Joint Clone()
         {
-            return (Joint)this.MemberwiseClone();
+            Joint result = (Joint)this.MemberwiseClone();
+
+            JointEdge resultEdgeA = EdgeA.Clone();
+            resultEdgeA.Joint = result;
+            result.EdgeA = resultEdgeA;
+
+            JointEdge resultEdgeB = EdgeB.Clone();
+            resultEdgeB.Joint = result;
+            result.EdgeB = resultEdgeB;
+
+            return result;
         }
     }
 }
