@@ -183,7 +183,7 @@ namespace LevelEditor
 
         private void loadMaterialToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*OpenFileDialog fileDialog = new OpenFileDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog();
 
             fileDialog.Title = "Load Material";
 
@@ -193,20 +193,17 @@ namespace LevelEditor
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 Cursor = Cursors.WaitCursor;
+
                 string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
-                builder.Add(fileDialog.FileName, ContentService.GetMaterial() + filename, null, "TextureProcessor");
-                string buildError = builder.Build();
+                string sourceFile = fileDialog.FileName;
+                string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
+
+                File.Copy(sourceFile, destFile);
+                assetCreator.LoadMaterial(filename,ContentService.GetContentService().LoadTexture(destFile));
+                materialBox.Items.Add(filename);
+
                 Cursor = Cursors.Arrow;
-                if (!string.IsNullOrEmpty(buildError))
-                {
-                    MessageBox.Show(buildError, "Error");
-                }
-                else
-                {
-                    assetCreator.LoadContent(filename);
-                    materialBox.Items.Add(filename);
-                }
-            }*/
+            }
         }
 
 
