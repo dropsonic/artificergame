@@ -18,7 +18,6 @@ namespace LevelEditor
     using System.Reflection;
     public partial class MainForm : Form
     {
-        ContentBuilder builder;
         AssetCreator assetCreator;
         readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -27,22 +26,13 @@ namespace LevelEditor
         {
             InitializeComponent();
             Initialize();
-        }
+
+            BlendState state = new BlendState();
+          }
 
         private void Initialize()
         {
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
-            //
-            //build runtime textures
-            //
-            builder = new ContentBuilder(ContentService.GetContentPath());
-            builder.AddMaterials(Directory.GetFiles(GetParent(Environment.CurrentDirectory, 2) + "\\Content (Runtime Build)\\Textures\\Materials"));
-            string buildError = builder.Build();
-            if (!string.IsNullOrEmpty(buildError))
-            {
-                MessageBox.Show(buildError, "Error");
-            }
-
             //
             //set component parameters
             //
@@ -59,26 +49,18 @@ namespace LevelEditor
             //load assetCreator Materials
             //
             assetCreator = ContentService.GetContentService().AssetCreator;
-            List<string> materials = new List<string>();
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
-                materials.Add(System.IO.Path.GetFileName(material).Split('.')[0]);
-            }
-            assetCreator.LoadContent(materials);
-
-            //
-            //fill ComboBoxes
-            //
-            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
-            {
-                materialBox.Items.Add(Path.GetFileName(material).Split('.')[0]);
+                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
+                assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
+                materialBox.Items.Add(filename);
             }
 
             foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
             {
                 shapeBox.Items.Add(obj);
             }
-
+            
             foreach (string colorName in colorDictionary.Keys)
             {
                 colorBox.Items.Add(colorName);
@@ -107,6 +89,7 @@ namespace LevelEditor
 
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
+                
                 this.shapeParameters.Text = "Shape Parameters - " + shapeBox.SelectedItem.ToString();
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
@@ -200,7 +183,7 @@ namespace LevelEditor
 
         private void loadMaterialToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
+            /*OpenFileDialog fileDialog = new OpenFileDialog();
 
             fileDialog.Title = "Load Material";
 
@@ -223,7 +206,7 @@ namespace LevelEditor
                     assetCreator.LoadContent(filename);
                     materialBox.Items.Add(filename);
                 }
-            }
+            }*/
         }
 
 

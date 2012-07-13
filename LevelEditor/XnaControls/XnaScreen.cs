@@ -12,6 +12,7 @@ namespace LevelEditor
         SpriteBatch spriteBatch;
         SpriteFont font;
         public string message = "Empty Message";
+        public Texture2D texture;
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -46,7 +47,13 @@ namespace LevelEditor
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             spriteBatch.DrawString(font, message, Vector2.Zero, Color.Black);
+            if (texture != null)
+            {
+                spriteBatch.Draw(texture, new Vector2(0, 0), Color.White);
+            }
             spriteBatch.End();
+
+
         }
     }
 }
