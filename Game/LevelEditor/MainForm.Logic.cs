@@ -20,12 +20,7 @@ namespace LevelEditor
 
         private void ValidateShapeRadius()
         {
-            if ((capsuleHeight.Value <= capsuleBottomRadius.Value * 2) || (capsuleHeight.Value <= capsuleTopRadius.Value * 2))
-                throw new ApplicationException("Capsule height must be greater then 2 minimum radiuses.");
-            if (roundedRectangleHeight.Value < roundedRectangleYRadius.Value * 2)
-                throw new ApplicationException("Rounded rectangle height must be greater then 2 YRadiuses.");
-            if (roundedRectangleWidth.Value < roundedRectangleXRadius.Value * 2)
-                throw new ApplicationException("Rounded rectangle width must be greater then 2 XRadiuses.");
+            
         }
 
         private void UpdatePreview()
@@ -138,12 +133,23 @@ namespace LevelEditor
             }
         }
 
+        private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)
+        {
+            return !((height <= bottomRadius * 2) || (height <= topRadius * 2));
+        }
+
+        private bool CheckRoundedRectangleParams(decimal side, decimal radius)
+        {
+            return !(side < radius * 2);
+        }
+
         #region Status
         private enum StatusType
         {
             Undefined,
             Ready,
-            Error
+            Error,
+            Warning
         }
 
         private StatusType _status = StatusType.Undefined;
@@ -165,6 +171,14 @@ namespace LevelEditor
                 toolStripStatusLabel.Image = null;
                 _status = StatusType.Ready;
             }
+        }
+
+        private void ShowWarningStatus(string message)
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.Orange;
+            toolStripStatusLabel.Image = SystemIcons.Warning.ToBitmap();
+            toolStripStatusLabel.Text = message;
+            _status = StatusType.Warning;
         }
         #endregion
     }

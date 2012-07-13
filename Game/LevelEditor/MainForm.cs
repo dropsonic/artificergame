@@ -67,20 +67,6 @@ namespace LevelEditor
             }
         }
 
-        private void NumericUpDownRadiusValidate(object sender, EventArgs e)
-        {
-            try
-            {
-                ValidateShapeRadius();
-                UpdatePreview();
-                ShowReadyStatus();
-            }
-            catch (Exception ex)
-            {
-                ShowErrorStatus(ex);
-            }
-        }
-
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
             SwitchShapeParametersTab((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()));
@@ -130,5 +116,84 @@ namespace LevelEditor
                 ShowErrorStatus(ex);
             }
         }
+
+        #region Проверки NumericUpDown для фигур
+        private void capsuleHeight_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckCapsuleParams(e.NewValue, capsuleBottomRadius.Value, capsuleTopRadius.Value))
+            {
+                ShowWarningStatus("Capsule height must be greater then 2 minimum radiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void capsuleBottomRadius_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckCapsuleParams(capsuleHeight.Value, e.NewValue, capsuleTopRadius.Value))
+            {
+                ShowWarningStatus("Capsule height must be greater then 2 minimum radiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void capsuleTopRadius_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckCapsuleParams(capsuleHeight.Value, capsuleBottomRadius.Value, e.NewValue))
+            {
+                ShowWarningStatus("Capsule height must be greater then 2 minimum radiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void roundedRectangleHeight_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckRoundedRectangleParams(e.NewValue, roundedRectangleYRadius.Value))
+            {
+                ShowWarningStatus("Rounded rectangle height must be greater then 2 YRadiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void roundedRectangleYRadius_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckRoundedRectangleParams(roundedRectangleHeight.Value, e.NewValue))
+            {
+                ShowWarningStatus("Rounded rectangle height must be greater then 2 yRadiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void roundedRectangleWidth_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckRoundedRectangleParams(e.NewValue, roundedRectangleXRadius.Value))
+            {
+                ShowWarningStatus("Rounded rectangle width must be greater then 2 yRadiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+
+        private void roundedRectangleXRadius_ValueChanging(object sender, ValueChangingEventArgs e)
+        {
+            if (!CheckRoundedRectangleParams(roundedRectangleWidth.Value, e.NewValue))
+            {
+                ShowWarningStatus("Rounded rectangle width must be greater then 2 xRadiuses.");
+                e.KeepOldValue = true;
+            }
+            else
+                ShowReadyStatus();
+        }
+        #endregion
     }
 }
