@@ -8,6 +8,8 @@ using FarseerTools;
 using LevelEditor;
 using Color = Microsoft.Xna.Framework.Color;
 using System.Drawing;
+using System.Diagnostics;
+using System.Threading;
 
 namespace LevelEditor
 {
@@ -23,10 +25,20 @@ namespace LevelEditor
             
         }
 
+        Stopwatch updatePreviewStopwatch;
+        double updatePreviewDuration = 0;
+        const double minUpdatePreviewDuration = 10; //минимальное время отрисовки, зависит от производительности видеокарты
+        const double updatePreviewWaitingCoefficient = 1.5; //подбирается опытным путём
         private void UpdatePreview()
         {
+            if (updatePreviewDuration > minUpdatePreviewDuration)
+                Thread.Sleep(TimeSpan.FromMilliseconds(updatePreviewDuration * updatePreviewWaitingCoefficient));
+
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
+                //Засекаем продолжительность вызова UpdatePreview
+                updatePreviewStopwatch = Stopwatch.StartNew();
+
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:
@@ -61,6 +73,9 @@ namespace LevelEditor
                             float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
                         break;
                 }
+
+                updatePreviewStopwatch.Stop();
+                updatePreviewDuration = updatePreviewStopwatch.Elapsed.TotalMilliseconds;
             }
         }
 
