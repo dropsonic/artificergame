@@ -8,6 +8,7 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Threading;
 
 namespace FarseerTools
 {
@@ -242,7 +243,6 @@ namespace FarseerTools
                                         List<VertexPositionColorTexture[]> verticesFill,
                                         VertexPositionColor[] verticesOutline)
         {
-
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
                                                         DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
@@ -373,13 +373,11 @@ namespace FarseerTools
             _device.Clear(Color.Transparent);
             _effect.Projection = Matrix.CreateOrthographic(width + 2f, height + 2f, 0f, 1f);
             _effect.View = halfPixelOffset;
-             //render shape;
             _effect.TextureEnabled = false;
             _effect.VertexColorEnabled = true;
             _effect.Techniques[0].Passes[0].Apply();
             for (int i = 0; i < verticesFill.Count; ++i)
                 _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline[i], 0, verticesOutline[i].Length / 2);
-            // render outline;
             _effect.TextureEnabled = true;
             _effect.Texture = _materials[type];
             _effect.Techniques[0].Passes[0].Apply();
