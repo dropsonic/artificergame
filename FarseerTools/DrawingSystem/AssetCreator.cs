@@ -212,7 +212,7 @@ namespace FarseerTools
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             
             RenderTarget2D texture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
-                                                        DepthFormat.None, 20,
+                                                        DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
 
             _device.RasterizerState = RasterizerState.CullNone;
@@ -244,7 +244,7 @@ namespace FarseerTools
         {
 
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
-                                                        DepthFormat.None, 0,
+                                                        DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
 
             VertexPositionColorTexture[] rectangleTexture = new VertexPositionColorTexture[4];
