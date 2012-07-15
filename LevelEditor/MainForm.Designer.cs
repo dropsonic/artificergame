@@ -103,6 +103,7 @@ namespace LevelEditor
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.commonParameters = new System.Windows.Forms.GroupBox();
+            this.setAsTextureCheck = new System.Windows.Forms.CheckBox();
             this.materialScale = new System.Windows.Forms.NumericUpDownEx();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -121,7 +122,6 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.setAsTextureCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -812,6 +812,7 @@ namespace LevelEditor
             0,
             65536});
             this.capsuleBottomRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleBottomRadius_ValueChanging);
+            this.capsuleBottomRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label16
             // 
@@ -882,6 +883,7 @@ namespace LevelEditor
             0,
             65536});
             this.capsuleTopRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleTopRadius_ValueChanging);
+            this.capsuleTopRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label18
             // 
@@ -920,6 +922,7 @@ namespace LevelEditor
             0,
             0});
             this.capsuleHeight.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.capsuleHeight_ValueChanging);
+            this.capsuleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label19
             // 
@@ -1068,6 +1071,7 @@ namespace LevelEditor
             0,
             65536});
             this.roundedRectangleYRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleYRadius_ValueChanging);
+            this.roundedRectangleYRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label23
             // 
@@ -1106,6 +1110,7 @@ namespace LevelEditor
             0,
             65536});
             this.roundedRectangleXRadius.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleXRadius_ValueChanging);
+            this.roundedRectangleXRadius.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label24
             // 
@@ -1144,6 +1149,7 @@ namespace LevelEditor
             0,
             0});
             this.roundedRectangleHeight.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleHeight_ValueChanging);
+            this.roundedRectangleHeight.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label25
             // 
@@ -1182,6 +1188,7 @@ namespace LevelEditor
             0,
             0});
             this.roundedRectangleWidth.ValueChanging += new System.Windows.Forms.ValueChangingEventHandler(this.roundedRectangleWidth_ValueChanging);
+            this.roundedRectangleWidth.ValueChanged += new System.EventHandler(this.HandlePreview);
             // 
             // label26
             // 
@@ -1299,6 +1306,17 @@ namespace LevelEditor
             this.commonParameters.TabIndex = 7;
             this.commonParameters.TabStop = false;
             this.commonParameters.Text = "Common Parameters";
+            // 
+            // setAsTextureCheck
+            // 
+            this.setAsTextureCheck.AutoSize = true;
+            this.setAsTextureCheck.Location = new System.Drawing.Point(162, 118);
+            this.setAsTextureCheck.Name = "setAsTextureCheck";
+            this.setAsTextureCheck.Size = new System.Drawing.Size(91, 17);
+            this.setAsTextureCheck.TabIndex = 10;
+            this.setAsTextureCheck.Text = "Set as texture";
+            this.setAsTextureCheck.UseVisualStyleBackColor = true;
+            this.setAsTextureCheck.CheckedChanged += new System.EventHandler(this.setAsTextureCheck_CheckedChanged);
             // 
             // materialScale
             // 
@@ -1490,17 +1508,6 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // setAsTextureCheck
-            // 
-            this.setAsTextureCheck.AutoSize = true;
-            this.setAsTextureCheck.Location = new System.Drawing.Point(162, 118);
-            this.setAsTextureCheck.Name = "setAsTextureCheck";
-            this.setAsTextureCheck.Size = new System.Drawing.Size(91, 17);
-            this.setAsTextureCheck.TabIndex = 10;
-            this.setAsTextureCheck.Text = "Set as texture";
-            this.setAsTextureCheck.UseVisualStyleBackColor = true;
-            this.setAsTextureCheck.CheckedChanged += new System.EventHandler(this.setAsTextureCheck_CheckedChanged);
             // 
             // MainForm
             // 
