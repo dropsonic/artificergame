@@ -271,7 +271,7 @@ namespace FarseerTools
             bassicEffect.View = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             bassicEffect.Projection = Matrix.CreateOrthographic(width+2, height+2, 0f, 1f);
             bassicEffect.TextureEnabled = true;
-            Texture2D shapeFill = new Texture2D(_device, texture.Height, texture.Width);
+            Texture2D shapeFill = new Texture2D(_device, 1, 1);
             shapeFill.SetData<Color>(new Color[] { verticesFill[0][0].Color });
             bassicEffect.Texture = shapeFill;
             bassicEffect.VertexColorEnabled = true;
