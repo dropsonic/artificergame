@@ -46,6 +46,7 @@ namespace LevelEditor
             //load assetCreator Materials
             _assetCreator = ContentService.GetContentService().AssetCreator;
             _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
                 string filename = System.IO.Path.GetFileName(material).Split('.')[0];
@@ -123,6 +124,12 @@ namespace LevelEditor
         private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
         {
             _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            HandlePreview(sender, e);
+        }
+
+        private void drawOutlineCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
             HandlePreview(sender, e);
         }
 
@@ -204,7 +211,5 @@ namespace LevelEditor
                 ShowReadyStatus();
         }
         #endregion
-
-
     }
 }
