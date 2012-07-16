@@ -31,18 +31,16 @@ namespace LevelEditor
 
         private void Initialize()
         {
-            updateTimer.Tick += new EventHandler(ResetTimer);
-            updateTimer.Interval = 100;
+            updateTimer.Enabled = false;
+            updateTimer.Tick += new EventHandler(UpdatePreview);
+            updateTimer.Interval = 10;
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             levelScreen.message = "Level";
             objectScreen.message = "GameObject";
             ShowReadyStatus();
         }
-        void ResetTimer(Object obj, EventArgs e)
-        {
-            updateTimer.Enabled = false;
-        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             //load assetCreator Materials
@@ -76,15 +74,21 @@ namespace LevelEditor
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            try 
-            { 
-                UpdatePreview();
+            updateTimer.Enabled = true;
+        }
+
+        private void UpdatePreview(object sender, EventArgs e)
+        {
+            try
+            {
+                SetPreview();
                 ShowReadyStatus();
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 ShowErrorStatus(ex);
             }
+            updateTimer.Enabled = false;
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

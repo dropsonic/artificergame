@@ -20,11 +20,10 @@ namespace LevelEditor
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
         }
 
-        private void UpdatePreview()
+        private void SetPreview()
         {
-            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null && updateTimer.Enabled == false)
+            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
-                updateTimer.Enabled = true;
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:
