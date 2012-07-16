@@ -103,6 +103,7 @@ namespace LevelEditor
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.commonParameters = new System.Windows.Forms.GroupBox();
+            this.drawOutlineCheck = new System.Windows.Forms.CheckBox();
             this.setAsTextureCheck = new System.Windows.Forms.CheckBox();
             this.materialScale = new System.Windows.Forms.NumericUpDownEx();
             this.label4 = new System.Windows.Forms.Label();
@@ -122,7 +123,6 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.drawOutlineCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -231,8 +231,8 @@ namespace LevelEditor
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.50466F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.49534F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Controls.Add(this.tabControl, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1309,6 +1309,17 @@ namespace LevelEditor
             this.commonParameters.TabStop = false;
             this.commonParameters.Text = "Common Parameters";
             // 
+            // drawOutlineCheck
+            // 
+            this.drawOutlineCheck.AutoSize = true;
+            this.drawOutlineCheck.Location = new System.Drawing.Point(162, 119);
+            this.drawOutlineCheck.Name = "drawOutlineCheck";
+            this.drawOutlineCheck.Size = new System.Drawing.Size(85, 17);
+            this.drawOutlineCheck.TabIndex = 11;
+            this.drawOutlineCheck.Text = "Draw outline";
+            this.drawOutlineCheck.UseVisualStyleBackColor = true;
+            this.drawOutlineCheck.CheckedChanged += new System.EventHandler(this.drawOutlineCheck_CheckedChanged);
+            // 
             // setAsTextureCheck
             // 
             this.setAsTextureCheck.AutoSize = true;
@@ -1510,17 +1521,6 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // drawOutlineCheck
-            // 
-            this.drawOutlineCheck.AutoSize = true;
-            this.drawOutlineCheck.Location = new System.Drawing.Point(162, 119);
-            this.drawOutlineCheck.Name = "drawOutlineCheck";
-            this.drawOutlineCheck.Size = new System.Drawing.Size(85, 17);
-            this.drawOutlineCheck.TabIndex = 11;
-            this.drawOutlineCheck.Text = "Draw outline";
-            this.drawOutlineCheck.UseVisualStyleBackColor = true;
-            this.drawOutlineCheck.CheckedChanged += new System.EventHandler(this.drawOutlineCheck_CheckedChanged);
             // 
             // MainForm
             // 
