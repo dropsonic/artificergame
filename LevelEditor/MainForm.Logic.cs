@@ -6,10 +6,10 @@ using System.Text;
 using System.Windows.Forms;
 using FarseerTools;
 using LevelEditor;
-using Color = Microsoft.Xna.Framework.Color;
 using System.Drawing;
-using System.Diagnostics;
 using System.Threading;
+
+using Color = Microsoft.Xna.Framework.Color;
 
 namespace LevelEditor
 {
@@ -20,25 +20,11 @@ namespace LevelEditor
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
         }
 
-        private void ValidateShapeRadius()
-        {
-            
-        }
-
-        Stopwatch updatePreviewStopwatch;
-        double updatePreviewDuration = 0;
-        const double minUpdatePreviewDuration = 10; //минимальное время отрисовки, зависит от производительности видеокарты
-        const double updatePreviewWaitingCoefficient = 1.5; //подбирается опытным путём
         private void UpdatePreview()
         {
-            if (updatePreviewDuration > minUpdatePreviewDuration)
-                Thread.Sleep(TimeSpan.FromMilliseconds(updatePreviewDuration * updatePreviewWaitingCoefficient));
-
-            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
+            if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null && updateTimer.Enabled == false)
             {
-                //Засекаем продолжительность вызова UpdatePreview
-                updatePreviewStopwatch = Stopwatch.StartNew();
-
+                updateTimer.Enabled = true;
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:
@@ -52,7 +38,7 @@ namespace LevelEditor
                     case ObjectType.Circle:
                         previewScreen.SetCirclePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
                             float.Parse(circleRadius.Value.ToString()));
-                        break;
+                         break;
                     case ObjectType.CustomShape:
 
                         break;
@@ -73,9 +59,6 @@ namespace LevelEditor
                             float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
                         break;
                 }
-
-                updatePreviewStopwatch.Stop();
-                updatePreviewDuration = updatePreviewStopwatch.Elapsed.TotalMilliseconds;
             }
         }
 

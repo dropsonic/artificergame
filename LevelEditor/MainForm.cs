@@ -19,6 +19,7 @@ namespace LevelEditor
     public partial class MainForm : Form
     {
         AssetCreator _assetCreator;
+        System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
         
@@ -26,27 +27,25 @@ namespace LevelEditor
         {
             InitializeComponent();
             Initialize();
-
-            BlendState state = new BlendState();
         }
 
         private void Initialize()
         {
+            updateTimer.Tick += new EventHandler(ResetTimer);
+            updateTimer.Interval = 100;
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
-            //
-            //set component parameters
-            //
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             levelScreen.message = "Level";
             objectScreen.message = "GameObject";
             ShowReadyStatus();
         }
-
+        void ResetTimer(Object obj, EventArgs e)
+        {
+            updateTimer.Enabled = false;
+        }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //
             //load assetCreator Materials
-            //
             _assetCreator = ContentService.GetContentService().AssetCreator;
             _assetCreator.UseTexture = setAsTextureCheck.Checked;
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
