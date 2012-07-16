@@ -29,9 +29,10 @@ namespace FarseerTools
         private const int CircleSegments = 32;
         private GraphicsDevice _device;
         private BasicEffect _effect;
-        private VertexBuffer _vertexBuffer;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
+
         public bool UseTexture { get; set; }
+        public bool DrawOutline { get; set; }
 
         public AssetCreator(GraphicsDevice device, ContentManager content)
         {
@@ -105,7 +106,7 @@ namespace FarseerTools
             }
             List<VertexPositionColorTexture[]> verticesFill =
                 new List<VertexPositionColorTexture[]>(decomposedVerts.Count);
-
+            float textureScale = materialScale;
             materialScale /= _materials[type].Width;
 
             for (int i = 0; i < decomposedVerts.Count; ++i)
@@ -135,7 +136,7 @@ namespace FarseerTools
 
             Vector2 vertsSize = new Vector2(vertsBounds.UpperBound.X - vertsBounds.LowerBound.X,
                                             vertsBounds.UpperBound.Y - vertsBounds.LowerBound.Y);
-            return UseTexture ? RenderTexture((int)vertsSize.X, (int)vertsSize.Y,_materials[type], verticesFill, verticesOutline): 
+            return UseTexture ? RenderTexture((int)vertsSize.X, (int)vertsSize.Y,_materials[type], verticesFill, verticesOutline,textureScale): 
                                 RenderMaterial((int)vertsSize.X, (int)vertsSize.Y,_materials[type], verticesFill, verticesOutline);
         }
 
@@ -154,6 +155,7 @@ namespace FarseerTools
 
             radiusX = ConvertUnits.ToDisplayUnits(radiusX);
             radiusY = ConvertUnits.ToDisplayUnits(radiusY);
+            float textureScale = materialScale;
             materialScale /= _materials[type].Width;
             Vector2 start = new Vector2(radiusX, 0f);
 
@@ -193,18 +195,10 @@ namespace FarseerTools
                 theta += segmentSize;
             }
 
-            return RenderMaterial((int)(radiusX * 2f), (int)(radiusY * 2f),
-                                 _materials[type], verticesFill, verticesOutline);
-        }
-
-        private Texture2D RenderMaterial(int width, int height, Texture2D material,
-                                        VertexPositionColorTexture[] verticesFill,
-                                        VertexPositionColor[] verticesOutline)
-        {
             List<VertexPositionColorTexture[]> fill = new List<VertexPositionColorTexture[]>(1);
             fill.Add(verticesFill);
-            return UseTexture ? RenderTexture(width, height, material, fill, verticesOutline):
-                                RenderMaterial(width, height, material, fill, verticesOutline);
+            return UseTexture ? RenderTexture((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[type], fill, verticesOutline, textureScale) :
+                                RenderMaterial((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[type], fill, verticesOutline);
         }
 
         private Texture2D RenderMaterial(int width, int height, Texture2D material,
@@ -232,37 +226,43 @@ namespace FarseerTools
             {
                 _device.DrawUserPrimitives(PrimitiveType.TriangleList, verticesFill[i], 0, verticesFill[i].Length / 3);
             }
-            // render outline;
-            _effect.TextureEnabled = false;
-            _effect.Techniques[0].Passes[0].Apply();
-            _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
+
+            if (DrawOutline)
+            {
+                // render outline;
+                _effect.TextureEnabled = false;
+                _effect.Techniques[0].Passes[0].Apply();
+                _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
+            }
             _device.SetRenderTarget(null);
              return texture;
         }
 
         private Texture2D RenderTexture(int width, int height, Texture2D texture,
                                         List<VertexPositionColorTexture[]> verticesFill,
-                                        VertexPositionColor[] verticesOutline)
+                                        VertexPositionColor[] verticesOutline,float textureScale = 1)
         {
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
                                                         DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
 
+            float textureWidth = width * textureScale / 2;
+            float textureHeight = height * textureScale / 2;
             VertexPositionColorTexture[] rectangleTexture = new VertexPositionColorTexture[4];
             rectangleTexture[0] = new VertexPositionColorTexture();
-            rectangleTexture[0].Position = new Vector3(-width / 2, height / 2, 0);
+            rectangleTexture[0].Position = new Vector3(-textureWidth, textureHeight, 0);
             rectangleTexture[0].TextureCoordinate = new Vector2(0, 0);
             rectangleTexture[0].Color = Color.White;
             rectangleTexture[1] = new VertexPositionColorTexture();
-            rectangleTexture[1].Position = new Vector3(width / 2, height / 2, 0);
+            rectangleTexture[1].Position = new Vector3(textureWidth, textureHeight, 0);
             rectangleTexture[1].TextureCoordinate = new Vector2(1, 0);
             rectangleTexture[1].Color = Color.White;
             rectangleTexture[2] = new VertexPositionColorTexture();
-            rectangleTexture[2].Position = new Vector3(-width / 2, -height / 2, 0);
+            rectangleTexture[2].Position = new Vector3(-textureWidth, -textureHeight, 0);
             rectangleTexture[2].TextureCoordinate = new Vector2(0, 1);
             rectangleTexture[2].Color = Color.White;
             rectangleTexture[3] = new VertexPositionColorTexture();
-            rectangleTexture[3].Position = new Vector3(width / 2, -height / 2, 0);
+            rectangleTexture[3].Position = new Vector3(textureWidth, -textureHeight, 0);
             rectangleTexture[3].TextureCoordinate = new Vector2(1, 1);
             rectangleTexture[3].Color = Color.White;
 
@@ -300,12 +300,14 @@ namespace FarseerTools
             bassicEffect.Texture = texture;
             bassicEffect.Techniques[0].Passes[0].Apply();
             _device.DrawUserPrimitives(PrimitiveType.TriangleStrip, rectangleTexture, 0, 2);
-
             _device.BlendState = BlendState.AlphaBlend;
-            bassicEffect.TextureEnabled = false;
-            bassicEffect.Techniques[0].Passes[0].Apply();
-            _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
 
+            if (DrawOutline)
+            {
+                bassicEffect.TextureEnabled = false;
+                bassicEffect.Techniques[0].Passes[0].Apply();
+                _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
+            }
             _device.SetRenderTarget(null);
             return outputTexture as Texture2D;
         }

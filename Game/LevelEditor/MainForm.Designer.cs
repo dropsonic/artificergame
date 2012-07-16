@@ -122,6 +122,7 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.drawOutlineCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -1293,6 +1294,7 @@ namespace LevelEditor
             // 
             // commonParameters
             // 
+            this.commonParameters.Controls.Add(this.drawOutlineCheck);
             this.commonParameters.Controls.Add(this.setAsTextureCheck);
             this.commonParameters.Controls.Add(this.materialScale);
             this.commonParameters.Controls.Add(this.label4);
@@ -1310,7 +1312,7 @@ namespace LevelEditor
             // setAsTextureCheck
             // 
             this.setAsTextureCheck.AutoSize = true;
-            this.setAsTextureCheck.Location = new System.Drawing.Point(162, 118);
+            this.setAsTextureCheck.Location = new System.Drawing.Point(162, 102);
             this.setAsTextureCheck.Name = "setAsTextureCheck";
             this.setAsTextureCheck.Size = new System.Drawing.Size(91, 17);
             this.setAsTextureCheck.TabIndex = 10;
@@ -1509,6 +1511,17 @@ namespace LevelEditor
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // drawOutlineCheck
+            // 
+            this.drawOutlineCheck.AutoSize = true;
+            this.drawOutlineCheck.Location = new System.Drawing.Point(162, 119);
+            this.drawOutlineCheck.Name = "drawOutlineCheck";
+            this.drawOutlineCheck.Size = new System.Drawing.Size(85, 17);
+            this.drawOutlineCheck.TabIndex = 11;
+            this.drawOutlineCheck.Text = "Draw outline";
+            this.drawOutlineCheck.UseVisualStyleBackColor = true;
+            this.drawOutlineCheck.CheckedChanged += new System.EventHandler(this.drawOutlineCheck_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1682,6 +1695,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.CheckBox setAsTextureCheck;
+        private System.Windows.Forms.CheckBox drawOutlineCheck;
 
 
     }
