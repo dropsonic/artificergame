@@ -29,6 +29,7 @@ namespace FarseerTools
         private const int CircleSegments = 32;
         private GraphicsDevice _device;
         private BasicEffect _effect;
+        private VertexBuffer _vertexBuffer;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
         public bool UseTexture { get; set; }
 
@@ -281,31 +282,32 @@ namespace FarseerTools
             _device.SetRenderTarget(outputTexture);
             _device.Clear(Color.Transparent);
 
-
             bassicEffect.Techniques[0].Passes[0].Apply();
             for (int i = 0; i < verticesFill.Count; ++i)
             {
                 _device.DrawUserPrimitives(PrimitiveType.TriangleList, verticesFill[i], 0, verticesFill[i].Length / 3);
             }
             
-            bassicEffect.TextureEnabled = false;
-            bassicEffect.Techniques[0].Passes[0].Apply();
-            _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
-            
-            BlendState blendAlpha = new BlendState();
-            blendAlpha.ColorWriteChannels = ColorWriteChannels.All;
-            blendAlpha.ColorSourceBlend = Blend.DestinationAlpha;
-            blendAlpha.ColorDestinationBlend = Blend.InverseSourceAlpha;
-            blendAlpha.AlphaSourceBlend = Blend.DestinationAlpha;
-            blendAlpha.AlphaDestinationBlend = Blend.InverseSourceAlpha;
-            _device.BlendState = blendAlpha;
+            BlendState crossBlend = new BlendState();
+            crossBlend.ColorWriteChannels = ColorWriteChannels.All;
+            crossBlend.ColorSourceBlend = Blend.DestinationAlpha;
+            crossBlend.ColorDestinationBlend = Blend.InverseSourceAlpha;
+            crossBlend.AlphaSourceBlend = Blend.DestinationAlpha;
+            crossBlend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+            _device.BlendState = crossBlend;
             
             bassicEffect.TextureEnabled = true;
             bassicEffect.Texture = texture;
             bassicEffect.Techniques[0].Passes[0].Apply();
             _device.DrawUserPrimitives(PrimitiveType.TriangleStrip, rectangleTexture, 0, 2);
+
+            _device.BlendState = BlendState.AlphaBlend;
+            bassicEffect.TextureEnabled = false;
+            bassicEffect.Techniques[0].Passes[0].Apply();
+            _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
+
             _device.SetRenderTarget(null);
-            return outputTexture;
+            return outputTexture as Texture2D;
         }
         
         //ADDED0: new function to make textures from fixture lists.
