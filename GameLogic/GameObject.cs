@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FarseerPhysics.SamplesFramework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using System.Reflection;
+using FarseerTools;
 
-namespace FarseerPhysics.SamplesFramework.Experiments
+namespace GameLogic
 {
     public class GameObject : IDrawable
     {
@@ -21,7 +21,7 @@ namespace FarseerPhysics.SamplesFramework.Experiments
         private List<Joint> _joints;
 
         private SpriteBatch _spriteBatch;
-        private Camera2D _camera;
+        private Camera _camera;
 
         public SpriteBatch SpriteBatch
         {
@@ -107,7 +107,7 @@ namespace FarseerPhysics.SamplesFramework.Experiments
         #endregion
 
         #region Конструкторы
-        public GameObject(Camera2D camera, SpriteBatch spriteBatch)
+        public GameObject(Camera camera, SpriteBatch spriteBatch)
         {
             _parts = new List<GameObjectPart>();
             _sorted = true;
@@ -124,19 +124,19 @@ namespace FarseerPhysics.SamplesFramework.Experiments
             Visible = true;
         }
 
-        public GameObject(Camera2D camera, SpriteBatch spriteBatch, Vector2 origin)
+        public GameObject(Camera camera, SpriteBatch spriteBatch, Vector2 origin)
             : this(camera, spriteBatch)
         {
             _origin = origin;
         }
 
-        public GameObject(World world, Camera2D camera, SpriteBatch spriteBatch)
+        public GameObject(World world, Camera camera, SpriteBatch spriteBatch)
             : this(camera, spriteBatch)
         {
             _world = world;
         }
 
-        public GameObject(World world, Camera2D camera, SpriteBatch spriteBatch, Vector2 origin)
+        public GameObject(World world, Camera camera, SpriteBatch spriteBatch, Vector2 origin)
             : this(world, camera, spriteBatch)
         {
             _origin = origin;

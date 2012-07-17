@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FarseerPhysics.Dynamics;
-using FarseerPhysics.SamplesFramework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
 
-namespace FarseerPhysics.SamplesFramework.Experiments
+namespace GameLogic
 {
     public class GameLevel : IDrawable, IUpdateable
     {
         private World _world;
-        private Camera2D _camera;
+        private Camera _camera;
         private SpriteBatch _spriteBatch;
 
         private List<GameObject> _objects;
@@ -27,7 +26,7 @@ namespace FarseerPhysics.SamplesFramework.Experiments
             set { _world = value; }
         }
 
-        public Camera2D Camera
+        public Camera Camera
         {
             get { return _camera; }
             set { _camera = value; }
@@ -49,7 +48,7 @@ namespace FarseerPhysics.SamplesFramework.Experiments
             }
         }
 
-        public GameLevel(Camera2D camera, SpriteBatch spriteBatch)
+        public GameLevel(Camera camera, SpriteBatch spriteBatch)
         {
             _objects = new List<GameObject>();
             _sorted = true;
@@ -64,13 +63,13 @@ namespace FarseerPhysics.SamplesFramework.Experiments
             Visible = true;
         }
 
-        public GameLevel(Camera2D camera, SpriteBatch spriteBatch, Vector2 gravity)
+        public GameLevel(Camera camera, SpriteBatch spriteBatch, Vector2 gravity)
             : this(camera, spriteBatch)
         {
             _world.Gravity = gravity;
         }
 
-        public GameLevel(Camera2D camera, SpriteBatch spriteBatch, World world)
+        public GameLevel(Camera camera, SpriteBatch spriteBatch, World world)
             : this(camera, spriteBatch)
         {
             _world = world;
