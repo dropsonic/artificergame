@@ -106,6 +106,11 @@ namespace FarseerTools
             if (!verts.IsConvex())
             {
                 decomposedVerts = EarclipDecomposer.ConvexPartition(verts);
+                //decomposedVerts = SeidelDecomposer.ConvexPartition(verts,0.01f);
+                //decomposedVerts = SeidelDecomposer.ConvexPartitionTrapezoid(verts,0.01f);
+                //decomposedVerts = FlipcodeDecomposer.ConvexPartition(verts);
+                //decomposedVerts = CDTDecomposer.ConvexPartition(verts);
+                //decomposedVerts = BayazitDecomposer.ConvexPartition(verts);
             }
             else
             {
@@ -405,14 +410,17 @@ namespace FarseerTools
             uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
             shapeTexture.GetData(data);
             Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
-            Vector2 centroid = -textureVertices.GetCentroid();
-            textureVertices.Translate(ref centroid);
-            Vector2 origin = -centroid;
+            //Возможно стоит все таки применять центройд.
+            AABB vertsBounds = textureVertices.GetCollisionBox();
+            Vector2 origin = vertsBounds.Center;
+            textureVertices.Translate(-origin);
+            int width = (int)(vertsBounds.UpperBound.X - vertsBounds.LowerBound.X);
+            int height = (int)(vertsBounds.UpperBound.Y - vertsBounds.LowerBound.Y);
             textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
-            Vector2 vertScale = new Vector2(ConvertUnits.ToSimUnits(1)) * scale;
+            Vector2 vertScale = ConvertUnits.ToSimUnits(Vector2.One) * scale;
             textureVertices.Scale(ref vertScale);
             decomposedVertices = BayazitDecomposer.ConvexPartition(textureVertices);
-            RenderTarget2D renderTarget = new RenderTarget2D(_device, (int)(shapeTexture.Width * scale) + 20, (int)(shapeTexture.Height * scale) + 20, false, SurfaceFormat.Color,
+            RenderTarget2D renderTarget = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
                                                        DepthFormat.None, 8,
                                                        RenderTargetUsage.DiscardContents);
             SpriteBatch batch = new SpriteBatch(_device);
@@ -420,7 +428,7 @@ namespace FarseerTools
             _device.SamplerStates[0] = SamplerState.AnisotropicWrap;
             _device.SetRenderTarget(renderTarget);
             _device.Clear(Color.Transparent);
-            batch.Begin();
+            batch.Begin(0, null, null, null, null, null, Matrix.CreateTranslation(-0.5f, -0.5f, 0f));
             batch.Draw(shapeTexture, new Vector2(renderTarget.Width / 2, renderTarget.Height / 2), null, color, 0, origin, scale, SpriteEffects.None, 0f);
             batch.End();
             _device.SetRenderTarget(null);
