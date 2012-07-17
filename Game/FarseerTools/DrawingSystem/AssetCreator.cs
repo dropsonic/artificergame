@@ -397,6 +397,7 @@ namespace FarseerTools
             bassicEffect.Techniques[0].Passes[0].Apply();
             _device.DrawUserPrimitives(PrimitiveType.TriangleStrip, rectangleTexture, 0, 2);
 
+            _device.DepthStencilState = DepthStencilState.Default;
             if (DrawOutline)
             {
                 bassicEffect.VertexColorEnabled = true;
