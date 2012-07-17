@@ -1300,7 +1300,7 @@ namespace LevelEditor
             1,
             0,
             0,
-            65536});
+            131072});
             this.customShapeScale.Location = new System.Drawing.Point(4, 65);
             this.customShapeScale.Maximum = new decimal(new int[] {
             1000,
