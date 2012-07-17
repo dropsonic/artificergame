@@ -279,36 +279,42 @@ namespace FarseerTools
             rectangleTexture[3].TextureCoordinate = new Vector2(1, 0);
             rectangleTexture[3].Color = Color.White;
 
+            bool transparent = (verticesFill[0][0].Color == Color.Transparent);
 
             BasicEffect bassicEffect = new BasicEffect(_device);
             bassicEffect.World = Matrix.Identity;
             bassicEffect.View = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             bassicEffect.Projection = Matrix.CreateOrthographic(width+2, -height-2, 0f, 1f);
-            bassicEffect.TextureEnabled = true;
-            Texture2D shapeFill = new Texture2D(_device, 1, 1);
-            shapeFill.SetData<Color>(new Color[] { verticesFill[0][0].Color });
-            bassicEffect.Texture = shapeFill;
-            bassicEffect.VertexColorEnabled = true;
-
+           
             _device.RasterizerState = RasterizerState.CullNone;
             _device.SamplerStates[0] = SamplerState.LinearClamp;
             _device.SetRenderTarget(outputTexture);
             _device.Clear(Color.Transparent);
 
+            bassicEffect.TextureEnabled = false;
+            bassicEffect.VertexColorEnabled = !transparent;
             bassicEffect.Techniques[0].Passes[0].Apply();
             for (int i = 0; i < verticesFill.Count; ++i)
             {
                 _device.DrawUserPrimitives(PrimitiveType.TriangleList, verticesFill[i], 0, verticesFill[i].Length / 3);
             }
-            
+
             BlendState crossBlend = new BlendState();
             crossBlend.ColorWriteChannels = ColorWriteChannels.All;
             crossBlend.ColorSourceBlend = Blend.DestinationAlpha;
-            crossBlend.ColorDestinationBlend = Blend.InverseSourceAlpha;
             crossBlend.AlphaSourceBlend = Blend.DestinationAlpha;
-            crossBlend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+            if (transparent)
+            {
+                crossBlend.ColorDestinationBlend = Blend.Zero;
+                crossBlend.AlphaDestinationBlend = Blend.Zero;
+            }
+            else
+            {
+                crossBlend.ColorDestinationBlend = Blend.InverseSourceAlpha;
+                crossBlend.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+            }
+
             _device.BlendState = crossBlend;
-            
             bassicEffect.TextureEnabled = true;
             bassicEffect.Texture = texture;
             bassicEffect.Techniques[0].Passes[0].Apply();
@@ -317,6 +323,7 @@ namespace FarseerTools
 
             if (DrawOutline)
             {
+                bassicEffect.VertexColorEnabled = true;
                 bassicEffect.TextureEnabled = false;
                 bassicEffect.Techniques[0].Passes[0].Apply();
                 _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
