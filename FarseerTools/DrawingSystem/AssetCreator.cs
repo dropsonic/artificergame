@@ -26,7 +26,7 @@ namespace FarseerTools
 
     public class AssetCreator
     {
-        private const int CircleSegments = 32;
+        private const int CircleSegments = 64;
         private GraphicsDevice _device;
         private BasicEffect _effect;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
@@ -251,19 +251,19 @@ namespace FarseerTools
             VertexPositionColorTexture[] rectangleTexture = new VertexPositionColorTexture[4];
             rectangleTexture[0] = new VertexPositionColorTexture();
             rectangleTexture[0].Position = new Vector3(-textureWidth, textureHeight, 0);
-            rectangleTexture[0].TextureCoordinate = new Vector2(0, 0);
+            rectangleTexture[0].TextureCoordinate = new Vector2(0, 1);
             rectangleTexture[0].Color = Color.White;
             rectangleTexture[1] = new VertexPositionColorTexture();
             rectangleTexture[1].Position = new Vector3(textureWidth, textureHeight, 0);
-            rectangleTexture[1].TextureCoordinate = new Vector2(1, 0);
+            rectangleTexture[1].TextureCoordinate = new Vector2(1, 1);
             rectangleTexture[1].Color = Color.White;
             rectangleTexture[2] = new VertexPositionColorTexture();
             rectangleTexture[2].Position = new Vector3(-textureWidth, -textureHeight, 0);
-            rectangleTexture[2].TextureCoordinate = new Vector2(0, 1);
+            rectangleTexture[2].TextureCoordinate = new Vector2(0, 0);
             rectangleTexture[2].Color = Color.White;
             rectangleTexture[3] = new VertexPositionColorTexture();
             rectangleTexture[3].Position = new Vector3(textureWidth, -textureHeight, 0);
-            rectangleTexture[3].TextureCoordinate = new Vector2(1, 1);
+            rectangleTexture[3].TextureCoordinate = new Vector2(1, 0);
             rectangleTexture[3].Color = Color.White;
 
 
