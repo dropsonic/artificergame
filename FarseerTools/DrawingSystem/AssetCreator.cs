@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Threading;
+using FarseerPhysics.Common.PolygonManipulation;
 
 namespace FarseerTools
 {
@@ -30,15 +31,17 @@ namespace FarseerTools
         private GraphicsDevice _device;
         private BasicEffect _effect;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
+        private Dictionary<string, Texture2D> _shapes = new Dictionary<string, Texture2D>();
 
         public bool UseTexture { get; set; }
         public bool DrawOutline { get; set; }
-
+        
         public AssetCreator(GraphicsDevice device, ContentManager content)
         {
             _device = device;
             _effect = new BasicEffect(_device);
             UseTexture = false;
+            DrawOutline = false;
         }
 
         public static Vector2 CalculateOrigin(Body b)
@@ -61,9 +64,14 @@ namespace FarseerTools
             return ConvertUnits.ToDisplayUnits(b.Position - lBound) + new Vector2(1f);
         }
 
-        public void LoadMaterial(string key, Texture2D texture)
+        public void LoadMaterial(string key, Texture2D material)
         {
-            _materials[key] = texture;
+            _materials[key] = material;
+        }
+
+        public void LoadShape(string key, Texture2D shape)
+        {
+            _shapes[key] = shape;
         }
 
 
@@ -80,7 +88,7 @@ namespace FarseerTools
             }
         }
 
-        public Texture2D TextureFromVertices(Vertices vertices, string type, Color color, float materialScale)
+        public Texture2D TextureFromVertices(Vertices vertices, string materialType, Color color, float materialScale)
         {
             // copy vertices
             Vertices verts = new Vertices(vertices);
@@ -107,7 +115,7 @@ namespace FarseerTools
             List<VertexPositionColorTexture[]> verticesFill =
                 new List<VertexPositionColorTexture[]>(decomposedVerts.Count);
             float textureScale = materialScale;
-            materialScale /= _materials[type].Width;
+            materialScale /= _materials[materialType].Width;
 
             for (int i = 0; i < decomposedVerts.Count; ++i)
             {
@@ -136,8 +144,8 @@ namespace FarseerTools
 
             Vector2 vertsSize = new Vector2(vertsBounds.UpperBound.X - vertsBounds.LowerBound.X,
                                             vertsBounds.UpperBound.Y - vertsBounds.LowerBound.Y);
-            return UseTexture ? RenderTexture((int)vertsSize.X, (int)vertsSize.Y,_materials[type], verticesFill, verticesOutline,textureScale): 
-                                RenderMaterial((int)vertsSize.X, (int)vertsSize.Y,_materials[type], verticesFill, verticesOutline);
+            return UseTexture ? RenderTexture((int)vertsSize.X, (int)vertsSize.Y, _materials[materialType], verticesFill, verticesOutline, textureScale) :
+                                RenderMaterial((int)vertsSize.X, (int)vertsSize.Y, _materials[materialType], verticesFill, verticesOutline);
         }
 
         public Texture2D CircleTexture(float radius, string type, Color color, float materialScale)
@@ -145,7 +153,7 @@ namespace FarseerTools
             return EllipseTexture(radius, radius, type, color, materialScale);
         }
 
-        public Texture2D EllipseTexture(float radiusX, float radiusY, string type, Color color,
+        public Texture2D EllipseTexture(float radiusX, float radiusY, string materialType, Color color,
                                         float materialScale)
         {
             VertexPositionColorTexture[] verticesFill = new VertexPositionColorTexture[3 * (CircleSegments - 2)];
@@ -156,7 +164,7 @@ namespace FarseerTools
             radiusX = ConvertUnits.ToDisplayUnits(radiusX);
             radiusY = ConvertUnits.ToDisplayUnits(radiusY);
             float textureScale = materialScale;
-            materialScale /= _materials[type].Width;
+            materialScale /= _materials[materialType].Width;
             Vector2 start = new Vector2(radiusX, 0f);
 
             for (int i = 0; i < CircleSegments - 2; ++i)
@@ -197,8 +205,8 @@ namespace FarseerTools
 
             List<VertexPositionColorTexture[]> fill = new List<VertexPositionColorTexture[]>(1);
             fill.Add(verticesFill);
-            return UseTexture ? RenderTexture((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[type], fill, verticesOutline, textureScale) :
-                                RenderMaterial((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[type], fill, verticesOutline);
+            return UseTexture ? RenderTexture((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[materialType], fill, verticesOutline, textureScale) :
+                                RenderMaterial((int)(radiusX * 2f), (int)(radiusY * 2f), _materials[materialType], fill, verticesOutline);
         }
 
         private Texture2D RenderMaterial(int width, int height, Texture2D material,
@@ -312,7 +320,6 @@ namespace FarseerTools
             return outputTexture as Texture2D;
         }
         
-        //ADDED0: new function to make textures from fixture lists.
         /// <summary>Takes a list of fixtures with convex polygons.</summary>
         /// <returns>Returns Texture2D.</returns>
         public Texture2D TextureFromFixtures(List<Fixture> fixtures, string type, Color color, float materialScale)
@@ -390,6 +397,50 @@ namespace FarseerTools
 
             _device.SetRenderTarget(null);
             return texture;
+        }
+
+        public void ShapeFromTexture(string shape, float scale,Color color, out Texture2D outputTexture, out List<Vertices> decomposedVertices)
+        {
+            Texture2D shapeTexture = _shapes[shape];
+            uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
+            shapeTexture.GetData(data);
+            Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
+            Vector2 centroid = -textureVertices.GetCentroid();
+            textureVertices.Translate(ref centroid);
+            Vector2 origin = -centroid;
+            textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
+            Vector2 vertScale = new Vector2(ConvertUnits.ToSimUnits(1)) * scale;
+            textureVertices.Scale(ref vertScale);
+            decomposedVertices = BayazitDecomposer.ConvexPartition(textureVertices);
+            RenderTarget2D renderTarget = new RenderTarget2D(_device, (int)(shapeTexture.Width * scale) + 20, (int)(shapeTexture.Height * scale) + 20, false, SurfaceFormat.Color,
+                                                       DepthFormat.None, 8,
+                                                       RenderTargetUsage.DiscardContents);
+            SpriteBatch batch = new SpriteBatch(_device);
+            _device.RasterizerState = RasterizerState.CullNone;
+            _device.SamplerStates[0] = SamplerState.AnisotropicWrap;
+            _device.SetRenderTarget(renderTarget);
+            _device.Clear(Color.Transparent);
+            batch.Begin();
+            batch.Draw(shapeTexture, new Vector2(renderTarget.Width / 2, renderTarget.Height / 2), null, color, 0, origin, scale, SpriteEffects.None, 0f);
+            batch.End();
+            _device.SetRenderTarget(null);
+            outputTexture = renderTarget as Texture2D;
+        }
+
+        public void ShapeFromTexture(string shape, float scale, string materialType, Color color, float materialScale, out Texture2D outputTexture, out List<Vertices> decomposedVertices)
+        {
+            Texture2D shapeTexture = _shapes[shape];
+            uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
+            shapeTexture.GetData(data);
+            Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
+            Vector2 centroid = -textureVertices.GetCentroid();
+            textureVertices.Translate(ref centroid);
+            Vector2 origin = -centroid;
+            textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
+            Vector2 vertScale = new Vector2(ConvertUnits.ToSimUnits(1)) * scale;
+            textureVertices.Scale(ref vertScale);
+            decomposedVertices = BayazitDecomposer.ConvexPartition(textureVertices);
+            outputTexture = TextureFromVertices(textureVertices, materialType, color, materialScale);
         }
     }
 }

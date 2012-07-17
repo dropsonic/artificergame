@@ -33,11 +33,13 @@ namespace LevelEditor
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
@@ -98,12 +100,14 @@ namespace LevelEditor
             this.roundedRectangleSegments = new System.Windows.Forms.NumericUpDownEx();
             this.label27 = new System.Windows.Forms.Label();
             this.customShapeTab = new System.Windows.Forms.TabPage();
+            this.label30 = new System.Windows.Forms.Label();
+            this.shapeFromTextureBox = new System.Windows.Forms.ComboBox();
+            this.useOriginalTextureCheck = new System.Windows.Forms.CheckBox();
             this.customShapeScale = new System.Windows.Forms.NumericUpDownEx();
             this.label28 = new System.Windows.Forms.Label();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.commonParameters = new System.Windows.Forms.GroupBox();
-            this.useOriginalTextureCheck = new System.Windows.Forms.CheckBox();
             this.drawOutlineCheck = new System.Windows.Forms.CheckBox();
             this.setAsTextureCheck = new System.Windows.Forms.CheckBox();
             this.materialScale = new System.Windows.Forms.NumericUpDownEx();
@@ -179,7 +183,8 @@ namespace LevelEditor
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.levelToolStripMenuItem});
+            this.levelToolStripMenuItem,
+            this.resoursesToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1444, 24);
@@ -188,25 +193,46 @@ namespace LevelEditor
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createLevelToolStripMenuItem,
-            this.loadLevelToolStripMenuItem,
-            this.loadMaterialToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // levelToolStripMenuItem
+            // 
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createLevelToolStripMenuItem,
+            this.loadLevelToolStripMenuItem,
+            this.clearLevelToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.levelToolStripMenuItem.Text = "Level";
+            // 
             // createLevelToolStripMenuItem
             // 
             this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.createLevelToolStripMenuItem.Text = "Create Level";
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.loadLevelToolStripMenuItem.Text = "Load Level";
+            // 
+            // clearLevelToolStripMenuItem
+            // 
+            this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
+            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.clearLevelToolStripMenuItem.Text = "Clear Level";
+            // 
+            // resoursesToolStripMenuItem
+            // 
+            this.resoursesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadMaterialToolStripMenuItem,
+            this.loadShapeToolStripMenuItem});
+            this.resoursesToolStripMenuItem.Name = "resoursesToolStripMenuItem";
+            this.resoursesToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.resoursesToolStripMenuItem.Text = "Resources";
             // 
             // loadMaterialToolStripMenuItem
             // 
@@ -215,19 +241,12 @@ namespace LevelEditor
             this.loadMaterialToolStripMenuItem.Text = "Load Material";
             this.loadMaterialToolStripMenuItem.Click += new System.EventHandler(this.loadMaterialToolStripMenuItem_Click);
             // 
-            // levelToolStripMenuItem
+            // loadShapeToolStripMenuItem
             // 
-            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearToolStripMenuItem});
-            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.levelToolStripMenuItem.Text = "Level";
-            // 
-            // clearToolStripMenuItem
-            // 
-            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(101, 22);
-            this.clearToolStripMenuItem.Text = "Clear";
+            this.loadShapeToolStripMenuItem.Name = "loadShapeToolStripMenuItem";
+            this.loadShapeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.loadShapeToolStripMenuItem.Text = "Load Shape";
+            this.loadShapeToolStripMenuItem.Click += new System.EventHandler(this.loadShapeToolStripMenuItem_Click);
             // 
             // tableLayoutPanel
             // 
@@ -241,7 +260,7 @@ namespace LevelEditor
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 793);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 758);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // tabControl
@@ -252,7 +271,7 @@ namespace LevelEditor
             this.tabControl.Location = new System.Drawing.Point(3, 3);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(304, 787);
+            this.tabControl.Size = new System.Drawing.Size(304, 752);
             this.tabControl.TabIndex = 0;
             // 
             // previewPage
@@ -265,7 +284,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(296, 761);
+            this.previewPage.Size = new System.Drawing.Size(296, 726);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -282,7 +301,7 @@ namespace LevelEditor
             // shapeParameters
             // 
             this.shapeParameters.Controls.Add(this.shapeParametersControl);
-            this.shapeParameters.Location = new System.Drawing.Point(3, 520);
+            this.shapeParameters.Location = new System.Drawing.Point(3, 488);
             this.shapeParameters.Name = "shapeParameters";
             this.shapeParameters.Size = new System.Drawing.Size(284, 212);
             this.shapeParameters.TabIndex = 8;
@@ -1230,6 +1249,9 @@ namespace LevelEditor
             // 
             // customShapeTab
             // 
+            this.customShapeTab.Controls.Add(this.label30);
+            this.customShapeTab.Controls.Add(this.shapeFromTextureBox);
+            this.customShapeTab.Controls.Add(this.useOriginalTextureCheck);
             this.customShapeTab.Controls.Add(this.customShapeScale);
             this.customShapeTab.Controls.Add(this.label28);
             this.customShapeTab.Location = new System.Drawing.Point(4, 58);
@@ -1240,6 +1262,37 @@ namespace LevelEditor
             this.customShapeTab.Text = "CustomShape";
             this.customShapeTab.UseVisualStyleBackColor = true;
             // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(1, 9);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(96, 13);
+            this.label30.TabIndex = 13;
+            this.label30.Text = "Shape from texture";
+            // 
+            // shapeFromTextureBox
+            // 
+            this.shapeFromTextureBox.FormattingEnabled = true;
+            this.shapeFromTextureBox.Location = new System.Drawing.Point(2, 25);
+            this.shapeFromTextureBox.Name = "shapeFromTextureBox";
+            this.shapeFromTextureBox.Size = new System.Drawing.Size(262, 21);
+            this.shapeFromTextureBox.TabIndex = 12;
+            this.shapeFromTextureBox.SelectedValueChanged += new System.EventHandler(this.HandlePreview);
+            // 
+            // useOriginalTextureCheck
+            // 
+            this.useOriginalTextureCheck.AutoSize = true;
+            this.useOriginalTextureCheck.Checked = true;
+            this.useOriginalTextureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.useOriginalTextureCheck.Location = new System.Drawing.Point(148, 68);
+            this.useOriginalTextureCheck.Name = "useOriginalTextureCheck";
+            this.useOriginalTextureCheck.Size = new System.Drawing.Size(116, 17);
+            this.useOriginalTextureCheck.TabIndex = 11;
+            this.useOriginalTextureCheck.Text = "Use original texture";
+            this.useOriginalTextureCheck.UseVisualStyleBackColor = true;
+            this.useOriginalTextureCheck.CheckedChanged += new System.EventHandler(this.HandlePreview);
+            // 
             // customShapeScale
             // 
             this.customShapeScale.DecimalPlaces = 2;
@@ -1248,7 +1301,7 @@ namespace LevelEditor
             0,
             0,
             65536});
-            this.customShapeScale.Location = new System.Drawing.Point(4, 20);
+            this.customShapeScale.Location = new System.Drawing.Point(4, 65);
             this.customShapeScale.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1267,7 +1320,7 @@ namespace LevelEditor
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(3, 3);
+            this.label28.Location = new System.Drawing.Point(1, 49);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(34, 13);
             this.label28.TabIndex = 2;
@@ -1295,7 +1348,6 @@ namespace LevelEditor
             // 
             // commonParameters
             // 
-            this.commonParameters.Controls.Add(this.useOriginalTextureCheck);
             this.commonParameters.Controls.Add(this.drawOutlineCheck);
             this.commonParameters.Controls.Add(this.setAsTextureCheck);
             this.commonParameters.Controls.Add(this.materialScale);
@@ -1306,28 +1358,15 @@ namespace LevelEditor
             this.commonParameters.Controls.Add(this.colorBox);
             this.commonParameters.Location = new System.Drawing.Point(3, 343);
             this.commonParameters.Name = "commonParameters";
-            this.commonParameters.Size = new System.Drawing.Size(281, 171);
+            this.commonParameters.Size = new System.Drawing.Size(281, 139);
             this.commonParameters.TabIndex = 7;
             this.commonParameters.TabStop = false;
             this.commonParameters.Text = "Common Parameters";
             // 
-            // useOriginalTextureCheck
-            // 
-            this.useOriginalTextureCheck.AutoSize = true;
-            this.useOriginalTextureCheck.Checked = true;
-            this.useOriginalTextureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useOriginalTextureCheck.Location = new System.Drawing.Point(155, 146);
-            this.useOriginalTextureCheck.Name = "useOriginalTextureCheck";
-            this.useOriginalTextureCheck.Size = new System.Drawing.Size(116, 17);
-            this.useOriginalTextureCheck.TabIndex = 11;
-            this.useOriginalTextureCheck.Text = "Use original texture";
-            this.useOriginalTextureCheck.UseVisualStyleBackColor = true;
-            this.useOriginalTextureCheck.Visible = false;
-            // 
             // drawOutlineCheck
             // 
             this.drawOutlineCheck.AutoSize = true;
-            this.drawOutlineCheck.Location = new System.Drawing.Point(155, 123);
+            this.drawOutlineCheck.Location = new System.Drawing.Point(155, 115);
             this.drawOutlineCheck.Name = "drawOutlineCheck";
             this.drawOutlineCheck.Size = new System.Drawing.Size(85, 17);
             this.drawOutlineCheck.TabIndex = 11;
@@ -1433,7 +1472,7 @@ namespace LevelEditor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(296, 761);
+            this.tabPage2.Size = new System.Drawing.Size(296, 726);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1452,7 +1491,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1128, 787);
+            this.splitContainer1.Size = new System.Drawing.Size(1128, 752);
             this.splitContainer1.SplitterDistance = 851;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1464,7 +1503,7 @@ namespace LevelEditor
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(851, 787);
+            this.tabControl1.Size = new System.Drawing.Size(851, 752);
             this.tabControl1.TabIndex = 0;
             // 
             // levelPage
@@ -1473,7 +1512,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(843, 761);
+            this.levelPage.Size = new System.Drawing.Size(843, 726);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1484,7 +1523,7 @@ namespace LevelEditor
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.Name = "levelScreen";
-            this.levelScreen.Size = new System.Drawing.Size(837, 755);
+            this.levelScreen.Size = new System.Drawing.Size(837, 720);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
             // 
@@ -1494,7 +1533,7 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(843, 761);
+            this.objectTab.Size = new System.Drawing.Size(843, 726);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
@@ -1505,7 +1544,7 @@ namespace LevelEditor
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(837, 755);
+            this.objectScreen.Size = new System.Drawing.Size(837, 720);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 
@@ -1514,14 +1553,14 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(273, 787);
+            this.propertyGrid.Size = new System.Drawing.Size(273, 752);
             this.propertyGrid.TabIndex = 0;
             // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 795);
+            this.statusStrip.Location = new System.Drawing.Point(0, 760);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1444, 22);
             this.statusStrip.TabIndex = 6;
@@ -1542,7 +1581,7 @@ namespace LevelEditor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1444, 817);
+            this.ClientSize = new System.Drawing.Size(1444, 782);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
@@ -1622,9 +1661,6 @@ namespace LevelEditor
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage previewPage;
@@ -1705,13 +1741,20 @@ namespace LevelEditor
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.CheckBox setAsTextureCheck;
         private System.Windows.Forms.CheckBox drawOutlineCheck;
         private System.Windows.Forms.CheckBox useOriginalTextureCheck;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox shapeFromTextureBox;
+        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadShapeToolStripMenuItem;
 
 
     }
