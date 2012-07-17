@@ -1353,7 +1353,7 @@ namespace LevelEditor
             1,
             0,
             0,
-            65536});
+            131072});
             this.materialScale.Location = new System.Drawing.Point(7, 112);
             this.materialScale.Name = "materialScale";
             this.materialScale.Size = new System.Drawing.Size(120, 20);
