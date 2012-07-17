@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FarseerPhysics.SamplesFramework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using System.Reflection;
-using FarseerTools;
 
-namespace GameLogic
+namespace FarseerPhysics.SamplesFramework.Experiments
 {
     public class GameObject : IDrawable
     {
@@ -21,7 +21,7 @@ namespace GameLogic
         private List<Joint> _joints;
 
         private SpriteBatch _spriteBatch;
-        private Camera _camera;
+        private Camera2D _camera;
 
         public SpriteBatch SpriteBatch
         {
@@ -40,11 +40,16 @@ namespace GameLogic
             set { _origin = value; }
         }
 
+        public Joint[] Joints
+        {
+            get { return _joints.ToArray(); }
+        }
+
         public GameObjectPart this[int index]
         {
             get { return _parts[index]; }
-            set 
-            { 
+            set
+            {
                 _parts[index] = value;
                 _sorted = false;
             }
@@ -102,7 +107,7 @@ namespace GameLogic
         #endregion
 
         #region Конструкторы
-        public GameObject(Camera camera, SpriteBatch spriteBatch)
+        public GameObject(Camera2D camera, SpriteBatch spriteBatch)
         {
             _parts = new List<GameObjectPart>();
             _sorted = true;
@@ -119,19 +124,19 @@ namespace GameLogic
             Visible = true;
         }
 
-        public GameObject(Camera camera, SpriteBatch spriteBatch, Vector2 origin)
+        public GameObject(Camera2D camera, SpriteBatch spriteBatch, Vector2 origin)
             : this(camera, spriteBatch)
         {
             _origin = origin;
         }
 
-        public GameObject(World world, Camera camera, SpriteBatch spriteBatch)
+        public GameObject(World world, Camera2D camera, SpriteBatch spriteBatch)
             : this(camera, spriteBatch)
         {
             _world = world;
         }
 
-        public GameObject(World world, Camera camera, SpriteBatch spriteBatch, Vector2 origin)
+        public GameObject(World world, Camera2D camera, SpriteBatch spriteBatch, Vector2 origin)
             : this(world, camera, spriteBatch)
         {
             _origin = origin;
@@ -168,25 +173,48 @@ namespace GameLogic
         #region IDrawable
         public void Draw(GameTime gameTime)
         {
-            if (_sorted)
+            if (_visible)
             {
-                SpriteBatch.Begin(0, null, null, null, null, null, _camera.GetViewMatrix());
-                foreach (var part in _parts)
-                    part.Draw(gameTime);
-                SpriteBatch.End();
-            }
-            else
-            {
-                SortParts();
-                Draw(gameTime);
+                if (_sorted)
+                {
+                    SpriteBatch.Begin(0, null, null, null, null, null, _camera.View);
+                    foreach (var part in _parts)
+                        part.Draw(gameTime);
+                    SpriteBatch.End();
+                }
+                else
+                {
+                    SortParts();
+                    Draw(gameTime);
+                }
             }
         }
 
-        public int DrawOrder { get; set; }
+        private int _drawOrder;
+        public int DrawOrder
+        {
+            get { return _drawOrder; }
+            set
+            {
+                _drawOrder = value;
+                if (DrawOrderChanged != null)
+                    DrawOrderChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> DrawOrderChanged;
 
-        public bool Visible { get; set; }
+        private bool _visible;
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                _visible = value;
+                if (VisibleChanged != null)
+                    VisibleChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> VisibleChanged;
         #endregion

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.SamplesFramework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
 
-namespace GameLogic
+namespace FarseerPhysics.SamplesFramework.Experiments
 {
-    public class GameLevel : IDrawable
+    public class GameLevel : IDrawable, IUpdateable
     {
         private World _world;
-        private Camera _camera;
+        private Camera2D _camera;
         private SpriteBatch _spriteBatch;
 
         private List<GameObject> _objects;
@@ -26,7 +27,7 @@ namespace GameLogic
             set { _world = value; }
         }
 
-        public Camera Camera
+        public Camera2D Camera
         {
             get { return _camera; }
             set { _camera = value; }
@@ -48,16 +49,31 @@ namespace GameLogic
             }
         }
 
-        public GameLevel(World world, Camera camera, SpriteBatch spriteBatch)
+        public GameLevel(Camera2D camera, SpriteBatch spriteBatch)
         {
             _objects = new List<GameObject>();
             _sorted = true;
 
             _joints = new List<Joint>();
 
-            _world = world;
+            _world = new World(new Vector2(0, 9.81f));
             _camera = camera;
             _spriteBatch = spriteBatch;
+
+            Enabled = true;
+            Visible = true;
+        }
+
+        public GameLevel(Camera2D camera, SpriteBatch spriteBatch, Vector2 gravity)
+            : this(camera, spriteBatch)
+        {
+            _world.Gravity = gravity;
+        }
+
+        public GameLevel(Camera2D camera, SpriteBatch spriteBatch, World world)
+            : this(camera, spriteBatch)
+        {
+            _world = world;
         }
 
         public void AddObject(GameObject gameObject)
@@ -83,25 +99,87 @@ namespace GameLogic
         #region IDrawable
         public void Draw(GameTime gameTime)
         {
-            if (_sorted)
+            if (_visible)
             {
-                foreach (var gameObject in _objects)
-                    gameObject.Draw(gameTime);
-            }
-            else
-            {
-                SortObjects();
-                Draw(gameTime);
+                if (_sorted)
+                {
+                    foreach (var gameObject in _objects)
+                        gameObject.Draw(gameTime);
+                }
+                else
+                {
+                    SortObjects();
+                    Draw(gameTime);
+                }
             }
         }
 
-        public int DrawOrder { get; set; }
+        private int _drawOrder;
+        public int DrawOrder
+        {
+            get { return _drawOrder; }
+            set
+            {
+                _drawOrder = value;
+                if (DrawOrderChanged != null)
+                    DrawOrderChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> DrawOrderChanged;
 
-        public bool Visible { get; set; }
+        private bool _visible;
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                _visible = value;
+                if (VisibleChanged != null)
+                    VisibleChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> VisibleChanged;
+        #endregion
+
+        #region IUpdatable
+        private bool _enabled;
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                _enabled = value;
+                if (EnabledChanged != null)
+                    EnabledChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler<EventArgs> EnabledChanged;
+
+        public void Update(GameTime gameTime)
+        {
+            if (_enabled)
+                // variable time step but never less then 30 Hz
+                _world.Step(MathHelper.Min((float)gameTime.ElapsedGameTime.TotalSeconds, (1f / 30f)));
+            else
+                _world.Step(0f);
+        }
+
+        private int _updateOrder;
+        public int UpdateOrder
+        {
+            get { return _updateOrder; }
+            set
+            {
+                _updateOrder = value;
+                if (UpdateOrderChanged != null)
+                    UpdateOrderChanged(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler<EventArgs> UpdateOrderChanged;
         #endregion
     }
 }
