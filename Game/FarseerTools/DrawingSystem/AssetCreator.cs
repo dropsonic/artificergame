@@ -255,7 +255,7 @@ namespace FarseerTools
                                         List<VertexPositionColorTexture[]> verticesFill,
                                         VertexPositionColor[] verticesOutline,float textureScale = 1)
         {
-            RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
+            /*RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
                                                         DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
 
@@ -279,6 +279,7 @@ namespace FarseerTools
             rectangleTexture[3].TextureCoordinate = new Vector2(1, 0);
             rectangleTexture[3].Color = Color.White;
 
+            
             bool transparent = (verticesFill[0][0].Color == Color.Transparent);
 
             BasicEffect bassicEffect = new BasicEffect(_device);
@@ -328,6 +329,82 @@ namespace FarseerTools
                 bassicEffect.Techniques[0].Passes[0].Apply();
                 _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
             }
+            _device.SetRenderTarget(null);
+             */
+
+            RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
+                                                        DepthFormat.Depth24Stencil8, 8,
+                                                        RenderTargetUsage.DiscardContents);
+
+            float textureWidth = width * textureScale / 2;
+            float textureHeight = height * textureScale / 2;
+            VertexPositionColorTexture[] rectangleTexture = new VertexPositionColorTexture[4];
+            rectangleTexture[0] = new VertexPositionColorTexture();
+            rectangleTexture[0].Position = new Vector3(-textureWidth, textureHeight, 0);
+            rectangleTexture[0].TextureCoordinate = new Vector2(0, 1);
+            rectangleTexture[0].Color = Color.White;
+            rectangleTexture[1] = new VertexPositionColorTexture();
+            rectangleTexture[1].Position = new Vector3(textureWidth, textureHeight, 0);
+            rectangleTexture[1].TextureCoordinate = new Vector2(1, 1);
+            rectangleTexture[1].Color = Color.White;
+            rectangleTexture[2] = new VertexPositionColorTexture();
+            rectangleTexture[2].Position = new Vector3(-textureWidth, -textureHeight, 0);
+            rectangleTexture[2].TextureCoordinate = new Vector2(0, 0);
+            rectangleTexture[2].Color = Color.White;
+            rectangleTexture[3] = new VertexPositionColorTexture();
+            rectangleTexture[3].Position = new Vector3(textureWidth, -textureHeight, 0);
+            rectangleTexture[3].TextureCoordinate = new Vector2(1, 0);
+            rectangleTexture[3].Color = Color.White;
+
+            DepthStencilState drawShape;
+            drawShape = new DepthStencilState();
+            drawShape.StencilEnable = true;
+            drawShape.StencilFunction = CompareFunction.Always;
+            drawShape.StencilPass = StencilOperation.Replace;
+            drawShape.ReferenceStencil = 1;
+            drawShape.DepthBufferEnable = false;
+
+            DepthStencilState drawTexture;
+            drawTexture = new DepthStencilState();
+            drawTexture.StencilEnable = true;
+            drawTexture.StencilFunction = CompareFunction.Equal;
+            drawTexture.ReferenceStencil = 1;
+            drawTexture.StencilPass = StencilOperation.Keep;
+            drawTexture.DepthBufferEnable = false;
+
+            BasicEffect bassicEffect = new BasicEffect(_device);
+            bassicEffect.World = Matrix.Identity;
+            bassicEffect.View = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
+            bassicEffect.Projection = Matrix.CreateOrthographic(width + 2, -height - 2, 0f, 1f);
+
+            _device.RasterizerState = RasterizerState.CullNone;
+            _device.SamplerStates[0] = SamplerState.LinearClamp;
+            _device.SetRenderTarget(outputTexture);
+            _device.Clear(Color.Transparent);
+            
+            bassicEffect.TextureEnabled = false;
+            bassicEffect.VertexColorEnabled = true;
+            _device.DepthStencilState = drawShape;
+            bassicEffect.Techniques[0].Passes[0].Apply();
+            for (int i = 0; i < verticesFill.Count; ++i)
+            {
+                _device.DrawUserPrimitives(PrimitiveType.TriangleList, verticesFill[i], 0, verticesFill[i].Length / 3);
+            }
+
+            bassicEffect.TextureEnabled = true;
+            bassicEffect.Texture = texture;
+            _device.DepthStencilState = drawTexture;
+            bassicEffect.Techniques[0].Passes[0].Apply();
+            _device.DrawUserPrimitives(PrimitiveType.TriangleStrip, rectangleTexture, 0, 2);
+
+            if (DrawOutline)
+            {
+                bassicEffect.VertexColorEnabled = true;
+                bassicEffect.TextureEnabled = false;
+                bassicEffect.Techniques[0].Passes[0].Apply();
+                _device.DrawUserPrimitives(PrimitiveType.LineList, verticesOutline, 0, verticesOutline.Length / 2);
+            }
+
             _device.SetRenderTarget(null);
             return outputTexture as Texture2D;
         }
