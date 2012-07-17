@@ -101,6 +101,7 @@ namespace LevelEditor
         private void SwitchShapeParametersTab(ObjectType shapeType)
         {
             this.shapeParameters.Text = "Shape Parameters - " + shapeType.ToString();
+            this.useOriginalTextureCheck.Visible = false;
             switch (shapeType)
             {
                 case ObjectType.Arc:
@@ -114,6 +115,7 @@ namespace LevelEditor
                     break;
                 case ObjectType.CustomShape:
                     this.shapeParametersControl.SelectedTab = this.customShapeTab;
+                    this.useOriginalTextureCheck.Visible = true;
                     break;
                 case ObjectType.Ellipse:
                     this.shapeParametersControl.SelectedTab = this.ellipseTab;

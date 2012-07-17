@@ -123,6 +123,7 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.useOriginalTextureCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -256,6 +257,7 @@ namespace LevelEditor
             // 
             // previewPage
             // 
+            this.previewPage.Controls.Add(this.useOriginalTextureCheck);
             this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
@@ -1409,7 +1411,7 @@ namespace LevelEditor
             this.shapeBox.FormattingEnabled = true;
             this.shapeBox.Location = new System.Drawing.Point(3, 316);
             this.shapeBox.Name = "shapeBox";
-            this.shapeBox.Size = new System.Drawing.Size(284, 21);
+            this.shapeBox.Size = new System.Drawing.Size(148, 21);
             this.shapeBox.TabIndex = 1;
             this.shapeBox.SelectedValueChanged += new System.EventHandler(this.ShapeParameterSwitch);
             // 
@@ -1521,6 +1523,19 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // useOriginalTextureCheck
+            // 
+            this.useOriginalTextureCheck.AutoSize = true;
+            this.useOriginalTextureCheck.Checked = true;
+            this.useOriginalTextureCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.useOriginalTextureCheck.Location = new System.Drawing.Point(170, 316);
+            this.useOriginalTextureCheck.Name = "useOriginalTextureCheck";
+            this.useOriginalTextureCheck.Size = new System.Drawing.Size(116, 17);
+            this.useOriginalTextureCheck.TabIndex = 11;
+            this.useOriginalTextureCheck.Text = "Use original texture";
+            this.useOriginalTextureCheck.UseVisualStyleBackColor = true;
+            this.useOriginalTextureCheck.Visible = false;
             // 
             // MainForm
             // 
@@ -1696,6 +1711,7 @@ namespace LevelEditor
         private PreviewScreen previewScreen;
         private System.Windows.Forms.CheckBox setAsTextureCheck;
         private System.Windows.Forms.CheckBox drawOutlineCheck;
+        private System.Windows.Forms.CheckBox useOriginalTextureCheck;
 
 
     }
