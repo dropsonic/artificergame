@@ -177,7 +177,7 @@ namespace GameLogic
             {
                 if (_sorted)
                 {
-                    SpriteBatch.Begin(0, null, null, null, null, null, _camera.View);
+                    SpriteBatch.Begin(0, null, null, null, null, null, _camera.GetViewMatrix());
                     foreach (var part in _parts)
                         part.Draw(gameTime);
                     SpriteBatch.End();
