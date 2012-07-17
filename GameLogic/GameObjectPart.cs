@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FarseerPhysics.SamplesFramework;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using FarseerTools;
 
-namespace GameLogic
+namespace FarseerPhysics.SamplesFramework.Experiments
 {
     public class GameObjectPart : IDrawable
     {
@@ -42,17 +42,40 @@ namespace GameLogic
         #region IDrawable
         public void Draw(GameTime gameTime)
         {
-            _parent.SpriteBatch.Draw(Sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
-                                           null,
-                                           Color.White, Body.Rotation, Sprite.Origin, 1f,
-                                           SpriteEffects.None, 0f);
+            if (_visible)
+            {
+                _parent.SpriteBatch.Draw(Sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
+                                               null,
+                                               Color.White, Body.Rotation, Sprite.Origin, 1f,
+                                               SpriteEffects.None, 0f);
+            }
         }
 
-        public int DrawOrder { get; set; }
+        private int _drawOrder;
+        public int DrawOrder
+        {
+            get { return _drawOrder; }
+            set
+            {
+                _drawOrder = value;
+                if (DrawOrderChanged != null)
+                    DrawOrderChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> DrawOrderChanged;
 
-        public bool Visible { get; set; }
+        private bool _visible;
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                _visible = value;
+                if (VisibleChanged != null)
+                    VisibleChanged(this, EventArgs.Empty);
+            }
+        }
 
         public event EventHandler<EventArgs> VisibleChanged;
         #endregion
