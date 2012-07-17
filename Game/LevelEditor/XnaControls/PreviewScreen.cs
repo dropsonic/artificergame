@@ -66,6 +66,23 @@ namespace LevelEditor
             sprite = new Sprite(ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateCapsule(height, topRadius, topEdges, bottomRadius, bottomEdges), material, color, materialScale));
         }
         
+        public void SetCustomShapePreview(string shape, float scale,Color color)
+        {
+            Texture2D texture;
+            List<Vertices> vertices;
+            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale, color, out texture, out vertices);
+            sprite = new Sprite(texture);
+        }
+
+        public void SetCustomShapePreview(string shape, float scale, string material, Color color, float materialScale)
+        {
+            Texture2D texture;
+            List<Vertices> vertices;
+            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale,material,color,materialScale,out texture,out vertices);
+            sprite = new Sprite(texture);
+        }
+
+        
         protected override void UpdateFrame()
         {
             

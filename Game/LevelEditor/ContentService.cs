@@ -77,6 +77,11 @@ namespace LevelEditor
             return "Textures\\Materials\\"+material;
         }
 
+        public static string GetShape(string shape = null)
+        {
+            return "Textures\\Shapes\\" + shape;
+        }
+
         public Texture2D LoadTexture(string fileLocation)
         {
             GraphicsDevice graphicsDevice = ((GraphicsDeviceService)services.GetService(typeof(IGraphicsDeviceService))).GraphicsDevice;

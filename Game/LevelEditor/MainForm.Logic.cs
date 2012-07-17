@@ -39,8 +39,12 @@ namespace LevelEditor
                             float.Parse(circleRadius.Value.ToString()));
                          break;
                     case ObjectType.CustomShape:
-
-                        break;
+                         if (useOriginalTextureCheck.Checked)
+                             previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()]);
+                         else
+                             previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), 
+                                 materialBox.SelectedItem.ToString(),colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()));
+                         break;
                     case ObjectType.Ellipse:
                         previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
                             float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
@@ -95,13 +99,47 @@ namespace LevelEditor
         }
 
         /// <summary>
+        /// Загружает текстуру для создания формы.
+        /// </summary>
+        private void LoadShape()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            fileDialog.Title = "Load Shape";
+
+            fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
+                                "All Files (*.*)|*.*";
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
+
+                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string sourceFile = fileDialog.FileName;
+                    string destFile = "Content\\" + ContentService.GetShape(Path.GetFileName(fileDialog.FileName));
+
+                    File.Copy(sourceFile, destFile);
+                    _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(destFile));
+                    shapeFromTextureBox.Items.Add(filename);
+                }
+                finally
+                {
+                    Cursor = Cursors.Arrow;
+                }
+            }
+        }
+
+                
+
+        /// <summary>
         /// Переключает видимость вкладки параметров фигуры в зависимости от типа фигуры.
         /// </summary>
         /// <param name="shapeType">Тип фигуры.</param>
         private void SwitchShapeParametersTab(ObjectType shapeType)
         {
             this.shapeParameters.Text = "Shape Parameters - " + shapeType.ToString();
-            this.useOriginalTextureCheck.Visible = false;
             switch (shapeType)
             {
                 case ObjectType.Arc:
@@ -115,7 +153,6 @@ namespace LevelEditor
                     break;
                 case ObjectType.CustomShape:
                     this.shapeParametersControl.SelectedTab = this.customShapeTab;
-                    this.useOriginalTextureCheck.Visible = true;
                     break;
                 case ObjectType.Ellipse:
                     this.shapeParametersControl.SelectedTab = this.ellipseTab;

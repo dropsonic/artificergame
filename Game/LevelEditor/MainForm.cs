@@ -47,6 +47,7 @@ namespace LevelEditor
             _assetCreator = ContentService.GetContentService().AssetCreator;
             _assetCreator.UseTexture = setAsTextureCheck.Checked;
             _assetCreator.DrawOutline = drawOutlineCheck.Checked;
+
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
                 string filename = System.IO.Path.GetFileName(material).Split('.')[0];
@@ -54,6 +55,13 @@ namespace LevelEditor
                 materialBox.Items.Add(filename);
             }
 
+            foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
+            {
+                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
+                _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
+                shapeFromTextureBox.Items.Add(filename);
+            }
+            
             foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
             {
                 shapeBox.Items.Add(obj);
@@ -113,6 +121,19 @@ namespace LevelEditor
             try
             {
                 LoadMaterial();
+                ShowReadyStatus();
+            }
+            catch (Exception ex)
+            {
+                ShowErrorStatus(ex);
+            }
+        }
+
+        private void loadShapeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadShape();
                 ShowReadyStatus();
             }
             catch (Exception ex)
