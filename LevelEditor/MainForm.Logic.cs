@@ -75,8 +75,9 @@ namespace LevelEditor
                 }
                 if (shapeVertices != null && previewTexture != null)
                 {
+                    float? previousDensity = currentObject[0].Body.Density;
                     currentObject[0].Body.FixtureList.Clear();
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 1f, currentObject[0].Body);
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, currentObject[0].Body);
                     currentObject[0].Sprite = new Sprite(previewTexture);
                     previewScreen.PreviewGameObject = currentObject[0];
                 }
