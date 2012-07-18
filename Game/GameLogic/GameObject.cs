@@ -29,6 +29,12 @@ namespace GameLogic
             set { _spriteBatch = value; }
         }
 
+        public Camera Camera
+        {
+            get { return _camera; }
+            set { _camera = Camera; }
+        }
+
         private Vector2 _origin;
 
         /// <summary>
@@ -89,7 +95,7 @@ namespace GameLogic
             //Копируем все части
             foreach (var part in _parts)
             {
-                GameObjectPart newPart = part.DeepClone(result, world, position);
+                GameObjectPart newPart = part.DeepClone(world, position);
 
                 //Меняем привязки joint'ов на новые копии body.
                 for (int i = 0; i < _joints.Count; i++)
@@ -107,21 +113,22 @@ namespace GameLogic
         #endregion
 
         #region Конструкторы
-        public GameObject(Camera camera, SpriteBatch spriteBatch)
+        public GameObject()
         {
             _parts = new List<GameObjectPart>();
             _sorted = true;
-
             _joints = new List<Joint>();
-
             _origin = Vector2.Zero;
 
+            _world = new World(Vector2.Zero);
+            Visible = true;
+        }
+
+        public GameObject(Camera camera, SpriteBatch spriteBatch)
+            : this()
+        {
             _spriteBatch = spriteBatch;
             _camera = camera;
-
-            _world = new World(Vector2.Zero);
-
-            Visible = true;
         }
 
         public GameObject(Camera camera, SpriteBatch spriteBatch, Vector2 origin)
@@ -161,7 +168,7 @@ namespace GameLogic
 
         public void AddPart(Sprite sprite, Body body)
         {
-            AddPart(new GameObjectPart(this, sprite, body));
+            AddPart(new GameObjectPart(_spriteBatch, sprite, body));
         }
 
         public void AddJoint(Joint joint)
