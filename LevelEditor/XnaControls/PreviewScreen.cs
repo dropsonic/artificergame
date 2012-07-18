@@ -20,6 +20,11 @@ namespace LevelEditor
         {
             get { return previewTexture; }
         }
+        private Vertices shapeVertices;
+        public Vertices ShapeVertices
+        {
+            get { return shapeVertices; }
+        }
         string message = "Select Preview";
         protected override void Initialize()
         {
@@ -43,43 +48,49 @@ namespace LevelEditor
 
         public void SetCirclePreview(string material, Color color, float materialScale, float radius)
         {
+            shapeVertices = PolygonTools.CreateCircle(radius, AssetCreator.CircleSegments);
             previewTexture = ContentService.GetContentService().AssetCreator.CircleTexture(radius, material, color, materialScale);
         }
         public void SetRectanglePreview(string material, Color color, float materialScale, float width, float height)
-        {      
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateRectangle(width, height), material, color, materialScale);
+        {
+            shapeVertices = PolygonTools.CreateRectangle(width, height);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
+
         }
          public void SetGearPreview(string material, Color color, float materialScale, float radius, int numberOfTeeth, float tipPercentage, float toothHeight)
-        {      
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateGear(radius, numberOfTeeth, tipPercentage, toothHeight), material, color, materialScale);
+        {
+            shapeVertices = PolygonTools.CreateGear(radius, numberOfTeeth, tipPercentage, toothHeight);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
         } 
         public void SetArcPreview(string material, Color color, float materialScale, float degrees, int sides, float radius)
-        {      
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateArc(MathHelper.ToRadians(degrees), sides, radius), material, color, materialScale);
+        {
+            shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians(degrees), sides, radius);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
         }
         public void SetEllipsePreview(string material, Color color, float materialScale, float xRadius, float yRadius, int numberOfEdges)
         {
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateEllipse(xRadius, yRadius, numberOfEdges), material, color, materialScale);
+            shapeVertices = PolygonTools.CreateEllipse(xRadius, yRadius, numberOfEdges);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
         } 
         public void SetRoundedRectanglePreview(string material, Color color, float materialScale, float width, float height, float xRadius, float yRadius, int segments)
         {
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateRoundedRectangle(width, height, xRadius, yRadius, segments), material, color, materialScale);
+            shapeVertices = PolygonTools.CreateRoundedRectangle(width, height, xRadius, yRadius, segments);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
         }
         public void SetCapsulePreview(string material, Color color, float materialScale, float height, float topRadius, int topEdges, float bottomRadius, int bottomEdges)   
         {
-            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(PolygonTools.CreateCapsule(height, topRadius, topEdges, bottomRadius, bottomEdges), material, color, materialScale);
+            shapeVertices = PolygonTools.CreateCapsule(height, topRadius, topEdges, bottomRadius, bottomEdges);
+            previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, material, color, materialScale);
         }
         
         public void SetCustomShapePreview(string shape, float scale,Color color)
         {
-            List<Vertices> vertices;
-            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale, color, out previewTexture, out vertices);
+            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale, color, out previewTexture, out shapeVertices);
         }
 
         public void SetCustomShapePreview(string shape, float scale, string material, Color color, float materialScale)
         {
-            List<Vertices> vertices;
-            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale, material, color, materialScale, out previewTexture, out vertices);
+            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shape, scale, material, color, materialScale, out previewTexture, out shapeVertices);
         }
 
         

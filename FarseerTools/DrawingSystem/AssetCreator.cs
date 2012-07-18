@@ -27,7 +27,7 @@ namespace FarseerTools
 
     public class AssetCreator
     {
-        private const int CircleSegments = 64;
+        public const int CircleSegments = 64;
         private GraphicsDevice _device;
         private BasicEffect _effect;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
@@ -472,7 +472,7 @@ namespace FarseerTools
             _device.SamplerStates[0] = SamplerState.AnisotropicWrap;
             _device.SetRenderTarget(texture);
             _device.Clear(Color.Transparent);
-            _effect.Projection = Matrix.CreateOrthographic(width + 2f, height + 2f, 0f, 1f);
+            _effect.Projection = Matrix.CreateOrthographic(width + 2f, -height - 2f, 0f, 1f);
             _effect.View = halfPixelOffset;
             _effect.TextureEnabled = false;
             _effect.VertexColorEnabled = true;
@@ -489,7 +489,7 @@ namespace FarseerTools
             return texture;
         }
 
-        public void ShapeFromTexture(string shape, float scale,Color color, out Texture2D outputTexture, out List<Vertices> decomposedVertices)
+        public void ShapeFromTexture(string shape, float scale,Color color, out Texture2D outputTexture, out Vertices vertices)
         {
             Texture2D shapeTexture = _shapes[shape];
             uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
@@ -504,7 +504,7 @@ namespace FarseerTools
             textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
             Vector2 vertScale = ConvertUnits.ToSimUnits(Vector2.One) * scale;
             textureVertices.Scale(ref vertScale);
-            decomposedVertices = BayazitDecomposer.ConvexPartition(textureVertices);
+            vertices = new Vertices(textureVertices);
             RenderTarget2D renderTarget = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
                                                        DepthFormat.None, 8,
                                                        RenderTargetUsage.DiscardContents);
@@ -520,7 +520,7 @@ namespace FarseerTools
             outputTexture = renderTarget as Texture2D;
         }
 
-        public void ShapeFromTexture(string shape, float scale, string materialType, Color color, float materialScale, out Texture2D outputTexture, out List<Vertices> decomposedVertices)
+        public void ShapeFromTexture(string shape, float scale, string materialType, Color color, float materialScale, out Texture2D outputTexture, out Vertices vertices)
         {
             Texture2D shapeTexture = _shapes[shape];
             uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
@@ -532,7 +532,7 @@ namespace FarseerTools
             textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
             Vector2 vertScale = new Vector2(ConvertUnits.ToSimUnits(1)) * scale;
             textureVertices.Scale(ref vertScale);
-            decomposedVertices = BayazitDecomposer.ConvexPartition(textureVertices);
+            vertices = new Vertices(textureVertices);
             outputTexture = TextureFromVertices(textureVertices, materialType, color, materialScale);
         }
     }
