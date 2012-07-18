@@ -1417,6 +1417,7 @@ namespace FarseerPhysics.Dynamics
                 {
                     fix.Dencity = (float)value;
                 }
+                ResetMassData();
             }
         }
     }

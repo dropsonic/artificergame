@@ -1584,6 +1584,7 @@ namespace LevelEditor
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.Size = new System.Drawing.Size(271, 809);
             this.propertyGrid.TabIndex = 0;
+            this.propertyGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid_SelectedGridItemChanged);
             // 
             // toolStripContainer1
             // 

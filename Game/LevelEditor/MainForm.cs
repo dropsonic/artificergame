@@ -290,5 +290,10 @@ namespace LevelEditor
             }
 
         }
+
+        private void propertyGrid_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
+        {
+            propertyGrid.Refresh();
+        }
     }
 }

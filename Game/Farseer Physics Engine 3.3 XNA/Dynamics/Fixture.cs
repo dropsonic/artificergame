@@ -616,6 +616,7 @@ namespace FarseerPhysics.Dynamics
             set
             {
                 Shape._density = value;
+                Shape.ComputeProperties();
             }
         }
     }
