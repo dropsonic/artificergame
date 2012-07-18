@@ -16,13 +16,24 @@ namespace LevelEditor
         public string message = "Empty Message";
 
 
-        public Texture2D CurrentTexture { get; set; }
+        public Texture2D CurrentTexture
+        {
+            set
+            {
+                if (value != null)
+                    currentSprite = new Sprite(value);
+            }
+        }
+
+        private Sprite currentSprite;
+        public Vector2 CurrentTexturePosition { get; set; }
         public bool DrawPreview { get; set; }
 
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
+            CurrentTexturePosition = Vector2.Zero;
         }
 
         protected override void LoadContent()
@@ -51,8 +62,8 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            if (CurrentTexture != null && DrawPreview)
-                spriteBatch.Draw(CurrentTexture, Vector2.Zero, Color.White);
+            if (currentSprite.Texture != null && DrawPreview)
+                spriteBatch.Draw(currentSprite.Texture, CurrentTexturePosition, null, Color.White, 0f, currentSprite.Origin, 1f, SpriteEffects.None, 0f);
             spriteBatch.End();
         }
     }
