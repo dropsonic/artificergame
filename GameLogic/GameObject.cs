@@ -26,7 +26,12 @@ namespace GameLogic
         public SpriteBatch SpriteBatch
         {
             get { return _spriteBatch; }
-            set { _spriteBatch = value; }
+            set 
+            { 
+                _spriteBatch = value;
+                foreach (var part in _parts)
+                    part.SpriteBatch = value;
+            }
         }
 
         public Camera Camera
