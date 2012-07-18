@@ -44,7 +44,7 @@ namespace LevelEditor
             CurrentObjectPosition = Vector2.Zero;
             DrawCurrentGameObject = false;
 
-            world = new World(Vector2.Zero);
+            world = new World(new Vector2(1,1));
             camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
             gameLevel = new GameLevel(camera, spriteBatch,world);
         }
@@ -72,7 +72,7 @@ namespace LevelEditor
         
         protected override void UpdateFrame()
         {
-            
+            world.Step((float)GameTime.ElapsedGameTime.TotalSeconds);
         }
 
 
@@ -85,8 +85,6 @@ namespace LevelEditor
                 currentGameObject.Draw(GameTime);
                 currentGameObject.Camera.Position = Vector2.Zero;
             }
-
-            
             gameLevel.Draw(GameTime);
         }
     }
