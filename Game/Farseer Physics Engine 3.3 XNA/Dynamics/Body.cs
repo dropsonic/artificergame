@@ -1392,5 +1392,32 @@ namespace FarseerPhysics.Dynamics
                 }
             }
         }
+
+        /// <summary>
+        /// Density of all shapes. If density is the same, then "Density" property returns density float value. 
+        /// If density varies, then "Density" property returns null.
+        /// ATTENTION: setting this property will result in setting density for all shapes with same value.
+        /// </summary>
+        public float? Density
+        {
+            get
+            {
+                if (FixtureList.Count == 0) return null;
+                float cmprDensity = FixtureList[0].Dencity;
+                bool theSame = true;
+                foreach (Fixture fix in FixtureList)
+                {
+                    if (cmprDensity != fix.Dencity) theSame = false;
+                }
+                return theSame ? cmprDensity : (float?)null;
+            }
+            set
+            {
+                foreach (Fixture fix in FixtureList)
+                {
+                    fix.Dencity = (float)value;
+                }
+            }
+        }
     }
 }

@@ -603,5 +603,20 @@ namespace FarseerPhysics.Dynamics
                        Shape.CompareTo(fixture.Shape) &&
                        UserData == fixture.UserData);
         }
+
+        /// <summary>
+        /// Set dencity for shape, associated with this fixture.
+        /// </summary>
+        public float Dencity
+        {
+            get
+            {
+                return Shape._density;
+            }
+            set
+            {
+                Shape._density = value;
+            }
+        }
     }
 }
