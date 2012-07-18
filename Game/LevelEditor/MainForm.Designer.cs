@@ -256,7 +256,7 @@ namespace LevelEditor
             // 
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Controls.Add(this.paramsTabControl, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1493,7 +1493,7 @@ namespace LevelEditor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(316, 783);
+            this.tabPage2.Size = new System.Drawing.Size(306, 783);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1512,8 +1512,8 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1128, 809);
-            this.splitContainer1.SplitterDistance = 851;
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 809);
+            this.splitContainer1.SplitterDistance = 843;
             this.splitContainer1.TabIndex = 1;
             // 
             // tabControl1
@@ -1524,7 +1524,7 @@ namespace LevelEditor
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(851, 809);
+            this.tabControl1.Size = new System.Drawing.Size(843, 809);
             this.tabControl1.TabIndex = 0;
             // 
             // levelPage
@@ -1534,7 +1534,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(843, 783);
+            this.levelPage.Size = new System.Drawing.Size(835, 783);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1581,7 +1581,7 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(273, 809);
+            this.propertyGrid.Size = new System.Drawing.Size(271, 809);
             this.propertyGrid.TabIndex = 0;
             // 
             // toolStripContainer1
