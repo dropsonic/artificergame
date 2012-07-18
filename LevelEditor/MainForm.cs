@@ -37,6 +37,7 @@ namespace LevelEditor
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             levelScreen.message = "Level";
+            levelScreen.DrawPreview = false;
             objectScreen.message = "GameObject";
             ShowReadyStatus();
         }
@@ -73,6 +74,22 @@ namespace LevelEditor
             }
         }
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                previewScreen.FrameTimer.Enabled = false;
+                levelScreen.FrameTimer.Enabled = false;
+                objectScreen.FrameTimer.Enabled = false;
+            }
+            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
+            {
+                previewScreen.FrameTimer.Enabled = true;
+                levelScreen.FrameTimer.Enabled = true;
+                objectScreen.FrameTimer.Enabled = true;
+            }
+        }
+        #region Настройка превью
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
             SwitchShapeParametersTab((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()));
@@ -97,25 +114,24 @@ namespace LevelEditor
             {
                 ShowErrorStatus(ex);
             }
+            SetCurrentSprite();
             updateTimer.Enabled = false;
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
+        private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                previewScreen.FrameTimer.Enabled = false;
-                levelScreen.FrameTimer.Enabled = false;
-                objectScreen.FrameTimer.Enabled = false;
-            }
-            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
-            {
-                previewScreen.FrameTimer.Enabled = true;
-                levelScreen.FrameTimer.Enabled = true;
-                objectScreen.FrameTimer.Enabled = true;
-            }
+            _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            HandlePreview(sender, e);
         }
 
+        private void drawOutlineCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
+            HandlePreview(sender, e);
+        }
+        #endregion
+
+        #region Загрузка ресурсов
         private void loadMaterialToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -141,19 +157,8 @@ namespace LevelEditor
                 ShowErrorStatus(ex);
             }
         }
-
-        private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            _assetCreator.UseTexture = setAsTextureCheck.Checked;
-            HandlePreview(sender, e);
-        }
-
-        private void drawOutlineCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
-            HandlePreview(sender, e);
-        }
-
+        #endregion
+        
         #region Проверки NumericUpDown для фигур
         private void capsuleHeight_ValueChanging(object sender, ValueChangingEventArgs e)
         {
@@ -232,5 +237,41 @@ namespace LevelEditor
                 ShowReadyStatus();
         }
         #endregion
+
+
+        private void levelScreen_MouseEnter(object sender, EventArgs e)
+        {
+            levelScreen.DrawPreview = true;
+        }
+
+        private void levelScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void levelScreen_MouseLeave(object sender, EventArgs e)
+        {
+            levelScreen.DrawPreview = false;
+        }
+
+        
+
+        private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            SetCurrentSprite();
+        }
+
+        void SetCurrentSprite()
+        {
+            if (previewScreen.PreviewTexture != null && placeObjectCheck.Checked)
+            {
+                levelScreen.CurrentTexture = previewScreen.PreviewTexture;
+            }
+            else
+            {
+                levelScreen.CurrentTexture = null;
+            }
+
+        }
     }
 }

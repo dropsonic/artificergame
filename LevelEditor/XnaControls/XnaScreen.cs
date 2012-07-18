@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision.Shapes;
+using FarseerTools;
 
 namespace LevelEditor
 {
@@ -11,12 +12,16 @@ namespace LevelEditor
     {
         SpriteBatch spriteBatch;
         SpriteFont font;
+
         public string message = "Empty Message";
-        public Texture2D texture;
+
+
+        public Texture2D CurrentTexture { get; set; }
+        public bool DrawPreview { get; set; }
+
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
         }
 
@@ -46,14 +51,9 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, message, Vector2.Zero, Color.Black);
-            if (texture != null)
-            {
-                spriteBatch.Draw(texture, new Vector2(0, 0), Color.White);
-            }
+            if (CurrentTexture != null && DrawPreview)
+                spriteBatch.Draw(CurrentTexture, Vector2.Zero, Color.White);
             spriteBatch.End();
-
-
         }
     }
 }
