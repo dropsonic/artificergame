@@ -1541,14 +1541,15 @@ namespace LevelEditor
             // 
             // levelScreen
             // 
-            this.levelScreen.CurrentTexturePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
-            this.levelScreen.DrawPreview = false;
+            this.levelScreen.CurrentObjectPosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
+            this.levelScreen.DrawCurrentGameObject = false;
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.Name = "levelScreen";
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
+            this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
             this.levelScreen.MouseEnter += new System.EventHandler(this.levelScreen_MouseEnter);
             this.levelScreen.MouseLeave += new System.EventHandler(this.levelScreen_MouseLeave);
             this.levelScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseMove);
@@ -1559,20 +1560,20 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(843, 783);
+            this.objectTab.Size = new System.Drawing.Size(835, 783);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
             // 
             // objectScreen
             // 
-            this.objectScreen.CurrentTexturePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
+            this.objectScreen.CurrentObjectPosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.objectScreen.DrawPreview = false;
+            this.objectScreen.DrawCurrentGameObject = false;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(837, 777);
+            this.objectScreen.Size = new System.Drawing.Size(829, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 

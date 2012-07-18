@@ -5,6 +5,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Collision.Shapes;
 using FarseerTools;
+using GameLogic;
 
 namespace LevelEditor
 {
@@ -13,32 +14,44 @@ namespace LevelEditor
         SpriteBatch spriteBatch;
         SpriteFont font;
 
-        public string message = "Empty Message";
+        GameLevel gameLevel;
+        World world;
+        Camera camera;
 
-
-        public Texture2D CurrentTexture
+        private GameObject currentGameObject;
+        public GameObject CurrentGameObject
         {
             set
             {
-                if (value != null)
-                    currentSprite = new Sprite(value);
+                if (value == null)
+                    currentGameObject = null;
                 else
                 {
-                    currentSprite = new Sprite();
-                    currentSprite.Texture = null;
+                    currentGameObject = value;
+                    currentGameObject.Camera = camera;
+                    currentGameObject.SpriteBatch = spriteBatch;
                 }
             }
         }
-
-        private Sprite currentSprite;
-        public Vector2 CurrentTexturePosition { get; set; }
-        public bool DrawPreview { get; set; }
+        public Vector2 CurrentObjectPosition { get; set; }
+        public bool DrawCurrentGameObject { get; set; }
 
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
-            CurrentTexturePosition = Vector2.Zero;
+
+            CurrentObjectPosition = Vector2.Zero;
+            DrawCurrentGameObject = false;
+
+            world = new World(Vector2.Zero);
+            camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
+            gameLevel = new GameLevel(camera, spriteBatch,world);
+        }
+
+        public void AddCurrentObject()
+        {
+            gameLevel.AddObject(currentGameObject.CopyObjectToWorld(gameLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
         }
 
         protected override void LoadContent()
@@ -66,10 +79,15 @@ namespace LevelEditor
         protected override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
-            if (currentSprite.Texture != null && DrawPreview)
-                spriteBatch.Draw(currentSprite.Texture, CurrentTexturePosition, null, Color.White, 0f, currentSprite.Origin, 1f, SpriteEffects.None, 0f);
-            spriteBatch.End();
+            if (currentGameObject != null && DrawCurrentGameObject)
+            {
+                currentGameObject.Camera.Position = -CurrentObjectPosition;
+                currentGameObject.Draw(GameTime);
+                currentGameObject.Camera.Position = Vector2.Zero;
+            }
+
+            
+            gameLevel.Draw(GameTime);
         }
     }
 }

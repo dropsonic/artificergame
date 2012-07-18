@@ -42,9 +42,7 @@ namespace LevelEditor
             updateTimer.Interval = 10;
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
             this.shapeParametersControl.SelectedTab = this.emptyTab;
-            levelScreen.message = "Level";
-            levelScreen.DrawPreview = false;
-            objectScreen.message = "GameObject";
+            levelScreen.DrawCurrentGameObject = false;
 
             currentObject = new GameObject();
             Body body = new Body(currentObject.World);
@@ -125,7 +123,7 @@ namespace LevelEditor
             {
                 ShowErrorStatus(ex);
             }
-            SetCurrentSprite();
+            SetCurrentObject();
             propertyGrid.Refresh();
 
             updateTimer.Enabled = false;
@@ -254,33 +252,41 @@ namespace LevelEditor
 
         private void levelScreen_MouseEnter(object sender, EventArgs e)
         {
-            levelScreen.DrawPreview = true;
+            levelScreen.DrawCurrentGameObject = true;
+            Cursor = Cursors.Cross;
         }
 
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            levelScreen.CurrentTexturePosition = new Vector2(e.X, e.Y);
+            levelScreen.CurrentObjectPosition = new Vector2(e.X, e.Y);
+        }
+
+        private void levelScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (placeObjectCheck.Checked)
+                levelScreen.AddCurrentObject();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
         {
-            levelScreen.DrawPreview = false;
+            levelScreen.DrawCurrentGameObject = false;
+            Cursor = Cursors.Arrow;
         }
 
         private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
         {
-            SetCurrentSprite();
+            SetCurrentObject();
         }
 
-        void SetCurrentSprite()
+        void SetCurrentObject()
         {
-            if (previewScreen.PreviewTexture != null && placeObjectCheck.Checked)
+            if (currentObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
             {
-                levelScreen.CurrentTexture = previewScreen.PreviewTexture;
+                levelScreen.CurrentGameObject = currentObject;
             }
             else
             {
-                levelScreen.CurrentTexture = null;
+                levelScreen.CurrentGameObject = null;
             }
 
         }
