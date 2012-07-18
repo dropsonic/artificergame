@@ -499,8 +499,8 @@ namespace FarseerTools
             AABB vertsBounds = textureVertices.GetCollisionBox();
             Vector2 origin = vertsBounds.Center;
             textureVertices.Translate(-origin);
-            int width = (int)(vertsBounds.UpperBound.X - vertsBounds.LowerBound.X);
-            int height = (int)(vertsBounds.UpperBound.Y - vertsBounds.LowerBound.Y);
+            int width = (int)((vertsBounds.UpperBound.X - vertsBounds.LowerBound.X)*scale);
+            int height = (int)((vertsBounds.UpperBound.Y - vertsBounds.LowerBound.Y)*scale);
             textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
             Vector2 vertScale = ConvertUnits.ToSimUnits(Vector2.One) * scale;
             textureVertices.Scale(ref vertScale);
