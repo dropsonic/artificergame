@@ -255,8 +255,8 @@ namespace LevelEditor
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Controls.Add(this.paramsTabControl, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -264,7 +264,7 @@ namespace LevelEditor
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 753);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 815);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // paramsTabControl
@@ -275,7 +275,7 @@ namespace LevelEditor
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
             this.paramsTabControl.SelectedIndex = 0;
-            this.paramsTabControl.Size = new System.Drawing.Size(304, 747);
+            this.paramsTabControl.Size = new System.Drawing.Size(314, 809);
             this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
@@ -290,7 +290,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(296, 721);
+            this.previewPage.Size = new System.Drawing.Size(306, 783);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -301,7 +301,7 @@ namespace LevelEditor
             this.placeObjectCheck.AutoSize = true;
             this.placeObjectCheck.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green;
             this.placeObjectCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.placeObjectCheck.Location = new System.Drawing.Point(213, 706);
+            this.placeObjectCheck.Location = new System.Drawing.Point(216, 714);
             this.placeObjectCheck.Name = "placeObjectCheck";
             this.placeObjectCheck.Size = new System.Drawing.Size(78, 23);
             this.placeObjectCheck.TabIndex = 10;
@@ -314,14 +314,14 @@ namespace LevelEditor
             this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
             this.previewScreen.Location = new System.Drawing.Point(3, 3);
             this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(285, 290);
+            this.previewScreen.Size = new System.Drawing.Size(300, 300);
             this.previewScreen.TabIndex = 9;
             this.previewScreen.Text = "previewScreen";
             // 
             // shapeParameters
             // 
             this.shapeParameters.Controls.Add(this.shapeParametersControl);
-            this.shapeParameters.Location = new System.Drawing.Point(3, 488);
+            this.shapeParameters.Location = new System.Drawing.Point(6, 496);
             this.shapeParameters.Name = "shapeParameters";
             this.shapeParameters.Size = new System.Drawing.Size(284, 212);
             this.shapeParameters.TabIndex = 8;
@@ -1376,7 +1376,7 @@ namespace LevelEditor
             this.commonParameters.Controls.Add(this.materialBox);
             this.commonParameters.Controls.Add(this.label3);
             this.commonParameters.Controls.Add(this.colorBox);
-            this.commonParameters.Location = new System.Drawing.Point(3, 343);
+            this.commonParameters.Location = new System.Drawing.Point(6, 351);
             this.commonParameters.Name = "commonParameters";
             this.commonParameters.Size = new System.Drawing.Size(284, 139);
             this.commonParameters.TabIndex = 7;
@@ -1472,7 +1472,7 @@ namespace LevelEditor
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 300);
+            this.label1.Location = new System.Drawing.Point(12, 308);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 4;
@@ -1481,7 +1481,7 @@ namespace LevelEditor
             // shapeBox
             // 
             this.shapeBox.FormattingEnabled = true;
-            this.shapeBox.Location = new System.Drawing.Point(10, 316);
+            this.shapeBox.Location = new System.Drawing.Point(13, 324);
             this.shapeBox.Name = "shapeBox";
             this.shapeBox.Size = new System.Drawing.Size(264, 21);
             this.shapeBox.TabIndex = 1;
@@ -1493,7 +1493,7 @@ namespace LevelEditor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(296, 721);
+            this.tabPage2.Size = new System.Drawing.Size(316, 783);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1501,7 +1501,7 @@ namespace LevelEditor
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(313, 3);
+            this.splitContainer1.Location = new System.Drawing.Point(323, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -1512,7 +1512,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1128, 747);
+            this.splitContainer1.Size = new System.Drawing.Size(1128, 809);
             this.splitContainer1.SplitterDistance = 851;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1524,7 +1524,7 @@ namespace LevelEditor
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(851, 747);
+            this.tabControl1.Size = new System.Drawing.Size(851, 809);
             this.tabControl1.TabIndex = 0;
             // 
             // levelPage
@@ -1534,7 +1534,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(843, 721);
+            this.levelPage.Size = new System.Drawing.Size(843, 783);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1559,7 +1559,7 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(843, 721);
+            this.objectTab.Size = new System.Drawing.Size(843, 783);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
@@ -1572,7 +1572,7 @@ namespace LevelEditor
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(837, 715);
+            this.objectScreen.Size = new System.Drawing.Size(837, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 
@@ -1581,7 +1581,7 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(273, 747);
+            this.propertyGrid.Size = new System.Drawing.Size(273, 809);
             this.propertyGrid.TabIndex = 0;
             // 
             // toolStripContainer1
@@ -1596,7 +1596,7 @@ namespace LevelEditor
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1444, 0);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 777);
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 839);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
             this.toolStripContainer1.Size = new System.Drawing.Size(1444, 22);
@@ -1630,7 +1630,7 @@ namespace LevelEditor
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1444, 799);
+            this.ClientSize = new System.Drawing.Size(1444, 861);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.toolStripContainer1);

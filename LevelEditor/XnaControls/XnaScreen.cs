@@ -22,6 +22,11 @@ namespace LevelEditor
             {
                 if (value != null)
                     currentSprite = new Sprite(value);
+                else
+                {
+                    currentSprite = new Sprite();
+                    currentSprite.Texture = null;
+                }
             }
         }
 
