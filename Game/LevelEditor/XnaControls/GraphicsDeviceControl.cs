@@ -39,6 +39,12 @@ using Microsoft.Xna.Framework.Content;
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
         ContentService contentService;
+        private GameTime gameTime;
+        protected GameTime GameTime
+        {
+            get { return gameTime; }
+        }
+
         protected Timer frameTimer = new Timer();
         public Timer FrameTimer
         { 
@@ -86,11 +92,12 @@ using Microsoft.Xna.Framework.Content;
                 frameTimer.Tick += new EventHandler(CalculateFrame);
                 frameTimer.Interval = (int)((float)1000/(float)fps);
                 frameTimer.Enabled = true;
+                gameTime = new GameTime();
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();
             }
-
+            
             base.OnCreateControl();
         }
 

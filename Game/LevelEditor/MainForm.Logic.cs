@@ -15,6 +15,8 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
 using Color = Microsoft.Xna.Framework.Color;
 using Path = System.IO.Path;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 namespace LevelEditor
 {
     public partial class MainForm : Form
@@ -28,47 +30,56 @@ namespace LevelEditor
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
+                Vertices shapeVertices = null;
+                Texture2D previewTexture = null;
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:
-                        previewScreen.SetArcPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(arcDegrees.Value.ToString()), int.Parse(arcSides.Value.ToString()), float.Parse(arcRadius.Value.ToString()));
+                        shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians(float.Parse(arcDegrees.Value.ToString())), int.Parse(arcSides.Value.ToString()), float.Parse(arcRadius.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Capsule:
-                        previewScreen.SetCapsulePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
+                        shapeVertices = PolygonTools.CreateCapsule(float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        break;
+                    case ObjectType.Gear:
+                        shapeVertices = PolygonTools.CreateGear(float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        break;
+                    case ObjectType.Rectangle:
+                        shapeVertices = PolygonTools.CreateRectangle(float.Parse(rectangleWidth.Value.ToString()), float.Parse(rectangleHeight.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        break;
+                    case ObjectType.RoundedRectangle:
+                        shapeVertices = PolygonTools.CreateRoundedRectangle(float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        break;
+                    case ObjectType.Ellipse:
+                        shapeVertices = PolygonTools.CreateEllipse(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.EllipseTexture(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Circle:
-                        previewScreen.SetCirclePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(circleRadius.Value.ToString()));
-                         break;
+                        shapeVertices = PolygonTools.CreateCircle(float.Parse(circleRadius.Value.ToString()), AssetCreator.CircleSegments);
+                        previewTexture = ContentService.GetContentService().AssetCreator.CircleTexture(float.Parse(circleRadius.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        break;
                     case ObjectType.CustomShape:
                         if (shapeFromTextureBox.SelectedItem == null) break;
                         if (useOriginalTextureCheck.Checked)
-                            previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()]);
+                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()], out previewTexture, out shapeVertices);
                         else
-                            previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), 
-                                materialBox.SelectedItem.ToString(),colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()));
+                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()), out previewTexture, out shapeVertices);
                         break;
-                    case ObjectType.Ellipse:
-                        previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
-                        break;
-                    case ObjectType.Gear:
-                        previewScreen.SetGearPreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
-                        break;
-                    case ObjectType.Rectangle:
-                        previewScreen.SetRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(rectangleWidth.Value.ToString()), float.Parse(rectangleHeight.Value.ToString()));
-                        break;
-                    case ObjectType.RoundedRectangle:
-                        previewScreen.SetRoundedRectanglePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
-                            float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
-                        break;
+                    default:
+                         throw new Exception("Unknown Shape");
+                        
                 }
-                currentObject[0].Body.FixtureList.Clear();
-                FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(previewScreen.ShapeVertices), 1f, currentObject[0].Body);
+                if (shapeVertices != null && previewTexture != null)
+                {
+                    currentObject[0].Body.FixtureList.Clear();
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 1f, currentObject[0].Body);
+                    currentObject[0].Sprite = new Sprite(previewTexture);
+                    previewScreen.PreviewGameObject = currentObject[0];
+                }
             }
         }
 

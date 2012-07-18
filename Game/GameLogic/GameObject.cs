@@ -37,7 +37,7 @@ namespace GameLogic
         public Camera Camera
         {
             get { return _camera; }
-            set { _camera = Camera; }
+            set { _camera = value; }
         }
 
         private Vector2 _origin;
