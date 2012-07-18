@@ -41,7 +41,7 @@ namespace LevelEditor
             this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.tabControl = new System.Windows.Forms.TabControl();
+            this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
             this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.previewScreen = new LevelEditor.PreviewScreen();
@@ -127,11 +127,12 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.XnaScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
-            this.tabControl.SuspendLayout();
+            this.paramsTabControl.SuspendLayout();
             this.previewPage.SuspendLayout();
             this.shapeParameters.SuspendLayout();
             this.shapeParametersControl.SuspendLayout();
@@ -177,6 +178,8 @@ namespace LevelEditor
             this.tabControl1.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
+            this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -254,29 +257,30 @@ namespace LevelEditor
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Controls.Add(this.tabControl, 0, 0);
+            this.tableLayoutPanel.Controls.Add(this.paramsTabControl, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 775);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 753);
             this.tableLayoutPanel.TabIndex = 5;
             // 
-            // tabControl
+            // paramsTabControl
             // 
-            this.tabControl.Controls.Add(this.previewPage);
-            this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(3, 3);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(304, 769);
-            this.tabControl.TabIndex = 0;
+            this.paramsTabControl.Controls.Add(this.previewPage);
+            this.paramsTabControl.Controls.Add(this.tabPage2);
+            this.paramsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
+            this.paramsTabControl.Name = "paramsTabControl";
+            this.paramsTabControl.SelectedIndex = 0;
+            this.paramsTabControl.Size = new System.Drawing.Size(304, 747);
+            this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
             // 
+            this.previewPage.AutoScroll = true;
             this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.shapeParameters);
@@ -286,7 +290,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(296, 743);
+            this.previewPage.Size = new System.Drawing.Size(296, 721);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -310,7 +314,7 @@ namespace LevelEditor
             this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
             this.previewScreen.Location = new System.Drawing.Point(3, 3);
             this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(290, 290);
+            this.previewScreen.Size = new System.Drawing.Size(285, 290);
             this.previewScreen.TabIndex = 9;
             this.previewScreen.Text = "previewScreen";
             // 
@@ -1485,10 +1489,11 @@ namespace LevelEditor
             // 
             // tabPage2
             // 
+            this.tabPage2.AutoScroll = true;
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(296, 743);
+            this.tabPage2.Size = new System.Drawing.Size(296, 721);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1507,7 +1512,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1128, 769);
+            this.splitContainer1.Size = new System.Drawing.Size(1128, 747);
             this.splitContainer1.SplitterDistance = 851;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1519,7 +1524,7 @@ namespace LevelEditor
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(851, 769);
+            this.tabControl1.Size = new System.Drawing.Size(851, 747);
             this.tabControl1.TabIndex = 0;
             // 
             // levelPage
@@ -1529,13 +1534,14 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(843, 743);
+            this.levelPage.Size = new System.Drawing.Size(843, 721);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
             // 
             // levelScreen
             // 
+            this.levelScreen.CurrentTexturePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.DrawPreview = false;
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
@@ -1553,19 +1559,20 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(843, 743);
+            this.objectTab.Size = new System.Drawing.Size(843, 721);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
             // 
             // objectScreen
             // 
+            this.objectScreen.CurrentTexturePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawPreview = false;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(837, 737);
+            this.objectScreen.Size = new System.Drawing.Size(837, 715);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 
@@ -1574,17 +1581,38 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(273, 769);
+            this.propertyGrid.Size = new System.Drawing.Size(273, 747);
             this.propertyGrid.TabIndex = 0;
+            // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.BottomToolStripPanel
+            // 
+            this.toolStripContainer1.BottomToolStripPanel.Controls.Add(this.statusStrip);
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1444, 0);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStripContainer1.LeftToolStripPanelVisible = false;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 777);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.RightToolStripPanelVisible = false;
+            this.toolStripContainer1.Size = new System.Drawing.Size(1444, 22);
+            this.toolStripContainer1.TabIndex = 7;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            this.toolStripContainer1.TopToolStripPanelVisible = false;
             // 
             // statusStrip
             // 
+            this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 777);
+            this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1444, 22);
-            this.statusStrip.TabIndex = 6;
+            this.statusStrip.TabIndex = 7;
             // 
             // toolStripStatusLabel
             // 
@@ -1592,7 +1620,7 @@ namespace LevelEditor
             this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1398, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1429, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1603,9 +1631,9 @@ namespace LevelEditor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1444, 799);
-            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.toolStripContainer1);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "LevelEditor";
@@ -1613,7 +1641,7 @@ namespace LevelEditor
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.tableLayoutPanel.ResumeLayout(false);
-            this.tabControl.ResumeLayout(false);
+            this.paramsTabControl.ResumeLayout(false);
             this.previewPage.ResumeLayout(false);
             this.previewPage.PerformLayout();
             this.shapeParameters.ResumeLayout(false);
@@ -1670,6 +1698,10 @@ namespace LevelEditor
             this.tabControl1.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
+            this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -1682,8 +1714,14 @@ namespace LevelEditor
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadShapeToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabControl paramsTabControl;
         private System.Windows.Forms.TabPage previewPage;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -1762,23 +1800,16 @@ namespace LevelEditor
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private PreviewScreen previewScreen;
         private System.Windows.Forms.CheckBox setAsTextureCheck;
         private System.Windows.Forms.CheckBox drawOutlineCheck;
         private System.Windows.Forms.CheckBox useOriginalTextureCheck;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox shapeFromTextureBox;
-        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadShapeToolStripMenuItem;
         private System.Windows.Forms.CheckBox placeObjectCheck;
-
-
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }
 
