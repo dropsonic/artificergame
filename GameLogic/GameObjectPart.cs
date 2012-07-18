@@ -11,32 +11,51 @@ namespace GameLogic
 {
     public class GameObjectPart : IDrawable
     {
-        public Sprite Sprite;
-        public Body Body;
+        private Sprite _sprite;
+        private Body _body;
 
-        private GameObject _parent;
-
-        public GameObjectPart(GameObject parent, Sprite sprite, Body body)
+        public Sprite Sprite
         {
-            _parent = parent;
+            get { return _sprite; }
+            set { _sprite = value; }
+        }
 
-            Sprite = sprite;
-            Body = body;
+        public Body Body
+        {
+            get { return _body; }
+        }
+
+        private SpriteBatch _spriteBatch;
+        public SpriteBatch SpriteBatch
+        {
+            get { return _spriteBatch; }
+            set { _spriteBatch = value; }
+        }
+
+        public GameObjectPart(Sprite sprite, Body body)
+        {
+            _sprite = sprite;
+            _body = body;
 
             Visible = true;
+        }
+
+        public GameObjectPart(SpriteBatch spriteBatch, Sprite sprite, Body body)
+            : this(sprite, body)
+        {
+            _spriteBatch = spriteBatch;
         }
 
         /// <summary>
         /// Создаёт копию GameObjectPart.
         /// </summary>
-        /// <param name="parent">Родительский GameObject.</param>
         /// <param name="world">World, к которому необходимо привязать объект.</param>
         /// <param name="origin">Origin родительского GameObject.</param>
-        public GameObjectPart DeepClone(GameObject parent, World world, Vector2 origin)
+        public GameObjectPart DeepClone(World world, Vector2 origin)
         {
             Body newBody = Body.DeepClone(world);
             newBody.Position += origin;
-            return new GameObjectPart(parent, Sprite, newBody);
+            return new GameObjectPart(_spriteBatch, Sprite, newBody);
         }
 
         #region IDrawable
@@ -44,7 +63,7 @@ namespace GameLogic
         {
             if (_visible)
             {
-                _parent.SpriteBatch.Draw(Sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
+                _spriteBatch.Draw(Sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
                                                null,
                                                Color.White, Body.Rotation, Sprite.Origin, 1f,
                                                SpriteEffects.None, 0f);
