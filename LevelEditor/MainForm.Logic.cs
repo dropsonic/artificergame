@@ -13,12 +13,14 @@ using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Common;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
-using Color = Microsoft.Xna.Framework.Color;
-using Path = System.IO.Path;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+
 namespace LevelEditor
 {
+    using Color = Microsoft.Xna.Framework.Color;
+    using Path = System.IO.Path;
+
     public partial class MainForm : Form
     {
         string GetParent(string path, int nesting)
@@ -82,6 +84,19 @@ namespace LevelEditor
                     previewScreen.PreviewGameObject = currentObject[0];
                 }
             }
+        }
+
+        void SetCurrentObject()
+        {
+            if (currentObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
+            {
+                levelScreen.CurrentGameObject = currentObject;
+            }
+            else
+            {
+                levelScreen.CurrentGameObject = null;
+            }
+
         }
 
         /// <summary>

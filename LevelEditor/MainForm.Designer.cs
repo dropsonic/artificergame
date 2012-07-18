@@ -123,9 +123,9 @@ namespace LevelEditor
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.levelPage = new System.Windows.Forms.TabPage();
-            this.levelScreen = new LevelEditor.XnaScreen();
+            this.levelScreen = new LevelEditor.LevelScreen();
             this.objectTab = new System.Windows.Forms.TabPage();
-            this.objectScreen = new LevelEditor.XnaScreen();
+            this.objectScreen = new LevelEditor.LevelScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -299,7 +299,7 @@ namespace LevelEditor
             // 
             this.placeObjectCheck.Appearance = System.Windows.Forms.Appearance.Button;
             this.placeObjectCheck.AutoSize = true;
-            this.placeObjectCheck.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green;
+            this.placeObjectCheck.FlatAppearance.CheckedBackColor = System.Drawing.Color.LimeGreen;
             this.placeObjectCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.placeObjectCheck.Location = new System.Drawing.Point(216, 714);
             this.placeObjectCheck.Name = "placeObjectCheck";
@@ -1584,7 +1584,7 @@ namespace LevelEditor
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.Size = new System.Drawing.Size(271, 809);
             this.propertyGrid.TabIndex = 0;
-            this.propertyGrid.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid_SelectedGridItemChanged);
+            this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
             // toolStripContainer1
             // 
@@ -1741,8 +1741,8 @@ namespace LevelEditor
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage levelPage;
         private System.Windows.Forms.TabPage objectTab;
-        private XnaScreen objectScreen;
-        private XnaScreen levelScreen;
+        private LevelScreen objectScreen;
+        private LevelScreen levelScreen;
         private WindowsFormsApplication1.TabHiddenHeadersControl shapeParametersControl;
         private System.Windows.Forms.TabPage circleTab;
         private System.Windows.Forms.TabPage ellipseTab;

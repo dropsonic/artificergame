@@ -9,17 +9,19 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using FarseerTools;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Color = Microsoft.Xna.Framework.Color;
-using GameLogic;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using GameLogic;
+
 
 namespace LevelEditor
 {
+    using Color = Microsoft.Xna.Framework.Color;
+
     public partial class MainForm : Form
     {
         GameObject currentObject;
@@ -278,20 +280,7 @@ namespace LevelEditor
             SetCurrentObject();
         }
 
-        void SetCurrentObject()
-        {
-            if (currentObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
-            {
-                levelScreen.CurrentGameObject = currentObject;
-            }
-            else
-            {
-                levelScreen.CurrentGameObject = null;
-            }
-
-        }
-
-        private void propertyGrid_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             propertyGrid.Refresh();
         }
