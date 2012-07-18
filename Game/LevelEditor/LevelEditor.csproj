@@ -117,6 +117,10 @@
       <Project>{A875A73C-7870-4A79-81CD-BEA7DC8CCBD5}</Project>
       <Name>FarseerTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameLogic\GameLogic.csproj">
+      <Project>{0DD5DE46-B54C-4E56-892D-BF5DA771AFD6}</Project>
+      <Name>GameLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LevelEditorContentBuilder\LevelEditorContentBuilder.csproj">
       <Project>{8DAFD587-8A79-4D33-A35F-77D1ECD26D69}</Project>
       <Name>LevelEditorContentBuilder</Name>

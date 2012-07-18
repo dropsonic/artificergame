@@ -13,11 +13,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color;
+using GameLogic;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Common.Decomposition;
 
 namespace LevelEditor
 {
     public partial class MainForm : Form
     {
+        GameObject currentObject;
         AssetCreator _assetCreator;
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
@@ -27,6 +32,7 @@ namespace LevelEditor
         {
             InitializeComponent();
             Initialize();
+            
         }
 
         private void Initialize()
@@ -39,6 +45,11 @@ namespace LevelEditor
             levelScreen.message = "Level";
             levelScreen.DrawPreview = false;
             objectScreen.message = "GameObject";
+
+            currentObject = new GameObject();
+            Body body = new Body(currentObject.World);
+            currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
+            propertyGrid.SelectedObject = currentObject[0].Body;
             ShowReadyStatus();
         }
 
@@ -115,6 +126,8 @@ namespace LevelEditor
                 ShowErrorStatus(ex);
             }
             SetCurrentSprite();
+            propertyGrid.Refresh();
+
             updateTimer.Enabled = false;
         }
 

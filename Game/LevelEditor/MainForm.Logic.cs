@@ -8,9 +8,13 @@ using FarseerTools;
 using LevelEditor;
 using System.Drawing;
 using System.Threading;
-
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Collision.Shapes;
+using FarseerPhysics.Common;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Common.Decomposition;
 using Color = Microsoft.Xna.Framework.Color;
-
+using Path = System.IO.Path;
 namespace LevelEditor
 {
     public partial class MainForm : Form
@@ -39,12 +43,13 @@ namespace LevelEditor
                             float.Parse(circleRadius.Value.ToString()));
                          break;
                     case ObjectType.CustomShape:
-                         if (useOriginalTextureCheck.Checked)
-                             previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()]);
-                         else
-                             previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), 
-                                 materialBox.SelectedItem.ToString(),colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()));
-                         break;
+                        if (shapeFromTextureBox.SelectedItem == null) break;
+                        if (useOriginalTextureCheck.Checked)
+                            previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()]);
+                        else
+                            previewScreen.SetCustomShapePreview(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), 
+                                materialBox.SelectedItem.ToString(),colorDictionary[colorBox.SelectedItem.ToString()],float.Parse(materialScale.Value.ToString()));
+                        break;
                     case ObjectType.Ellipse:
                         previewScreen.SetEllipsePreview(materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()),
                             float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
@@ -62,6 +67,8 @@ namespace LevelEditor
                             float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
                         break;
                 }
+                currentObject[0].Body.FixtureList.Clear();
+                FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(previewScreen.ShapeVertices), 1f, currentObject[0].Body);
             }
         }
 
