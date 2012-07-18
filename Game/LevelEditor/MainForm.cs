@@ -246,15 +246,13 @@ namespace LevelEditor
 
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            
+            levelScreen.CurrentTexturePosition = new Vector2(e.X, e.Y);
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
         {
             levelScreen.DrawPreview = false;
         }
-
-        
 
         private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
         {
