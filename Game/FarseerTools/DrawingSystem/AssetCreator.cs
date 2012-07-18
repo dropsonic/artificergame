@@ -27,7 +27,7 @@ namespace FarseerTools
 
     public class AssetCreator
     {
-        public const int CircleSegments = 64;
+        public const int CircleSegments = 128;
         private GraphicsDevice _device;
         private BasicEffect _effect;
         private Dictionary<string, Texture2D> _materials = new Dictionary<string, Texture2D>();
@@ -336,8 +336,8 @@ namespace FarseerTools
                                                         DepthFormat.Depth24Stencil8, 8,
                                                         RenderTargetUsage.DiscardContents);
 
-            float textureWidth = width * textureScale / 2;
-            float textureHeight = height * textureScale / 2;
+            float textureWidth = 1 + width * textureScale / 2;
+            float textureHeight = 1 + height * textureScale / 2;
             VertexPositionColorTexture[] rectangleTexture = new VertexPositionColorTexture[4];
             rectangleTexture[0] = new VertexPositionColorTexture();
             rectangleTexture[0].Position = new Vector3(-textureWidth, textureHeight, 0);

@@ -9,7 +9,7 @@ using GameLogic;
 
 namespace LevelEditor
 {
-    class XnaScreen : GraphicsDeviceControl
+    class LevelScreen : GraphicsDeviceControl
     {
         SpriteBatch spriteBatch;
         SpriteFont font;
