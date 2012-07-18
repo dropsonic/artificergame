@@ -39,12 +39,14 @@ using Microsoft.Xna.Framework.Content;
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService graphicsDeviceService;
         ContentService contentService;
+        private Stopwatch stopwatch;
+
         private GameTime gameTime;
         protected GameTime GameTime
         {
             get { return gameTime; }
         }
-
+        
         protected Timer frameTimer = new Timer();
         public Timer FrameTimer
         { 
@@ -92,7 +94,9 @@ using Microsoft.Xna.Framework.Content;
                 frameTimer.Tick += new EventHandler(CalculateFrame);
                 frameTimer.Interval = (int)((float)1000/(float)fps);
                 frameTimer.Enabled = true;
-                gameTime = new GameTime();
+
+                stopwatch = new Stopwatch();
+                stopwatch.Start();
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();
@@ -122,12 +126,17 @@ using Microsoft.Xna.Framework.Content;
         #region Paint
 
 
+        TimeSpan previousStopwatchCall = new TimeSpan();
         /// <summary>
         /// Redraws the control in certain time intervals
         /// </summary>
         void CalculateFrame(Object obj, EventArgs e)
         {
+            gameTime = new GameTime(stopwatch.Elapsed, stopwatch.Elapsed - previousStopwatchCall);
+            previousStopwatchCall = stopwatch.Elapsed;
+
             string beginDrawError = BeginDraw();
+            
 
             if (string.IsNullOrEmpty(beginDrawError))
             {
