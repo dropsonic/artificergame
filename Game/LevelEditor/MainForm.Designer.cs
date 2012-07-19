@@ -130,6 +130,7 @@ namespace LevelEditor
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.simulateCheck = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.paramsTabControl.SuspendLayout();
@@ -281,6 +282,7 @@ namespace LevelEditor
             // previewPage
             // 
             this.previewPage.AutoScroll = true;
+            this.previewPage.Controls.Add(this.simulateCheck);
             this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.shapeParameters);
@@ -1546,6 +1548,7 @@ namespace LevelEditor
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.Name = "levelScreen";
+            this.levelScreen.Simulate = false;
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
@@ -1573,6 +1576,7 @@ namespace LevelEditor
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
+            this.objectScreen.Simulate = false;
             this.objectScreen.Size = new System.Drawing.Size(829, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
@@ -1626,6 +1630,20 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // simulateCheck
+            // 
+            this.simulateCheck.Appearance = System.Windows.Forms.Appearance.Button;
+            this.simulateCheck.AutoSize = true;
+            this.simulateCheck.FlatAppearance.CheckedBackColor = System.Drawing.Color.LightSkyBlue;
+            this.simulateCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.simulateCheck.Location = new System.Drawing.Point(237, 743);
+            this.simulateCheck.Name = "simulateCheck";
+            this.simulateCheck.Size = new System.Drawing.Size(57, 23);
+            this.simulateCheck.TabIndex = 11;
+            this.simulateCheck.Text = "Simulate";
+            this.simulateCheck.UseVisualStyleBackColor = true;
+            this.simulateCheck.CheckedChanged += new System.EventHandler(this.simulateCheck_CheckedChanged);
             // 
             // MainForm
             // 
@@ -1812,6 +1830,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.CheckBox simulateCheck;
     }
 }
 

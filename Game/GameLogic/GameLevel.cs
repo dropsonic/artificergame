@@ -6,10 +6,11 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
+using System.Collections;
 
 namespace GameLogic
 {
-    public class GameLevel : IDrawable, IUpdateable
+    public class GameLevel : IDrawable, IUpdateable, IEnumerable<GameObject>
     {
         private World _world;
         private Camera _camera;
@@ -38,6 +39,8 @@ namespace GameLogic
             set { _spriteBatch = value; }
         }
 
+        public IEnumerator<GameObject> GetEnumerator() { return _objects.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
         public GameObject this[int index]
         {
             get { return _objects[index]; }
