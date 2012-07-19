@@ -284,5 +284,10 @@ namespace LevelEditor
         {
             propertyGrid.Refresh();
         }
+
+        private void simulateCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            levelScreen.Simulate = simulateCheck.Checked;
+        }
     }
 }

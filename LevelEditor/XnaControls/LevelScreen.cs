@@ -7,6 +7,7 @@ using FarseerPhysics.Collision.Shapes;
 using FarseerTools;
 using GameLogic;
 
+
 namespace LevelEditor
 {
     class LevelScreen : GraphicsDeviceControl
@@ -14,8 +15,9 @@ namespace LevelEditor
         SpriteBatch spriteBatch;
         SpriteFont font;
 
-        GameLevel gameLevel;
-        World world;
+        GameLevel simulatedLevel;
+        GameLevel initialLevel;
+  
         Camera camera;
 
         private GameObject currentGameObject;
@@ -33,6 +35,20 @@ namespace LevelEditor
                 }
             }
         }
+        private bool simulate;
+        public bool Simulate 
+        {
+            get
+            {
+                return simulate;
+            }
+            set
+            {
+                if (value == false)
+                    ResetLevelTo(initialLevel);
+                simulate = value;
+            }
+        }
         public Vector2 CurrentObjectPosition { get; set; }
         public bool DrawCurrentGameObject { get; set; }
 
@@ -41,19 +57,32 @@ namespace LevelEditor
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
+            camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
+            simulatedLevel = new GameLevel(camera, spriteBatch, new Vector2(1, 1));
+            initialLevel = new GameLevel(camera, spriteBatch,new Vector2(1, 1));
+
             CurrentObjectPosition = Vector2.Zero;
             DrawCurrentGameObject = false;
-
-            world = new World(new Vector2(1,1));
-            camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
-            gameLevel = new GameLevel(camera, spriteBatch,world);
+            Simulate = false;
         }
 
         public void AddCurrentObject()
         {
-            gameLevel.AddObject(currentGameObject.CopyObjectToWorld(gameLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+            simulatedLevel.AddObject(currentGameObject.CopyObjectToWorld(simulatedLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+            if (Simulate == false)
+                initialLevel.AddObject(currentGameObject.CopyObjectToWorld(initialLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
         }
 
+        void ResetLevelTo(GameLevel levelState)
+        {
+            if (levelState == null) return;
+            simulatedLevel = new GameLevel(camera, spriteBatch, levelState.World.Gravity);
+            foreach (GameObject gameObject in levelState)
+            {
+                simulatedLevel.AddObject(gameObject.CopyObjectToWorld(simulatedLevel.World,Vector2.Zero));
+            }
+
+        }
         protected override void LoadContent()
         {
             
@@ -72,9 +101,9 @@ namespace LevelEditor
         
         protected override void UpdateFrame()
         {
-            world.Step((float)GameTime.ElapsedGameTime.TotalSeconds);
+            if (Simulate)
+                simulatedLevel.World.Step((float)GameTime.ElapsedGameTime.TotalSeconds);
         }
-
 
         protected override void Draw()
         {
@@ -85,7 +114,7 @@ namespace LevelEditor
                 currentGameObject.Draw(GameTime);
                 currentGameObject.Camera.Position = Vector2.Zero;
             }
-            gameLevel.Draw(GameTime);
+            simulatedLevel.Draw(GameTime);
         }
     }
 }
