@@ -265,7 +265,7 @@ namespace LevelEditor
         private void ShowWarningStatus(string message)
         {
             toolStripStatusLabel.BackColor = System.Drawing.Color.Orange;
-            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Warning.ToString()];//SystemIcons.Warning.ToBitmap();
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Warning.ToString()];
             toolStripStatusLabel.Text = message;
             _status = StatusType.Warning;
         }
