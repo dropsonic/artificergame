@@ -97,6 +97,8 @@ using Microsoft.Xna.Framework.Content;
 
                 stopwatch = new Stopwatch();
                 stopwatch.Start();
+                gameTime = new GameTime();
+
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();

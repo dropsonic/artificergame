@@ -40,12 +40,17 @@ namespace LevelEditor
             this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedHalfMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedDoubleNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
-            this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.previewScreen = new LevelEditor.PreviewScreen();
+            this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
             this.circleTab = new System.Windows.Forms.TabPage();
@@ -190,7 +195,7 @@ namespace LevelEditor
             this.fileToolStripMenuItem,
             this.levelToolStripMenuItem,
             this.resoursesToolStripMenuItem,
-            this.simulateMenuItem});
+            this.simulationToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1444, 24);
@@ -254,13 +259,58 @@ namespace LevelEditor
             this.loadShapeToolStripMenuItem.Text = "Load Shape";
             this.loadShapeToolStripMenuItem.Click += new System.EventHandler(this.loadShapeToolStripMenuItem_Click);
             // 
+            // simulationToolStripMenuItem
+            // 
+            this.simulationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simulateMenuItem,
+            this.simulationSpeedToolStripMenuItem});
+            this.simulationToolStripMenuItem.Name = "simulationToolStripMenuItem";
+            this.simulationToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.simulationToolStripMenuItem.Text = "Simulation";
+            // 
             // simulateMenuItem
             // 
             this.simulateMenuItem.Name = "simulateMenuItem";
             this.simulateMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.simulateMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.simulateMenuItem.Size = new System.Drawing.Size(166, 22);
             this.simulateMenuItem.Text = "Simulate";
             this.simulateMenuItem.Click += new System.EventHandler(this.simulateState_Changed);
+            // 
+            // simulationSpeedToolStripMenuItem
+            // 
+            this.simulationSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simulationSpeedHalfMenuItem,
+            this.simulationSpeedNormalMenuItem,
+            this.simulationSpeedDoubleNormalMenuItem});
+            this.simulationSpeedToolStripMenuItem.Name = "simulationSpeedToolStripMenuItem";
+            this.simulationSpeedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.simulationSpeedToolStripMenuItem.Text = "Simulation Speed";
+            // 
+            // simulationSpeedHalfMenuItem
+            // 
+            this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
+            this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simulationSpeedHalfMenuItem.Text = "0.50x";
+            this.simulationSpeedHalfMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedNormalMenuItem
+            // 
+            this.simulationSpeedNormalMenuItem.Checked = true;
+            this.simulationSpeedNormalMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.simulationSpeedNormalMenuItem.Name = "simulationSpeedNormalMenuItem";
+            this.simulationSpeedNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simulationSpeedNormalMenuItem.Text = "1.00x";
+            this.simulationSpeedNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedDoubleNormalMenuItem
+            // 
+            this.simulationSpeedDoubleNormalMenuItem.Name = "simulationSpeedDoubleNormalMenuItem";
+            this.simulationSpeedDoubleNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.simulationSpeedDoubleNormalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simulationSpeedDoubleNormalMenuItem.Text = "2.00x";
+            this.simulationSpeedDoubleNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // tableLayoutPanel
             // 
@@ -291,8 +341,8 @@ namespace LevelEditor
             // previewPage
             // 
             this.previewPage.AutoScroll = true;
-            this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.previewScreen);
+            this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
             this.previewPage.Controls.Add(this.label1);
@@ -304,6 +354,15 @@ namespace LevelEditor
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
+            // 
+            // previewScreen
+            // 
+            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.previewScreen.Location = new System.Drawing.Point(3, 3);
+            this.previewScreen.Name = "previewScreen";
+            this.previewScreen.Size = new System.Drawing.Size(300, 300);
+            this.previewScreen.TabIndex = 11;
+            this.previewScreen.Text = "previewScreen";
             // 
             // placeObjectCheck
             // 
@@ -318,15 +377,6 @@ namespace LevelEditor
             this.placeObjectCheck.Text = "Place Object";
             this.placeObjectCheck.UseVisualStyleBackColor = true;
             this.placeObjectCheck.CheckedChanged += new System.EventHandler(this.placeObjectCheck_CheckedChanged);
-            // 
-            // previewScreen
-            // 
-            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.previewScreen.Location = new System.Drawing.Point(3, 3);
-            this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(300, 300);
-            this.previewScreen.TabIndex = 9;
-            this.previewScreen.Text = "previewScreen";
             // 
             // shapeParameters
             // 
@@ -1814,7 +1864,6 @@ namespace LevelEditor
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage emptyTab;
         private System.Windows.Forms.Label label29;
-        private PreviewScreen previewScreen;
         private System.Windows.Forms.CheckBox setAsTextureCheck;
         private System.Windows.Forms.CheckBox drawOutlineCheck;
         private System.Windows.Forms.CheckBox useOriginalTextureCheck;
@@ -1824,7 +1873,13 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripContainer statusToolStripContainer1;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private System.Windows.Forms.ToolStripMenuItem simulationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulateMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedHalfMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedNormalMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedDoubleNormalMenuItem;
+        private PreviewScreen previewScreen;
     }
 }
 

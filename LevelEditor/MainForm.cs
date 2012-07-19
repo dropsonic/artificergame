@@ -293,12 +293,37 @@ namespace LevelEditor
             if (levelScreen.Simulate)
             {
                 simulateMenuItem.Text = "Stop simulation";
-                ShowSimulationStatus();
+                ShowSimulationStatus(levelScreen.SimulationSpeed);
             }
             else
             {
                 simulateMenuItem.Text = "Simulate";
                 ShowReadyStatus();
+            }
+        }
+
+        private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender == simulationSpeedHalfMenuItem)
+            {
+                simulationSpeedHalfMenuItem.Checked = true;
+                simulationSpeedNormalMenuItem.Checked = false;
+                simulationSpeedDoubleNormalMenuItem.Checked = false;
+                levelScreen.SimulationSpeed = 0.5f;
+            }
+            else if (sender == simulationSpeedNormalMenuItem)
+            {
+                simulationSpeedHalfMenuItem.Checked = false;
+                simulationSpeedNormalMenuItem.Checked = true;
+                simulationSpeedDoubleNormalMenuItem.Checked = false;
+                levelScreen.SimulationSpeed = LevelScreen.NormalSimulationSpeed;
+            }
+            else if (sender == simulationSpeedDoubleNormalMenuItem)
+            {
+                simulationSpeedHalfMenuItem.Checked = false;
+                simulationSpeedNormalMenuItem.Checked = false;
+                simulationSpeedDoubleNormalMenuItem.Checked = true;
+                levelScreen.SimulationSpeed = 2.0f;
             }
         }
     }
