@@ -6,6 +6,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Collision.Shapes;
 using FarseerTools;
 using GameLogic;
+using System;
 
 
 namespace LevelEditor
@@ -52,14 +53,25 @@ namespace LevelEditor
         public Vector2 CurrentObjectPosition { get; set; }
         public bool DrawCurrentGameObject { get; set; }
 
+        public const float NormalSimulationSpeed = 1.0f;
+        private float _simulationSpeed;
+
+        public float SimulationSpeed
+        {
+            get { return _simulationSpeed; }
+            set { _simulationSpeed = value; }
+        }
+
         protected override void Initialize()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
             _camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
-            _simulatedLevel = new GameLevel(_camera, _spriteBatch, new Vector2(1, 1));
-            _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(1, 1));
+            _simulatedLevel = new GameLevel(_camera, _spriteBatch, new Vector2(10, 10));
+            _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(10, 10));
+
+            _simulationSpeed = NormalSimulationSpeed;
 
             CurrentObjectPosition = Vector2.Zero;
             DrawCurrentGameObject = false;
@@ -102,7 +114,7 @@ namespace LevelEditor
         protected override void UpdateFrame()
         {
             if (_simulate)
-                _simulatedLevel.Update(GameTime);
+                _simulatedLevel.Update(_simulationSpeed == NormalSimulationSpeed ? GameTime : new GameTime(GameTime.TotalGameTime, TimeSpan.FromMilliseconds(GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed)));
         }
 
         protected override void Draw()

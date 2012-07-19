@@ -253,11 +253,11 @@ namespace LevelEditor
             }
         }
 
-        private void ShowSimulationStatus()
+        private void ShowSimulationStatus(float simulationSpeed)
         {
             toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
             toolStripStatusLabel.Image = null;
-            toolStripStatusLabel.Text = "Simulating...";
+            toolStripStatusLabel.Text = String.Format("Simulating {0:0.##}...", simulationSpeed);
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Simulation.ToString()];
             _status = StatusType.Simulation;
         }
