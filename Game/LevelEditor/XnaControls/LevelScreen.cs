@@ -12,41 +12,41 @@ namespace LevelEditor
 {
     class LevelScreen : GraphicsDeviceControl
     {
-        SpriteBatch spriteBatch;
-        SpriteFont font;
+        SpriteBatch _spriteBatch;
+        SpriteFont _font;
 
-        GameLevel simulatedLevel;
-        GameLevel initialLevel;
+        GameLevel _simulatedLevel;
+        GameLevel _initialLevel;
   
-        Camera camera;
+        Camera _camera;
 
-        private GameObject currentGameObject;
+        private GameObject _currentGameObject;
         public GameObject CurrentGameObject
         {
             set
             {
                 if (value == null)
-                    currentGameObject = null;
+                    _currentGameObject = null;
                 else
                 {
-                    currentGameObject = value;
-                    currentGameObject.Camera = camera;
-                    currentGameObject.SpriteBatch = spriteBatch;
+                    _currentGameObject = value;
+                    _currentGameObject.Camera = _camera;
+                    _currentGameObject.SpriteBatch = _spriteBatch;
                 }
             }
         }
-        private bool simulate;
+        private bool _simulate;
         public bool Simulate 
         {
             get
             {
-                return simulate;
+                return _simulate;
             }
             set
             {
                 if (value == false)
-                    ResetLevelTo(initialLevel);
-                simulate = value;
+                    ResetLevelTo(_initialLevel);
+                _simulate = value;
             }
         }
         public Vector2 CurrentObjectPosition { get; set; }
@@ -54,12 +54,12 @@ namespace LevelEditor
 
         protected override void Initialize()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = Content.Load<SpriteFont>("Fonts/Segoe14");
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
-            camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
-            simulatedLevel = new GameLevel(camera, spriteBatch, new Vector2(1, 1));
-            initialLevel = new GameLevel(camera, spriteBatch,new Vector2(1, 1));
+            _camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
+            _simulatedLevel = new GameLevel(_camera, _spriteBatch, new Vector2(1, 1));
+            _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(1, 1));
 
             CurrentObjectPosition = Vector2.Zero;
             DrawCurrentGameObject = false;
@@ -68,18 +68,18 @@ namespace LevelEditor
 
         public void AddCurrentObject()
         {
-            simulatedLevel.AddObject(currentGameObject.CopyObjectToWorld(simulatedLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+            _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
             if (Simulate == false)
-                initialLevel.AddObject(currentGameObject.CopyObjectToWorld(initialLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+                _initialLevel.AddObject(_currentGameObject.CopyObjectToWorld(_initialLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
         }
 
         void ResetLevelTo(GameLevel levelState)
         {
             if (levelState == null) return;
-            simulatedLevel = new GameLevel(camera, spriteBatch, levelState.World.Gravity);
+            _simulatedLevel = new GameLevel(_camera, _spriteBatch, levelState.World.Gravity);
             foreach (GameObject gameObject in levelState)
             {
-                simulatedLevel.AddObject(gameObject.CopyObjectToWorld(simulatedLevel.World,Vector2.Zero));
+                _simulatedLevel.AddObject(gameObject.CopyObjectToWorld(_simulatedLevel.World,Vector2.Zero));
             }
 
         }
@@ -101,20 +101,20 @@ namespace LevelEditor
         
         protected override void UpdateFrame()
         {
-            if (Simulate)
-                simulatedLevel.World.Step((float)GameTime.ElapsedGameTime.TotalSeconds);
+            if (_simulate)
+                _simulatedLevel.Update(GameTime);
         }
 
         protected override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            if (currentGameObject != null && DrawCurrentGameObject)
+            if (_currentGameObject != null && DrawCurrentGameObject)
             {
-                currentGameObject.Camera.Position = -CurrentObjectPosition;
-                currentGameObject.Draw(GameTime);
-                currentGameObject.Camera.Position = Vector2.Zero;
+                _currentGameObject.Camera.Position = -CurrentObjectPosition;
+                _currentGameObject.Draw(GameTime);
+                _currentGameObject.Camera.Position = Vector2.Zero;
             }
-            simulatedLevel.Draw(GameTime);
+            _simulatedLevel.Draw(GameTime);
         }
     }
 }
