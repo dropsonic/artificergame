@@ -59,8 +59,12 @@
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.Logic.cs">
       <SubType>Form</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TabHiddenHeadersControl.cs">
       <SubType>Component</SubType>
@@ -75,9 +79,6 @@
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
