@@ -219,15 +219,24 @@ namespace LevelEditor
             Undefined,
             Ready,
             Error,
-            Warning
+            Warning,
+            Simulation
         }
 
         private StatusType _status = StatusType.Undefined;
 
+        private ImageList _statusImages = new ImageList();
+
+        private void InitializeStatusStrip()
+        {
+            _statusImages.Images.Add(StatusType.Error.ToString(), SystemIcons.Error);
+            _statusImages.Images.Add(StatusType.Warning.ToString(), SystemIcons.Warning);
+        }
+
         private void ShowErrorStatus(Exception ex)
         {
             toolStripStatusLabel.BackColor = System.Drawing.Color.Tomato;
-            toolStripStatusLabel.Image = SystemIcons.Error.ToBitmap();
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Error.ToString()];//SystemIcons.Error.ToBitmap();
             toolStripStatusLabel.Text = String.Format("Error: {0} ({1}, source: {2}).", ex.Message, ex.GetType().Name, ex.Source);
             _status = StatusType.Error;
         }
@@ -243,10 +252,19 @@ namespace LevelEditor
             }
         }
 
+        private void ShowSimulationStatus()
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
+            toolStripStatusLabel.Image = null;
+            toolStripStatusLabel.Text = "Simulating...";
+            //toolStripStatusLabel.Image = Image.
+            _status = StatusType.Simulation;
+        }
+
         private void ShowWarningStatus(string message)
         {
             toolStripStatusLabel.BackColor = System.Drawing.Color.Orange;
-            toolStripStatusLabel.Image = SystemIcons.Warning.ToBitmap();
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Warning.ToString()];//SystemIcons.Warning.ToBitmap();
             toolStripStatusLabel.Text = message;
             _status = StatusType.Warning;
         }

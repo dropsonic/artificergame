@@ -50,6 +50,8 @@ namespace LevelEditor
             Body body = new Body(currentObject.World);
             currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
             propertyGrid.SelectedObject = currentObject[0].Body;
+
+            InitializeStatusStrip();
             ShowReadyStatus();
         }
 
@@ -285,9 +287,19 @@ namespace LevelEditor
             propertyGrid.Refresh();
         }
 
-        private void simulateCheck_CheckedChanged(object sender, EventArgs e)
+        private void simulateState_Changed(object sender, EventArgs e)
         {
-            levelScreen.Simulate = simulateCheck.Checked;
+            levelScreen.Simulate = !levelScreen.Simulate;
+            if (levelScreen.Simulate)
+            {
+                simulateMenuItem.Text = "Stop simulation";
+                ShowSimulationStatus();
+            }
+            else
+            {
+                simulateMenuItem.Text = "Simulate";
+                ShowReadyStatus();
+            }
         }
     }
 }
