@@ -231,6 +231,7 @@ namespace LevelEditor
         {
             _statusImages.Images.Add(StatusType.Error.ToString(), SystemIcons.Error);
             _statusImages.Images.Add(StatusType.Warning.ToString(), SystemIcons.Warning);
+            _statusImages.Images.Add(StatusType.Simulation.ToString(), LevelEditor.Properties.Resources.simulationStatusImage);
         }
 
         private void ShowErrorStatus(Exception ex)
@@ -257,7 +258,7 @@ namespace LevelEditor
             toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
             toolStripStatusLabel.Image = null;
             toolStripStatusLabel.Text = "Simulating...";
-            //toolStripStatusLabel.Image = Image.
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Simulation.ToString()];
             _status = StatusType.Simulation;
         }
 
