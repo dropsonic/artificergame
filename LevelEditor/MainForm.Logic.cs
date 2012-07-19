@@ -257,7 +257,7 @@ namespace LevelEditor
         {
             toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
             toolStripStatusLabel.Image = null;
-            toolStripStatusLabel.Text = String.Format("Simulating {0:0.##}...", simulationSpeed);
+            toolStripStatusLabel.Text = String.Format("Simulating ({0:0.##}x time)...", simulationSpeed);
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Simulation.ToString()];
             _status = StatusType.Simulation;
         }
