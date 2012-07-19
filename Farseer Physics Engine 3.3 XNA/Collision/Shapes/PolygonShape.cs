@@ -27,6 +27,7 @@ using System.Diagnostics;
 using FarseerPhysics.Common;
 using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace FarseerPhysics.Collision.Shapes
 {
@@ -247,7 +248,9 @@ namespace FarseerPhysics.Collision.Shapes
             }
 
             //The area is too small for the engine to handle.
-            Debug.Assert(area > Settings.Epsilon);
+            //Debug.Assert(area > Settings.Epsilon);
+            if (!(area > Settings.Epsilon))
+                throw new Exception("The area is too small for the engine to handle.");
 
             // We save the area
             MassData.Area = area;
