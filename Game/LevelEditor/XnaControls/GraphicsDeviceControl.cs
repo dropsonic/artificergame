@@ -124,20 +124,15 @@ using Microsoft.Xna.Framework.Content;
         #endregion
 
         #region Paint
-
-
-        TimeSpan previousStopwatchCall = new TimeSpan();
         /// <summary>
         /// Redraws the control in certain time intervals
         /// </summary>
         void CalculateFrame(Object obj, EventArgs e)
         {
-            gameTime = new GameTime(stopwatch.Elapsed, stopwatch.Elapsed - previousStopwatchCall);
-            previousStopwatchCall = stopwatch.Elapsed;
+            gameTime = new GameTime(stopwatch.Elapsed, stopwatch.Elapsed - gameTime.TotalGameTime);
 
             string beginDrawError = BeginDraw();
             
-
             if (string.IsNullOrEmpty(beginDrawError))
             {
                 // Draw the control using the GraphicsDevice.
@@ -149,7 +144,6 @@ using Microsoft.Xna.Framework.Content;
             {
                 // If BeginDraw failed, show an error message using System.Drawing.
                 PaintUsingSystemDrawing(CreateGraphics(), beginDrawError);
-                
             }
         }
 
