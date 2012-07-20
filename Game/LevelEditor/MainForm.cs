@@ -92,7 +92,7 @@ namespace LevelEditor
             if (flag.HasFlag(DebugViewFlags.ContactPoints) && levelScreen.DebugViewHasFlag(DebugViewFlags.ContactNormals))
                 flag = flag | DebugViewFlags.ContactNormals;
             //Если включается ContactNormals, а ContactPoints не включен, то нужно его включить
-            else if (flag.HasFlag(DebugViewFlags.ContactNormals))
+            else if (flag.HasFlag(DebugViewFlags.ContactNormals) && !levelScreen.DebugViewHasFlag(DebugViewFlags.ContactPoints))
                 flag = flag | DebugViewFlags.ContactPoints;
 
             levelScreen.SwitchDebugViewFlag(flag);
@@ -314,6 +314,8 @@ namespace LevelEditor
         private void levelScreen_MouseDown(object sender, MouseEventArgs e)
         {
             levelScreen.CreateMouseJoint();
+            levelPage.Focus();
+            //levelScreen.Focus();
         }
 
         private void levelScreen_MouseUp(object sender, MouseEventArgs e)
@@ -331,6 +333,23 @@ namespace LevelEditor
         {
             levelScreen.DrawCurrentGameObject = false;
             Cursor = Cursors.Arrow;
+        }
+
+        private void levelPage_MouseWheel(object sender, MouseEventArgs e)
+        {
+            //if (shiftPressed)
+            //{
+            //    ScrollableControl control = sender as ScrollableControl;    
+
+            //    int lines = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
+            //    int horizontalDelta = -control.HorizontalScroll.SmallChange * lines;
+            //    int newValue = (int)MathHelper.Clamp(control.HorizontalScroll.Value + horizontalDelta, control.HorizontalScroll.Minimum, control.HorizontalScroll.Maximum);
+            //    if (control.HorizontalScroll.Value != newValue)
+            //        control.HorizontalScroll.Value = newValue;
+
+            //    //int verticalDelta = -control.VerticalScroll.SmallChange * lines * 2;
+            //    //control.VerticalScroll.Value = (int)MathHelper.Clamp(control.VerticalScroll.Value + verticalDelta, control.VerticalScroll.Minimum, control.VerticalScroll.Maximum);
+            //}
         }
 
         private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
@@ -415,6 +434,17 @@ namespace LevelEditor
                 simulateMenuItem.Text = "Simulate";
                 ShowReadyStatus();
             }
+        }
+
+        //private bool shiftPressed = false;
+        private void levelPage_KeyDown(object sender, KeyEventArgs e)
+        {
+            //shiftPressed = e.Shift;
+        }
+
+        private void levelPage_KeyUp(object sender, KeyEventArgs e)
+        {
+            //shiftPressed = e.Shift;
         }
 
         private void levelPage_Scroll(object sender, ScrollEventArgs e)
