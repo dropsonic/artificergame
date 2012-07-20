@@ -105,9 +105,11 @@ namespace LevelEditor
             _simulationSpeed = NormalSimulationSpeed;
             _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
-            Simulate = false;
             
+            Simulate = false;
             SetDebugView();
+            int i;
+            
 
         }
 
@@ -125,7 +127,7 @@ namespace LevelEditor
             _debugView = new DebugViewXNA(_simulatedLevel.World);
             _debugView.DefaultShapeColor = Color.White;
             _debugView.SleepingShapeColor = Color.LightGray;
-            _debugView.LoadContent(GraphicsDevice, Content);
+            _debugView.LoadContent(GraphicsDevice, new Viewport(0,0,this.Size.Width,this.Size.Height),Content);
         }
 
         public void SwitchDebugViewFlag(DebugViewFlags flag)
@@ -241,6 +243,7 @@ namespace LevelEditor
                 _currentGameObject.Camera.Position = Vector2.Zero;
             }
             _simulatedLevel.Draw(GameTimer.GameTime);
+
 
             Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
             _debugView.RenderDebugData(ref proj);
