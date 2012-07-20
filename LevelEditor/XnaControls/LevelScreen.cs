@@ -128,7 +128,7 @@ namespace LevelEditor
             _debugView.LoadContent(GraphicsDevice, Content);
         }
 
-        public void EnableOrDisableFlag(DebugViewFlags flag)
+        public void SwitchDebugViewFlag(DebugViewFlags flag)
         {
             if ((_debugView.Flags & flag) == flag)
             {
@@ -138,6 +138,13 @@ namespace LevelEditor
             {
                 _debugView.AppendFlags(flag);
             }
+        }
+        public bool CheckDebugViewFlag(DebugViewFlags flag)
+        {
+            if ((_debugView.Flags & flag) == flag)
+                return true;
+            else
+                return false;
         }
         public void AddCurrentObject()
         {
