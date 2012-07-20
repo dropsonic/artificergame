@@ -48,6 +48,7 @@ namespace LevelEditor
             this.simulationSpeedDoubleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationSpeedIncreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
@@ -138,7 +139,6 @@ namespace LevelEditor
             this.statusToolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.paramsTabControl.SuspendLayout();
@@ -333,6 +333,12 @@ namespace LevelEditor
             this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedDecreaseMenuItem.Text = "Decrease by 0.25";
             this.simulationSpeedDecreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
             // 
             // tableLayoutPanel
             // 
@@ -1620,6 +1626,7 @@ namespace LevelEditor
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
+            this.levelPage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.levelPage_Scroll);
             // 
             // levelScreen
             // 
@@ -1715,12 +1722,6 @@ namespace LevelEditor
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
             // 
             // MainForm
             // 
