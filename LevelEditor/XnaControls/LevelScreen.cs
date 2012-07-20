@@ -9,6 +9,8 @@ using GameLogic;
 using System;
 using System.Windows.Forms;
 using FarseerPhysics.Dynamics.Joints;
+using FarseerPhysics.DebugViews;
+using FarseerPhysics;
 
 
 namespace LevelEditor
@@ -25,6 +27,7 @@ namespace LevelEditor
         TimeSpan _worldTime = TimeSpan.Zero;
 
         FixedMouseJoint _mouseJoint;
+        DebugViewXNA _debugView;
 
         private GameObject _currentGameObject;
         public GameObject CurrentGameObject
@@ -103,6 +106,9 @@ namespace LevelEditor
             _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
             Simulate = false;
+            
+            SetDebugView();
+
         }
 
         void LevelScreen_SimulateChanged(object obj, EventArgs e)
@@ -111,8 +117,28 @@ namespace LevelEditor
                 ResetLevelTo(_initialLevel);
             GameTimer.Enabled = _simulate;
             _worldTime = TimeSpan.Zero;
+            SetDebugView();
         }
 
+        void SetDebugView()
+        {
+            _debugView = new DebugViewXNA(_simulatedLevel.World);
+            _debugView.DefaultShapeColor = Color.White;
+            _debugView.SleepingShapeColor = Color.LightGray;
+            _debugView.LoadContent(GraphicsDevice, Content);
+        }
+
+        private void EnableOrDisableFlag(DebugViewFlags flag)
+        {
+            if ((_debugView.Flags & flag) == flag)
+            {
+                _debugView.RemoveFlags(flag);
+            }
+            else
+            {
+                _debugView.AppendFlags(flag);
+            }
+        }
         public void AddCurrentObject()
         {
             _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
@@ -209,6 +235,8 @@ namespace LevelEditor
             }
             _simulatedLevel.Draw(GameTimer.GameTime);
 
+            Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
+            _debugView.RenderDebugData(ref proj);
         }
     }
 }
