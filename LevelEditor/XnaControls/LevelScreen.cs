@@ -139,7 +139,7 @@ namespace LevelEditor
                 _debugView.AppendFlags(flag);
             }
         }
-        public bool CheckDebugViewFlag(DebugViewFlags flag)
+        public bool DebugViewHasFlag(DebugViewFlags flag)
         {
             if ((_debugView.Flags & flag) == flag)
                 return true;

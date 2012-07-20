@@ -70,7 +70,7 @@ namespace LevelEditor
                     CheckOnClick = true,
                     Checked = false
                 };
-                currentMenuItem.Click += new EventHandler(DebugViewClick);
+                currentMenuItem.Click += new EventHandler(DebugView_Click);
                 debugToolStripMenuItem.DropDownItems.Add(currentMenuItem);
             }
             SetDebugViewMenu();
@@ -80,13 +80,22 @@ namespace LevelEditor
         {
             foreach (System.Windows.Forms.ToolStripMenuItem menu in debugToolStripMenuItem.DropDownItems)
             {
-                menu.Checked = levelScreen.CheckDebugViewFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), menu.Text));
+                menu.Checked = levelScreen.DebugViewHasFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), menu.Text));
             }
         }
 
-        private void DebugViewClick(object sender, EventArgs e)
+        private void DebugView_Click(object sender, EventArgs e)
         {
-            levelScreen.SwitchDebugViewFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), ((System.Windows.Forms.ToolStripMenuItem)sender).Text));
+            DebugViewFlags flag = (DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), ((System.Windows.Forms.ToolStripMenuItem)sender).Text);
+
+            //Если был включен ContactNormals и выключается ContactPoints, то нужно выключить ContactNormals тоже
+            if (flag.HasFlag(DebugViewFlags.ContactPoints) && levelScreen.DebugViewHasFlag(DebugViewFlags.ContactNormals))
+                flag = flag | DebugViewFlags.ContactNormals;
+            //Если включается ContactNormals, а ContactPoints не включен, то нужно его включить
+            else if (flag.HasFlag(DebugViewFlags.ContactNormals))
+                flag = flag | DebugViewFlags.ContactPoints;
+
+            levelScreen.SwitchDebugViewFlag(flag);
             SetDebugViewMenu();
         }
 
