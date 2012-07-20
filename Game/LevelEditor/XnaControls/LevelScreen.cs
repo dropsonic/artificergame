@@ -91,7 +91,7 @@ namespace LevelEditor
             if(_simulate == false)
                 ResetLevelTo(_initialLevel);
             GameTimer.Enabled = _simulate;
-            _worldTime = new TimeSpan();
+            _worldTime = TimeSpan.Zero;
         }
 
         public void AddCurrentObject()
@@ -131,12 +131,10 @@ namespace LevelEditor
         {
             if (_simulate)
             {
+                if (_worldTime == TimeSpan.Zero && _simulationSpeed < 0)
+                    throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
                 TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                 _worldTime += elapsed;
-                if (_worldTime == elapsed && elapsed <= TimeSpan.Zero)
-                    //это неверное условие для выдачи исключения(оно может возникнуть и в случае окончания симуляции по приходу к начальному состоянию).
-                    //правильным будет уведомлять пользователя при попытки запуска.
-                    throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
                 if (_worldTime <= TimeSpan.Zero)
                 {
                     Simulate = false;
