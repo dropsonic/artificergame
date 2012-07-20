@@ -131,9 +131,7 @@ namespace LevelEditor
                     //Корректируем GameTime с учётом скорости симуляции
                     TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                     GameTime correctedGameTime = new GameTime(GameTime.TotalGameTime, elapsed);
-                    //Если скорость симуляции была отрицательна, то "отматывать время назад" можно не дальше точки старта симуляции
-                    //if (correctedGameTime.TotalGameTime <= TimeSpan.Zero)
-                    //    Simulate = false;
+                    //TODO: Если скорость симуляции была отрицательна, то "отматывать время назад" можно не дальше точки старта симуляции
                     
                     _simulatedLevel.Update(correctedGameTime);
                 }
