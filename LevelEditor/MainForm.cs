@@ -338,8 +338,8 @@ namespace LevelEditor
         {
             if (levelScreen.SimulationSpeed <= 0)
             {
-                levelScreen.SimulationSpeed = 1;
-                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1");
+                simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
+                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
             }
             else
             {
