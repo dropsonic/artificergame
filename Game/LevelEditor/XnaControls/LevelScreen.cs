@@ -151,7 +151,7 @@ namespace LevelEditor
             if (_simulate)
             {
                 UpdateMouseJoint();
-                if (_worldTime == TimeSpan.Zero && _simulationSpeed < 0)
+                if (_worldTime == TimeSpan.Zero && _simulationSpeed <= 0)
                     throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
                 TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                 _worldTime += elapsed;
