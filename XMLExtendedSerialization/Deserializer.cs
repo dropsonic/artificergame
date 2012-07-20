@@ -7,7 +7,7 @@ using System.Reflection;
 using System.IO;
 using Microsoft.Xna.Framework;
 
-namespace XMLImporterEx
+namespace XMLExtendedSerialization
 {
     internal class Deserializer
     {

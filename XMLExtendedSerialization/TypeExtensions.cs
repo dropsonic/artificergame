@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XMLImporterEx
+namespace XMLExtendedSerialization
 {
     public static class TypeExtensions
     {

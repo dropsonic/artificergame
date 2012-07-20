@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Globalization;
 
-namespace XMLImporterEx
+namespace XMLExtendedSerialization
 {
     internal static class DefaultConverters
     {

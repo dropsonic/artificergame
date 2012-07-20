@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugView XNA Content", "De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLImporterEx", "XMLImporterEx\XMLImporterEx.csproj", "{1C768AEB-081A-4AC2-9F01-809D4D8559C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLExtendedSerialization", "XMLExtendedSerialization\XMLExtendedSerialization.csproj", "{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -163,6 +165,16 @@ Global
 		{1C768AEB-081A-4AC2-9F01-809D4D8559C1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1C768AEB-081A-4AC2-9F01-809D4D8559C1}.Release|x86.ActiveCfg = Release|x86
 		{1C768AEB-081A-4AC2-9F01-809D4D8559C1}.Release|x86.Build.0 = Release|x86
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
