@@ -37,23 +37,23 @@ using Microsoft.Xna.Framework.Content;
 
         // However many GraphicsDeviceControl instances you have, they all share
         // the same underlying GraphicsDevice, managed by this helper service.
-        GraphicsDeviceService graphicsDeviceService;
-        ContentService contentService;
-        private Stopwatch stopwatch;
+        GraphicsDeviceService _graphicsDeviceService;
+        ContentService _contentService;
+        private Stopwatch _stopwatch;
 
-        private GameTime gameTime;
+        private GameTime _gameTime;
         protected GameTime GameTime
         {
-            get { return gameTime; }
+            get { return _gameTime; }
         }
         
-        protected Timer frameTimer = new Timer();
+        protected Timer _frameTimer = new Timer();
         public Timer FrameTimer
         { 
-            get { return frameTimer; } 
+            get { return _frameTimer; } 
         }
         //around 60fps
-        private int fps = 100;
+        private int _fps = 100;
         #endregion
 
         #region Properties
@@ -64,12 +64,12 @@ using Microsoft.Xna.Framework.Content;
         /// </summary>
         public GraphicsDevice GraphicsDevice
         {
-            get { return graphicsDeviceService.GraphicsDevice; }
+            get { return _graphicsDeviceService.GraphicsDevice; }
         }
 
         public ContentManager Content
         {
-            get { return contentService.Content; }
+            get { return _contentService.Content; }
         }
 
         #endregion
@@ -85,19 +85,19 @@ using Microsoft.Xna.Framework.Content;
             // Don't initialize the graphics device if we are running in the designer.
             if (!DesignMode)
             {
-                graphicsDeviceService = GraphicsDeviceService.AddRef(Handle,
+                _graphicsDeviceService = GraphicsDeviceService.AddRef(Handle,
                                                                      ClientSize.Width,
                                                                      ClientSize.Height);
 
-                contentService = ContentService.GetContentService(graphicsDeviceService);
+                _contentService = ContentService.GetContentService(_graphicsDeviceService);
 
-                frameTimer.Tick += new EventHandler(CalculateFrame);
-                frameTimer.Interval = (int)((float)1000/(float)fps);
-                frameTimer.Enabled = true;
+                _frameTimer.Tick += new EventHandler(CalculateFrame);
+                _frameTimer.Interval = (int)((float)1000/(float)_fps);
+                _frameTimer.Enabled = true;
 
-                stopwatch = new Stopwatch();
-                stopwatch.Start();
-                gameTime = new GameTime();
+                _stopwatch = new Stopwatch();
+                _stopwatch.Start();
+                _gameTime = new GameTime();
 
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
@@ -113,10 +113,10 @@ using Microsoft.Xna.Framework.Content;
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (graphicsDeviceService != null)
+            if (_graphicsDeviceService != null)
             {
-                graphicsDeviceService.Release(disposing);
-                graphicsDeviceService = null;
+                _graphicsDeviceService.Release(disposing);
+                _graphicsDeviceService = null;
             }
 
             base.Dispose(disposing);
@@ -131,7 +131,7 @@ using Microsoft.Xna.Framework.Content;
         /// </summary>
         void CalculateFrame(Object obj, EventArgs e)
         {
-            gameTime = new GameTime(stopwatch.Elapsed, stopwatch.Elapsed - gameTime.TotalGameTime);
+            _gameTime = new GameTime(_stopwatch.Elapsed, _stopwatch.Elapsed - _gameTime.TotalGameTime);
 
             string beginDrawError = BeginDraw();
             
@@ -152,7 +152,7 @@ using Microsoft.Xna.Framework.Content;
         protected override void OnPaint(PaintEventArgs e)
         {
             // If we have no graphics device, we must be running in the designer.
-            if (DesignMode && graphicsDeviceService == null)
+            if (DesignMode && _graphicsDeviceService == null)
                 PaintUsingSystemDrawing(e.Graphics, Text + "\n\n" + GetType());
         }
 
@@ -260,7 +260,7 @@ using Microsoft.Xna.Framework.Content;
             {
                 try
                 {
-                    graphicsDeviceService.ResetDevice(ClientSize.Width,
+                    _graphicsDeviceService.ResetDevice(ClientSize.Width,
                                                       ClientSize.Height);
                 }
                 catch (Exception e)

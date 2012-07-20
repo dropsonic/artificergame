@@ -34,7 +34,6 @@ namespace LevelEditor
         {
             InitializeComponent();
             Initialize();
-            
         }
 
         private void Initialize()
@@ -287,9 +286,60 @@ namespace LevelEditor
             propertyGrid.Refresh();
         }
 
-        private void simulateState_Changed(object sender, EventArgs e)
+        private void simulateMenuItem_Click(object sender, EventArgs e)
         {
             levelScreen.Simulate = !levelScreen.Simulate;
+        }
+
+        /// <summary>
+        /// Метод-хелпер для изменения состояния checked элементов меню изменения скорости симуляции.
+        /// </summary>
+        private void ChangeSimSpeedMenuItemsCheckedStateHelper(bool halfItem, bool normalItem, bool doubleItem)
+        {
+            simulationSpeedHalfMenuItem.Checked = halfItem;
+            simulationSpeedNormalMenuItem.Checked = normalItem;
+            simulationSpeedDoubleMenuItem.Checked = doubleItem;
+        }
+
+        private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
+        {
+            const float inc = 0.25f; //шаг изменения скорости симуляции
+
+            if (sender == simulationSpeedHalfMenuItem)
+            {
+                ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
+                levelScreen.SimulationSpeed = 0.5f;
+            }
+            else if (sender == simulationSpeedNormalMenuItem)
+            {
+                ChangeSimSpeedMenuItemsCheckedStateHelper(false, true, false);
+                levelScreen.SimulationSpeed = LevelScreen.NormalSimulationSpeed;
+            }
+            else if (sender == simulationSpeedDoubleMenuItem)
+            {
+                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, true);
+                levelScreen.SimulationSpeed = 2.0f;
+            }
+            else if (sender == simulationSpeedIncreaseMenuItem)
+            {
+                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
+                levelScreen.SimulationSpeed += inc;
+
+                if (_status == StatusType.Simulation)
+                    ShowSimulationStatus(levelScreen.SimulationSpeed);
+            }
+            else if (sender == simulationSpeedDecreaseMenuItem)
+            {
+                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
+                levelScreen.SimulationSpeed -= inc;
+
+                if (_status == StatusType.Simulation)
+                    ShowSimulationStatus(levelScreen.SimulationSpeed);
+            }
+        }
+
+        private void levelScreen_SimulateChanged(object sender, EventArgs e)
+        {
             if (levelScreen.Simulate)
             {
                 simulateMenuItem.Text = "Stop simulation";
@@ -299,31 +349,6 @@ namespace LevelEditor
             {
                 simulateMenuItem.Text = "Simulate";
                 ShowReadyStatus();
-            }
-        }
-
-        private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
-        {
-            if (sender == simulationSpeedHalfMenuItem)
-            {
-                simulationSpeedHalfMenuItem.Checked = true;
-                simulationSpeedNormalMenuItem.Checked = false;
-                simulationSpeedDoubleNormalMenuItem.Checked = false;
-                levelScreen.SimulationSpeed = 0.5f;
-            }
-            else if (sender == simulationSpeedNormalMenuItem)
-            {
-                simulationSpeedHalfMenuItem.Checked = false;
-                simulationSpeedNormalMenuItem.Checked = true;
-                simulationSpeedDoubleNormalMenuItem.Checked = false;
-                levelScreen.SimulationSpeed = LevelScreen.NormalSimulationSpeed;
-            }
-            else if (sender == simulationSpeedDoubleNormalMenuItem)
-            {
-                simulationSpeedHalfMenuItem.Checked = false;
-                simulationSpeedNormalMenuItem.Checked = false;
-                simulationSpeedDoubleNormalMenuItem.Checked = true;
-                levelScreen.SimulationSpeed = 2.0f;
             }
         }
     }
