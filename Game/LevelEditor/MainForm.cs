@@ -50,8 +50,7 @@ namespace LevelEditor
             Body body = new Body(currentObject.World);
             currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
             propertyGrid.SelectedObject = currentObject[0].Body;
-            
-            PopulateDebugViewMenu();
+
             InitializeStatusStrip();
             ShowReadyStatus();
         }
@@ -74,6 +73,21 @@ namespace LevelEditor
                 currentMenuItem.Click += new EventHandler(DebugViewClick);
                 debugToolStripMenuItem.DropDownItems.Add(currentMenuItem);
             }
+            SetDebugViewMenu();
+        }
+
+        private void SetDebugViewMenu()
+        {
+            foreach (System.Windows.Forms.ToolStripMenuItem menu in debugToolStripMenuItem.DropDownItems)
+            {
+                menu.Checked = levelScreen.CheckDebugViewFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), menu.Text));
+            }
+        }
+
+        private void DebugViewClick(object sender, EventArgs e)
+        {
+            levelScreen.SwitchDebugViewFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags), ((System.Windows.Forms.ToolStripMenuItem)sender).Text));
+            SetDebugViewMenu();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -106,6 +120,8 @@ namespace LevelEditor
             {
                 colorBox.Items.Add(colorName);
             }
+
+            PopulateDebugViewMenu();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -391,11 +407,6 @@ namespace LevelEditor
                 simulateMenuItem.Text = "Simulate";
                 ShowReadyStatus();
             }
-        }
-
-        private void DebugViewClick(object sender, EventArgs e)
-        {
-            levelScreen.EnableOrDisableFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags),((System.Windows.Forms.ToolStripMenuItem)sender).Text));
         }
     }
 }
