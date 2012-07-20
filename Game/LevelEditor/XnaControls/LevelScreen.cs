@@ -108,9 +108,6 @@ namespace LevelEditor
             
             Simulate = false;
             SetDebugView();
-            int i;
-            
-
         }
 
         void LevelScreen_SimulateChanged(object obj, EventArgs e)
@@ -255,4 +252,4 @@ namespace LevelEditor
             _debugView.RenderDebugData(ref proj);
         }
     }
-}
+}   

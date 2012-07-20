@@ -840,6 +840,7 @@ namespace FarseerPhysics.DebugViews
             
             // Create a new SpriteBatch, which can be used to draw textures.
             _device = device;
+
             _batch = new SpriteBatch(_device);
             _primitiveBatch = new PrimitiveBatch(_device, 1000);
             _font = content.Load<SpriteFont>("font");
