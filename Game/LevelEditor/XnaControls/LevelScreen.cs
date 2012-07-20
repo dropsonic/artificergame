@@ -20,7 +20,7 @@ namespace LevelEditor
         GameLevel _initialLevel;
   
         Camera _camera;
-
+        TimeSpan _worldTime = new TimeSpan();
         private GameObject _currentGameObject;
         public GameObject CurrentGameObject
         {
@@ -45,8 +45,6 @@ namespace LevelEditor
             }
             set
             {
-                if (value == false)
-                    ResetLevelTo(_initialLevel);
                 _simulate = value;
                 OnSimulateChanged();
             }
@@ -76,6 +74,7 @@ namespace LevelEditor
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
+            SimulateChanged+=new EventHandler(LevelScreen_SimulateChanged);
             _camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
             _simulatedLevel = new GameLevel(_camera, _spriteBatch, new Vector2(10, 10));
             _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(10, 10));
@@ -85,6 +84,14 @@ namespace LevelEditor
             CurrentObjectPosition = Vector2.Zero;
             DrawCurrentGameObject = false;
             Simulate = false;
+        }
+
+        void LevelScreen_SimulateChanged(object obj, EventArgs e)
+        {
+            if(_simulate == false)
+                ResetLevelTo(_initialLevel);
+            GameTimer.Enabled = _simulate;
+            _worldTime = new TimeSpan();
         }
 
         public void AddCurrentObject()
@@ -124,17 +131,21 @@ namespace LevelEditor
         {
             if (_simulate)
             {
-                if (_simulationSpeed == NormalSimulationSpeed)
-                    _simulatedLevel.Update(GameTime);
-                else
+                TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
+                _worldTime += elapsed;
+                if (_worldTime == elapsed && elapsed <= TimeSpan.Zero)
+                    //это неверное условие для выдачи исключения(оно может возникнуть и в случае окончания симуляции по приходу к начальному состоянию).
+                    //правильным будет уведомлять пользователя при попытки запуска.
+                    throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
+                if (_worldTime <= TimeSpan.Zero)
                 {
-                    //Корректируем GameTime с учётом скорости симуляции
-                    TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
-                    GameTime correctedGameTime = new GameTime(GameTime.TotalGameTime, elapsed);
-                    //TODO: Если скорость симуляции была отрицательна, то "отматывать время назад" можно не дальше точки старта симуляции
-                    
-                    _simulatedLevel.Update(correctedGameTime);
+                    Simulate = false;
+                    return;
                 }
+                if (_simulationSpeed == NormalSimulationSpeed)
+                    _simulatedLevel.Update(GameTimer.GameTime);
+                else
+                    _simulatedLevel.Update(new GameTime(GameTimer.GameTime.TotalGameTime, elapsed));
             }
         }
 
@@ -144,10 +155,10 @@ namespace LevelEditor
             if (_currentGameObject != null && DrawCurrentGameObject)
             {
                 _currentGameObject.Camera.Position = -CurrentObjectPosition;
-                _currentGameObject.Draw(GameTime);
+                _currentGameObject.Draw(GameTimer.GameTime);
                 _currentGameObject.Camera.Position = Vector2.Zero;
             }
-            _simulatedLevel.Draw(GameTime);
+            _simulatedLevel.Draw(GameTimer.GameTime);
         }
     }
 }
