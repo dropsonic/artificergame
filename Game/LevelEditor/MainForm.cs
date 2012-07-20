@@ -299,8 +299,8 @@ namespace LevelEditor
 
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
-            if (levelScreen.SimulationSpeed < 0)
-                ShowWarningStatus("Василий...");
+            if (levelScreen.SimulationSpeed <= 0)
+                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени.");
             else
                 levelScreen.Simulate = !levelScreen.Simulate;
         }
@@ -318,6 +318,9 @@ namespace LevelEditor
         private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
         {
             const float inc = 0.25f; //шаг изменения скорости симуляции
+
+            if (_status != StatusType.Ready)
+                ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
 
             if (sender == simulationSpeedHalfMenuItem)
             {
