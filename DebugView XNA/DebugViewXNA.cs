@@ -50,7 +50,8 @@ namespace FarseerPhysics.DebugViews
 #if XBOX
         public Vector2 DebugPanelPosition = new Vector2(55, 100);
 #else
-        public Vector2 DebugPanelPosition = new Vector2(40, 100);
+        //public Vector2 DebugPanelPosition = new Vector2(40, 100);
+        public Vector2 DebugPanelPosition = new Vector2(10, 10);
 #endif
         private int _max;
         private int _avg;
@@ -66,7 +67,8 @@ namespace FarseerPhysics.DebugViews
 #if XBOX
         public Rectangle PerformancePanelBounds = new Rectangle(265, 100, 200, 100);
 #else
-        public Rectangle PerformancePanelBounds = new Rectangle(250, 100, 200, 100);
+        //public Rectangle PerformancePanelBounds = new Rectangle(250, 100, 200, 100);
+        public Rectangle PerformancePanelBounds = new Rectangle(220, 10, 200, 100);
 #endif
         private Vector2[] _background = new Vector2[4];
         public bool Enabled = true;
@@ -831,13 +833,12 @@ namespace FarseerPhysics.DebugViews
             
             // Create a new SpriteBatch, which can be used to draw textures.
             _device = device;
-            _device.Viewport = viewport;
             _batch = new SpriteBatch(_device);
             _primitiveBatch = new PrimitiveBatch(_device, 1000);
             _font = content.Load<SpriteFont>("font");
             _stringData = new List<StringData>();
 
-            _localProjection = Matrix.CreateOrthographicOffCenter(0f, _device.Viewport.Width, _device.Viewport.Height,
+            _localProjection = Matrix.CreateOrthographicOffCenter(0f, viewport.Width, viewport.Height,
                                                                   0f, 0f, 1f);
             _localView = Matrix.Identity;
         }

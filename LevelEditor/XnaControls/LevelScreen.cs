@@ -124,10 +124,14 @@ namespace LevelEditor
 
         void SetDebugView()
         {
+            DebugViewFlags flags = 0;
+            if (_debugView != null) { flags = _debugView.Flags;}
             _debugView = new DebugViewXNA(_simulatedLevel.World);
             _debugView.DefaultShapeColor = Color.White;
             _debugView.SleepingShapeColor = Color.LightGray;
             _debugView.LoadContent(GraphicsDevice, new Viewport(0,0,this.Size.Width,this.Size.Height),Content);
+            _debugView.Flags = flags;
+
         }
 
         public void SwitchDebugViewFlag(DebugViewFlags flag)
