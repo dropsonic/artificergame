@@ -79,6 +79,13 @@ namespace FarseerPhysics.DebugViews
         public const int CircleSegments = 32;
 #endif
 
+        public void TranslateDebugPerfomancePair(Vector2 translation)
+        {
+            DebugPanelPosition = translation;
+
+            PerformancePanelBounds.X =(int)translation.X+210;
+            PerformancePanelBounds.Y =(int)translation.Y;
+        }
         public DebugViewXNA(World world)
             : base(world)
         {

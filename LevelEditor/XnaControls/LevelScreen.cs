@@ -248,8 +248,10 @@ namespace LevelEditor
             }
             _simulatedLevel.Draw(GameTimer.GameTime);
 
-
+            
             Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
+            _debugView.TranslateDebugPerfomancePair(Vector2.Transform(Vector2.Zero,Matrix.CreateTranslation(_mousePosition.X,_mousePosition.Y,0)));
+
             _debugView.RenderDebugData(ref proj);
         }
     }
