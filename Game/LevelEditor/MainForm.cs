@@ -299,7 +299,10 @@ namespace LevelEditor
 
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
-            levelScreen.Simulate = !levelScreen.Simulate;
+            if (levelScreen.SimulationSpeed < 0)
+                ShowWarningStatus("Василий...");
+            else
+                levelScreen.Simulate = !levelScreen.Simulate;
         }
 
         /// <summary>
