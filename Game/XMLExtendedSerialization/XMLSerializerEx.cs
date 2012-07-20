@@ -6,7 +6,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Reflection;
 
-namespace XMLImporterEx
+namespace XMLExtendedSerialization
 {
     public static class XMLSerializerEx
     {
