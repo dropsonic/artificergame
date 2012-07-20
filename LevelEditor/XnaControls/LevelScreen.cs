@@ -29,6 +29,7 @@ namespace LevelEditor
         FixedMouseJoint _mouseJoint;
         DebugViewXNA _debugView;
 
+        public string message = "";
         private GameObject _currentGameObject;
         public GameObject CurrentGameObject
         {
@@ -81,6 +82,19 @@ namespace LevelEditor
         private MouseEventArgs _mouseState;
         private Vector2 _mousePosition;
 
+        private Vector2 _upperLeftLocalPoint;
+        public Vector2 UpperLeftLocalPoint {
+            get
+            {
+                return _upperLeftLocalPoint;
+            }
+            
+            set
+            {
+                _upperLeftLocalPoint = value;
+                _debugView.TranslateDebugPerfomancePair(value);
+            }
+        }
         public bool DrawCurrentGameObject { get; set; }
 
         public const float NormalSimulationSpeed = 1.0f;
@@ -247,8 +261,6 @@ namespace LevelEditor
 
             
             Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
-            _debugView.TranslateDebugPerfomancePair(Vector2.Transform(Vector2.Zero,Matrix.CreateTranslation(_mousePosition.X,_mousePosition.Y,0)));
-
             _debugView.RenderDebugData(ref proj);
         }
     }

@@ -50,8 +50,8 @@ namespace FarseerPhysics.DebugViews
 #if XBOX
         public Vector2 DebugPanelPosition = new Vector2(55, 100);
 #else
-        //public Vector2 DebugPanelPosition = new Vector2(40, 100);
-        public Vector2 DebugPanelPosition = new Vector2(10, 10);
+        public Vector2 DebugPanelPosition = _initialDebugPanelPosition;
+        private static readonly Vector2 _initialDebugPanelPosition = new Vector2(10, 10);
 #endif
         private int _max;
         private int _avg;
@@ -67,8 +67,8 @@ namespace FarseerPhysics.DebugViews
 #if XBOX
         public Rectangle PerformancePanelBounds = new Rectangle(265, 100, 200, 100);
 #else
-        //public Rectangle PerformancePanelBounds = new Rectangle(250, 100, 200, 100);
-        public Rectangle PerformancePanelBounds = new Rectangle(220, 10, 200, 100);
+        public Rectangle PerformancePanelBounds = _initialPerformancePanelBounds;
+        private static readonly Rectangle _initialPerformancePanelBounds = new Rectangle(220, 10, 200, 100);
 #endif
         private Vector2[] _background = new Vector2[4];
         public bool Enabled = true;
@@ -81,10 +81,10 @@ namespace FarseerPhysics.DebugViews
 
         public void TranslateDebugPerfomancePair(Vector2 translation)
         {
-            DebugPanelPosition = translation;
+            DebugPanelPosition = translation + _initialDebugPanelPosition;
 
-            PerformancePanelBounds.X =(int)translation.X+210;
-            PerformancePanelBounds.Y =(int)translation.Y;
+            PerformancePanelBounds.X = (int)translation.X + _initialPerformancePanelBounds.X;
+            PerformancePanelBounds.Y = (int)translation.Y + _initialPerformancePanelBounds.Y;
         }
         public DebugViewXNA(World world)
             : base(world)

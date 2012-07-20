@@ -416,5 +416,12 @@ namespace LevelEditor
                 ShowReadyStatus();
             }
         }
+
+        private void levelPage_Scroll(object sender, ScrollEventArgs e)
+        {
+            levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y); ;
+            
+        }
+
     }
 }
