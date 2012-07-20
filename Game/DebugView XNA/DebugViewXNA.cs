@@ -83,9 +83,9 @@ namespace FarseerPhysics.DebugViews
             world.ContactManager.PreSolve += PreSolve;
 
             //Default flags
-            AppendFlags(DebugViewFlags.Shape);
-            AppendFlags(DebugViewFlags.Controllers);
-            AppendFlags(DebugViewFlags.Joint);
+            //AppendFlags(DebugViewFlags.Shape);
+            //AppendFlags(DebugViewFlags.Controllers);
+            //AppendFlags(DebugViewFlags.Joint);
         }
 
         public void BeginCustomDraw(ref Matrix projection, ref Matrix view)
