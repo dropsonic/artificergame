@@ -300,7 +300,10 @@ namespace LevelEditor
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
             if (levelScreen.SimulationSpeed <= 0)
-                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени.");
+            {
+                levelScreen.SimulationSpeed = 1;
+                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1");
+            }
             else
                 levelScreen.Simulate = !levelScreen.Simulate;
         }
