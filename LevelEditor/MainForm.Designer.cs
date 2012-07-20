@@ -1626,7 +1626,6 @@ namespace LevelEditor
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.Name = "levelScreen";
-            this.levelScreen.Simulate = false;
             this.levelScreen.SimulationSpeed = 0F;
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;

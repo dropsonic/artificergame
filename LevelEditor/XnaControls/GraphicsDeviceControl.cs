@@ -25,6 +25,51 @@ namespace LevelEditor
 using Microsoft.Xna.Framework.Content;
 
 
+    public class StopwatchGameTimer
+    {
+        private GameTime _gameTime;
+        private Stopwatch _stopwatch;
+        private bool _enabled;
+        public GameTime GameTime
+        {
+            get
+            {
+                return _gameTime;
+            }
+        }
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                if (value == true)
+                {
+                    _stopwatch.Restart();
+                    _gameTime = new GameTime();
+                }
+                else
+                {
+                    _stopwatch.Reset();
+                    _gameTime = new GameTime();
+                }
+                _enabled = value;
+            }
+        }
+        public StopwatchGameTimer()
+        {
+            _gameTime = new GameTime();
+            _stopwatch = new Stopwatch();
+            _enabled = false;
+        }
+        public void UpdateGameTime()
+        {
+            if(_enabled)
+                _gameTime = new GameTime(_stopwatch.Elapsed, _stopwatch.Elapsed - _gameTime.TotalGameTime);
+        }
+    }
     /// <summary>
     /// Custom control uses the XNA Framework GraphicsDevice to render onto
     /// a Windows Form. Derived classes can override the Initialize and Draw
@@ -39,14 +84,14 @@ using Microsoft.Xna.Framework.Content;
         // the same underlying GraphicsDevice, managed by this helper service.
         GraphicsDeviceService _graphicsDeviceService;
         ContentService _contentService;
-        private Stopwatch _stopwatch;
-
-        private GameTime _gameTime;
-        protected GameTime GameTime
+        StopwatchGameTimer _gameTimer = new StopwatchGameTimer();
+        public StopwatchGameTimer GameTimer 
         {
-            get { return _gameTime; }
+            get
+            {
+                return _gameTimer;
+            }
         }
-        
         protected Timer _frameTimer = new Timer();
         public Timer FrameTimer
         { 
@@ -95,10 +140,7 @@ using Microsoft.Xna.Framework.Content;
                 _frameTimer.Interval = (int)((float)1000/(float)_fps);
                 _frameTimer.Enabled = true;
 
-                _stopwatch = new Stopwatch();
-                _stopwatch.Start();
-                _gameTime = new GameTime();
-
+                _gameTimer.Enabled = false;
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();
@@ -125,14 +167,13 @@ using Microsoft.Xna.Framework.Content;
 
         #endregion
 
-        #region Paint
+        #region Update
         /// <summary>
         /// Redraws the control in certain time intervals
         /// </summary>
         void CalculateFrame(Object obj, EventArgs e)
         {
-            _gameTime = new GameTime(_stopwatch.Elapsed, _stopwatch.Elapsed - _gameTime.TotalGameTime);
-
+            _gameTimer.UpdateGameTime();
             string beginDrawError = BeginDraw();
             
             if (string.IsNullOrEmpty(beginDrawError))
@@ -304,7 +345,6 @@ using Microsoft.Xna.Framework.Content;
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
         }
-
 
         #endregion
 
