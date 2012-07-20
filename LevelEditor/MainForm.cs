@@ -359,9 +359,6 @@ namespace LevelEditor
         {
             const float inc = 0.25f; //шаг изменения скорости симуляции
 
-            if (_status != StatusType.Ready)
-                ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
-
             if (sender == simulationSpeedHalfMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
@@ -381,18 +378,17 @@ namespace LevelEditor
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
                 levelScreen.SimulationSpeed += inc;
-
-                if (_status == StatusType.Simulation)
-                    ShowSimulationStatus(levelScreen.SimulationSpeed);
             }
             else if (sender == simulationSpeedDecreaseMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
                 levelScreen.SimulationSpeed -= inc;
-
-                if (_status == StatusType.Simulation)
-                    ShowSimulationStatus(levelScreen.SimulationSpeed);
             }
+
+            if (_status == StatusType.Simulation)
+                ShowSimulationStatus(levelScreen.SimulationSpeed);
+            else
+                ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
         }
 
         private void levelScreen_SimulateChanged(object sender, EventArgs e)
