@@ -335,23 +335,6 @@ namespace LevelEditor
             Cursor = Cursors.Arrow;
         }
 
-        private void levelPage_MouseWheel(object sender, MouseEventArgs e)
-        {
-            //if (shiftPressed)
-            //{
-            //    ScrollableControl control = sender as ScrollableControl;    
-
-            //    int lines = e.Delta * SystemInformation.MouseWheelScrollLines / 120;
-            //    int horizontalDelta = -control.HorizontalScroll.SmallChange * lines;
-            //    int newValue = (int)MathHelper.Clamp(control.HorizontalScroll.Value + horizontalDelta, control.HorizontalScroll.Minimum, control.HorizontalScroll.Maximum);
-            //    if (control.HorizontalScroll.Value != newValue)
-            //        control.HorizontalScroll.Value = newValue;
-
-            //    //int verticalDelta = -control.VerticalScroll.SmallChange * lines * 2;
-            //    //control.VerticalScroll.Value = (int)MathHelper.Clamp(control.VerticalScroll.Value + verticalDelta, control.VerticalScroll.Minimum, control.VerticalScroll.Maximum);
-            //}
-        }
-
         private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
         {
             SetCurrentObject();
@@ -436,22 +419,10 @@ namespace LevelEditor
             }
         }
 
-        //private bool shiftPressed = false;
-        private void levelPage_KeyDown(object sender, KeyEventArgs e)
-        {
-            //shiftPressed = e.Shift;
-        }
-
-        private void levelPage_KeyUp(object sender, KeyEventArgs e)
-        {
-            //shiftPressed = e.Shift;
-        }
-
         private void levelPage_Scroll(object sender, ScrollEventArgs e)
         {
             levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y); ;
             
         }
-
     }
 }
