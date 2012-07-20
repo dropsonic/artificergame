@@ -48,8 +48,17 @@ namespace LevelEditor
                 if (value == false)
                     ResetLevelTo(_initialLevel);
                 _simulate = value;
+                OnSimulateChanged();
             }
         }
+
+        public event EventHandler SimulateChanged;
+        protected void OnSimulateChanged()
+        {
+            if (SimulateChanged != null)
+                SimulateChanged(this, EventArgs.Empty);
+        }
+
         public Vector2 CurrentObjectPosition { get; set; }
         public bool DrawCurrentGameObject { get; set; }
 
@@ -114,7 +123,21 @@ namespace LevelEditor
         protected override void UpdateFrame()
         {
             if (_simulate)
-                _simulatedLevel.Update(_simulationSpeed == NormalSimulationSpeed ? GameTime : new GameTime(GameTime.TotalGameTime, TimeSpan.FromMilliseconds(GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed)));
+            {
+                if (_simulationSpeed == NormalSimulationSpeed)
+                    _simulatedLevel.Update(GameTime);
+                else
+                {
+                    //Корректируем GameTime с учётом скорости симуляции
+                    TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
+                    GameTime correctedGameTime = new GameTime(GameTime.TotalGameTime, elapsed);
+                    //Если скорость симуляции была отрицательна, то "отматывать время назад" можно не дальше точки старта симуляции
+                    //if (correctedGameTime.TotalGameTime <= TimeSpan.Zero)
+                    //    Simulate = false;
+                    
+                    _simulatedLevel.Update(correctedGameTime);
+                }
+            }
         }
 
         protected override void Draw()

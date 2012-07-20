@@ -45,7 +45,9 @@ namespace LevelEditor
             this.simulationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationSpeedHalfMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationSpeedNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedDoubleNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedDoubleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedIncreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
@@ -274,14 +276,16 @@ namespace LevelEditor
             this.simulateMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.simulateMenuItem.Size = new System.Drawing.Size(166, 22);
             this.simulateMenuItem.Text = "Simulate";
-            this.simulateMenuItem.Click += new System.EventHandler(this.simulateState_Changed);
+            this.simulateMenuItem.Click += new System.EventHandler(this.simulateMenuItem_Click);
             // 
             // simulationSpeedToolStripMenuItem
             // 
             this.simulationSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.simulationSpeedHalfMenuItem,
             this.simulationSpeedNormalMenuItem,
-            this.simulationSpeedDoubleNormalMenuItem});
+            this.simulationSpeedDoubleMenuItem,
+            this.simulationSpeedIncreaseMenuItem,
+            this.simulationSpeedDecreaseMenuItem});
             this.simulationSpeedToolStripMenuItem.Name = "simulationSpeedToolStripMenuItem";
             this.simulationSpeedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.simulationSpeedToolStripMenuItem.Text = "Simulation Speed";
@@ -290,7 +294,7 @@ namespace LevelEditor
             // 
             this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
             this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedHalfMenuItem.Text = "0.50x";
             this.simulationSpeedHalfMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
@@ -300,17 +304,33 @@ namespace LevelEditor
             this.simulationSpeedNormalMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.simulationSpeedNormalMenuItem.Name = "simulationSpeedNormalMenuItem";
             this.simulationSpeedNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedNormalMenuItem.Text = "1.00x";
             this.simulationSpeedNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
-            // simulationSpeedDoubleNormalMenuItem
+            // simulationSpeedDoubleMenuItem
             // 
-            this.simulationSpeedDoubleNormalMenuItem.Name = "simulationSpeedDoubleNormalMenuItem";
-            this.simulationSpeedDoubleNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.simulationSpeedDoubleNormalMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.simulationSpeedDoubleNormalMenuItem.Text = "2.00x";
-            this.simulationSpeedDoubleNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            this.simulationSpeedDoubleMenuItem.Name = "simulationSpeedDoubleMenuItem";
+            this.simulationSpeedDoubleMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.simulationSpeedDoubleMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedDoubleMenuItem.Text = "2.00x";
+            this.simulationSpeedDoubleMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedIncreaseMenuItem
+            // 
+            this.simulationSpeedIncreaseMenuItem.Name = "simulationSpeedIncreaseMenuItem";
+            this.simulationSpeedIncreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
+            this.simulationSpeedIncreaseMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedIncreaseMenuItem.Text = "Increase by 0.25";
+            this.simulationSpeedIncreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedDecreaseMenuItem
+            // 
+            this.simulationSpeedDecreaseMenuItem.Name = "simulationSpeedDecreaseMenuItem";
+            this.simulationSpeedDecreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
+            this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedDecreaseMenuItem.Text = "Decrease by 0.25";
+            this.simulationSpeedDecreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // tableLayoutPanel
             // 
@@ -1607,9 +1627,11 @@ namespace LevelEditor
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.Name = "levelScreen";
             this.levelScreen.Simulate = false;
+            this.levelScreen.SimulationSpeed = 0F;
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
+            this.levelScreen.SimulateChanged += new System.EventHandler(this.levelScreen_SimulateChanged);
             this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
             this.levelScreen.MouseEnter += new System.EventHandler(this.levelScreen_MouseEnter);
             this.levelScreen.MouseLeave += new System.EventHandler(this.levelScreen_MouseLeave);
@@ -1635,6 +1657,7 @@ namespace LevelEditor
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.Name = "objectScreen";
             this.objectScreen.Simulate = false;
+            this.objectScreen.SimulationSpeed = 0F;
             this.objectScreen.Size = new System.Drawing.Size(829, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
@@ -1878,8 +1901,10 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedHalfMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedNormalMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem simulationSpeedDoubleNormalMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedDoubleMenuItem;
         private PreviewScreen previewScreen;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedIncreaseMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simulationSpeedDecreaseMenuItem;
     }
 }
 
