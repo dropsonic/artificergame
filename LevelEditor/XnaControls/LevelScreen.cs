@@ -75,7 +75,7 @@ namespace LevelEditor
             set
             {
                 _mouseState = value;
-                if (value!=null)
+                if (value != null)
                     _mousePosition = new Vector2(value.X, value.Y);
             }
         }

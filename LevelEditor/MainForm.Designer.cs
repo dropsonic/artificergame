@@ -1619,7 +1619,10 @@ namespace LevelEditor
             // 
             this.levelPage.AutoScroll = true;
             this.levelPage.Controls.Add(this.levelScreen);
+            this.levelPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.levelPage_KeyDown);
+            this.levelPage.KeyUp += new System.Windows.Forms.KeyEventHandler(this.levelPage_KeyDown);
             this.levelPage.Location = new System.Drawing.Point(4, 22);
+            this.levelPage.MouseWheel += new System.Windows.Forms.MouseEventHandler(levelPage_MouseWheel);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
             this.levelPage.Size = new System.Drawing.Size(835, 783);
@@ -1806,7 +1809,6 @@ namespace LevelEditor
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip;
