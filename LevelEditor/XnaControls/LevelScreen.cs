@@ -7,6 +7,8 @@ using FarseerPhysics.Collision.Shapes;
 using FarseerTools;
 using GameLogic;
 using System;
+using System.Windows.Forms;
+using FarseerPhysics.Dynamics.Joints;
 
 
 namespace LevelEditor
@@ -20,7 +22,10 @@ namespace LevelEditor
         GameLevel _initialLevel;
   
         Camera _camera;
-        TimeSpan _worldTime = new TimeSpan();
+        TimeSpan _worldTime = TimeSpan.Zero;
+
+        FixedMouseJoint _mouseJoint;
+
         private GameObject _currentGameObject;
         public GameObject CurrentGameObject
         {
@@ -57,7 +62,22 @@ namespace LevelEditor
                 SimulateChanged(this, EventArgs.Empty);
         }
 
-        public Vector2 CurrentObjectPosition { get; set; }
+        public MouseEventArgs MouseState 
+        {
+            get
+            {
+                return _mouseState;
+            }
+            set
+            {
+                _mouseState = value;
+                if (value!=null)
+                    _mousePosition = new Vector2(value.X, value.Y);
+            }
+        }
+        private MouseEventArgs _mouseState;
+        private Vector2 _mousePosition;
+
         public bool DrawCurrentGameObject { get; set; }
 
         public const float NormalSimulationSpeed = 1.0f;
@@ -80,8 +100,7 @@ namespace LevelEditor
             _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(10, 10));
 
             _simulationSpeed = NormalSimulationSpeed;
-
-            CurrentObjectPosition = Vector2.Zero;
+            _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
             Simulate = false;
         }
@@ -96,9 +115,9 @@ namespace LevelEditor
 
         public void AddCurrentObject()
         {
-            _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+            _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
             if (Simulate == false)
-                _initialLevel.AddObject(_currentGameObject.CopyObjectToWorld(_initialLevel.World, ConvertUnits.ToSimUnits(CurrentObjectPosition)));
+                _initialLevel.AddObject(_currentGameObject.CopyObjectToWorld(_initialLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
         }
 
         void ResetLevelTo(GameLevel levelState)
@@ -131,6 +150,7 @@ namespace LevelEditor
         {
             if (_simulate)
             {
+                UpdateMouseJoint();
                 if (_worldTime == TimeSpan.Zero && _simulationSpeed < 0)
                     throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
                 TimeSpan elapsed = TimeSpan.FromMilliseconds(GameTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
@@ -147,16 +167,48 @@ namespace LevelEditor
             }
         }
 
+        public void CreateMouseJoint()
+        {
+            if (_mouseJoint == null)
+            {
+                Fixture savedFixture = _simulatedLevel.World.TestPoint(ConvertUnits.ToSimUnits(_mousePosition));
+                if (savedFixture != null)
+                {
+                    Body body = savedFixture.Body;
+                    _mouseJoint = new FixedMouseJoint(body, ConvertUnits.ToSimUnits(_mousePosition));
+                    _mouseJoint.MaxForce = 1000.0f * body.Mass;
+                    _simulatedLevel.World.AddJoint(_mouseJoint);
+                    body.Awake = true;
+                }
+            }
+        }
+        public void RemoveMouseJoint()
+        {
+            if (_mouseJoint != null)
+            {
+                _simulatedLevel.World.RemoveJoint(_mouseJoint);
+                _mouseJoint = null;
+            }
+        }
+        public void UpdateMouseJoint()
+        {
+            if (_mouseJoint != null)
+            {
+                _mouseJoint.WorldAnchorB = ConvertUnits.ToSimUnits(_mousePosition);
+            }
+        }
+
         protected override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             if (_currentGameObject != null && DrawCurrentGameObject)
             {
-                _currentGameObject.Camera.Position = -CurrentObjectPosition;
+                _currentGameObject.Camera.Position = -_mousePosition;
                 _currentGameObject.Draw(GameTimer.GameTime);
                 _currentGameObject.Camera.Position = Vector2.Zero;
             }
             _simulatedLevel.Draw(GameTimer.GameTime);
+
         }
     }
 }

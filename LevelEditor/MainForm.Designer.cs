@@ -1621,20 +1621,23 @@ namespace LevelEditor
             // 
             // levelScreen
             // 
-            this.levelScreen.CurrentObjectPosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.DrawCurrentGameObject = false;
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
+            this.levelScreen.MouseState = null;
             this.levelScreen.Name = "levelScreen";
+            this.levelScreen.Simulate = false;
             this.levelScreen.SimulationSpeed = 0F;
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
             this.levelScreen.SimulateChanged += new System.EventHandler(this.levelScreen_SimulateChanged);
             this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
+            this.levelScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseDown);
             this.levelScreen.MouseEnter += new System.EventHandler(this.levelScreen_MouseEnter);
             this.levelScreen.MouseLeave += new System.EventHandler(this.levelScreen_MouseLeave);
             this.levelScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseMove);
+            this.levelScreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseUp);
             // 
             // objectTab
             // 
@@ -1649,11 +1652,11 @@ namespace LevelEditor
             // 
             // objectScreen
             // 
-            this.objectScreen.CurrentObjectPosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawCurrentGameObject = false;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
+            this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
             this.objectScreen.Simulate = false;
             this.objectScreen.SimulationSpeed = 0F;

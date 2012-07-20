@@ -21,6 +21,7 @@ using GameLogic;
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
+    using Microsoft.Xna.Framework.Input;
 
     public partial class MainForm : Form
     {
@@ -261,7 +262,17 @@ namespace LevelEditor
 
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            levelScreen.CurrentObjectPosition = new Vector2(e.X, e.Y);
+            levelScreen.MouseState = e;
+        }
+
+        private void levelScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            levelScreen.CreateMouseJoint();
+        }
+
+        private void levelScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            levelScreen.RemoveMouseJoint();
         }
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
