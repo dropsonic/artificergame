@@ -13,15 +13,15 @@ using Microsoft.Xna.Framework.Graphics;
 namespace XMLImporterEx
 {
     [ContentImporter(".xml", DisplayName = "XML Content - Extended Importer")]
-    public class XMLImporterEx : ContentImporter<object>
+    public class XMLImporterEx : ContentImporter<XDocument>
     {
-        public override object Import(string filename, ContentImporterContext context)
+        public override XDocument Import(string filename, ContentImporterContext context)
         {
             using (Stream stream = File.OpenRead(filename))
             {
                 try
                 {
-                    return XMLSerializerEx.Deserialize(stream);
+                    return XDocument.Load(stream);
                 }
                 catch (Exception ex)
                 {
