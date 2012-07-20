@@ -255,6 +255,7 @@ namespace FarseerTools
                                         List<VertexPositionColorTexture[]> verticesFill,
                                         VertexPositionColor[] verticesOutline,float textureScale = 1)
         {
+            #region BlendState alternative
             /*RenderTarget2D outputTexture = new RenderTarget2D(_device, width+2, height+2, false, SurfaceFormat.Color,
                                                         DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
@@ -331,7 +332,7 @@ namespace FarseerTools
             }
             _device.SetRenderTarget(null);
              */
-
+            #endregion
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
                                                         DepthFormat.Depth24Stencil8, 8,
                                                         RenderTargetUsage.DiscardContents);
@@ -495,7 +496,6 @@ namespace FarseerTools
             uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
             shapeTexture.GetData(data);
             Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
-            //Возможно стоит все таки применять центройд.
             AABB vertsBounds = textureVertices.GetCollisionBox();
             Vector2 origin = vertsBounds.Center;
             textureVertices.Translate(-origin);
@@ -509,11 +509,9 @@ namespace FarseerTools
                                                        DepthFormat.None, 8,
                                                        RenderTargetUsage.DiscardContents);
             SpriteBatch batch = new SpriteBatch(_device);
-            _device.RasterizerState = RasterizerState.CullNone;
-            _device.SamplerStates[0] = SamplerState.AnisotropicWrap;
             _device.SetRenderTarget(renderTarget);
             _device.Clear(Color.Transparent);
-            batch.Begin(0, null, null, null, null, null, Matrix.CreateTranslation(-0.5f, -0.5f, 0f));
+            batch.Begin(SpriteSortMode.Immediate,null,SamplerState.LinearClamp,null,RasterizerState.CullNone);
             batch.Draw(shapeTexture, new Vector2(renderTarget.Width / 2, renderTarget.Height / 2), null, color, 0, origin, scale, SpriteEffects.None, 0f);
             batch.End();
             _device.SetRenderTarget(null);

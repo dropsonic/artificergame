@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameLogic;
-
+using FarseerPhysics;
 
 namespace LevelEditor
 {
@@ -50,9 +50,30 @@ namespace LevelEditor
             Body body = new Body(currentObject.World);
             currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
             propertyGrid.SelectedObject = currentObject[0].Body;
-
+            
+            PopulateDebugViewMenu();
             InitializeStatusStrip();
             ShowReadyStatus();
+        }
+
+        private void PopulateDebugViewMenu()
+        {
+            int i = 0;
+            foreach (DebugViewFlags flag in Enum.GetValues(typeof(DebugViewFlags)))
+            {
+                i++;
+                System.Windows.Forms.ToolStripMenuItem currentMenuItem = new System.Windows.Forms.ToolStripMenuItem
+                {
+                    Name = "debugView" + flag.ToString() + "MenuItem",
+                    Size = new System.Drawing.Size(166, 22),
+                    Text = flag.ToString(),
+                    ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | (System.Windows.Forms.Keys)Enum.Parse(typeof(System.Windows.Forms.Keys), "F" + i.ToString())))),
+                    CheckOnClick = true,
+                    Checked = false
+                };
+                currentMenuItem.Click += new EventHandler(DebugViewClick);
+                debugToolStripMenuItem.DropDownItems.Add(currentMenuItem);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -370,6 +391,11 @@ namespace LevelEditor
                 simulateMenuItem.Text = "Simulate";
                 ShowReadyStatus();
             }
+        }
+
+        private void DebugViewClick(object sender, EventArgs e)
+        {
+            levelScreen.EnableOrDisableFlag((DebugViewFlags)Enum.Parse(typeof(DebugViewFlags),((System.Windows.Forms.ToolStripMenuItem)sender).Text));
         }
     }
 }

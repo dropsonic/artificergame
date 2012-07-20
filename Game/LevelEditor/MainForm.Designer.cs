@@ -138,6 +138,7 @@ namespace LevelEditor
             this.statusToolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.paramsTabControl.SuspendLayout();
@@ -197,7 +198,8 @@ namespace LevelEditor
             this.fileToolStripMenuItem,
             this.levelToolStripMenuItem,
             this.resoursesToolStripMenuItem,
-            this.simulationToolStripMenuItem});
+            this.simulationToolStripMenuItem,
+            this.debugToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1444, 24);
@@ -1714,6 +1716,12 @@ namespace LevelEditor
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1907,6 +1915,7 @@ namespace LevelEditor
         private PreviewScreen previewScreen;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedIncreaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedDecreaseMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
     }
 }
 

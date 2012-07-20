@@ -128,7 +128,7 @@ namespace LevelEditor
             _debugView.LoadContent(GraphicsDevice, Content);
         }
 
-        private void EnableOrDisableFlag(DebugViewFlags flag)
+        public void EnableOrDisableFlag(DebugViewFlags flag)
         {
             if ((_debugView.Flags & flag) == flag)
             {
