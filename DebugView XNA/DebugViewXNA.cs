@@ -826,10 +826,12 @@ namespace FarseerPhysics.DebugViews
             RenderDebugData(ref projection, ref view);
         }
 
-        public void LoadContent(GraphicsDevice device, ContentManager content)
+        public void LoadContent(GraphicsDevice device, Viewport viewport,ContentManager content)
         {
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             _device = device;
+            _device.Viewport = viewport;
             _batch = new SpriteBatch(_device);
             _primitiveBatch = new PrimitiveBatch(_device, 1000);
             _font = content.Load<SpriteFont>("font");
@@ -838,6 +840,11 @@ namespace FarseerPhysics.DebugViews
             _localProjection = Matrix.CreateOrthographicOffCenter(0f, _device.Viewport.Width, _device.Viewport.Height,
                                                                   0f, 0f, 1f);
             _localView = Matrix.Identity;
+        }
+
+        public void LoadContent(GraphicsDevice device, ContentManager content)
+        {
+            LoadContent(device, device.Viewport, content);
         }
 
         #region Nested type: ContactPoint
