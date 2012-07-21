@@ -419,10 +419,19 @@ namespace LevelEditor
             }
         }
 
+        private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
+        {
+            levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
+        }
+
         private void levelPage_Scroll(object sender, ScrollEventArgs e)
         {
-            levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y); ;
-            
+            UpdateLevelScreenUpperLeftLocalPoint(sender);
+        }
+
+        private void levelPage_MouseWheel(object sender, MouseEventArgs e)
+        {
+            UpdateLevelScreenUpperLeftLocalPoint(sender);
         }
     }
 }
