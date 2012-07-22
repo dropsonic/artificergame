@@ -111,6 +111,10 @@
     <None Include="Resources\simulationStatusImage.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Crad.Windows.Forms.Actions\Crad.Windows.Forms.Actions.csproj">
+      <Project>{6E50D1BD-D8EA-4992-8B25-C5A0D7E179A5}</Project>
+      <Name>Crad.Windows.Forms.Actions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DebugView XNA\DebugView XNA.csproj">
       <Project>{FC7845FA-13FE-4FF8-822A-A577F3F59B00}</Project>
       <Name>DebugView XNA</Name>
