@@ -136,7 +136,7 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.LevelScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.statusToolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip.SuspendLayout();
@@ -187,8 +187,8 @@ namespace LevelEditor
             this.viewTabControl.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
-            this.statusToolStripContainer1.BottomToolStripPanel.SuspendLayout();
-            this.statusToolStripContainer1.SuspendLayout();
+            this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
+            this.toolStripContainer.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1619,10 +1619,7 @@ namespace LevelEditor
             // 
             this.levelPage.AutoScroll = true;
             this.levelPage.Controls.Add(this.levelScreen);
-            //this.levelPage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.levelPage_KeyDown);
-            //this.levelPage.KeyUp += new System.Windows.Forms.KeyEventHandler(this.levelPage_KeyDown);
             this.levelPage.Location = new System.Drawing.Point(4, 22);
-            this.levelPage.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.levelPage_MouseWheel);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
             this.levelPage.Size = new System.Drawing.Size(835, 783);
@@ -1630,6 +1627,7 @@ namespace LevelEditor
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
             this.levelPage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.levelPage_Scroll);
+            this.levelPage.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.levelPage_MouseWheel);
             // 
             // levelScreen
             // 
@@ -1643,6 +1641,7 @@ namespace LevelEditor
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
+            this.levelScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.SimulateChanged += new System.EventHandler(this.levelScreen_SimulateChanged);
             this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
             this.levelScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseDown);
@@ -1675,6 +1674,7 @@ namespace LevelEditor
             this.objectScreen.Size = new System.Drawing.Size(829, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
+            this.objectScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             // 
             // propertyGrid
             // 
@@ -1685,25 +1685,25 @@ namespace LevelEditor
             this.propertyGrid.TabIndex = 0;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
-            // statusToolStripContainer1
+            // toolStripContainer
             // 
             // 
-            // statusToolStripContainer1.BottomToolStripPanel
+            // toolStripContainer.BottomToolStripPanel
             // 
-            this.statusToolStripContainer1.BottomToolStripPanel.Controls.Add(this.statusStrip);
+            this.toolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip);
             // 
-            // statusToolStripContainer1.ContentPanel
+            // toolStripContainer.ContentPanel
             // 
-            this.statusToolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1444, 0);
-            this.statusToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.statusToolStripContainer1.LeftToolStripPanelVisible = false;
-            this.statusToolStripContainer1.Location = new System.Drawing.Point(0, 839);
-            this.statusToolStripContainer1.Name = "statusToolStripContainer1";
-            this.statusToolStripContainer1.RightToolStripPanelVisible = false;
-            this.statusToolStripContainer1.Size = new System.Drawing.Size(1444, 22);
-            this.statusToolStripContainer1.TabIndex = 7;
-            this.statusToolStripContainer1.Text = "toolStripContainer1";
-            this.statusToolStripContainer1.TopToolStripPanelVisible = false;
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 0);
+            this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStripContainer.LeftToolStripPanelVisible = false;
+            this.toolStripContainer.Location = new System.Drawing.Point(0, 839);
+            this.toolStripContainer.Name = "toolStripContainer";
+            this.toolStripContainer.RightToolStripPanelVisible = false;
+            this.toolStripContainer.Size = new System.Drawing.Size(1444, 22);
+            this.toolStripContainer.TabIndex = 7;
+            this.toolStripContainer.Text = "toolStripContainer1";
+            this.toolStripContainer.TopToolStripPanelVisible = false;
             // 
             // statusStrip
             // 
@@ -1734,7 +1734,7 @@ namespace LevelEditor
             this.ClientSize = new System.Drawing.Size(1444, 861);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.menuStrip);
-            this.Controls.Add(this.statusToolStripContainer1);
+            this.Controls.Add(this.toolStripContainer);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "LevelEditor";
@@ -1799,10 +1799,10 @@ namespace LevelEditor
             this.viewTabControl.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
-            this.statusToolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
-            this.statusToolStripContainer1.BottomToolStripPanel.PerformLayout();
-            this.statusToolStripContainer1.ResumeLayout(false);
-            this.statusToolStripContainer1.PerformLayout();
+            this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer.BottomToolStripPanel.PerformLayout();
+            this.toolStripContainer.ResumeLayout(false);
+            this.toolStripContainer.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -1906,7 +1906,7 @@ namespace LevelEditor
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox shapeFromTextureBox;
         private System.Windows.Forms.CheckBox placeObjectCheck;
-        private System.Windows.Forms.ToolStripContainer statusToolStripContainer1;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem simulationToolStripMenuItem;
