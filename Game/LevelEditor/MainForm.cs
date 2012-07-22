@@ -347,7 +347,7 @@ namespace LevelEditor
 
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
-            if (levelScreen.SimulationSpeed <= 0)
+            if (!levelScreen.Simulate && levelScreen.SimulationSpeed <= 0)
             {
                 simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
                 ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
