@@ -9,6 +9,7 @@ using FarseerPhysics.Common;
 using System.IO;
 using System.Collections.Generic;
 using GameLogic;
+using System.ComponentModel;
 
 namespace LevelEditor
 {
@@ -19,6 +20,7 @@ namespace LevelEditor
         string message = "Select Preview";
 
         private GameObjectPart previewGameObject;
+        [Browsable(false)]
         public GameObjectPart PreviewGameObject 
         {
             set

@@ -23,6 +23,7 @@ namespace LevelEditor
     using Color = System.Drawing.Color;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Content;
+using System.ComponentModel;
 
 
     public class StopwatchGameTimer
@@ -85,33 +86,39 @@ using Microsoft.Xna.Framework.Content;
         GraphicsDeviceService _graphicsDeviceService;
         ContentService _contentService;
         StopwatchGameTimer _gameTimer = new StopwatchGameTimer();
-        public StopwatchGameTimer GameTimer 
+        
+        protected Timer _frameTimer = new Timer();
+        
+        //around 60fps
+        private int _fps = 100;
+        #endregion
+
+        #region Properties
+        [Browsable(false)]
+        public StopwatchGameTimer GameTimer
         {
             get
             {
                 return _gameTimer;
             }
         }
-        protected Timer _frameTimer = new Timer();
+
+        [Browsable(false)]
         public Timer FrameTimer
-        { 
-            get { return _frameTimer; } 
+        {
+            get { return _frameTimer; }
         }
-        //around 60fps
-        private int _fps = 100;
-        #endregion
-
-        #region Properties
-
 
         /// <summary>
         /// Gets a GraphicsDevice that can be used to draw onto this control.
         /// </summary>
+        [Browsable(false)]
         public GraphicsDevice GraphicsDevice
         {
             get { return _graphicsDeviceService.GraphicsDevice; }
         }
 
+        [Browsable(false)]
         public ContentManager Content
         {
             get { return _contentService.Content; }
