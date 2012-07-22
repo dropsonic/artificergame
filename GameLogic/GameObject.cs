@@ -66,6 +66,14 @@ namespace GameLogic
                 _sorted = false;
             }
         }
+
+        /// <summary>
+        /// Количество объектов GameObjectPart, содержащихся в данном GameObject.
+        /// </summary>
+        public int PartsCount
+        {
+            get { return _parts.Count; }
+        }
         #endregion
 
         #region IEnumerable
@@ -98,7 +106,7 @@ namespace GameLogic
             //Копируем joint'ы между частями
             foreach (var joint in _joints)
             {
-                Joint newJoint = joint.Clone();
+                Joint newJoint = joint.Copy();
                 result.AddJoint(newJoint);
                 world.AddJoint(newJoint);
             }
