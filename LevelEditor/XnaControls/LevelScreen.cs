@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.DebugViews;
 using FarseerPhysics;
+using System.ComponentModel;
 
 
 namespace LevelEditor
@@ -31,6 +32,7 @@ namespace LevelEditor
 
         public string message = "";
         private GameObject _currentGameObject;
+        [Browsable(false)]
         public GameObject CurrentGameObject
         {
             set
