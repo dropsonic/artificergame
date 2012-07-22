@@ -8,10 +8,11 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Joints;
 using System.Reflection;
 using FarseerTools;
+using System.Collections;
 
 namespace GameLogic
 {
-    public class GameObject : IDrawable
+    public class GameObject : IDrawable, IEnumerable<GameObjectPart>
     {
         #region Общие поля и свойства
         //Список частей объекта
@@ -65,6 +66,11 @@ namespace GameLogic
                 _sorted = false;
             }
         }
+        #endregion
+
+        #region IEnumerable
+        public IEnumerator<GameObjectPart> GetEnumerator() { return _parts.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
         #endregion
 
         #region Шаблонизация объекта

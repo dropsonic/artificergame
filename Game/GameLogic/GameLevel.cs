@@ -39,8 +39,6 @@ namespace GameLogic
             set { _spriteBatch = value; }
         }
 
-        public IEnumerator<GameObject> GetEnumerator() { return _objects.GetEnumerator(); }
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
         public GameObject this[int index]
         {
             get { return _objects[index]; }
@@ -50,6 +48,11 @@ namespace GameLogic
                 _sorted = false;
             }
         }
+
+        #region IEnumerable
+        public IEnumerator<GameObject> GetEnumerator() { return _objects.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        #endregion
 
         public GameLevel(Camera camera, SpriteBatch spriteBatch)
         {
