@@ -83,7 +83,8 @@ namespace LevelEditor
         private Vector2 _mousePosition;
 
         private Vector2 _upperLeftLocalPoint;
-        public Vector2 UpperLeftLocalPoint {
+        public Vector2 UpperLeftLocalPoint 
+        {
             get
             {
                 return _upperLeftLocalPoint;
@@ -92,9 +93,11 @@ namespace LevelEditor
             set
             {
                 _upperLeftLocalPoint = value;
-                _debugView.TranslateDebugPerfomancePair(value);
+                if (_debugView != null) //если null, то это дизайнер пытается присвоить значение при создании формы
+                    _debugView.TranslateDebugPerfomancePair(value);
             }
         }
+
         public bool DrawCurrentGameObject { get; set; }
 
         public const float NormalSimulationSpeed = 1.0f;
@@ -120,8 +123,9 @@ namespace LevelEditor
             _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
             
-            Simulate = false;
+            _simulate = false;
             SetDebugView();
+            _debugView.TranslateDebugPerfomancePair(_upperLeftLocalPoint);
         }
 
         void LevelScreen_SimulateChanged(object obj, EventArgs e)
@@ -142,7 +146,6 @@ namespace LevelEditor
             _debugView.SleepingShapeColor = Color.LightGray;
             _debugView.LoadContent(GraphicsDevice, new Viewport(0,0,this.Size.Width,this.Size.Height),Content);
             _debugView.Flags = flags;
-
         }
 
         public void SwitchDebugViewFlag(DebugViewFlags flag)
