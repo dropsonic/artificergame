@@ -62,11 +62,6 @@ namespace LevelEditor
         }
 
         public event EventHandler SimulateChanged;
-        protected void OnSimulateChanged()
-        {
-            if (SimulateChanged != null)
-                SimulateChanged(this, EventArgs.Empty);
-        }
 
         public MouseEventArgs MouseState 
         {
@@ -116,7 +111,6 @@ namespace LevelEditor
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _font = Content.Load<SpriteFont>("Fonts/Segoe14");
 
-            SimulateChanged+=new EventHandler(LevelScreen_SimulateChanged);
             _camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
             _simulatedLevel = new GameLevel(_camera, _spriteBatch, new Vector2(10, 10));
             _initialLevel = new GameLevel(_camera, _spriteBatch,new Vector2(10, 10));
@@ -128,15 +122,6 @@ namespace LevelEditor
             _simulate = false;
             SetDebugView();
             _debugView.TranslateDebugPerfomancePair(_upperLeftLocalPoint);
-        }
-
-        void LevelScreen_SimulateChanged(object obj, EventArgs e)
-        {
-            if(_simulate == false)
-                ResetLevelTo(_initialLevel);
-            GameTimer.Enabled = _simulate;
-            _worldTime = TimeSpan.Zero;
-            SetDebugView();
         }
 
         void SetDebugView()
@@ -161,6 +146,8 @@ namespace LevelEditor
                 _debugView.AppendFlags(flag);
             }
         }
+
+
         public bool DebugViewHasFlag(DebugViewFlags flag)
         {
             if ((_debugView.Flags & flag) == flag)
@@ -168,6 +155,19 @@ namespace LevelEditor
             else
                 return false;
         }
+
+        protected void OnSimulateChanged()
+        {
+            if (_simulate == false)
+                ResetLevelTo(_initialLevel);
+
+            GameTimer.Enabled = _simulate;
+            _worldTime = TimeSpan.Zero;
+
+            if (SimulateChanged != null)
+                SimulateChanged(this, EventArgs.Empty);
+        }
+
         public void AddCurrentObject()
         {
             _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
@@ -183,7 +183,6 @@ namespace LevelEditor
             {
                 _simulatedLevel.AddObject(gameObject.CopyObjectToWorld(_simulatedLevel.World,Vector2.Zero));
             }
-
         }
         protected override void LoadContent()
         {
