@@ -12,6 +12,8 @@ namespace GameLogic
 {
     public class GameLevel : IDrawable, IUpdateable, IEnumerable<GameObject>
     {
+        private static readonly Vector2 defaultGravity = new Vector2(0f, 9.81f);
+
         private World _world;
         private Camera _camera;
         private SpriteBatch _spriteBatch;
@@ -61,7 +63,7 @@ namespace GameLogic
 
             _joints = new List<Joint>();
 
-            _world = new World(new Vector2(0, 9.81f));
+            _world = new World(defaultGravity);
             _camera = camera;
             _spriteBatch = spriteBatch;
 
@@ -99,6 +101,44 @@ namespace GameLogic
         {
             _objects.Sort((x, y) => Comparer<int>.Default.Compare(x.DrawOrder, y.DrawOrder));
             _sorted = true;
+        }
+
+        /// <summary>
+        /// Создаёт полную копию GameLevel.
+        /// </summary>
+        /// <returns></returns>
+        public GameLevel DeepCopy()
+        {
+            //Создаём новый GameLevel
+            GameLevel result = new GameLevel(_camera, _spriteBatch, _world.Gravity);
+
+            //Копируем все joint'ы
+            foreach (Joint joint in _joints)
+            {
+                Joint newJoint = joint.Copy();
+                result.AddJoint(newJoint);
+                result._world.AddJoint(newJoint);
+            }
+
+            //Копируем в него все объекты
+            foreach (GameObject gameObject in _objects)
+            {
+                GameObject newGameObject = gameObject.CopyObjectToWorld(result._world, Vector2.Zero); //копируем объект
+                result.AddObject(newGameObject); //добавляем его в новый GameLevel
+                for (int i = 0; i < newGameObject.PartsCount; i++)
+                {
+                    //Меняем ссылки на Body в joint'ах на новые
+                    for (int j = 0; j < _joints.Count; j++)
+                    {
+                        if (_joints[j].BodyA == gameObject[i].Body)
+                            result._joints[j].BodyA = newGameObject[i].Body;
+                        if (_joints[j].BodyB == gameObject[i].Body)
+                            result._joints[j].BodyB = newGameObject[i].Body;
+                    }
+                }
+            }
+
+            return result;
         }
 
         #region IDrawable

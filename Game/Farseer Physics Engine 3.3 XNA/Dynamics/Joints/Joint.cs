@@ -117,7 +117,7 @@ namespace FarseerPhysics.Dynamics.Joints
         /// </summary>
         public JointEdge Prev;
 
-        public JointEdge Clone()
+        public JointEdge Copy()
         {
             JointEdge result = new JointEdge();
             result.Joint = this.Joint;
@@ -289,15 +289,15 @@ namespace FarseerPhysics.Dynamics.Joints
         /// <returns>returns true if the position errors are within tolerance.</returns>
         internal abstract bool SolvePositionConstraints();
 
-        public virtual Joint Clone()
+        public Joint Copy()
         {
             Joint result = (Joint)this.MemberwiseClone();
 
-            JointEdge resultEdgeA = EdgeA.Clone();
+            JointEdge resultEdgeA = EdgeA.Copy();
             resultEdgeA.Joint = result;
             result.EdgeA = resultEdgeA;
 
-            JointEdge resultEdgeB = EdgeB.Clone();
+            JointEdge resultEdgeB = EdgeB.Copy();
             resultEdgeB.Joint = result;
             result.EdgeB = resultEdgeB;
 

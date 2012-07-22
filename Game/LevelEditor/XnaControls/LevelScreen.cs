@@ -180,13 +180,9 @@ namespace LevelEditor
             if (levelState == null) 
                 return;
 
-            _simulatedLevel = new GameLevel(_camera, _spriteBatch, levelState.World.Gravity);
-            
-            foreach (GameObject gameObject in levelState)
-            {
-                _simulatedLevel.AddObject(gameObject.CopyObjectToWorld(_simulatedLevel.World,Vector2.Zero));
-            }
+            _simulatedLevel = _initialLevel.DeepCopy();
         }
+
         protected override void LoadContent()
         {
             
