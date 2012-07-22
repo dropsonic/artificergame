@@ -31,31 +31,14 @@ namespace LevelEditor
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedHalfMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedDoubleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedIncreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
-            this.previewScreen = new LevelEditor.PreviewScreen();
             this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
+            this.previewScreen = new PreviewScreen();
             this.circleTab = new System.Windows.Forms.TabPage();
             this.circleRadius = new System.Windows.Forms.NumericUpDownEx();
             this.label5 = new System.Windows.Forms.Label();
@@ -136,10 +119,26 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.LevelScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
-            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.menuStrip.SuspendLayout();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadShapeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedHalfMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedDoubleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedIncreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel.SuspendLayout();
             this.paramsTabControl.SuspendLayout();
             this.previewPage.SuspendLayout();
@@ -188,157 +187,11 @@ namespace LevelEditor
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
+            this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStrip
-            // 
-            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.levelToolStripMenuItem,
-            this.resoursesToolStripMenuItem,
-            this.simulationToolStripMenuItem,
-            this.debugToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1444, 24);
-            this.menuStrip.TabIndex = 4;
-            this.menuStrip.Text = "menuStrip";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // levelToolStripMenuItem
-            // 
-            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createLevelToolStripMenuItem,
-            this.loadLevelToolStripMenuItem,
-            this.clearLevelToolStripMenuItem});
-            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
-            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.levelToolStripMenuItem.Text = "Level";
-            // 
-            // createLevelToolStripMenuItem
-            // 
-            this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.createLevelToolStripMenuItem.Text = "Create Level";
-            // 
-            // loadLevelToolStripMenuItem
-            // 
-            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.loadLevelToolStripMenuItem.Text = "Load Level";
-            // 
-            // clearLevelToolStripMenuItem
-            // 
-            this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
-            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.clearLevelToolStripMenuItem.Text = "Clear Level";
-            // 
-            // resoursesToolStripMenuItem
-            // 
-            this.resoursesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadMaterialToolStripMenuItem,
-            this.loadShapeToolStripMenuItem});
-            this.resoursesToolStripMenuItem.Name = "resoursesToolStripMenuItem";
-            this.resoursesToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.resoursesToolStripMenuItem.Text = "Resources";
-            // 
-            // loadMaterialToolStripMenuItem
-            // 
-            this.loadMaterialToolStripMenuItem.Name = "loadMaterialToolStripMenuItem";
-            this.loadMaterialToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.loadMaterialToolStripMenuItem.Text = "Load Material";
-            this.loadMaterialToolStripMenuItem.Click += new System.EventHandler(this.loadMaterialToolStripMenuItem_Click);
-            // 
-            // loadShapeToolStripMenuItem
-            // 
-            this.loadShapeToolStripMenuItem.Name = "loadShapeToolStripMenuItem";
-            this.loadShapeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.loadShapeToolStripMenuItem.Text = "Load Shape";
-            this.loadShapeToolStripMenuItem.Click += new System.EventHandler(this.loadShapeToolStripMenuItem_Click);
-            // 
-            // simulationToolStripMenuItem
-            // 
-            this.simulationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.simulateMenuItem,
-            this.simulationSpeedToolStripMenuItem});
-            this.simulationToolStripMenuItem.Name = "simulationToolStripMenuItem";
-            this.simulationToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-            this.simulationToolStripMenuItem.Text = "Simulation";
-            // 
-            // simulateMenuItem
-            // 
-            this.simulateMenuItem.Name = "simulateMenuItem";
-            this.simulateMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.simulateMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.simulateMenuItem.Text = "Simulate";
-            this.simulateMenuItem.Click += new System.EventHandler(this.simulateMenuItem_Click);
-            // 
-            // simulationSpeedToolStripMenuItem
-            // 
-            this.simulationSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.simulationSpeedHalfMenuItem,
-            this.simulationSpeedNormalMenuItem,
-            this.simulationSpeedDoubleMenuItem,
-            this.simulationSpeedIncreaseMenuItem,
-            this.simulationSpeedDecreaseMenuItem});
-            this.simulationSpeedToolStripMenuItem.Name = "simulationSpeedToolStripMenuItem";
-            this.simulationSpeedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.simulationSpeedToolStripMenuItem.Text = "Simulation Speed";
-            // 
-            // simulationSpeedHalfMenuItem
-            // 
-            this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
-            this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.simulationSpeedHalfMenuItem.Text = "0.50x";
-            this.simulationSpeedHalfMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
-            // 
-            // simulationSpeedNormalMenuItem
-            // 
-            this.simulationSpeedNormalMenuItem.Checked = true;
-            this.simulationSpeedNormalMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.simulationSpeedNormalMenuItem.Name = "simulationSpeedNormalMenuItem";
-            this.simulationSpeedNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.simulationSpeedNormalMenuItem.Text = "1.00x";
-            this.simulationSpeedNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
-            // 
-            // simulationSpeedDoubleMenuItem
-            // 
-            this.simulationSpeedDoubleMenuItem.Name = "simulationSpeedDoubleMenuItem";
-            this.simulationSpeedDoubleMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.simulationSpeedDoubleMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.simulationSpeedDoubleMenuItem.Text = "2.00x";
-            this.simulationSpeedDoubleMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
-            // 
-            // simulationSpeedIncreaseMenuItem
-            // 
-            this.simulationSpeedIncreaseMenuItem.Name = "simulationSpeedIncreaseMenuItem";
-            this.simulationSpeedIncreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
-            this.simulationSpeedIncreaseMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.simulationSpeedIncreaseMenuItem.Text = "Increase by 0.25";
-            this.simulationSpeedIncreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
-            // 
-            // simulationSpeedDecreaseMenuItem
-            // 
-            this.simulationSpeedDecreaseMenuItem.Name = "simulationSpeedDecreaseMenuItem";
-            this.simulationSpeedDecreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
-            this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.simulationSpeedDecreaseMenuItem.Text = "Decrease by 0.25";
-            this.simulationSpeedDecreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
             // 
             // tableLayoutPanel
             // 
@@ -348,11 +201,11 @@ namespace LevelEditor
             this.tableLayoutPanel.Controls.Add(this.paramsTabControl, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.splitContainer1, 1, 0);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 815);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 861);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // paramsTabControl
@@ -363,13 +216,12 @@ namespace LevelEditor
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
             this.paramsTabControl.SelectedIndex = 0;
-            this.paramsTabControl.Size = new System.Drawing.Size(314, 809);
+            this.paramsTabControl.Size = new System.Drawing.Size(314, 855);
             this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
             // 
             this.previewPage.AutoScroll = true;
-            this.previewPage.Controls.Add(this.previewScreen);
             this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
@@ -378,19 +230,10 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(306, 783);
+            this.previewPage.Size = new System.Drawing.Size(306, 829);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
-            // 
-            // previewScreen
-            // 
-            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.previewScreen.Location = new System.Drawing.Point(3, 3);
-            this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(300, 300);
-            this.previewScreen.TabIndex = 11;
-            this.previewScreen.Text = "previewScreen";
             // 
             // placeObjectCheck
             // 
@@ -1581,7 +1424,7 @@ namespace LevelEditor
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(306, 783);
+            this.tabPage2.Size = new System.Drawing.Size(306, 829);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1600,7 +1443,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1118, 809);
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 855);
             this.splitContainer1.SplitterDistance = 843;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1612,7 +1455,7 @@ namespace LevelEditor
             this.viewTabControl.Location = new System.Drawing.Point(0, 0);
             this.viewTabControl.Name = "viewTabControl";
             this.viewTabControl.SelectedIndex = 0;
-            this.viewTabControl.Size = new System.Drawing.Size(843, 809);
+            this.viewTabControl.Size = new System.Drawing.Size(843, 855);
             this.viewTabControl.TabIndex = 0;
             // 
             // levelPage
@@ -1622,7 +1465,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(835, 783);
+            this.levelPage.Size = new System.Drawing.Size(835, 829);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1656,7 +1499,7 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(835, 783);
+            this.objectTab.Size = new System.Drawing.Size(835, 829);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
@@ -1671,7 +1514,7 @@ namespace LevelEditor
             this.objectScreen.Name = "objectScreen";
             this.objectScreen.Simulate = false;
             this.objectScreen.SimulationSpeed = 0F;
-            this.objectScreen.Size = new System.Drawing.Size(829, 777);
+            this.objectScreen.Size = new System.Drawing.Size(829, 823);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             this.objectScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
@@ -1681,30 +1524,9 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(271, 809);
+            this.propertyGrid.Size = new System.Drawing.Size(271, 855);
             this.propertyGrid.TabIndex = 0;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
-            // 
-            // toolStripContainer
-            // 
-            // 
-            // toolStripContainer.BottomToolStripPanel
-            // 
-            this.toolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip);
-            // 
-            // toolStripContainer.ContentPanel
-            // 
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 0);
-            this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStripContainer.LeftToolStripPanelVisible = false;
-            this.toolStripContainer.Location = new System.Drawing.Point(0, 839);
-            this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.RightToolStripPanelVisible = false;
-            this.toolStripContainer.Size = new System.Drawing.Size(1444, 22);
-            this.toolStripContainer.TabIndex = 7;
-            this.toolStripContainer.Text = "toolStripContainer1";
-            this.toolStripContainer.TopToolStripPanelVisible = false;
-            // 
             // statusStrip
             // 
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -1726,21 +1548,188 @@ namespace LevelEditor
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.levelToolStripMenuItem,
+            this.resoursesToolStripMenuItem,
+            this.simulationToolStripMenuItem,
+            this.debugToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1444, 24);
+            this.menuStrip.TabIndex = 5;
+            this.menuStrip.Text = "menuStrip";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // levelToolStripMenuItem
+            // 
+            this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createLevelToolStripMenuItem,
+            this.loadLevelToolStripMenuItem,
+            this.clearLevelToolStripMenuItem});
+            this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
+            this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.levelToolStripMenuItem.Text = "Level";
+            // 
+            // createLevelToolStripMenuItem
+            // 
+            this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.createLevelToolStripMenuItem.Text = "Create Level";
+            // 
+            // loadLevelToolStripMenuItem
+            // 
+            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.loadLevelToolStripMenuItem.Text = "Load Level";
+            // 
+            // clearLevelToolStripMenuItem
+            // 
+            this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
+            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.clearLevelToolStripMenuItem.Text = "Clear Level";
+            // 
+            // resoursesToolStripMenuItem
+            // 
+            this.resoursesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadMaterialToolStripMenuItem,
+            this.loadShapeToolStripMenuItem});
+            this.resoursesToolStripMenuItem.Name = "resoursesToolStripMenuItem";
+            this.resoursesToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.resoursesToolStripMenuItem.Text = "Resources";
+            // 
+            // loadMaterialToolStripMenuItem
+            // 
+            this.loadMaterialToolStripMenuItem.Name = "loadMaterialToolStripMenuItem";
+            this.loadMaterialToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadMaterialToolStripMenuItem.Text = "Load Material";
+            this.loadMaterialToolStripMenuItem.Click += new System.EventHandler(this.loadMaterialToolStripMenuItem_Click);
+            // 
+            // loadShapeToolStripMenuItem
+            // 
+            this.loadShapeToolStripMenuItem.Name = "loadShapeToolStripMenuItem";
+            this.loadShapeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadShapeToolStripMenuItem.Text = "Load Shape";
+            this.loadShapeToolStripMenuItem.Click += new System.EventHandler(this.loadShapeToolStripMenuItem_Click);
+            // 
+            // simulationToolStripMenuItem
+            // 
+            this.simulationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simulateMenuItem,
+            this.simulationSpeedToolStripMenuItem});
+            this.simulationToolStripMenuItem.Name = "simulationToolStripMenuItem";
+            this.simulationToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.simulationToolStripMenuItem.Text = "Simulation";
+            // 
+            // simulateMenuItem
+            // 
+            this.simulateMenuItem.Name = "simulateMenuItem";
+            this.simulateMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.simulateMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.simulateMenuItem.Text = "Simulate";
+            this.simulateMenuItem.Click += new System.EventHandler(this.simulateMenuItem_Click);
+            // 
+            // simulationSpeedToolStripMenuItem
+            // 
+            this.simulationSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simulationSpeedHalfMenuItem,
+            this.simulationSpeedNormalMenuItem,
+            this.simulationSpeedDoubleMenuItem,
+            this.simulationSpeedIncreaseMenuItem,
+            this.simulationSpeedDecreaseMenuItem});
+            this.simulationSpeedToolStripMenuItem.Name = "simulationSpeedToolStripMenuItem";
+            this.simulationSpeedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.simulationSpeedToolStripMenuItem.Text = "Simulation Speed";
+            // 
+            // simulationSpeedHalfMenuItem
+            // 
+            this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
+            this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedHalfMenuItem.Text = "0.50x";
+            this.simulationSpeedHalfMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedNormalMenuItem
+            // 
+            this.simulationSpeedNormalMenuItem.Checked = true;
+            this.simulationSpeedNormalMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.simulationSpeedNormalMenuItem.Name = "simulationSpeedNormalMenuItem";
+            this.simulationSpeedNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedNormalMenuItem.Text = "1.00x";
+            this.simulationSpeedNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedDoubleMenuItem
+            // 
+            this.simulationSpeedDoubleMenuItem.Name = "simulationSpeedDoubleMenuItem";
+            this.simulationSpeedDoubleMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.simulationSpeedDoubleMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedDoubleMenuItem.Text = "2.00x";
+            this.simulationSpeedDoubleMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedIncreaseMenuItem
+            // 
+            this.simulationSpeedIncreaseMenuItem.Name = "simulationSpeedIncreaseMenuItem";
+            this.simulationSpeedIncreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
+            this.simulationSpeedIncreaseMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedIncreaseMenuItem.Text = "Increase by 0.25";
+            this.simulationSpeedIncreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // simulationSpeedDecreaseMenuItem
+            // 
+            this.simulationSpeedDecreaseMenuItem.Name = "simulationSpeedDecreaseMenuItem";
+            this.simulationSpeedDecreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
+            this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.simulationSpeedDecreaseMenuItem.Text = "Decrease by 0.25";
+            this.simulationSpeedDecreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // toolStripContainer
+            // 
+            // 
+            // toolStripContainer.BottomToolStripPanel
+            // 
+            this.toolStripContainer.BottomToolStripPanel.Controls.Add(this.statusStrip);
+            // 
+            // toolStripContainer.ContentPanel
+            // 
+            this.toolStripContainer.ContentPanel.Controls.Add(tableLayoutPanel);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 815);
+            this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer.Name = "toolStripContainer";
+            this.toolStripContainer.Size = new System.Drawing.Size(1444, 861);
+            this.toolStripContainer.TabIndex = 7;
+            this.toolStripContainer.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer.TopToolStripPanel
+            // 
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
+            // 
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1444, 861);
-            this.Controls.Add(this.tableLayoutPanel);
-            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.toolStripContainer);
-            this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "LevelEditor";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
             this.tableLayoutPanel.ResumeLayout(false);
             this.paramsTabControl.ResumeLayout(false);
             this.previewPage.ResumeLayout(false);
@@ -1801,25 +1790,19 @@ namespace LevelEditor
             this.objectTab.ResumeLayout(false);
             this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer.BottomToolStripPanel.PerformLayout();
+            this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.PerformLayout();
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadShapeToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TabControl paramsTabControl;
         private System.Windows.Forms.TabPage previewPage;
@@ -1909,13 +1892,22 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripContainer toolStripContainer;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+        private PreviewScreen previewScreen;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadShapeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedHalfMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedNormalMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedDoubleMenuItem;
-        private PreviewScreen previewScreen;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedIncreaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simulationSpeedDecreaseMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
