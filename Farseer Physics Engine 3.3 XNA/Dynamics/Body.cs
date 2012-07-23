@@ -405,6 +405,7 @@ namespace FarseerPhysics.Dynamics
         /// Gets all the fixtures attached to this body.
         /// </summary>
         /// <value>The fixture list.</value>
+        [System.ComponentModel.Editor(typeof(FixtureListCollectionEditor), typeof(System.Drawing.Design.UITypeEditor))]
         public List<Fixture> FixtureList { get; internal set; }
 
         /// <summary>
@@ -655,48 +656,84 @@ namespace FarseerPhysics.Dynamics
         /// If collision group varies from fixture to fixture, then "CollisionGroup" property returns null.
         /// ATTENTION: setting this property will result in setting collision group for all shapes with same value.
         /// </summary>
-        //public short? CollisionGroup
-        //{
-        //    get
-        //    {
-        //        if (FixtureList.Count == 0)
-        //            return null;
-        //        short oldValue = FixtureList[0].CollisionGroup;
-        //        for (int i = 0; i < FixtureList.Count; i++)
-        //        {
-        //            if (oldValue != FixtureList[i].CollisionGroup)
-        //                return null;
-        //        }
-
-        //        return oldValue;
-        //    }
-        //    set
-        //    {
-        //        for (int i = 0; i < FixtureList.Count; i++)
-        //        {
-        //            FixtureList[i].CollisionGroup = (short)value;
-        //        }
-        //    }
-        //}
-
-        public Category CollidesWith
+        public short? CollisionGroup
         {
+            get
+            {
+                if (FixtureList.Count == 0)
+                    return null;
+                short oldValue = FixtureList[0].CollisionGroup;
+                for (int i = 0; i < FixtureList.Count; i++)
+                {
+                    if (oldValue != FixtureList[i].CollisionGroup)
+                        return null;
+                }
+
+                return oldValue;
+            }
             set
             {
                 for (int i = 0; i < FixtureList.Count; i++)
                 {
-                    FixtureList[i].CollidesWith = value;
+                    FixtureList[i].CollisionGroup = (short)value;
                 }
             }
         }
 
-        public Category CollisionCategories
+        /// <summary>
+        /// CollidesWith of all fixtures. If CollidesWith is the same, then "CollidesWith" property returns Category value. 
+        /// If CollidesWith varies from fixture to fixture, then "CollidesWith" property returns null.
+        /// ATTENTION: setting this property will result in setting CollidesWith for all shapes with same value.
+        /// </summary>
+        public Category? CollidesWith
         {
+            get
+            {
+                if (FixtureList.Count == 0)
+                    return null;
+                Category oldValue = FixtureList[0].CollidesWith;
+                for (int i = 0; i < FixtureList.Count; i++)
+                {
+                    if (oldValue != FixtureList[i].CollidesWith)
+                        return null;
+                }
+
+                return oldValue;
+            }
             set
             {
                 for (int i = 0; i < FixtureList.Count; i++)
                 {
-                    FixtureList[i].CollisionCategories = value;
+                    FixtureList[i].CollidesWith = (Category)value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// CollisionCategories of all fixtures. If CollisionCategories is the same, then "CollisionCategories" property returns Category value. 
+        /// If CollisionCategories varies from fixture to fixture, then "CollisionCategories" property returns null.
+        /// ATTENTION: setting this property will result in setting CollisionCategories for all shapes with same value.
+        /// </summary>
+        public Category? CollisionCategories
+        {
+            get
+            {
+                if (FixtureList.Count == 0)
+                    return null;
+                Category oldValue = FixtureList[0].CollisionCategories;
+                for (int i = 0; i < FixtureList.Count; i++)
+                {
+                    if (oldValue != FixtureList[i].CollisionCategories)
+                        return null;
+                }
+
+                return oldValue;
+            }
+            set
+            {
+                for (int i = 0; i < FixtureList.Count; i++)
+                {
+                    FixtureList[i].CollisionCategories = (Category)value;
                 }
             }
         }
