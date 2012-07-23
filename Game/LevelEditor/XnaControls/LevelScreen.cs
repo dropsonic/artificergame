@@ -181,6 +181,7 @@ namespace LevelEditor
                 return;
 
             _simulatedLevel = _initialLevel.DeepCopy();
+            SetDebugView();
         }
 
         protected override void LoadContent()

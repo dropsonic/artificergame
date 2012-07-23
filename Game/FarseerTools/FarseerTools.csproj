@@ -63,11 +63,6 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentModel\ListCollectionEditor\ListCollectionEditor.cs" />
-    <Compile Include="ComponentModel\ListCollectionEditor\ListEditorForm.cs" />
-    <Compile Include="ComponentModel\ListCollectionEditor\ListEditorForm.designer.cs">
-      <DependentUpon>ListEditorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DrawingSystem\AssetCreator.cs" />
     <Compile Include="DrawingSystem\LineBatch.cs" />
     <Compile Include="DrawingSystem\Sprite.cs" />
@@ -79,11 +74,6 @@
       <Project>{0A850700-1ABB-4288-A391-6726B90EBEB9}</Project>
       <Name>Farseer Physics XNA</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ComponentModel\ListCollectionEditor\ListEditorForm.resx">
-      <DependentUpon>ListEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
