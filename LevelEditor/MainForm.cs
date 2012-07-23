@@ -39,6 +39,8 @@ namespace LevelEditor
 
         private void Initialize()
         {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
+
             updateTimer.Enabled = false;
             updateTimer.Tick += new EventHandler(UpdatePreview);
             updateTimer.Interval = 10;
