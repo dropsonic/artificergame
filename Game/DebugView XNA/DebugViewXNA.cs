@@ -793,7 +793,7 @@ namespace FarseerPhysics.DebugViews
             //Nothing is enabled - don't draw the debug view.
             if (Flags == 0)
                 return;
-
+            
             _device.RasterizerState = RasterizerState.CullNone;
             _device.DepthStencilState = DepthStencilState.Default;
 
