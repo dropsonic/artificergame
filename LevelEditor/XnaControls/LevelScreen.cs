@@ -171,6 +171,7 @@ namespace LevelEditor
         public void AddCurrentObject()
         {
             _simulatedLevel.AddObject(_currentGameObject.CopyObjectToWorld(_simulatedLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
+            _simulatedLevel.World.ProcessChanges();
             if (Simulate == false)
                 _initialLevel.AddObject(_currentGameObject.CopyObjectToWorld(_initialLevel.World, ConvertUnits.ToSimUnits(_mousePosition)));
         }
