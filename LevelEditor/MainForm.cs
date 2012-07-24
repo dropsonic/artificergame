@@ -317,6 +317,7 @@ namespace LevelEditor
         {
             levelScreen.MouseState = e;
             _controller.Simulator.MousePosition = levelScreen.MousePosition;
+            _controller.Simulator.UpdateMouseJoint();
         }
 
         private void levelScreen_MouseDown(object sender, MouseEventArgs e)

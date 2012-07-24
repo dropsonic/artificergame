@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Dynamics;
 using FarseerTools;
-using System.Windows.Forms;
+using System.Timers;
 
 namespace LevelEditor
 {
@@ -23,23 +23,36 @@ namespace LevelEditor
 
     public class Simulator
     {
+        /// <summary>
+        /// Частота обновления, Гц.
+        /// </summary>
+        private const int updateRate = 100;
+        public const float NormalSimulationSpeed = 1.0f;
+
         public Simulator()
         {
-            //_updateTimer = new Timer(obj => Update(), null, 0, 16);
-            _updateTimer = new Timer();
-            _updateTimer.Interval = 10;
-            _updateTimer.Tick += new EventHandler(_updateTimer_Tick);
+            //_updateTimer = new Timer();
+            //_updateTimer.Interval = 10;
+            //_updateTimer.Tick += new EventHandler(_updateTimer_Tick);
+            _updateTimer = new Timer(1000.0/updateRate);
+            _updateTimer.Elapsed += new ElapsedEventHandler(_updateTimer_Elapsed);
             _gameTimeTimer = new StopwatchGameTimer();
             
             _simulationSpeed = NormalSimulationSpeed;
             Stop();
         }
 
-        void _updateTimer_Tick(object sender, EventArgs e)
+        void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _gameTimeTimer.UpdateGameTime();
             Update();
         }
+
+        //void _updateTimer_Tick(object sender, EventArgs e)
+        //{
+        //    _gameTimeTimer.UpdateGameTime();
+        //    Update();
+        //}
 
         public Simulator(GameLevel level)
             : this()
@@ -55,7 +68,6 @@ namespace LevelEditor
         private GameLevel _initialLevel;
         private GameLevel _simulatedLevel;
 
-        public const float NormalSimulationSpeed = 1.0f;
         private float _simulationSpeed;
 
         private FixedMouseJoint _mouseJoint; 
@@ -169,6 +181,7 @@ namespace LevelEditor
             {
                 if (_worldTime == TimeSpan.Zero && _simulationSpeed <= 0)
                     throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
+
                 TimeSpan elapsed = TimeSpan.FromMilliseconds(_gameTimeTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                 _worldTime += elapsed;
                 if (_worldTime <= TimeSpan.Zero)
