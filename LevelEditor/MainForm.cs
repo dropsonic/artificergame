@@ -25,12 +25,14 @@ namespace LevelEditor
 
     public partial class MainForm : Form
     {
-        GameObject currentObject;
+        MainFormController _controller;
+
         AssetCreator _assetCreator;
+
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-        readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
+        Dictionary<string,Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
-        
+
         public MainForm()
         {
             InitializeComponent();
@@ -42,16 +44,12 @@ namespace LevelEditor
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
 
             updateTimer.Enabled = false;
+         
             updateTimer.Tick += new EventHandler(UpdatePreview);
             updateTimer.Interval = 10;
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
             this.shapeParametersControl.SelectedTab = this.emptyTab;
             levelScreen.DrawCurrentGameObject = false;
-
-            currentObject = new GameObject();
-            Body body = new Body(currentObject.World);
-            currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
-            propertyGrid.SelectedObject = currentObject[0].Body;
 
             InitializeStatusStrip();
             ShowReadyStatus();
@@ -103,6 +101,9 @@ namespace LevelEditor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            _controller = new MainFormController(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _controller.Simulator.SimulateChanged += controller_SimulateChanged;
+
             //load assetCreator Materials
             _assetCreator = ContentService.GetContentService().AssetCreator;
             _assetCreator.UseTexture = setAsTextureCheck.Checked;
@@ -311,24 +312,26 @@ namespace LevelEditor
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
             levelScreen.MouseState = e;
+            _controller.Simulator.MousePosition = levelScreen.MousePosition;
         }
 
         private void levelScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            levelScreen.CreateMouseJoint();
+            _controller.Simulator.MousePosition = levelScreen.MousePosition;
+            _controller.Simulator.CreateMouseJoint();
             levelPage.Focus();
             //levelScreen.Focus();
         }
 
         private void levelScreen_MouseUp(object sender, MouseEventArgs e)
         {
-            levelScreen.RemoveMouseJoint();
+            _controller.Simulator.RemoveMouseJoint();
         }
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
         {
             if (placeObjectCheck.Checked)
-                levelScreen.AddCurrentObject();
+                _controller.AddPreviewObject();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
@@ -349,14 +352,23 @@ namespace LevelEditor
 
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
-            if (!levelScreen.Simulate && levelScreen.SimulationSpeed <= 0)
+            if (_controller.Simulator.State == SimulationState.Stopped && _controller.Simulator.SimulationSpeed <= 0)
             {
                 simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
                 ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
             }
             else
             {
-                levelScreen.Simulate = !levelScreen.Simulate;
+                switch (_controller.Simulator.State)
+                {
+                    case SimulationState.Paused:
+                    case SimulationState.Stopped:
+                        _controller.Simulator.Start();
+                        break;
+                    case SimulationState.Simulation:
+                        _controller.Simulator.Stop();
+                        break;
+                }
                 SetDebugViewMenu();
             }
         }
@@ -378,46 +390,53 @@ namespace LevelEditor
             if (sender == simulationSpeedHalfMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
-                levelScreen.SimulationSpeed = 0.5f;
+                _controller.Simulator.SimulationSpeed = 0.5f;
             }
             else if (sender == simulationSpeedNormalMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, true, false);
-                levelScreen.SimulationSpeed = LevelScreen.NormalSimulationSpeed;
+                _controller.Simulator.SimulationSpeed = Simulator.NormalSimulationSpeed;
             }
             else if (sender == simulationSpeedDoubleMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, true);
-                levelScreen.SimulationSpeed = 2.0f;
+                _controller.Simulator.SimulationSpeed = 2.0f;
             }
             else if (sender == simulationSpeedIncreaseMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                levelScreen.SimulationSpeed += inc;
+                _controller.Simulator.SimulationSpeed += inc;
             }
             else if (sender == simulationSpeedDecreaseMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                levelScreen.SimulationSpeed -= inc;
+                _controller.Simulator.SimulationSpeed -= inc;
             }
 
             if (_status == StatusType.Simulation)
-                ShowSimulationStatus(levelScreen.SimulationSpeed);
+                ShowSimulationStatus(_controller.Simulator.SimulationSpeed, SimulationState.Simulation);
             else
                 ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
         }
 
-        private void levelScreen_SimulateChanged(object sender, EventArgs e)
+        private void controller_SimulateChanged(object sender, EventArgs e)
         {
-            if (levelScreen.Simulate)
+            switch (_controller.Simulator.State)
             {
-                simulateMenuItem.Text = "Stop simulation";
-                ShowSimulationStatus(levelScreen.SimulationSpeed);
-            }
-            else
-            {
-                simulateMenuItem.Text = "Simulate";
-                ShowReadyStatus();
+                case SimulationState.Simulation:
+                    simulateMenuItem.Text = "Stop simulation";
+                    ShowSimulationStatus(_controller.Simulator.SimulationSpeed, _controller.Simulator.State);
+                    break;
+
+                case SimulationState.Paused:
+                    simulateMenuItem.Text = "Continue simulation";
+                    ShowSimulationStatus(_controller.Simulator.SimulationSpeed, _controller.Simulator.State);
+                    break;
+
+                case SimulationState.Stopped:
+                    simulateMenuItem.Text = "Simulate";
+                    ShowReadyStatus();
+                    break;
             }
         }
 

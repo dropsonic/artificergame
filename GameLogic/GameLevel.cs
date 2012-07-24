@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,13 +32,27 @@ namespace GameLogic
         public Camera Camera
         {
             get { return _camera; }
-            set { _camera = value; }
+            set 
+            {
+                _camera = value;
+                foreach (GameObject obj in _objects)
+                    obj.Camera = value;
+                if (_spriteBatch != null)
+                    Visible = true;
+            }
         }
 
         public SpriteBatch SpriteBatch
         {
             get { return _spriteBatch; }
-            set { _spriteBatch = value; }
+            set 
+            { 
+                _spriteBatch = value;
+                foreach (GameObject obj in _objects)
+                    obj.SpriteBatch = value;
+                if (_camera != null)
+                    Visible = true;
+            }
         }
 
         public GameObject this[int index]
@@ -51,12 +65,7 @@ namespace GameLogic
             }
         }
 
-        #region IEnumerable
-        public IEnumerator<GameObject> GetEnumerator() { return _objects.GetEnumerator(); }
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
-        #endregion
-
-        public GameLevel(Camera camera, SpriteBatch spriteBatch)
+        public GameLevel()
         {
             _objects = new List<GameObject>();
             _sorted = true;
@@ -64,10 +73,16 @@ namespace GameLogic
             _joints = new List<Joint>();
 
             _world = new World(defaultGravity);
-            _camera = camera;
-            _spriteBatch = spriteBatch;
 
             Enabled = true;
+            Visible = false;
+        }
+
+        public GameLevel(Camera camera, SpriteBatch spriteBatch)
+            : this()
+        {
+            _camera = camera;
+            _spriteBatch = spriteBatch;
             Visible = true;
         }
 
@@ -87,6 +102,14 @@ namespace GameLogic
         {
             _objects.Add(gameObject);
             _sorted = false;
+        }
+
+        public void RemoveObject(GameObject gameObject)
+        {
+            foreach (GameObjectPart part in gameObject)
+                part.RemoveBody(World);
+            _objects.Remove(gameObject);
+            
         }
 
         public void AddJoint(Joint joint)
@@ -140,6 +163,10 @@ namespace GameLogic
 
             return result;
         }
+        #region IEnumerable
+        public IEnumerator<GameObject> GetEnumerator() { return _objects.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        #endregion
 
         #region IDrawable
         public void Draw(GameTime gameTime)

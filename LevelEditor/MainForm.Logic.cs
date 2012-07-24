@@ -77,20 +77,20 @@ namespace LevelEditor
                 }
                 if (shapeVertices != null && previewTexture != null)
                 {
-                    float? previousDensity = currentObject[0].Body.Density;
-                    currentObject[0].Body.FixtureList.Clear();
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, currentObject[0].Body);
-                    currentObject[0].Sprite = new Sprite(previewTexture);
-                    previewScreen.PreviewGameObject = currentObject[0];
+                    float? previousDensity = _controller.PreviewObject[0].Body.Density;
+                    _controller.PreviewObject[0].Body.FixtureList.Clear();
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, _controller.PreviewObject[0].Body);
+                    _controller.PreviewObject[0].Sprite = new Sprite(previewTexture);
+                    previewScreen.PreviewGameObject = _controller.PreviewObject[0];
                 }
             }
         }
 
         void SetCurrentObject()
         {
-            if (currentObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
+            if (_controller.PreviewObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
             {
-                levelScreen.CurrentGameObject = currentObject;
+                levelScreen.CurrentGameObject = _controller.PreviewObject;
             }
             else
             {
@@ -253,11 +253,18 @@ namespace LevelEditor
             }
         }
 
-        private void ShowSimulationStatus(float simulationSpeed)
+        private void ShowSimulationStatus(float simulationSpeed, SimulationState state)
         {
+            if (state == SimulationState.Stopped)
+                return;
+
             toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
             toolStripStatusLabel.Image = null;
-            toolStripStatusLabel.Text = String.Format("Simulating ({0:0.##}x time)...", simulationSpeed);
+            if (state == SimulationState.Simulation)
+                toolStripStatusLabel.Text = String.Format("Simulating ({0:0.##}x time)...", simulationSpeed);
+            else
+                toolStripStatusLabel.Text = String.Format("Simulation paused ({0:0.##}x time)...", simulationSpeed);
+
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Simulation.ToString()];
             _status = StatusType.Simulation;
         }

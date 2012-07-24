@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,10 @@ namespace GameLogic
             Body newBody = Body.DeepClone(world);
             newBody.Position += origin;
             return new GameObjectPart(_spriteBatch, Sprite, newBody);
+        }
+        public void RemoveBody(World world)
+        {
+            world.RemoveBody(this.Body);
         }
 
         #region IDrawable
