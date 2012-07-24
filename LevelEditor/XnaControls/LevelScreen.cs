@@ -182,6 +182,7 @@ namespace LevelEditor
                 return;
 
             _simulatedLevel = _initialLevel.DeepCopy();
+            _simulatedLevel.World.ProcessChanges();
             SetDebugView();
         }
 
