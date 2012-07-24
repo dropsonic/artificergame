@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Dynamics;
 using FarseerTools;
+using System.Windows.Forms;
 
 namespace LevelEditor
 {
@@ -24,8 +25,20 @@ namespace LevelEditor
     {
         public Simulator()
         {
-            _timer = new StopwatchGameTimer();
+            //_updateTimer = new Timer(obj => Update(), null, 0, 16);
+            _updateTimer = new Timer();
+            _updateTimer.Interval = 10;
+            _updateTimer.Tick += new EventHandler(_updateTimer_Tick);
+            _gameTimeTimer = new StopwatchGameTimer();
+            
+            _simulationSpeed = NormalSimulationSpeed;
             Stop();
+        }
+
+        void _updateTimer_Tick(object sender, EventArgs e)
+        {
+            _gameTimeTimer.UpdateGameTime();
+            Update();
         }
 
         public Simulator(GameLevel level)
@@ -35,7 +48,8 @@ namespace LevelEditor
         }
 
         private SimulationState _state;
-        private StopwatchGameTimer _timer;
+        private StopwatchGameTimer _gameTimeTimer;
+        private Timer _updateTimer;
         private TimeSpan _worldTime = TimeSpan.Zero;
 
         private GameLevel _initialLevel;
@@ -44,7 +58,7 @@ namespace LevelEditor
         public const float NormalSimulationSpeed = 1.0f;
         private float _simulationSpeed;
 
-        private FixedMouseJoint _mouseJoint;
+        private FixedMouseJoint _mouseJoint; 
         private Vector2 _mousePosition;
 
         /// <summary>
@@ -60,11 +74,11 @@ namespace LevelEditor
         {
             get
             {
-                //if (_state == SimulationState.Simulation || _state == SimulationState.Paused)
-                //    return _simulatedLevel;
-                //else
-                //    return _initialLevel;
-                return _simulatedLevel;
+                if (_state == SimulationState.Simulation || _state == SimulationState.Paused)
+                    return _simulatedLevel;
+                else
+                    return _initialLevel;
+                //return _simulatedLevel;
             }
             set
             {
@@ -94,9 +108,12 @@ namespace LevelEditor
         /// </summary>
         public void Start()
         {
-            ResetLevelTo(_initialLevel);
+            if (_state == SimulationState.Stopped)
+                ResetLevelTo(_initialLevel);
+            
             State = SimulationState.Simulation;
-            _timer.Enabled = true;
+            _gameTimeTimer.Enabled = true;
+            _updateTimer.Start();
         }
 
         /// <summary>
@@ -106,8 +123,9 @@ namespace LevelEditor
         {
             if (_state == SimulationState.Simulation)
             {
+                _updateTimer.Stop();
                 State = SimulationState.Paused;
-                _timer.Enabled = false;
+                _gameTimeTimer.Enabled = false;
             }
         }
 
@@ -116,8 +134,9 @@ namespace LevelEditor
         /// </summary>
         public void Stop()
         {
+            _updateTimer.Stop();
             State = SimulationState.Stopped;
-            _timer.Enabled = false;
+            _gameTimeTimer.Enabled = false;
             ResetLevelTo(_initialLevel);
         }
 
@@ -150,7 +169,7 @@ namespace LevelEditor
             {
                 if (_worldTime == TimeSpan.Zero && _simulationSpeed <= 0)
                     throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
-                TimeSpan elapsed = TimeSpan.FromMilliseconds(_timer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
+                TimeSpan elapsed = TimeSpan.FromMilliseconds(_gameTimeTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                 _worldTime += elapsed;
                 if (_worldTime <= TimeSpan.Zero)
                 {
@@ -158,9 +177,9 @@ namespace LevelEditor
                     return;
                 }
                 if (_simulationSpeed == NormalSimulationSpeed)
-                    _simulatedLevel.Update(_timer.GameTime);
+                    _simulatedLevel.Update(_gameTimeTimer.GameTime);
                 else
-                    _simulatedLevel.Update(new GameTime(_timer.GameTime.TotalGameTime, elapsed));
+                    _simulatedLevel.Update(new GameTime(_gameTimeTimer.GameTime.TotalGameTime, elapsed));
             }
         }
 
@@ -172,7 +191,7 @@ namespace LevelEditor
 
         public void CreateMouseJoint()
         {
-            if (_mouseJoint == null)
+            if (_state == SimulationState.Simulation && _mouseJoint == null)
             {
                 Fixture savedFixture = _simulatedLevel.World.TestPoint(ConvertUnits.ToSimUnits(_mousePosition));
                 if (savedFixture != null)

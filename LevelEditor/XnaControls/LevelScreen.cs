@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
@@ -22,7 +22,6 @@ namespace LevelEditor
         GameLevel _gameLevel;
         Camera _camera;
         SpriteFont _font;
-        TimeSpan _worldTime = TimeSpan.Zero;
         private GameObject _currentGameObject;
         public string message = "";
 
@@ -152,13 +151,15 @@ namespace LevelEditor
 
         public bool DebugViewHasFlag(DebugViewFlags flag)
         {
+            if (_debugView == null)
+                return false;
+
             if ((_debugView.Flags & flag) == flag)
                 return true;
             else
                 return false;
         }
 
-            _simulatedLevel.World.ProcessChanges();
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -183,9 +184,11 @@ namespace LevelEditor
             if (_gameLevel != null)
                 _gameLevel.Draw(GameTimer.GameTime);
 
-            
-            Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
-            _debugView.RenderDebugData(ref proj);
+            if (_debugView != null)
+            {
+                Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
+                _debugView.RenderDebugData(ref proj);
+            }
         }
 
         protected override void LoadContent()

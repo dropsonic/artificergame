@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using System.ComponentModel;
 #endregion
 
 namespace LevelEditor
@@ -22,9 +24,6 @@ namespace LevelEditor
     // types. To avoid conflicts, we specify exactly which ones to use.
     using Color = System.Drawing.Color;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Microsoft.Xna.Framework.Content;
-using System.ComponentModel;
-
 
     /// <summary>
     /// Custom control uses the XNA Framework GraphicsDevice to render onto

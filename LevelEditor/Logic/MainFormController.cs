@@ -38,8 +38,8 @@ namespace LevelEditor
 
         public GameLevel GameLevel
         {
-            get { return _gameLevel; }
-            set { _gameLevel = value; }
+            get { return _simulator.GameLevel; }
+            set { _simulator.GameLevel = value; }
         }
 
         public GameObject PreviewObject

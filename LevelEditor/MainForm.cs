@@ -55,6 +55,47 @@ namespace LevelEditor
             ShowReadyStatus();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            _controller = new MainFormController(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _controller.Simulator.SimulateChanged += controller_SimulateChanged;
+
+            propertyGrid.SelectedObject = _controller.PreviewObject[0].Body;
+
+            levelScreen.GameLevel = _controller.GameLevel;
+
+            //load assetCreator Materials
+            _assetCreator = ContentService.GetContentService().AssetCreator;
+            _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
+
+            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
+            {
+                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
+                _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
+                materialBox.Items.Add(filename);
+            }
+
+            foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
+            {
+                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
+                _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
+                shapeFromTextureBox.Items.Add(filename);
+            }
+
+            foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
+            {
+                shapeBox.Items.Add(obj);
+            }
+
+            foreach (string colorName in colorDictionary.Keys)
+            {
+                colorBox.Items.Add(colorName);
+            }
+
+            PopulateDebugViewMenu();
+        }
+
         private void PopulateDebugViewMenu()
         {
             int i = 0;
@@ -97,43 +138,6 @@ namespace LevelEditor
 
             levelScreen.SwitchDebugViewFlag(flag);
             SetDebugViewMenu();
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            _controller = new MainFormController(levelScreen.Camera, levelScreen.GraphicsDevice);
-            _controller.Simulator.SimulateChanged += controller_SimulateChanged;
-
-            //load assetCreator Materials
-            _assetCreator = ContentService.GetContentService().AssetCreator;
-            _assetCreator.UseTexture = setAsTextureCheck.Checked;
-            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
-
-            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
-            {
-                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
-                _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
-                materialBox.Items.Add(filename);
-            }
-
-            foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
-            {
-                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
-                _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
-                shapeFromTextureBox.Items.Add(filename);
-            }
-            
-            foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
-            {
-                shapeBox.Items.Add(obj);
-            }
-            
-            foreach (string colorName in colorDictionary.Keys)
-            {
-                colorBox.Items.Add(colorName);
-            }
-
-            PopulateDebugViewMenu();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -412,7 +416,7 @@ namespace LevelEditor
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
                 _controller.Simulator.SimulationSpeed -= inc;
             }
-
+                    
             if (_status == StatusType.Simulation)
                 ShowSimulationStatus(_controller.Simulator.SimulationSpeed, SimulationState.Simulation);
             else
@@ -438,6 +442,8 @@ namespace LevelEditor
                     ShowReadyStatus();
                     break;
             }
+            //Меняем уровень, который отрисовывается
+            levelScreen.GameLevel = _controller.GameLevel;
         }
 
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)

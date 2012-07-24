@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +57,8 @@ namespace GameLogic
             newBody.Position += origin;
             return new GameObjectPart(_spriteBatch, Sprite, newBody);
         }
+
+
         public void RemoveBody(World world)
         {
             world.RemoveBody(this.Body);

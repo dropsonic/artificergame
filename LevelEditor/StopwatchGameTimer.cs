@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace LevelEditor
 {
+    using Action = System.Action;
+
     public class StopwatchGameTimer
     {
         private GameTime _gameTime;
@@ -36,12 +38,14 @@ namespace LevelEditor
                 _enabled = value;
             }
         }
+
         public StopwatchGameTimer()
         {
             _gameTime = new GameTime();
             _stopwatch = new Stopwatch();
             _enabled = false;
         }
+
         public void UpdateGameTime()
         {
             if (_enabled)
