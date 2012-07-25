@@ -623,7 +623,7 @@ namespace FarseerPhysics.Collision
                     _nodes[parent].AABB.Combine(ref _nodes[_nodes[parent].Child1].AABB,
                                                 ref _nodes[_nodes[parent].Child2].AABB);
 
-                    Debug.Assert(_nodes[parent].LeafCount > 0);
+                    //Debug.Assert(_nodes[parent].LeafCount > 0);
                     _nodes[parent].LeafCount -= 1;
 
                     parent = _nodes[parent].ParentOrNext;

@@ -32,7 +32,10 @@ namespace LevelEditor
         Cursor _levelScreenCursor = Cursors.Arrow;
         MouseToolState _mouseToolState;
 
-        System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
+        Timer _updateTimer = new Timer();
+        Timer _propertyGridTimer = new Timer();
+        
+                
 
         Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -47,9 +50,14 @@ namespace LevelEditor
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
 
-            updateTimer.Enabled = false;
-            updateTimer.Tick += new EventHandler(UpdatePreview);
-            updateTimer.Interval = 10;
+            _updateTimer.Enabled = false;
+            _updateTimer.Tick += new EventHandler(UpdatePreview);
+            _updateTimer.Interval = 10;
+
+            _propertyGridTimer.Enabled = false;
+            _propertyGridTimer.Tick += (object sen, EventArgs args) => { 
+                propertyGrid.Refresh(); };
+            _propertyGridTimer.Interval = 100;
 
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
 
@@ -283,7 +291,7 @@ namespace LevelEditor
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            updateTimer.Enabled = true;
+            _updateTimer.Enabled = true;
         }
 
         private void UpdatePreview(object sender, EventArgs e)
@@ -299,7 +307,7 @@ namespace LevelEditor
             }
             propertyGrid.Refresh();
 
-            updateTimer.Enabled = false;
+            _updateTimer.Enabled = false;
         }
 
         private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
@@ -554,7 +562,7 @@ namespace LevelEditor
                 pauseSimulationAction.Enabled = true;
 
                 _commandManager.Execute("StartSimulation");
-
+                _propertyGridTimer.Enabled = true;
                 ShowSimulationStatus();
             }
             else
@@ -566,6 +574,7 @@ namespace LevelEditor
                 ShowReadyStatus();
 
                 _commandManager.Execute("StopSimulation");
+                _propertyGridTimer.Enabled = true;
             }
 
             //Меняем уровень, который отрисовывается
