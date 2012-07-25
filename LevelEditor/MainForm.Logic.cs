@@ -240,6 +240,22 @@ namespace LevelEditor
             }
         }
 
+        /// <summary>
+        /// Скрывает все ошибки и предупреждения и показывает текущий статус.
+        /// </summary>
+        private void ShowCurrentNormalStatus()
+        {
+            if (_objectLevelManager.Simulator.State == SimulationState.Simulation || _objectLevelManager.Simulator.State == SimulationState.Paused)
+                ShowSimulationStatus();
+            else
+                ShowReadyStatus();
+        }
+
+        private void ShowSimulationStatus()
+        {
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+        }
+
         private void ShowSimulationStatus(float simulationSpeed, SimulationState state)
         {
             simulationSpeedToolStripLabel.Text = String.Format("{0:0.00}x", simulationSpeed);

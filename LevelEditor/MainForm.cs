@@ -206,7 +206,7 @@ namespace LevelEditor
             try
             {
                 CreatePreview();
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
@@ -236,7 +236,7 @@ namespace LevelEditor
             try
             {
                 LoadMaterial();
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
@@ -249,7 +249,7 @@ namespace LevelEditor
             try
             {
                 LoadShape();
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
@@ -267,7 +267,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void capsuleBottomRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -278,7 +278,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void capsuleTopRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -289,7 +289,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleHeight_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -300,7 +300,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleYRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -311,7 +311,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleWidth_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -322,7 +322,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleXRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -333,7 +333,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
         #endregion
 
@@ -414,7 +414,7 @@ namespace LevelEditor
 
                 _commandManager.Execute("StartSimulation");
 
-                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+                ShowSimulationStatus();
             }
             else
             {
@@ -452,7 +452,7 @@ namespace LevelEditor
                 pauseSimulationAction.Image = LevelEditor.Properties.Resources.PauseHS;
             }
 
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
 
         private void addPreviewObjectAction_Execute(object sender, EventArgs e)
@@ -480,7 +480,7 @@ namespace LevelEditor
             simulationSpeedHalfAction.Checked = true;
             simulationSpeedDoubleAction.Checked = false;
             _commandManager.Execute("SimulationSpeedHalf");
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
 
         private void simulationSpeedNormalAction_Execute(object sender, EventArgs e)
@@ -489,7 +489,7 @@ namespace LevelEditor
             simulationSpeedNormalAction.Checked = true;
             simulationSpeedDoubleAction.Checked = false;
             _commandManager.Execute("SimulationSpeedNormal");
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
 
         private void simulationSpeedDoubleAction_Execute(object sender, EventArgs e)
@@ -498,19 +498,19 @@ namespace LevelEditor
             simulationSpeedNormalAction.Checked = false;
             simulationSpeedDoubleAction.Checked = true;
             _commandManager.Execute("SimulationSpeedDouble");
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
 
         private void simulationSpeedIncreaseAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Execute("SimulationSpeedIncrease");
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
 
         private void simulationSpeedDecreaseAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Execute("SimulationSpeedDecrease");
-            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+            ShowSimulationStatus();
         }
         #endregion
     }
