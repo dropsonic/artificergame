@@ -55,17 +55,19 @@ namespace LevelEditor
             ShowReadyStatus();
         }
 
-        private void PopulateCommandManager()
+        private void InitializeCommandManager()
         {
             _commandManager = new CommandManager();
             _commandManager.AddCommand(new AddPreviewObjectCommand(_objectLevelManager));
+            _commandManager.AddCommand(new StartSimulationCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new PauseSimulationCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new StopSimulationCommand(_objectLevelManager.Simulator));
         }
 
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
-            _objectLevelManager.Simulator.SimulateChanged += controller_SimulateChanged;
 
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
 
@@ -100,7 +102,7 @@ namespace LevelEditor
                 colorBox.Items.Add(colorName);
             }
 
-            PopulateCommandManager();
+            InitializeCommandManager();
             PopulateDebugViewMenu();
         }
 
@@ -432,29 +434,6 @@ namespace LevelEditor
                 ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
         }
 
-        private void controller_SimulateChanged(object sender, EventArgs e)
-        {
-            switch (_objectLevelManager.Simulator.State)
-            {
-                case SimulationState.Simulation:
-                    simulateMenuItem.Text = "Stop simulation";
-                    ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
-                    break;
-
-                case SimulationState.Paused:
-                    simulateMenuItem.Text = "Continue simulation";
-                    ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
-                    break;
-
-                case SimulationState.Stopped:
-                    simulateMenuItem.Text = "Simulate";
-                    ShowReadyStatus();
-                    break;
-            }
-            //Меняем уровень, который отрисовывается
-            levelScreen.GameLevel = _objectLevelManager.GameLevel;
-        }
-
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
         {
             levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
@@ -469,5 +448,55 @@ namespace LevelEditor
         {
             UpdateLevelScreenUpperLeftLocalPoint(sender);
         }
+
+        #region Actions
+        bool _simulateActionState = false;
+        private void simulateAction_Execute(object sender, EventArgs e)
+        {
+            _simulateActionState = !_simulateActionState;
+            if (_simulateActionState)
+            {
+                simulateAction.Text = "Stop";
+                simulateAction.ToolTipText = "Stop simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.StopHS;
+                pauseSimulationAction.Enabled = true;
+                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+
+                _commandManager.Execute("StartSimulation");
+            }
+            else
+            {
+                simulateAction.Text = "Start";
+                simulateAction.ToolTipText = "Start simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.PlayHS;
+                pauseSimulationAction.Enabled = false;
+                ShowReadyStatus();
+
+                _commandManager.Execute("StopSimulation");
+            }
+
+            //Меняем уровень, который отрисовывается
+            levelScreen.GameLevel = _objectLevelManager.GameLevel;
+        }
+
+        bool pauseSimulationActionState = false;
+        private void pauseSimulationAction_Execute(object sender, EventArgs e)
+        {
+            pauseSimulationActionState = !pauseSimulationActionState;
+
+            if (pauseSimulationActionState)
+            {
+                _commandManager.Execute("StartSimulation");
+                pauseSimulationAction.Text = "Continue";
+                pauseSimulationAction.ToolTipText = "Continue simulation";
+            }
+            else
+            {
+                _commandManager.Execute("PauseSimulation");
+                pauseSimulationAction.Text = "Pause";
+                pauseSimulationAction.ToolTipText = "Pause simulation";
+            }
+        }
+        #endregion
     }
 }

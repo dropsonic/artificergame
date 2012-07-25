@@ -59,6 +59,9 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\AddPreviewObjectCommand.cs" />
+    <Compile Include="Commands\PauseSimulationCommand.cs" />
+    <Compile Include="Commands\StartSimulationCommand.cs" />
+    <Compile Include="Commands\StopSimulationCommand.cs" />
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
@@ -178,6 +181,9 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\StopHS.png" />
+    <None Include="Resources\PauseHS.png" />
+    <None Include="Resources\PlayHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -37,6 +37,7 @@ namespace LevelEditor
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
+            this.previewScreen = new LevelEditor.PreviewScreen();
             this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
@@ -139,7 +140,13 @@ namespace LevelEditor
             this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
-            this.previewScreen = new LevelEditor.PreviewScreen();
+            this.simulationSpeedNormalAction = new Crad.Windows.Forms.Actions.Action();
+            this.simulationSpeedDoubleAction = new Crad.Windows.Forms.Actions.Action();
+            this.simulationSpeedHalfAction = new Crad.Windows.Forms.Actions.Action();
+            this.simulationSpeedIncreaseAction = new Crad.Windows.Forms.Actions.Action();
+            this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
+            this.simulateAction = new Crad.Windows.Forms.Actions.Action();
+            this.pauseSimulationAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -281,6 +288,15 @@ namespace LevelEditor
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
+            // 
+            // previewScreen
+            // 
+            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.previewScreen.Location = new System.Drawing.Point(3, 3);
+            this.previewScreen.Name = "previewScreen";
+            this.previewScreen.Size = new System.Drawing.Size(300, 300);
+            this.previewScreen.TabIndex = 11;
+            this.previewScreen.Text = "previewScreen";
             // 
             // placeObjectCheck
             // 
@@ -1521,9 +1537,12 @@ namespace LevelEditor
             // 
             // levelScreen
             // 
+            this.levelScreen.Camera = null;
             this.levelScreen.DrawCurrentGameObject = false;
+            this.levelScreen.GameLevel = null;
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
+            this.levelScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.MouseState = null;
             this.levelScreen.Name = "levelScreen";
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
@@ -1550,13 +1569,16 @@ namespace LevelEditor
             // 
             // objectScreen
             // 
+            this.objectScreen.Camera = null;
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawCurrentGameObject = false;
+            this.objectScreen.GameLevel = null;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
+            this.objectScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(829, 823);
+            this.objectScreen.Size = new System.Drawing.Size(829, 777);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             this.objectScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
@@ -1721,16 +1743,63 @@ namespace LevelEditor
             // 
             // actionList
             // 
+            this.actionList.Actions.Add(this.simulateAction);
+            this.actionList.Actions.Add(this.pauseSimulationAction);
+            this.actionList.Actions.Add(this.simulationSpeedNormalAction);
+            this.actionList.Actions.Add(this.simulationSpeedDoubleAction);
+            this.actionList.Actions.Add(this.simulationSpeedHalfAction);
+            this.actionList.Actions.Add(this.simulationSpeedIncreaseAction);
+            this.actionList.Actions.Add(this.simulationSpeedDecreaseAction);
             this.actionList.ContainerControl = this;
             // 
-            // previewScreen
+            // simulationSpeedNormalAction
             // 
-            this.previewScreen.Dock = System.Windows.Forms.DockStyle.Top;
-            this.previewScreen.Location = new System.Drawing.Point(3, 3);
-            this.previewScreen.Name = "previewScreen";
-            this.previewScreen.Size = new System.Drawing.Size(300, 300);
-            this.previewScreen.TabIndex = 11;
-            this.previewScreen.Text = "previewScreen";
+            this.simulationSpeedNormalAction.CheckOnClick = true;
+            this.simulationSpeedNormalAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.simulationSpeedNormalAction.Text = "1.00x";
+            this.simulationSpeedNormalAction.ToolTipText = "Select normal simulation speed";
+            // 
+            // simulationSpeedDoubleAction
+            // 
+            this.simulationSpeedDoubleAction.CheckOnClick = true;
+            this.simulationSpeedDoubleAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.simulationSpeedDoubleAction.Text = "2.00x";
+            this.simulationSpeedDoubleAction.ToolTipText = "Select double simulation speed";
+            // 
+            // simulationSpeedHalfAction
+            // 
+            this.simulationSpeedHalfAction.CheckOnClick = true;
+            this.simulationSpeedHalfAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.simulationSpeedHalfAction.Text = "0.50x";
+            this.simulationSpeedHalfAction.ToolTipText = "Select half simulation speed";
+            // 
+            // simulationSpeedIncreaseAction
+            // 
+            this.simulationSpeedIncreaseAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
+            this.simulationSpeedIncreaseAction.Text = "Increase by 0.25";
+            this.simulationSpeedIncreaseAction.ToolTipText = "Increase simulation speed by 0.25";
+            // 
+            // simulationSpeedDecreaseAction
+            // 
+            this.simulationSpeedDecreaseAction.Text = "Decrease by 0.25";
+            this.simulationSpeedDecreaseAction.ToolTipText = "Decrease simulation speed by 0.25";
+            // 
+            // simulateAction
+            // 
+            this.simulateAction.Image = global::LevelEditor.Properties.Resources.PlayHS;
+            this.simulateAction.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.simulateAction.Text = "Start";
+            this.simulateAction.ToolTipText = "Start simulation";
+            this.simulateAction.Execute += new System.EventHandler(this.simulateAction_Execute);
+            // 
+            // pauseSimulationAction
+            // 
+            this.pauseSimulationAction.Enabled = false;
+            this.pauseSimulationAction.Image = global::LevelEditor.Properties.Resources.PauseHS;
+            this.pauseSimulationAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
+            this.pauseSimulationAction.Text = "Pause";
+            this.pauseSimulationAction.ToolTipText = "Pause simulation";
+            this.pauseSimulationAction.Execute += new System.EventHandler(this.pauseSimulationAction_Execute);
             // 
             // MainForm
             // 
@@ -1926,6 +1995,13 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private Crad.Windows.Forms.Actions.ActionList actionList;
         private PreviewScreen previewScreen;
+        private Crad.Windows.Forms.Actions.Action simulateAction;
+        private Crad.Windows.Forms.Actions.Action pauseSimulationAction;
+        private Crad.Windows.Forms.Actions.Action simulationSpeedNormalAction;
+        private Crad.Windows.Forms.Actions.Action simulationSpeedDoubleAction;
+        private Crad.Windows.Forms.Actions.Action simulationSpeedHalfAction;
+        private Crad.Windows.Forms.Actions.Action simulationSpeedIncreaseAction;
+        private Crad.Windows.Forms.Actions.Action simulationSpeedDecreaseAction;
     }
 }
 

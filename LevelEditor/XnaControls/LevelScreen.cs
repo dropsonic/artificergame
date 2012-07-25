@@ -40,8 +40,11 @@ namespace LevelEditor
             { 
                 _gameLevel = value;
 
-                SetDebugView();
-                _debugView.TranslateDebugPerfomancePair(_upperLeftLocalPoint);
+                if (_gameLevel != null)
+                {
+                    SetDebugView();
+                    _debugView.TranslateDebugPerfomancePair(_upperLeftLocalPoint);
+                }
             }
         }
 
