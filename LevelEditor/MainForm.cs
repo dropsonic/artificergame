@@ -57,6 +57,7 @@ namespace LevelEditor
 
         private void PopulateCommandManager()
         {
+            _commandManager = new CommandManager();
             _commandManager.AddCommand(new AddPreviewObjectCommand(_objectLevelManager));
         }
 
