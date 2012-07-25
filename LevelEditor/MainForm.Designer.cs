@@ -1700,7 +1700,6 @@ namespace LevelEditor
             this.simulateMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.simulateMenuItem.Size = new System.Drawing.Size(166, 22);
             this.simulateMenuItem.Text = "Start";
-            this.simulateMenuItem.Click += new System.EventHandler(this.simulateMenuItem_Click);
             // 
             // pauseToolStripMenuItem
             // 
@@ -1731,9 +1730,8 @@ namespace LevelEditor
             this.simulationSpeedHalfMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedHalfMenuItem.Image")));
             this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
             this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedHalfMenuItem.Text = "0.50x";
-            this.simulationSpeedHalfMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // simulationSpeedNormalMenuItem
             // 
@@ -1742,9 +1740,8 @@ namespace LevelEditor
             this.simulationSpeedNormalMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedNormalMenuItem.Image")));
             this.simulationSpeedNormalMenuItem.Name = "simulationSpeedNormalMenuItem";
             this.simulationSpeedNormalMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.simulationSpeedNormalMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedNormalMenuItem.Text = "1.00x";
-            this.simulationSpeedNormalMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // simulationSpeedDoubleMenuItem
             // 
@@ -1753,26 +1750,26 @@ namespace LevelEditor
             this.simulationSpeedDoubleMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedDoubleMenuItem.Image")));
             this.simulationSpeedDoubleMenuItem.Name = "simulationSpeedDoubleMenuItem";
             this.simulationSpeedDoubleMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.simulationSpeedDoubleMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.simulationSpeedDoubleMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedDoubleMenuItem.Text = "2.00x";
-            this.simulationSpeedDoubleMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // simulationSpeedIncreaseMenuItem
             // 
             this.actionList.SetAction(this.simulationSpeedIncreaseMenuItem, this.simulationSpeedIncreaseAction);
+            this.simulationSpeedIncreaseMenuItem.Image = global::LevelEditor.Properties.Resources.increaseSpeed;
             this.simulationSpeedIncreaseMenuItem.Name = "simulationSpeedIncreaseMenuItem";
             this.simulationSpeedIncreaseMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
-            this.simulationSpeedIncreaseMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.simulationSpeedIncreaseMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedIncreaseMenuItem.Text = "Increase by 0.25";
-            this.simulationSpeedIncreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // simulationSpeedDecreaseMenuItem
             // 
             this.actionList.SetAction(this.simulationSpeedDecreaseMenuItem, this.simulationSpeedDecreaseAction);
+            this.simulationSpeedDecreaseMenuItem.Image = global::LevelEditor.Properties.Resources.decreaseSpeed;
             this.simulationSpeedDecreaseMenuItem.Name = "simulationSpeedDecreaseMenuItem";
-            this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.simulationSpeedDecreaseMenuItem.ShortcutKeyDisplayString = "Ctrl+OemMinus";
+            this.simulationSpeedDecreaseMenuItem.Size = new System.Drawing.Size(254, 22);
             this.simulationSpeedDecreaseMenuItem.Text = "Decrease by 0.25";
-            this.simulationSpeedDecreaseMenuItem.Click += new System.EventHandler(this.simulationSpeedMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
@@ -1885,21 +1882,23 @@ namespace LevelEditor
             // 
             // toolStripButton6
             // 
-            this.actionList.SetAction(this.toolStripButton6, this.simulationSpeedIncreaseAction);
+            this.actionList.SetAction(this.toolStripButton6, this.simulationSpeedDecreaseAction);
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = global::LevelEditor.Properties.Resources.decreaseSpeed;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "Increase by 0.25";
+            this.toolStripButton6.Text = "Decrease by 0.25";
             // 
             // toolStripButton7
             // 
-            this.actionList.SetAction(this.toolStripButton7, this.simulationSpeedDecreaseAction);
+            this.actionList.SetAction(this.toolStripButton7, this.simulationSpeedIncreaseAction);
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = global::LevelEditor.Properties.Resources.increaseSpeed;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "Decrease by 0.25";
+            this.toolStripButton7.Text = "Increase by 0.25";
             // 
             // actionList
             // 
@@ -1940,7 +1939,9 @@ namespace LevelEditor
             // 
             // simulationSpeedNormalAction
             // 
+            this.simulationSpeedNormalAction.Checked = true;
             this.simulationSpeedNormalAction.CheckOnClick = true;
+            this.simulationSpeedNormalAction.CheckState = System.Windows.Forms.CheckState.Checked;
             this.simulationSpeedNormalAction.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedNormalAction.Image")));
             this.simulationSpeedNormalAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
             this.simulationSpeedNormalAction.Text = "1.00x";
@@ -1956,12 +1957,15 @@ namespace LevelEditor
             // 
             // simulationSpeedIncreaseAction
             // 
+            this.simulationSpeedIncreaseAction.Image = global::LevelEditor.Properties.Resources.increaseSpeed;
             this.simulationSpeedIncreaseAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
             this.simulationSpeedIncreaseAction.Text = "Increase by 0.25";
             this.simulationSpeedIncreaseAction.ToolTipText = "Increase simulation speed by 0.25";
             // 
             // simulationSpeedDecreaseAction
             // 
+            this.simulationSpeedDecreaseAction.Image = global::LevelEditor.Properties.Resources.decreaseSpeed;
+            this.simulationSpeedDecreaseAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
             this.simulationSpeedDecreaseAction.Text = "Decrease by 0.25";
             this.simulationSpeedDecreaseAction.ToolTipText = "Decrease simulation speed by 0.25";
             // 

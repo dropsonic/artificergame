@@ -25,6 +25,10 @@ namespace LevelEditor.Commands
 
         public void Execute()
         {
+            foreach (GameObjectPart part in _objectLevelManager.PreviewObject)
+                if (part.Sprite.Texture == null)
+                    throw new NullReferenceException("Texture cannot be null.");
+
             Simulator simulator = _objectLevelManager.Simulator;
             GameObject _object = _objectLevelManager.PreviewObject.CopyObjectToWorld(simulator.GameLevel.World, ConvertUnits.ToSimUnits(simulator.MousePosition));
             simulator.GameLevel.AddObject(_object);

@@ -323,6 +323,12 @@ namespace LevelEditor
             Cursor = Cursors.Cross;
         }
 
+        private void levelScreen_MouseLeave(object sender, EventArgs e)
+        {
+            levelScreen.DrawCurrentGameObject = false;
+            Cursor = Cursors.Arrow;
+        }
+
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
             levelScreen.MouseState = e;
@@ -349,12 +355,6 @@ namespace LevelEditor
                 _commandManager.Execute("AddPreviewObject");
         }
 
-        private void levelScreen_MouseLeave(object sender, EventArgs e)
-        {
-            levelScreen.DrawCurrentGameObject = false;
-            Cursor = Cursors.Arrow;
-        }
-
         private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
         {
             SetCurrentObject();
@@ -365,7 +365,7 @@ namespace LevelEditor
             propertyGrid.Refresh();
         }
 
-        private void simulateMenuItem_Click(object sender, EventArgs e)
+        /*private void simulateMenuItem_Click(object sender, EventArgs e)
         {
             if (_objectLevelManager.Simulator.State == SimulationState.Stopped && _objectLevelManager.Simulator.SimulationSpeed <= 0)
             {
@@ -386,7 +386,7 @@ namespace LevelEditor
                 }
                 SetDebugViewMenu();
             }
-        }
+        }*/
 
         /// <summary>
         /// Метод-хелпер для изменения состояния checked элементов меню изменения скорости симуляции.
@@ -400,38 +400,7 @@ namespace LevelEditor
 
         private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
         {
-            const float inc = 0.25f; //шаг изменения скорости симуляции
 
-            if (sender == simulationSpeedHalfMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
-                _objectLevelManager.Simulator.SimulationSpeed = 0.5f;
-            }
-            else if (sender == simulationSpeedNormalMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, true, false);
-                _objectLevelManager.Simulator.SimulationSpeed = Simulator.NormalSimulationSpeed;
-            }
-            else if (sender == simulationSpeedDoubleMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, true);
-                _objectLevelManager.Simulator.SimulationSpeed = 2.0f;
-            }
-            else if (sender == simulationSpeedIncreaseMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                _objectLevelManager.Simulator.SimulationSpeed += inc;
-            }
-            else if (sender == simulationSpeedDecreaseMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                _objectLevelManager.Simulator.SimulationSpeed -= inc;
-            }
-                    
-            if (_status == StatusType.Simulation)
-                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, SimulationState.Simulation);
-            else
-                ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
         }
 
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
@@ -460,9 +429,10 @@ namespace LevelEditor
                 simulateAction.ToolTipText = "Stop simulation";
                 simulateAction.Image = LevelEditor.Properties.Resources.StopHS;
                 pauseSimulationAction.Enabled = true;
-                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
 
                 _commandManager.Execute("StartSimulation");
+
+                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
             }
             else
             {
@@ -486,22 +456,37 @@ namespace LevelEditor
 
             if (pauseSimulationActionState)
             {
-                _commandManager.Execute("StartSimulation");
+                _commandManager.Execute("PauseSimulation");
                 pauseSimulationAction.Text = "Continue";
                 pauseSimulationAction.ToolTipText = "Continue simulation";
             }
             else
             {
-                _commandManager.Execute("PauseSimulation");
+                _commandManager.Execute("StartSimulation");
                 pauseSimulationAction.Text = "Pause";
                 pauseSimulationAction.ToolTipText = "Pause simulation";
             }
+
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
 
         private void addPreviewObjectAction_Execute(object sender, EventArgs e)
         {
-            levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
-            levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
+            if (addPreviewObjectAction.Checked)
+            {
+                if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null)
+                {
+                    levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
+                    //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
+                }
+                else
+                {
+                    addPreviewObjectAction.Checked = false;
+                    ShowWarningStatus("Необходимо установить текстуру.");
+                }
+            }
+            else
+                levelScreen.CurrentGameObject = null;
         }
         #endregion
     }

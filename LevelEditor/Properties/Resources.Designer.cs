@@ -67,6 +67,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap decreaseSpeed {
+            get {
+                object obj = ResourceManager.GetObject("decreaseSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap doubleSpeed {
             get {
                 object obj = ResourceManager.GetObject("doubleSpeed", resourceCulture);
@@ -77,6 +84,13 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap halfSpeed {
             get {
                 object obj = ResourceManager.GetObject("halfSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap increaseSpeed {
+            get {
+                object obj = ResourceManager.GetObject("increaseSpeed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
