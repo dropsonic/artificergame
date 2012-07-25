@@ -34,7 +34,7 @@ namespace LevelEditor.Commands
                 if (command is IUndoRedoCommand)
                 {
                     //Если мы в конце списка (Redo не делалось)
-                    if (_currentCommandIndex == _executedCommandList.Count - 1)
+                    if (_currentCommandIndex >= _executedCommandList.Count - 1)
                         _executedCommandList.Add(command);
                     else
                         _executedCommandList[_currentCommandIndex] = command;
