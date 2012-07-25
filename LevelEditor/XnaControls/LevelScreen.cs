@@ -186,7 +186,7 @@ namespace LevelEditor
 
             if (_gameLevel != null)
                 _gameLevel.Draw(GameTimer.GameTime);
-
+            
             if (_debugView != null)
             {
                 Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);

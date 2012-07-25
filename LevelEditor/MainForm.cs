@@ -29,8 +29,10 @@ namespace LevelEditor
         ObjectLevelManager _objectLevelManager;
         CommandManager _commandManager;
         AssetCreator _assetCreator;
+
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-        Dictionary<string,Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
+
+        Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
 
         public MainForm()
@@ -44,7 +46,6 @@ namespace LevelEditor
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
 
             updateTimer.Enabled = false;
-         
             updateTimer.Tick += new EventHandler(UpdatePreview);
             updateTimer.Interval = 10;
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
@@ -97,7 +98,7 @@ namespace LevelEditor
                 shapeBox.Items.Add(obj);
             }
 
-            foreach (string colorName in colorDictionary.Keys)
+            foreach (string colorName in _colorDictionary.Keys)
             {
                 colorBox.Items.Add(colorName);
             }
