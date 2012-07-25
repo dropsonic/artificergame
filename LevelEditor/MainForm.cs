@@ -500,7 +500,8 @@ namespace LevelEditor
 
         private void addPreviewObjectAction_Execute(object sender, EventArgs e)
         {
-            
+            levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
+            levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
         }
         #endregion
     }

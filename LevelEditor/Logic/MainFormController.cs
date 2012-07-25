@@ -14,13 +14,14 @@ namespace LevelEditor
     {
         public ObjectLevelManager(Camera camera, GraphicsDevice graphicsDevice)
         {
+            SpriteBatch spriteBatch = new SpriteBatch(graphicsDevice);
             //Создаём PreviewObject
-            _previewObject = new GameObject();
+            _previewObject = new GameObject(camera, spriteBatch);
             Body body = new Body(_previewObject.World);
             _previewObject.AddPart(new Sprite(null, Vector2.Zero), body);
 
             //Создаём GameLevel
-            _gameLevel = new GameLevel(camera, new SpriteBatch(graphicsDevice));
+            _gameLevel = new GameLevel(camera, spriteBatch);
 
             //Создаём Simulator
             _simulator = new Simulator(_gameLevel);
