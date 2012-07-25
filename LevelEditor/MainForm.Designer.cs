@@ -113,7 +113,7 @@ namespace LevelEditor
             this.colorBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.shapeBox = new System.Windows.Forms.ComboBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.jointPage = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.viewTabControl = new System.Windows.Forms.TabControl();
             this.levelPage = new System.Windows.Forms.TabPage();
@@ -283,7 +283,7 @@ namespace LevelEditor
             // paramsTabControl
             // 
             this.paramsTabControl.Controls.Add(this.previewPage);
-            this.paramsTabControl.Controls.Add(this.tabPage2);
+            this.paramsTabControl.Controls.Add(this.jointPage);
             this.paramsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
@@ -1484,16 +1484,16 @@ namespace LevelEditor
             this.shapeBox.TabIndex = 1;
             this.shapeBox.SelectedValueChanged += new System.EventHandler(this.ShapeParameterSwitch);
             // 
-            // tabPage2
+            // jointPage
             // 
-            this.tabPage2.AutoScroll = true;
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(306, 758);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.jointPage.AutoScroll = true;
+            this.jointPage.Location = new System.Drawing.Point(4, 22);
+            this.jointPage.Name = "jointPage";
+            this.jointPage.Padding = new System.Windows.Forms.Padding(3);
+            this.jointPage.Size = new System.Drawing.Size(306, 758);
+            this.jointPage.TabIndex = 1;
+            this.jointPage.Text = "Joints";
+            this.jointPage.UseVisualStyleBackColor = true;
             // 
             // splitContainer1
             // 
@@ -1540,6 +1540,7 @@ namespace LevelEditor
             // 
             // levelScreen
             // 
+            this.levelScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.Camera = null;
             this.levelScreen.DrawCurrentGameObject = false;
             this.levelScreen.GameLevel = null;
@@ -1551,7 +1552,6 @@ namespace LevelEditor
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
-            this.levelScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
             this.levelScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseDown);
             this.levelScreen.MouseEnter += new System.EventHandler(this.levelScreen_MouseEnter);
@@ -1572,6 +1572,7 @@ namespace LevelEditor
             // 
             // objectScreen
             // 
+            this.objectScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.Camera = null;
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawCurrentGameObject = false;
@@ -1584,7 +1585,6 @@ namespace LevelEditor
             this.objectScreen.Size = new System.Drawing.Size(829, 752);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
-            this.objectScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             // 
             // propertyGrid
             // 
@@ -1799,7 +1799,7 @@ namespace LevelEditor
             this.toolStripButton7});
             this.simulationToolStrip.Location = new System.Drawing.Point(38, 24);
             this.simulationToolStrip.Name = "simulationToolStrip";
-            this.simulationToolStrip.Size = new System.Drawing.Size(249, 25);
+            this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
             this.simulationToolStrip.TabIndex = 7;
             // 
             // toolStripButton1
@@ -2067,7 +2067,7 @@ namespace LevelEditor
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TabControl paramsTabControl;
         private System.Windows.Forms.TabPage previewPage;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage jointPage;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PropertyGrid propertyGrid;
         private System.Windows.Forms.ComboBox shapeBox;

@@ -182,6 +182,7 @@ namespace LevelEditor
                 flag = flag | DebugViewFlags.ContactPoints;
 
             levelScreen.SwitchDebugViewFlag(flag);
+            levelScreen.GameLevel.World.ProcessChanges();
             SetDebugViewMenu();
         }
         #endregion
