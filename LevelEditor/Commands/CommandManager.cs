@@ -9,7 +9,7 @@ namespace LevelEditor.Commands
     {
         private Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>();
         private List<ICommand> _executedCommandList = new List<ICommand>();
-        private int _currentCommandIndex = 0;
+        private int _currentCommandIndex = -1;
 
         public void AddCommand(ICommand command)
         {
@@ -37,7 +37,7 @@ namespace LevelEditor.Commands
                     if (_currentCommandIndex >= _executedCommandList.Count - 1)
                         _executedCommandList.Add(command);
                     else
-                        _executedCommandList[_currentCommandIndex] = command;
+                        _executedCommandList[_currentCommandIndex + 1] = command;
 
                     _currentCommandIndex++;
                 }
@@ -77,7 +77,7 @@ namespace LevelEditor.Commands
 
         public bool CanUndo
         {
-            get { return _currentCommandIndex > 0; }
+            get { return _currentCommandIndex >= 0; }
         }
 
         public bool CanRedo
