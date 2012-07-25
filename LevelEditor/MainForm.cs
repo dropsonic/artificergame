@@ -48,11 +48,15 @@ namespace LevelEditor
             updateTimer.Enabled = false;
             updateTimer.Tick += new EventHandler(UpdatePreview);
             updateTimer.Interval = 10;
+
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
+
             this.shapeParametersControl.SelectedTab = this.emptyTab;
+
             levelScreen.DrawCurrentGameObject = false;
 
             InitializeStatusStrip();
+
             ShowReadyStatus();
         }
 
@@ -72,7 +76,6 @@ namespace LevelEditor
             _commandManager.AddCommand(new SimulationSpeedIncreaseCommand(_objectLevelManager.Simulator));
             _commandManager.AddCommand(new SimulationSpeedDecreaseCommand(_objectLevelManager.Simulator));
         }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -112,9 +115,32 @@ namespace LevelEditor
             }
 
             InitializeCommandManager();
+
             PopulateDebugViewMenu();
         }
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                previewScreen.FrameTimer.Enabled = false;
+                levelScreen.FrameTimer.Enabled = false;
+                objectScreen.FrameTimer.Enabled = false;
+            }
+            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
+            {
+                previewScreen.FrameTimer.Enabled = true;
+                levelScreen.FrameTimer.Enabled = true;
+                objectScreen.FrameTimer.Enabled = true;
+            }
+        }
+        
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            propertyGrid.Refresh();
+        }
+
+        #region DebugView
         private void PopulateDebugViewMenu()
         {
             int i = 0;
@@ -158,22 +184,8 @@ namespace LevelEditor
             levelScreen.SwitchDebugViewFlag(flag);
             SetDebugViewMenu();
         }
+        #endregion
 
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                previewScreen.FrameTimer.Enabled = false;
-                levelScreen.FrameTimer.Enabled = false;
-                objectScreen.FrameTimer.Enabled = false;
-            }
-            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
-            {
-                previewScreen.FrameTimer.Enabled = true;
-                levelScreen.FrameTimer.Enabled = true;
-                objectScreen.FrameTimer.Enabled = true;
-            }
-        }
         #region Настройка превью
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
@@ -192,14 +204,13 @@ namespace LevelEditor
         {
             try
             {
-                SetPreview();
+                CreatePreview();
                 ShowReadyStatus();
             }
             catch (Exception ex)
             {
                 ShowErrorStatus(ex);
             }
-            SetCurrentObject();
             propertyGrid.Refresh();
 
             updateTimer.Enabled = false;
@@ -325,7 +336,7 @@ namespace LevelEditor
         }
         #endregion
 
-
+        #region MouseHandlers
         private void levelScreen_MouseEnter(object sender, EventArgs e)
         {
             levelScreen.DrawCurrentGameObject = true;
@@ -350,7 +361,6 @@ namespace LevelEditor
             _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
             _objectLevelManager.Simulator.CreateMouseJoint();
             levelPage.Focus();
-            //levelScreen.Focus();
         }
 
         private void levelScreen_MouseUp(object sender, MouseEventArgs e)
@@ -363,26 +373,7 @@ namespace LevelEditor
             if (addPreviewObjectAction.Checked)
                 _commandManager.Execute("AddPreviewObject");
         }
-
-        private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            SetCurrentObject();
-        }
-
-        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            propertyGrid.Refresh();
-        }
-
-        /// <summary>
-        /// Метод-хелпер для изменения состояния checked элементов меню изменения скорости симуляции.
-        /// </summary>
-        private void ChangeSimSpeedMenuItemsCheckedStateHelper(bool halfItem, bool normalItem, bool doubleItem)
-        {
-            simulationSpeedHalfMenuItem.Checked = halfItem;
-            simulationSpeedNormalMenuItem.Checked = normalItem;
-            simulationSpeedDoubleMenuItem.Checked = doubleItem;
-        }
+        #endregion
 
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
         {

@@ -28,7 +28,7 @@ namespace LevelEditor
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
         }
 
-        private void SetPreview()
+        private void CreatePreview()
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
@@ -86,19 +86,7 @@ namespace LevelEditor
             }
         }
 
-        void SetCurrentObject()
-        {
-            if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null && addPreviewObjectAction.Checked)
-            {
-                levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
-            }
-            else
-            {
-                levelScreen.CurrentGameObject = null;
-            }
-
-        }
-
+        //command
         /// <summary>
         /// Загружает custom-материал.
         /// </summary>
@@ -131,7 +119,7 @@ namespace LevelEditor
                 }
             }
         }
-
+        //command
         /// <summary>
         /// Загружает текстуру для создания формы.
         /// </summary>

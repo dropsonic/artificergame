@@ -23,7 +23,6 @@ namespace LevelEditor
         Camera _camera;
         SpriteFont _font;
         private GameObject _currentGameObject;
-        public string message = "";
 
         FixedMouseJoint _mouseJoint;
         DebugViewXNA _debugView;

@@ -39,7 +39,6 @@ namespace LevelEditor
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
             this.previewScreen = new LevelEditor.PreviewScreen();
-            this.placeObjectCheck = new System.Windows.Forms.CheckBox();
             this.shapeParameters = new System.Windows.Forms.GroupBox();
             this.shapeParametersControl = new WindowsFormsApplication1.TabHiddenHeadersControl();
             this.circleTab = new System.Windows.Forms.TabPage();
@@ -294,7 +293,6 @@ namespace LevelEditor
             // previewPage
             // 
             this.previewPage.Controls.Add(this.previewScreen);
-            this.previewPage.Controls.Add(this.placeObjectCheck);
             this.previewPage.Controls.Add(this.shapeParameters);
             this.previewPage.Controls.Add(this.commonParameters);
             this.previewPage.Controls.Add(this.label1);
@@ -315,20 +313,6 @@ namespace LevelEditor
             this.previewScreen.Size = new System.Drawing.Size(300, 300);
             this.previewScreen.TabIndex = 12;
             this.previewScreen.Text = "previewScreen";
-            // 
-            // placeObjectCheck
-            // 
-            this.placeObjectCheck.Appearance = System.Windows.Forms.Appearance.Button;
-            this.placeObjectCheck.AutoSize = true;
-            this.placeObjectCheck.FlatAppearance.CheckedBackColor = System.Drawing.Color.LimeGreen;
-            this.placeObjectCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.placeObjectCheck.Location = new System.Drawing.Point(216, 714);
-            this.placeObjectCheck.Name = "placeObjectCheck";
-            this.placeObjectCheck.Size = new System.Drawing.Size(78, 23);
-            this.placeObjectCheck.TabIndex = 10;
-            this.placeObjectCheck.Text = "Place Object";
-            this.placeObjectCheck.UseVisualStyleBackColor = true;
-            this.placeObjectCheck.CheckedChanged += new System.EventHandler(this.placeObjectCheck_CheckedChanged);
             // 
             // shapeParameters
             // 
@@ -2157,7 +2141,6 @@ namespace LevelEditor
         private System.Windows.Forms.CheckBox useOriginalTextureCheck;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox shapeFromTextureBox;
-        private System.Windows.Forms.CheckBox placeObjectCheck;
         private System.Windows.Forms.ToolStripContainer toolStripContainer;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
