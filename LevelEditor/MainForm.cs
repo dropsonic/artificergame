@@ -53,8 +53,6 @@ namespace LevelEditor
 
             InitializeStatusStrip();
             ShowReadyStatus();
-
-            PopulateCommandManager();
         }
 
         private void PopulateCommandManager()
@@ -101,6 +99,7 @@ namespace LevelEditor
                 colorBox.Items.Add(colorName);
             }
 
+            PopulateCommandManager();
             PopulateDebugViewMenu();
         }
 
@@ -343,8 +342,8 @@ namespace LevelEditor
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            if (placeObjectCheck.Checked)
-                _objectLevelManager.AddPreviewObject();
+            //if (placeObjectCheck.Checked)
+            //    _objectLevelManager.AddPreviewObject();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
