@@ -166,7 +166,30 @@ namespace LevelEditor
             bool tempCheck = toolButton.Checked;
             selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
             toolButton.Checked = tempCheck;
+
+            HandlePreviewDisplay();
             ChangeMouseToolState();
+        }
+
+        private void HandlePreviewDisplay()
+        {
+            if (addPreviewObjectAction.Checked)
+            {
+                if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null)
+                {
+                    levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
+                    //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
+                }
+                else
+                {
+                    addPreviewObjectAction.Checked = false;
+                    ShowWarningStatus("Необходимо установить текстуру.");
+                }
+            }
+            else
+            {
+                levelScreen.PreviewGameObject = null;
+            }
         }
 
         private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)

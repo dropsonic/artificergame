@@ -591,23 +591,6 @@ namespace LevelEditor
 
         private void addPreviewObjectAction_Execute(object sender, EventArgs e)
         {
-            if (addPreviewObjectAction.Checked)
-            {
-                if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null)
-                {
-                    levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
-                    //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
-                }
-                else
-                {
-                    addPreviewObjectAction.Checked = false;
-                    ShowWarningStatus("Необходимо установить текстуру.");
-                }
-            }
-            else
-            {
-                levelScreen.PreviewGameObject = null;
-            }
             SetMouseToolButtonsState(addPreviewObjectAction);
         }
 
