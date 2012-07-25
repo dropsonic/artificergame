@@ -38,6 +38,19 @@ namespace LevelEditor
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
         }
 
+        Body FindBody(Vector2 point)
+        {
+            Fixture foundFixture = _objectLevelManager.GameLevel.World.TestPoint(point);
+            if (foundFixture != null)
+            {
+               return foundFixture.Body;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private void CreatePreview()
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)

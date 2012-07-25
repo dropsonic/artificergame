@@ -517,15 +517,7 @@ namespace LevelEditor
                     {
                         if (mouseEvent == MouseEvents.Click)
                         {
-                            Fixture foundFixture = levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
-                            if (foundFixture != null)
-                            {
-                                propertyGrid.SelectedObject = foundFixture.Body;
-                            }
-                            else
-                            {
-                                propertyGrid.SelectedObject = null;
-                            }
+                            propertyGrid.SelectedObject = FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
                         }
                         break;
                     }
@@ -571,7 +563,10 @@ namespace LevelEditor
                 pauseSimulationAction.Enabled = true;
 
                 _commandManager.Execute("StartSimulation");
+                
                 _propertyGridTimer.Enabled = true;
+                propertyGrid.SelectedObject = propertyGrid.SelectedObject==null ? null : FindBody(((Body)propertyGrid.SelectedObject).Position);
+
                 ShowSimulationStatus();
             }
             else
@@ -583,7 +578,8 @@ namespace LevelEditor
                 ShowReadyStatus();
 
                 _commandManager.Execute("StopSimulation");
-                _propertyGridTimer.Enabled = true;
+                _propertyGridTimer.Enabled = false;
+                propertyGrid.SelectedObject = false;
             }
 
             //Меняем уровень, который отрисовывается
