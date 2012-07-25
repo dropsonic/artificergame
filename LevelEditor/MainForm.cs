@@ -691,6 +691,26 @@ namespace LevelEditor
             Properties.Settings.Default.Reset();
             LoadSettings();
         }
+
+        private void undoAction_Update(object sender, EventArgs e)
+        {
+            undoAction.Enabled = _commandManager.CanUndo;
+        }
+
+        private void undoAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Undo();
+        }
+
+        private void redoAction_Update(object sender, EventArgs e)
+        {
+            redoAction.Enabled = _commandManager.CanRedo;
+        }
+
+        private void redoAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Redo();
+        }
         #endregion
        
     }

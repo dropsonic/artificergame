@@ -144,6 +144,7 @@ namespace LevelEditor
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
@@ -170,14 +171,13 @@ namespace LevelEditor
             this.simulationSpeedIncreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.resetSettingsAction = new Crad.Windows.Forms.Actions.Action();
+            this.undoAction = new Crad.Windows.Forms.Actions.Action();
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
-            this.undoAction = new Crad.Windows.Forms.Actions.Action();
             this.redoAction = new Crad.Windows.Forms.Actions.Action();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1805,7 +1805,7 @@ namespace LevelEditor
             this.toolStripButton14});
             this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
             this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.Size = new System.Drawing.Size(89, 25);
+            this.mainToolStrip.Size = new System.Drawing.Size(58, 25);
             this.mainToolStrip.TabIndex = 8;
             // 
             // toolStripButton10
@@ -1819,6 +1819,17 @@ namespace LevelEditor
             this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton10.Text = "Undo";
             // 
+            // toolStripButton14
+            // 
+            this.actionList.SetAction(this.toolStripButton14, this.redoAction);
+            this.toolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton14.Enabled = false;
+            this.toolStripButton14.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
+            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton14.Name = "toolStripButton14";
+            this.toolStripButton14.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton14.Text = "Redo";
+            // 
             // toolsToolStrip
             // 
             this.toolsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -1828,7 +1839,7 @@ namespace LevelEditor
             this.toolStripButton11,
             this.toolStripButton12,
             this.toolStripButton13});
-            this.toolsToolStrip.Location = new System.Drawing.Point(92, 24);
+            this.toolsToolStrip.Location = new System.Drawing.Point(61, 24);
             this.toolsToolStrip.Name = "toolsToolStrip";
             this.toolsToolStrip.Size = new System.Drawing.Size(127, 25);
             this.toolsToolStrip.TabIndex = 6;
@@ -2082,6 +2093,16 @@ namespace LevelEditor
             this.resetSettingsAction.ToolTipText = "Reset settings to default values";
             this.resetSettingsAction.Execute += new System.EventHandler(this.resetSettingsAction_Execute);
             // 
+            // undoAction
+            // 
+            this.undoAction.Enabled = false;
+            this.undoAction.Image = global::LevelEditor.Properties.Resources.Edit_UndoHS;
+            this.undoAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoAction.Text = "Undo";
+            this.undoAction.ToolTipText = "Undo last action";
+            this.undoAction.Execute += new System.EventHandler(this.undoAction_Execute);
+            this.undoAction.Update += new System.EventHandler(this.undoAction_Update);
+            // 
             // addPreviewObjectAction
             // 
             this.addPreviewObjectAction.CheckOnClick = true;
@@ -2120,31 +2141,14 @@ namespace LevelEditor
             this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
             this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
             // 
-            // undoAction
-            // 
-            this.undoAction.Enabled = false;
-            this.undoAction.Image = global::LevelEditor.Properties.Resources.Edit_UndoHS;
-            this.undoAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoAction.Text = "Undo";
-            this.undoAction.ToolTipText = "Undo last action";
-            // 
             // redoAction
             // 
             this.redoAction.Enabled = false;
             this.redoAction.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
             this.redoAction.Text = "Redo";
             this.redoAction.ToolTipText = "Redo last undone action";
-            // 
-            // toolStripButton14
-            // 
-            this.actionList.SetAction(this.toolStripButton14, this.redoAction);
-            this.toolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton14.Enabled = false;
-            this.toolStripButton14.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton14.Text = "Redo";
+            this.redoAction.Execute += new System.EventHandler(this.redoAction_Execute);
+            this.redoAction.Update += new System.EventHandler(this.redoAction_Update);
             // 
             // MainForm
             // 
