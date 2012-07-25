@@ -501,9 +501,13 @@ namespace LevelEditor
                         if (mouseEvent == MouseEvents.Click)
                         {
                             Fixture foundFixture = levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
-                            if (foundFixture!=null)
+                            if (foundFixture != null)
                             {
                                 propertyGrid.SelectedObject = foundFixture.Body;
+                            }
+                            else
+                            {
+                                propertyGrid.SelectedObject = null;
                             }
                         }
                         break;
