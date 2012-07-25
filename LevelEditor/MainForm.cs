@@ -78,12 +78,10 @@ namespace LevelEditor
             _commandManager.AddCommand(new SimulationSpeedDecreaseCommand(_objectLevelManager.Simulator));
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void InitializeAfterLoad()
         {
             _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
-
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
-
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
 
             //load assetCreator Materials
@@ -116,8 +114,33 @@ namespace LevelEditor
             }
 
             InitializeCommandManager();
-
             PopulateDebugViewMenu();
+        }
+
+        /// <summary>
+        /// Загружает общие для формы и её элементов настройки.
+        /// </summary>
+        private void LoadSettings()
+        {
+
+        }
+
+        /// <summary>
+        /// Сохраняет общие для формы и её элементов настройки.
+        /// </summary>
+        private void SaveSettings()
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            InitializeAfterLoad();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -547,7 +570,5 @@ namespace LevelEditor
 
 
         #endregion
-
-        
     }
 }
