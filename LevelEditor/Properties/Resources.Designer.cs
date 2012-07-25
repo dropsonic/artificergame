@@ -88,6 +88,20 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Edit_RedoHS {
+            get {
+                object obj = ResourceManager.GetObject("Edit_RedoHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Edit_UndoHS {
+            get {
+                object obj = ResourceManager.GetObject("Edit_UndoHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Erase {
             get {
                 object obj = ResourceManager.GetObject("Erase", resourceCulture);
