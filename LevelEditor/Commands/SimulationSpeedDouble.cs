@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LevelEditor.Commands
 {
-    class SimulationSpeedDouble
+    public class SimulationSpeedDouble
     {
         Simulator _simulator;
 
