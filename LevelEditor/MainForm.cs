@@ -375,6 +375,7 @@ namespace LevelEditor
         }
         #endregion
 
+        #region UpdateULPoint
         private void UpdateAbsoluteULPoint(object sender)
         {
             levelScreen.AbsoluteULPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
@@ -389,6 +390,7 @@ namespace LevelEditor
         {
             UpdateAbsoluteULPoint(sender);
         }
+        #endregion
 
         #region Actions
         bool _simulateActionState = false;
