@@ -50,25 +50,35 @@ namespace LevelEditor.Commands
 
         public void Undo()
         {
-            ICommand command = _executedCommandList[_currentCommandIndex];
-            try
+            if (CanUndo)
             {
-                command.Unexecute();
-                _currentCommandIndex--;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(string.Format("Command {0} have not unexecuted", command.Name), ex);
+                ICommand command = _executedCommandList[_currentCommandIndex];
+                try
+                {
+                    command.Unexecute();
+                    _currentCommandIndex--;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("Command {0} have not unexecuted", command.Name), ex);
+                }
             }
         }
 
         public void Redo()
         {
-            if(_currentCommandIndex < _executedCommandList.Count-1)
+            if (CanRedo)
                 Execute(_executedCommandList[_currentCommandIndex+1]);
         }
 
+        public bool CanUndo
+        {
+            get { return _currentCommandIndex > 0; }
+        }
 
-
+        public bool CanRedo
+        {
+            get { return _currentCommandIndex < _executedCommandList.Count - 1; }
+        }
     }
 }
