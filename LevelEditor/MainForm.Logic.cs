@@ -86,75 +86,6 @@ namespace LevelEditor
             }
         }
 
-        //command
-        /// <summary>
-        /// Загружает custom-материал.
-        /// </summary>
-        private void LoadMaterial()
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-
-            fileDialog.Title = "Load Material";
-
-            fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
-                                "All Files (*.*)|*.*";
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    Cursor = Cursors.WaitCursor;
-
-                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
-                    string sourceFile = fileDialog.FileName;
-                    string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
-
-                    File.Copy(sourceFile, destFile);
-                    _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(destFile));
-                    materialBox.Items.Add(filename);
-                }
-                finally
-                {
-                    Cursor = Cursors.Arrow;
-                }
-            }
-        }
-        //command
-        /// <summary>
-        /// Загружает текстуру для создания формы.
-        /// </summary>
-        private void LoadShape()
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-
-            fileDialog.Title = "Load Shape";
-
-            fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
-                                "All Files (*.*)|*.*";
-
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    Cursor = Cursors.WaitCursor;
-
-                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
-                    string sourceFile = fileDialog.FileName;
-                    string destFile = "Content\\" + ContentService.GetShape(Path.GetFileName(fileDialog.FileName));
-
-                    File.Copy(sourceFile, destFile);
-                    _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(destFile));
-                    shapeFromTextureBox.Items.Add(filename);
-                }
-                finally
-                {
-                    Cursor = Cursors.Arrow;
-                }
-            }
-        }
-
-                
-
         /// <summary>
         /// Переключает видимость вкладки параметров фигуры в зависимости от типа фигуры.
         /// </summary>
@@ -200,6 +131,74 @@ namespace LevelEditor
         {
             return !(side < radius * 2);
         }
+
+        #region Load Dialogs
+        /// <summary>
+        /// Загружает custom-материал.
+        /// </summary>
+        private void LoadMaterial()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            fileDialog.Title = "Load Material";
+
+            fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
+                                "All Files (*.*)|*.*";
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
+
+                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string sourceFile = fileDialog.FileName;
+                    string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
+
+                    File.Copy(sourceFile, destFile);
+                    _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(destFile));
+                    materialBox.Items.Add(filename);
+                }
+                finally
+                {
+                    Cursor = Cursors.Arrow;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Загружает текстуру для создания формы.
+        /// </summary>
+        private void LoadShape()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            fileDialog.Title = "Load Shape";
+
+            fileDialog.Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|" +
+                                "All Files (*.*)|*.*";
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    Cursor = Cursors.WaitCursor;
+
+                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string sourceFile = fileDialog.FileName;
+                    string destFile = "Content\\" + ContentService.GetShape(Path.GetFileName(fileDialog.FileName));
+
+                    File.Copy(sourceFile, destFile);
+                    _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(destFile));
+                    shapeFromTextureBox.Items.Add(filename);
+                }
+                finally
+                {
+                    Cursor = Cursors.Arrow;
+                }
+            }
+        }
+        #endregion
 
         #region Status
         private enum StatusType
