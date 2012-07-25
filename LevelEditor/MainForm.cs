@@ -154,12 +154,21 @@ namespace LevelEditor
         {
             Properties.Settings settings = Properties.Settings.Default;
 
-            settings.MainFormLocation = this.Location;
-            settings.MainFormWindowState = this.WindowState;
+            if (this.Location.X < 0 || this.Location.Y < 0)
+                settings.MainFormLocation = new System.Drawing.Point(0, 0);
+            else
+                settings.MainFormLocation = this.Location;
+
+            if (this.WindowState == FormWindowState.Minimized)
+                settings.MainFormWindowState = FormWindowState.Normal;
+            else
+                settings.MainFormWindowState = this.WindowState;
+
             if (this.WindowState == FormWindowState.Normal)
                 settings.MainFormSize = this.Size;
             else
                 settings.MainFormSize = this.RestoreBounds.Size;
+
             settings.mainToolStripLocation = mainToolStrip.Location;
             settings.mainToolStripParentName = GetToolStripParentName(mainToolStrip);
             settings.toolsToolStripLocation = toolsToolStrip.Location;
@@ -692,26 +701,27 @@ namespace LevelEditor
             LoadSettings();
         }
 
-        private void undoAction_Update(object sender, EventArgs e)
-        {
-            undoAction.Enabled = _commandManager.CanUndo;
-        }
-
         private void undoAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Undo();
         }
 
-        private void redoAction_Update(object sender, EventArgs e)
+        private void undoAction_Update(object sender, EventArgs e)
         {
-            redoAction.Enabled = _commandManager.CanRedo;
+            if (undoAction.Enabled != _commandManager.CanUndo)
+                undoAction.Enabled = _commandManager.CanUndo;
         }
 
         private void redoAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Redo();
         }
+
+        private void redoAction_Update(object sender, EventArgs e)
+        {
+            if (redoAction.Enabled != _commandManager.CanRedo)
+                redoAction.Enabled = _commandManager.CanRedo;
+        }
         #endregion
-       
     }
 }

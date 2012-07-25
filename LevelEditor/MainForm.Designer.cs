@@ -172,12 +172,12 @@ namespace LevelEditor
             this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.resetSettingsAction = new Crad.Windows.Forms.Actions.Action();
             this.undoAction = new Crad.Windows.Forms.Actions.Action();
+            this.redoAction = new Crad.Windows.Forms.Actions.Action();
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
-            this.redoAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -2103,6 +2103,15 @@ namespace LevelEditor
             this.undoAction.Execute += new System.EventHandler(this.undoAction_Execute);
             this.undoAction.Update += new System.EventHandler(this.undoAction_Update);
             // 
+            // redoAction
+            // 
+            this.redoAction.Enabled = false;
+            this.redoAction.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
+            this.redoAction.Text = "Redo";
+            this.redoAction.ToolTipText = "Redo last undone action";
+            this.redoAction.Execute += new System.EventHandler(this.redoAction_Execute);
+            this.redoAction.Update += new System.EventHandler(this.redoAction_Update);
+            // 
             // addPreviewObjectAction
             // 
             this.addPreviewObjectAction.CheckOnClick = true;
@@ -2140,15 +2149,6 @@ namespace LevelEditor
             this.editCurrentObjectAction.Text = "Edit current object";
             this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
             this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
-            // 
-            // redoAction
-            // 
-            this.redoAction.Enabled = false;
-            this.redoAction.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
-            this.redoAction.Text = "Redo";
-            this.redoAction.ToolTipText = "Redo last undone action";
-            this.redoAction.Execute += new System.EventHandler(this.redoAction_Execute);
-            this.redoAction.Update += new System.EventHandler(this.redoAction_Update);
             // 
             // MainForm
             // 
