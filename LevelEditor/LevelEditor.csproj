@@ -181,6 +181,10 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\addPreviewObject.png" />
+    <None Include="Resources\normalSpeed.png" />
+    <None Include="Resources\halfSpeed.png" />
+    <None Include="Resources\doubleSpeed.png" />
     <None Include="Resources\StopHS.png" />
     <None Include="Resources\PauseHS.png" />
     <None Include="Resources\PlayHS.png" />

@@ -345,8 +345,8 @@ namespace LevelEditor
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            //if (placeObjectCheck.Checked)
-            //    _objectLevelManager.AddPreviewObject();
+            if (addPreviewObjectAction.Checked)
+                _commandManager.Execute("AddPreviewObject");
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
@@ -496,6 +496,11 @@ namespace LevelEditor
                 pauseSimulationAction.Text = "Pause";
                 pauseSimulationAction.ToolTipText = "Pause simulation";
             }
+        }
+
+        private void addPreviewObjectAction_Execute(object sender, EventArgs e)
+        {
+            
         }
         #endregion
     }

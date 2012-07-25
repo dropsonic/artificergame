@@ -88,7 +88,7 @@ namespace LevelEditor
 
         void SetCurrentObject()
         {
-            if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
+            if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null && addPreviewObjectAction.Checked)
             {
                 levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
             }

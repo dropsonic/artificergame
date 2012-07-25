@@ -60,6 +60,34 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap addPreviewObject {
+            get {
+                object obj = ResourceManager.GetObject("addPreviewObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap doubleSpeed {
+            get {
+                object obj = ResourceManager.GetObject("doubleSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap halfSpeed {
+            get {
+                object obj = ResourceManager.GetObject("halfSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap normalSpeed {
+            get {
+                object obj = ResourceManager.GetObject("normalSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PauseHS {
             get {
                 object obj = ResourceManager.GetObject("PauseHS", resourceCulture);
