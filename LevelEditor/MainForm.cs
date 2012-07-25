@@ -469,7 +469,6 @@ namespace LevelEditor
                     {
                         case MouseEvents.Down:
                             {
-                                _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
                                 _objectLevelManager.Simulator.CreateMouseJoint();
                                 levelPage.Focus();
                                 break;
