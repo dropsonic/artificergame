@@ -25,7 +25,7 @@ namespace LevelEditor
     {
         enum MouseToolState
         {
-            Default, PlaceObject, MouseJoint, SelectObjectPart, SelectObject
+            Default, PlaceObject, MouseJoint, SelectObjectPart, SelectObject, EditPreviewObject
         }
 
         enum MouseEvents
@@ -92,6 +92,9 @@ namespace LevelEditor
                     FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, _objectLevelManager.PreviewObject[0].Body);
                     _objectLevelManager.PreviewObject[0].Sprite = new Sprite(previewTexture);
                     previewScreen.PreviewGameObject = _objectLevelManager.PreviewObject[0];
+                    
+                    editCurrentObjectAction.Checked = true;
+                    SetMouseToolButtonsState(editCurrentObjectAction);
                 }
             }
         }
@@ -154,6 +157,11 @@ namespace LevelEditor
                 _levelScreenCursor = Cursors.HSplit;
                 _mouseToolState = MouseToolState.MouseJoint;
             }
+            else if (editCurrentObjectAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Arrow;
+                _mouseToolState = MouseToolState.EditPreviewObject;
+            }
             else
             {
                 _levelScreenCursor = Cursors.Arrow;
@@ -164,7 +172,7 @@ namespace LevelEditor
         private void SetMouseToolButtonsState(Crad.Windows.Forms.Actions.Action toolButton)
         {
             bool tempCheck = toolButton.Checked;
-            selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
+            editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
             toolButton.Checked = tempCheck;
 
             HandlePreviewDisplay();
@@ -189,6 +197,10 @@ namespace LevelEditor
             else
             {
                 levelScreen.PreviewGameObject = null;
+            }
+            if (editCurrentObjectAction.Checked)
+            {
+                propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             }
         }
 

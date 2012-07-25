@@ -459,6 +459,7 @@ namespace LevelEditor
 
         private void HandleLevelScreenMouseInput(MouseEvents mouseEvent,MouseEventArgs args)
         {
+            //TODO: для каждого типа своя ф-ия с передачей mouseEvent
             switch (_mouseToolState)
             {
                 case MouseToolState.Default:
@@ -483,20 +484,12 @@ namespace LevelEditor
                                 _objectLevelManager.Simulator.UpdateMouseJoint();
                                 break;
                             }
-
                     }
                     break;
                 case MouseToolState.PlaceObject:
                     {
-                        
                         if (mouseEvent == MouseEvents.Click)
                             _commandManager.Execute("AddPreviewObject");
-                        /*
-                        if (selectObjectPartAction.Checked)
-                        {
-                            levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
-                        }
-                         */ 
                         break;
                     }
 
@@ -504,7 +497,17 @@ namespace LevelEditor
                     break;
 
                 case MouseToolState.SelectObjectPart:
-                    break;
+                    {
+                        if (mouseEvent == MouseEvents.Click)
+                        {
+                            Fixture foundFixture = levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
+                            if (foundFixture!=null)
+                            {
+                                propertyGrid.SelectedObject = foundFixture.Body;
+                            }
+                        }
+                        break;
+                    }
             }
         }
 
@@ -603,9 +606,15 @@ namespace LevelEditor
         {
             SetMouseToolButtonsState(selectObjectAction);
         }
+
         private void useMouseJointAction_Execute(object sender, EventArgs e)
         {
             SetMouseToolButtonsState(useMouseJointAction);
+        }
+
+        private void editCurrentObjectAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(editCurrentObjectAction);
         }
 
 
@@ -670,7 +679,6 @@ namespace LevelEditor
             LoadSettings();
         }
         #endregion
-
-        
+       
     }
 }
