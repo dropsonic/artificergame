@@ -1936,6 +1936,7 @@ namespace LevelEditor
             this.simulationSpeedHalfAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
             this.simulationSpeedHalfAction.Text = "0.50x";
             this.simulationSpeedHalfAction.ToolTipText = "Select half simulation speed";
+            this.simulationSpeedHalfAction.Execute += new System.EventHandler(this.simulationSpeedHalfAction_Execute);
             // 
             // simulationSpeedNormalAction
             // 
@@ -1946,6 +1947,7 @@ namespace LevelEditor
             this.simulationSpeedNormalAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
             this.simulationSpeedNormalAction.Text = "1.00x";
             this.simulationSpeedNormalAction.ToolTipText = "Select normal simulation speed";
+            this.simulationSpeedNormalAction.Execute += new System.EventHandler(this.simulationSpeedNormalAction_Execute);
             // 
             // simulationSpeedDoubleAction
             // 
@@ -1954,6 +1956,7 @@ namespace LevelEditor
             this.simulationSpeedDoubleAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
             this.simulationSpeedDoubleAction.Text = "2.00x";
             this.simulationSpeedDoubleAction.ToolTipText = "Select double simulation speed";
+            this.simulationSpeedDoubleAction.Execute += new System.EventHandler(this.simulationSpeedDoubleAction_Execute);
             // 
             // simulationSpeedIncreaseAction
             // 
@@ -1961,6 +1964,7 @@ namespace LevelEditor
             this.simulationSpeedIncreaseAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
             this.simulationSpeedIncreaseAction.Text = "Increase by 0.25";
             this.simulationSpeedIncreaseAction.ToolTipText = "Increase simulation speed by 0.25";
+            this.simulationSpeedIncreaseAction.Execute += new System.EventHandler(this.simulationSpeedIncreaseAction_Execute);
             // 
             // simulationSpeedDecreaseAction
             // 
@@ -1968,6 +1972,7 @@ namespace LevelEditor
             this.simulationSpeedDecreaseAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
             this.simulationSpeedDecreaseAction.Text = "Decrease by 0.25";
             this.simulationSpeedDecreaseAction.ToolTipText = "Decrease simulation speed by 0.25";
+            this.simulationSpeedDecreaseAction.Execute += new System.EventHandler(this.simulationSpeedDecreaseAction_Execute);
             // 
             // addPreviewObjectAction
             // 

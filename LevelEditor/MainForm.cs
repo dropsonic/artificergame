@@ -59,10 +59,18 @@ namespace LevelEditor
         private void InitializeCommandManager()
         {
             _commandManager = new CommandManager();
+
             _commandManager.AddCommand(new AddPreviewObjectCommand(_objectLevelManager));
+
             _commandManager.AddCommand(new StartSimulationCommand(_objectLevelManager.Simulator));
             _commandManager.AddCommand(new PauseSimulationCommand(_objectLevelManager.Simulator));
             _commandManager.AddCommand(new StopSimulationCommand(_objectLevelManager.Simulator));
+
+            _commandManager.AddCommand(new SimulationSpeedHalfCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedNormalCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedDoubleCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedIncreaseCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedDecreaseCommand(_objectLevelManager.Simulator));
         }
 
 
@@ -366,29 +374,6 @@ namespace LevelEditor
             propertyGrid.Refresh();
         }
 
-        /*private void simulateMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_objectLevelManager.Simulator.State == SimulationState.Stopped && _objectLevelManager.Simulator.SimulationSpeed <= 0)
-            {
-                simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
-                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
-            }
-            else
-            {
-                switch (_objectLevelManager.Simulator.State)
-                {
-                    case SimulationState.Paused:
-                    case SimulationState.Stopped:
-                        _objectLevelManager.Simulator.Start();
-                        break;
-                    case SimulationState.Simulation:
-                        _objectLevelManager.Simulator.Stop();
-                        break;
-                }
-                SetDebugViewMenu();
-            }
-        }*/
-
         /// <summary>
         /// Метод-хелпер для изменения состояния checked элементов меню изменения скорости симуляции.
         /// </summary>
@@ -397,11 +382,6 @@ namespace LevelEditor
             simulationSpeedHalfMenuItem.Checked = halfItem;
             simulationSpeedNormalMenuItem.Checked = normalItem;
             simulationSpeedDoubleMenuItem.Checked = doubleItem;
-        }
-
-        private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
@@ -448,6 +428,7 @@ namespace LevelEditor
 
             //Меняем уровень, который отрисовывается
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
+            SetDebugViewMenu();
         }
 
         bool pauseSimulationActionState = false;
@@ -488,6 +469,34 @@ namespace LevelEditor
             }
             else
                 levelScreen.CurrentGameObject = null;
+        }
+
+        private void simulationSpeedHalfAction_Execute(object sender, EventArgs e)
+        {
+            simulationSpeedNormalAction.Checked = false;
+            simulationSpeedDoubleAction.Checked = false;
+        }
+
+        private void simulationSpeedNormalAction_Execute(object sender, EventArgs e)
+        {
+            simulationSpeedHalfAction.Checked = false;
+            simulationSpeedDoubleAction.Checked = false;
+        }
+
+        private void simulationSpeedDoubleAction_Execute(object sender, EventArgs e)
+        {
+            simulationSpeedHalfAction.Checked = false;
+            simulationSpeedNormalAction.Checked = false;
+        }
+
+        private void simulationSpeedIncreaseAction_Execute(object sender, EventArgs e)
+        {
+
+        }
+
+        private void simulationSpeedDecreaseAction_Execute(object sender, EventArgs e)
+        {
+
         }
         #endregion
     }

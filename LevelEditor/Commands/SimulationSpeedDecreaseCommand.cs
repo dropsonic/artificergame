@@ -5,21 +5,21 @@ using System.Text;
 
 namespace LevelEditor.Commands
 {
-    public class SimulationSpeedDouble
+    public class SimulationSpeedDecreaseCommand : ICommand
     {
         Simulator _simulator;
 
-        public SimulationSpeedDouble(Simulator simulator)
+        public SimulationSpeedDecreaseCommand(Simulator simulator)
         {
             _simulator = simulator;
         }
 
         public string Name
-        { get { return "SimulationSpeedDouble"; } }
+        { get { return "SimulationSpeedDecrease"; } }
 
         public void Execute()
         {
-            _simulator.SimulationSpeed = 2.0f;
+            _simulator.SimulationSpeed -= 0.25f;
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace LevelEditor.Commands
 {
-    public class SimulationSpeedHalf
+    public class SimulationSpeedHalfCommand : ICommand
     {
         Simulator _simulator;
 
-        public SimulationSpeedHalf(Simulator simulator)
+        public SimulationSpeedHalfCommand(Simulator simulator)
         {
             _simulator = simulator;
         }

@@ -57,14 +57,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\SimulationSpeedDecrease.cs" />
-    <Compile Include="Commands\SimulationSpeedIncrease.cs" />
-    <Compile Include="Commands\SimulationSpeedDouble.cs" />
-    <Compile Include="Commands\SimulationSpeedHalf.cs" />
+    <Compile Include="Commands\SimulationSpeedDecreaseCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedIncreaseCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedDoubleCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedHalfCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\AddPreviewObjectCommand.cs" />
     <Compile Include="Commands\PauseSimulationCommand.cs" />
-    <Compile Include="Commands\SimulationSpeedNormal.cs" />
+    <Compile Include="Commands\SimulationSpeedNormalCommand.cs" />
     <Compile Include="Commands\StartSimulationCommand.cs" />
     <Compile Include="Commands\StopSimulationCommand.cs" />
     <Compile Include="ContentBuilder.cs" />
