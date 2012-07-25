@@ -74,8 +74,6 @@ namespace LevelEditor
         {
             _commandManager = new CommandManager();
 
-            _commandManager.AddCommand(new AddPreviewObjectCommand(_objectLevelManager));
-
             _commandManager.AddCommand(new StartSimulationCommand(_objectLevelManager.Simulator));
             _commandManager.AddCommand(new PauseSimulationCommand(_objectLevelManager.Simulator));
             _commandManager.AddCommand(new StopSimulationCommand(_objectLevelManager.Simulator));
@@ -506,7 +504,9 @@ namespace LevelEditor
                 case MouseToolState.PlaceObject:
                     {
                         if (mouseEvent == MouseEvents.Click)
-                            _commandManager.Execute("AddPreviewObject");
+                        {
+                            _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, _objectLevelManager.Simulator.MousePosition));
+                        }
                         break;
                     }
 

@@ -18,17 +18,8 @@ namespace LevelEditor.Commands
 
         public void Execute(ICommand command)
         {
-            if (!_commands.ContainsKey(command.Name))
-                AddCommand(command);
-            else
-                Execute(command.Name);
-        }
-
-        public void Execute(string commandName)
-        {
             try
             {
-                ICommand command = _commands[commandName];
                 command.Execute();
                 //Если это команда, поддерживающая механизм undo/redo, то добавляем её в список выполненных команд
                 if (command is IUndoRedoCommand)
@@ -42,13 +33,22 @@ namespace LevelEditor.Commands
                     _currentCommandIndex++;
                 }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Command {0} executed  incorrectly", command.Name), ex);
+            }
+        }
+
+        public void Execute(string commandName)
+        {
+            try
+            {
+                ICommand command = _commands[commandName];
+                Execute(command);
+            }
             catch (KeyNotFoundException ex)
             {
                 throw new ArgumentException(String.Format("Command with name \"{0}\" not found.", commandName), ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(string.Format("Command {0} executed  incorrectly", commandName), ex);
             }
         }
 

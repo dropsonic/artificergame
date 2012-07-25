@@ -10,12 +10,22 @@ namespace LevelEditor.Commands
 {
     public class AddPreviewObjectCommand : ICommand, IUndoRedoCommand
     {
-        private ObjectLevelManager _objectLevelManager;
-        private GameObject _object;
+        private GameObject _objectToAdd;
+        private GameObject _addedObject;
+        private GameLevel _level;
+        private Vector2 _position;
 
-        public AddPreviewObjectCommand(ObjectLevelManager objectLevelManager)
+        /// <summary>
+        /// Создаёт новый экземпляр AddPreviewObjectCommand.
+        /// </summary>
+        /// <param name="objectToAdd">Объект для добавления.</param>
+        /// <param name="level">Уровень, в который необходимо добавить объект.</param>
+        /// <param name="position">Позиция точки Origin объекта в уровне.</param>
+        public AddPreviewObjectCommand(GameObject objectToAdd, GameLevel level, Vector2 position)
         {
-            _objectLevelManager = objectLevelManager;
+            _objectToAdd = objectToAdd;
+            _level = level;
+            _position = position;
         }
 
         public string Name
@@ -25,18 +35,16 @@ namespace LevelEditor.Commands
 
         public void Execute()
         {
-            foreach (GameObjectPart part in _objectLevelManager.PreviewObject)
+            foreach (GameObjectPart part in _objectToAdd)
                 if (part.Sprite.Texture == null)
                     throw new NullReferenceException("Texture cannot be null.");
-
-            Simulator simulator = _objectLevelManager.Simulator;
-            _object = _objectLevelManager.PreviewObject.CopyObjectToWorld(simulator.GameLevel.World, ConvertUnits.ToSimUnits(simulator.MousePosition));
-            simulator.GameLevel.AddObject(_object);
+            _addedObject = _objectToAdd.CopyObjectToWorld(_level.World, ConvertUnits.ToSimUnits(_position));
+            _level.AddObject(_addedObject);
         }
 
         public void Unexecute()
         {
-            _objectLevelManager.Simulator.GameLevel.RemoveObject(_object);
+            _level.RemoveObject(_addedObject);
         }
     }
 }
