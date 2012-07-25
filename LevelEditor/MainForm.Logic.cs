@@ -23,6 +23,16 @@ namespace LevelEditor
 
     public partial class MainForm : Form
     {
+        enum MouseToolState
+        {
+            Default, PlaceObject, MouseJoint, SelectObjectPart, SelectObject
+        }
+
+        enum MouseEvents
+        {
+            Click,Up,Down,Move
+        }
+        
         string GetParent(string path, int nesting)
         {
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
@@ -122,14 +132,41 @@ namespace LevelEditor
             }
         }
 
-        private void SetLevelScreenCursor()
+        private void ChangeMouseToolState()
         {
             if (selectObjectPartAction.Checked)
+            {
                 _levelScreenCursor = Cursors.Hand;
+                _mouseToolState = MouseToolState.SelectObjectPart;
+            }
+            else if (selectObjectAction.Checked)
+            {
+                _levelScreenCursor = Cursors.IBeam;
+                _mouseToolState = MouseToolState.SelectObject;
+            }
             else if (addPreviewObjectAction.Checked)
+            {
                 _levelScreenCursor = Cursors.Cross;
+                _mouseToolState = MouseToolState.PlaceObject;
+            }
+            else if (useMouseJointAction.Checked)
+            {
+                _levelScreenCursor = Cursors.HSplit;
+                _mouseToolState = MouseToolState.MouseJoint;
+            }
             else
+            {
                 _levelScreenCursor = Cursors.Arrow;
+                _mouseToolState = MouseToolState.Default;
+            }
+        }
+
+        private void SetMouseToolButtonsState(Crad.Windows.Forms.Actions.Action toolButton)
+        {
+            bool tempCheck = toolButton.Checked;
+            selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
+            toolButton.Checked = tempCheck;
+            ChangeMouseToolState();
         }
 
         private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)

@@ -30,6 +30,7 @@ namespace LevelEditor
         CommandManager _commandManager;
         AssetCreator _assetCreator;
         Cursor _levelScreenCursor = Cursors.Arrow;
+        MouseToolState _mouseToolState;
 
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
@@ -438,30 +439,76 @@ namespace LevelEditor
         {
             levelScreen.MouseState = e;
             _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
-            _objectLevelManager.Simulator.UpdateMouseJoint();
+            HandleLevelScreenMouseInput(MouseEvents.Move, e);
         }
 
         private void levelScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
-            _objectLevelManager.Simulator.CreateMouseJoint();
-            levelPage.Focus();
+            HandleLevelScreenMouseInput(MouseEvents.Down, e);
         }
 
         private void levelScreen_MouseUp(object sender, MouseEventArgs e)
         {
-            _objectLevelManager.Simulator.RemoveMouseJoint();
+            HandleLevelScreenMouseInput(MouseEvents.Up, e);
         }
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
         {
-            if (addPreviewObjectAction.Checked)
-                _commandManager.Execute("AddPreviewObject");
-            if (selectObjectPartAction.Checked)
+            HandleLevelScreenMouseInput(MouseEvents.Click, e);
+        }
+
+        private void HandleLevelScreenMouseInput(MouseEvents mouseEvent,MouseEventArgs args)
+        {
+            switch (_mouseToolState)
             {
-                levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
+                case MouseToolState.Default:
+                    break;
+
+                case MouseToolState.MouseJoint:
+                    switch (mouseEvent)
+                    {
+                        case MouseEvents.Down:
+                            {
+                                _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+                                _objectLevelManager.Simulator.CreateMouseJoint();
+                                levelPage.Focus();
+                                break;
+                            }
+                        case MouseEvents.Up:
+                            {
+                                _objectLevelManager.Simulator.RemoveMouseJoint();
+                                break;
+                            }
+                        case MouseEvents.Move:
+                            {
+                                _objectLevelManager.Simulator.UpdateMouseJoint();
+                                break;
+                            }
+
+                    }
+                    break;
+                case MouseToolState.PlaceObject:
+                    {
+                        
+                        if (mouseEvent == MouseEvents.Click)
+                            _commandManager.Execute("AddPreviewObject");
+                        /*
+                        if (selectObjectPartAction.Checked)
+                        {
+                            levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
+                        }
+                         */ 
+                        break;
+                    }
+
+                case MouseToolState.SelectObject:
+                    break;
+
+                case MouseToolState.SelectObjectPart:
+                    break;
             }
         }
+
         #endregion
 
         #region UpdateULPoint
@@ -562,14 +609,21 @@ namespace LevelEditor
             {
                 levelScreen.PreviewGameObject = null;
             }
-            SetLevelScreenCursor();
-            
-
+            SetMouseToolButtonsState(addPreviewObjectAction);
         }
 
         private void selectObjectPartAction_Execute(object sender, EventArgs e)
         {
-            SetLevelScreenCursor();
+            SetMouseToolButtonsState(selectObjectPartAction);
+        }
+
+        private void selectObjectAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(selectObjectAction);
+        }
+        private void useMouseJointAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(useMouseJointAction);
         }
 
 
@@ -634,5 +688,7 @@ namespace LevelEditor
             LoadSettings();
         }
         #endregion
+
+        
     }
 }
