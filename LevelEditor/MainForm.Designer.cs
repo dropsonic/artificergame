@@ -178,6 +178,9 @@ namespace LevelEditor
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1600,7 +1603,7 @@ namespace LevelEditor
             this.objectScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(829, 752);
+            this.objectScreen.Size = new System.Drawing.Size(829, 727);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 
@@ -1618,6 +1621,7 @@ namespace LevelEditor
             this.menuStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
             this.levelToolStripMenuItem,
             this.resoursesToolStripMenuItem,
             this.simulationToolStripMenuItem,
@@ -2107,6 +2111,7 @@ namespace LevelEditor
             // 
             this.redoAction.Enabled = false;
             this.redoAction.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
+            this.redoAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
             this.redoAction.Text = "Redo";
             this.redoAction.ToolTipText = "Redo last undone action";
             this.redoAction.Execute += new System.EventHandler(this.redoAction_Execute);
@@ -2149,6 +2154,35 @@ namespace LevelEditor
             this.editCurrentObjectAction.Text = "Edit current object";
             this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
             this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.undoToolStripMenuItem, this.undoAction);
+            this.undoToolStripMenuItem.Enabled = false;
+            this.undoToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.Edit_UndoHS;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.redoToolStripMenuItem, this.redoAction);
+            this.redoToolStripMenuItem.Enabled = false;
+            this.redoToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
             // 
             // MainForm
             // 
@@ -2388,6 +2422,9 @@ namespace LevelEditor
         private Crad.Windows.Forms.Actions.Action undoAction;
         private Crad.Windows.Forms.Actions.Action redoAction;
         private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }
 
