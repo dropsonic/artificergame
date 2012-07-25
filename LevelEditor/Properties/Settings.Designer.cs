@@ -22,5 +22,65 @@ namespace LevelEditor.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point MainFormLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["MainFormLocation"]));
+            }
+            set {
+                this["MainFormLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1460, 899")]
+        public global::System.Drawing.Size MainFormSize {
+            get {
+                return ((global::System.Drawing.Size)(this["MainFormSize"]));
+            }
+            set {
+                this["MainFormSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10, 24")]
+        public global::System.Drawing.Point mainToolBarLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["mainToolBarLocation"]));
+            }
+            set {
+                this["mainToolBarLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("179, 24")]
+        public global::System.Drawing.Point simulationToolBarLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["simulationToolBarLocation"]));
+            }
+            set {
+                this["simulationToolBarLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("121, 24")]
+        public global::System.Drawing.Point toolsToolBarLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["toolsToolBarLocation"]));
+            }
+            set {
+                this["toolsToolBarLocation"] = value;
+            }
+        }
     }
 }
