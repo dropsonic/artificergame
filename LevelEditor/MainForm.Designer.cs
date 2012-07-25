@@ -142,6 +142,7 @@ namespace LevelEditor
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.simulationToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -162,7 +163,6 @@ namespace LevelEditor
             this.simulationSpeedIncreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
@@ -1772,7 +1772,7 @@ namespace LevelEditor
             this.toolStripButton9});
             this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
             this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.Size = new System.Drawing.Size(89, 25);
+            this.mainToolStrip.Size = new System.Drawing.Size(58, 25);
             this.mainToolStrip.TabIndex = 6;
             // 
             // toolStripButton8
@@ -1785,6 +1785,16 @@ namespace LevelEditor
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton8.Text = "Place object";
+            // 
+            // toolStripButton9
+            // 
+            this.actionList.SetAction(this.toolStripButton9, this.selectObjectPartAction);
+            this.toolStripButton9.CheckOnClick = true;
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "Select object part";
             // 
             // simulationToolStrip
             // 
@@ -1800,9 +1810,9 @@ namespace LevelEditor
             this.toolStripButton6,
             this.simulationSpeedToolStripLabel,
             this.toolStripButton7});
-            this.simulationToolStrip.Location = new System.Drawing.Point(92, 24);
+            this.simulationToolStrip.Location = new System.Drawing.Point(61, 24);
             this.simulationToolStrip.Name = "simulationToolStrip";
-            this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
+            this.simulationToolStrip.Size = new System.Drawing.Size(249, 25);
             this.simulationToolStrip.TabIndex = 7;
             // 
             // toolStripButton1
@@ -1978,16 +1988,6 @@ namespace LevelEditor
             this.addPreviewObjectAction.Text = "Place object";
             this.addPreviewObjectAction.ToolTipText = "Place object on level";
             this.addPreviewObjectAction.Execute += new System.EventHandler(this.addPreviewObjectAction_Execute);
-            // 
-            // toolStripButton9
-            // 
-            this.actionList.SetAction(this.toolStripButton9, this.selectObjectPartAction);
-            this.toolStripButton9.CheckOnClick = true;
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton9.Text = "Select object part";
             // 
             // selectObjectPartAction
             // 
