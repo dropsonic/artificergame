@@ -207,7 +207,8 @@ namespace LevelEditor
             Ready,
             Error,
             Warning,
-            Simulation
+            Simulation,
+            Tooltip
         }
 
         private StatusType _status = StatusType.Undefined;
@@ -219,6 +220,7 @@ namespace LevelEditor
             _statusImages.Images.Add(StatusType.Error.ToString(), SystemIcons.Error);
             _statusImages.Images.Add(StatusType.Warning.ToString(), SystemIcons.Warning);
             _statusImages.Images.Add(StatusType.Simulation.ToString(), LevelEditor.Properties.Resources.simulationStatusImage);
+            _statusImages.Images.Add(StatusType.Tooltip.ToString(), SystemIcons.Information);
         }
 
         private void ShowErrorStatus(Exception ex)
@@ -280,6 +282,14 @@ namespace LevelEditor
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Warning.ToString()];
             toolStripStatusLabel.Text = message;
             _status = StatusType.Warning;
+        }
+
+        private void ShowTooltipStatus(string message)
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.BlanchedAlmond;
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Tooltip.ToString()];
+            toolStripStatusLabel.Text = message;
+            _status = StatusType.Tooltip;
         }
         #endregion
     }
