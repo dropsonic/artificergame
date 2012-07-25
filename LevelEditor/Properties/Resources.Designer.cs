@@ -88,6 +88,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Erase {
+            get {
+                object obj = ResourceManager.GetObject("Erase", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap halfSpeed {
             get {
                 object obj = ResourceManager.GetObject("halfSpeed", resourceCulture);

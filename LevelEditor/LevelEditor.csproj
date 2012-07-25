@@ -186,6 +186,7 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Erase1.png" />
     <None Include="Resources\objectPart.png" />
     <None Include="Resources\ContinueHS.png" />
     <None Include="Resources\increaseSpeed.png" />

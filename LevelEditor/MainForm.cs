@@ -626,7 +626,11 @@ namespace LevelEditor
             simulationSpeedIncDecChanged();
         }
 
-
+        private void resetSettingsAction_Execute(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            LoadSettings();
+        }
         #endregion
     }
 }
