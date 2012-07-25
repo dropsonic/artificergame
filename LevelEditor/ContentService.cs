@@ -93,9 +93,9 @@ namespace LevelEditor
             }
             //НИЧЕГО НЕ ТРОГАТЬ
             //Setup a render target to hold our final texture which will have premulitplied alpha values
-            result = new RenderTarget2D(graphicsDevice, file.Width, file.Height);
-            //graphicsDevice.Reset();
-            //result = new RenderTarget2D(graphicsDevice, file.Width, file.Height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
+            //result = new RenderTarget2D(graphicsDevice, file.Width, file.Height);
+            graphicsDevice.Reset();
+            result = new RenderTarget2D(graphicsDevice, file.Width, file.Height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
 
             graphicsDevice.SetRenderTarget(result);
             graphicsDevice.Clear(Color.Black);
