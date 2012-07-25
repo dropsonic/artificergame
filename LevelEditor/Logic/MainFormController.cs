@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LevelEditor
 {
-    public class MainFormController
+    public class ObjectLevelManager
     {
-        public MainFormController(Camera camera, GraphicsDevice graphicsDevice)
+        public ObjectLevelManager(Camera camera, GraphicsDevice graphicsDevice)
         {
             //Создаём PreviewObject
             _previewObject = new GameObject();
@@ -47,10 +47,6 @@ namespace LevelEditor
             get { return _previewObject; }
             set { _previewObject = value; }
         }
-
-        public void AddPreviewObject()
-        {
-            _simulator.GameLevel.AddObject(_previewObject.CopyObjectToWorld(_simulator.GameLevel.World, ConvertUnits.ToSimUnits(_simulator.MousePosition)));
-        }
     }
 }
+ 

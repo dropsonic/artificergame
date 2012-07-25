@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LevelEditor.Commands
 {
-    class CommandManager
+    public class CommandManager
     {
         private Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>();
         private List<ICommand> _executedCommandList = new List<ICommand>();
@@ -30,13 +30,17 @@ namespace LevelEditor.Commands
             {
                 ICommand command = _commands[commandName];
                 command.Execute();
-                //Если мы в конце списка (Redo не делалось)
-                if (_currentCommandIndex == _executedCommandList.Count - 1)
-                    _executedCommandList.Add(command);
-                else
-                    _executedCommandList[_currentCommandIndex] = command;
+                //Если это команда, поддерживающая механизм undo/redo, то добавляем её в список выполненных команд
+                if (command is IUndoRedoCommand)
+                {
+                    //Если мы в конце списка (Redo не делалось)
+                    if (_currentCommandIndex == _executedCommandList.Count - 1)
+                        _executedCommandList.Add(command);
+                    else
+                        _executedCommandList[_currentCommandIndex] = command;
 
-                _currentCommandIndex++;
+                    _currentCommandIndex++;
+                }
             }
             catch (KeyNotFoundException ex)
             {
@@ -52,7 +56,7 @@ namespace LevelEditor.Commands
         {
             if (CanUndo)
             {
-                ICommand command = _executedCommandList[_currentCommandIndex];
+                IUndoRedoCommand command = (IUndoRedoCommand)_executedCommandList[_currentCommandIndex];
                 try
                 {
                     command.Unexecute();

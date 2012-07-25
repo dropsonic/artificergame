@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\AddPreviewObject.cs" />
+    <Compile Include="Commands\AddPreviewObjectCommand.cs" />
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />

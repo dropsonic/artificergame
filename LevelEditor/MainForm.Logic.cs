@@ -77,20 +77,20 @@ namespace LevelEditor
                 }
                 if (shapeVertices != null && previewTexture != null)
                 {
-                    float? previousDensity = _controller.PreviewObject[0].Body.Density;
-                    _controller.PreviewObject[0].Body.FixtureList.Clear();
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, _controller.PreviewObject[0].Body);
-                    _controller.PreviewObject[0].Sprite = new Sprite(previewTexture);
-                    previewScreen.PreviewGameObject = _controller.PreviewObject[0];
+                    float? previousDensity = _objectLevelManager.PreviewObject[0].Body.Density;
+                    _objectLevelManager.PreviewObject[0].Body.FixtureList.Clear();
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, _objectLevelManager.PreviewObject[0].Body);
+                    _objectLevelManager.PreviewObject[0].Sprite = new Sprite(previewTexture);
+                    previewScreen.PreviewGameObject = _objectLevelManager.PreviewObject[0];
                 }
             }
         }
 
         void SetCurrentObject()
         {
-            if (_controller.PreviewObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
+            if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
             {
-                levelScreen.CurrentGameObject = _controller.PreviewObject;
+                levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
             }
             else
             {

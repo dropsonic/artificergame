@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameLogic;
 using FarseerPhysics;
+using LevelEditor.Commands;
 
 namespace LevelEditor
 {
@@ -25,10 +26,9 @@ namespace LevelEditor
 
     public partial class MainForm : Form
     {
-        MainFormController _controller;
-
+        ObjectLevelManager _objectLevelManager;
+        CommandManager _commandManager;
         AssetCreator _assetCreator;
-
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
         Dictionary<string,Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -53,16 +53,24 @@ namespace LevelEditor
 
             InitializeStatusStrip();
             ShowReadyStatus();
+
+            PopulateCommandManager();
         }
+
+        private void PopulateCommandManager()
+        {
+            _commandManager.AddCommand(new AddPreviewObjectCommand(_objectLevelManager));
+        }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _controller = new MainFormController(levelScreen.Camera, levelScreen.GraphicsDevice);
-            _controller.Simulator.SimulateChanged += controller_SimulateChanged;
+            _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _objectLevelManager.Simulator.SimulateChanged += controller_SimulateChanged;
 
-            propertyGrid.SelectedObject = _controller.PreviewObject[0].Body;
+            propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
 
-            levelScreen.GameLevel = _controller.GameLevel;
+            levelScreen.GameLevel = _objectLevelManager.GameLevel;
 
             //load assetCreator Materials
             _assetCreator = ContentService.GetContentService().AssetCreator;
@@ -316,27 +324,27 @@ namespace LevelEditor
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
             levelScreen.MouseState = e;
-            _controller.Simulator.MousePosition = levelScreen.MousePosition;
-            _controller.Simulator.UpdateMouseJoint();
+            _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+            _objectLevelManager.Simulator.UpdateMouseJoint();
         }
 
         private void levelScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            _controller.Simulator.MousePosition = levelScreen.MousePosition;
-            _controller.Simulator.CreateMouseJoint();
+            _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+            _objectLevelManager.Simulator.CreateMouseJoint();
             levelPage.Focus();
             //levelScreen.Focus();
         }
 
         private void levelScreen_MouseUp(object sender, MouseEventArgs e)
         {
-            _controller.Simulator.RemoveMouseJoint();
+            _objectLevelManager.Simulator.RemoveMouseJoint();
         }
 
         private void levelScreen_MouseClick(object sender, MouseEventArgs e)
         {
             if (placeObjectCheck.Checked)
-                _controller.AddPreviewObject();
+                _objectLevelManager.AddPreviewObject();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
@@ -357,21 +365,21 @@ namespace LevelEditor
 
         private void simulateMenuItem_Click(object sender, EventArgs e)
         {
-            if (_controller.Simulator.State == SimulationState.Stopped && _controller.Simulator.SimulationSpeed <= 0)
+            if (_objectLevelManager.Simulator.State == SimulationState.Stopped && _objectLevelManager.Simulator.SimulationSpeed <= 0)
             {
                 simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
                 ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
             }
             else
             {
-                switch (_controller.Simulator.State)
+                switch (_objectLevelManager.Simulator.State)
                 {
                     case SimulationState.Paused:
                     case SimulationState.Stopped:
-                        _controller.Simulator.Start();
+                        _objectLevelManager.Simulator.Start();
                         break;
                     case SimulationState.Simulation:
-                        _controller.Simulator.Stop();
+                        _objectLevelManager.Simulator.Stop();
                         break;
                 }
                 SetDebugViewMenu();
@@ -395,47 +403,47 @@ namespace LevelEditor
             if (sender == simulationSpeedHalfMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
-                _controller.Simulator.SimulationSpeed = 0.5f;
+                _objectLevelManager.Simulator.SimulationSpeed = 0.5f;
             }
             else if (sender == simulationSpeedNormalMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, true, false);
-                _controller.Simulator.SimulationSpeed = Simulator.NormalSimulationSpeed;
+                _objectLevelManager.Simulator.SimulationSpeed = Simulator.NormalSimulationSpeed;
             }
             else if (sender == simulationSpeedDoubleMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, true);
-                _controller.Simulator.SimulationSpeed = 2.0f;
+                _objectLevelManager.Simulator.SimulationSpeed = 2.0f;
             }
             else if (sender == simulationSpeedIncreaseMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                _controller.Simulator.SimulationSpeed += inc;
+                _objectLevelManager.Simulator.SimulationSpeed += inc;
             }
             else if (sender == simulationSpeedDecreaseMenuItem)
             {
                 ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                _controller.Simulator.SimulationSpeed -= inc;
+                _objectLevelManager.Simulator.SimulationSpeed -= inc;
             }
                     
             if (_status == StatusType.Simulation)
-                ShowSimulationStatus(_controller.Simulator.SimulationSpeed, SimulationState.Simulation);
+                ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, SimulationState.Simulation);
             else
                 ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
         }
 
         private void controller_SimulateChanged(object sender, EventArgs e)
         {
-            switch (_controller.Simulator.State)
+            switch (_objectLevelManager.Simulator.State)
             {
                 case SimulationState.Simulation:
                     simulateMenuItem.Text = "Stop simulation";
-                    ShowSimulationStatus(_controller.Simulator.SimulationSpeed, _controller.Simulator.State);
+                    ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
                     break;
 
                 case SimulationState.Paused:
                     simulateMenuItem.Text = "Continue simulation";
-                    ShowSimulationStatus(_controller.Simulator.SimulationSpeed, _controller.Simulator.State);
+                    ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
                     break;
 
                 case SimulationState.Stopped:
@@ -444,7 +452,7 @@ namespace LevelEditor
                     break;
             }
             //Меняем уровень, который отрисовывается
-            levelScreen.GameLevel = _controller.GameLevel;
+            levelScreen.GameLevel = _objectLevelManager.GameLevel;
         }
 
         private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
