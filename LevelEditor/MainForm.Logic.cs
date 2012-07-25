@@ -243,6 +243,8 @@ namespace LevelEditor
 
         private void ShowSimulationStatus(float simulationSpeed, SimulationState state)
         {
+            simulationSpeedToolStripLabel.Text = String.Format("{0:0.00}x", simulationSpeed);
+
             if (state == SimulationState.Stopped)
                 return;
 

@@ -67,6 +67,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ContinueHS {
+            get {
+                object obj = ResourceManager.GetObject("ContinueHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap decreaseSpeed {
             get {
                 object obj = ResourceManager.GetObject("decreaseSpeed", resourceCulture);

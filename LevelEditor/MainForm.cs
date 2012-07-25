@@ -394,6 +394,13 @@ namespace LevelEditor
         bool _simulateActionState = false;
         private void simulateAction_Execute(object sender, EventArgs e)
         {
+            if (!_simulateActionState && _objectLevelManager.Simulator.SimulationSpeed <= 0)
+            {
+                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
+                _commandManager.Execute("SimulationSpeedNormal");
+                return;
+            }
+
             _simulateActionState = !_simulateActionState;
             if (_simulateActionState)
             {
@@ -432,12 +439,14 @@ namespace LevelEditor
                 _commandManager.Execute("PauseSimulation");
                 pauseSimulationAction.Text = "Continue";
                 pauseSimulationAction.ToolTipText = "Continue simulation";
+                pauseSimulationAction.Image = LevelEditor.Properties.Resources.ContinueHS;
             }
             else
             {
                 _commandManager.Execute("StartSimulation");
                 pauseSimulationAction.Text = "Pause";
                 pauseSimulationAction.ToolTipText = "Pause simulation";
+                pauseSimulationAction.Image = LevelEditor.Properties.Resources.PauseHS;
             }
 
             ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
@@ -465,29 +474,40 @@ namespace LevelEditor
         private void simulationSpeedHalfAction_Execute(object sender, EventArgs e)
         {
             simulationSpeedNormalAction.Checked = false;
+            simulationSpeedHalfAction.Checked = true;
             simulationSpeedDoubleAction.Checked = false;
+            _commandManager.Execute("SimulationSpeedHalf");
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
 
         private void simulationSpeedNormalAction_Execute(object sender, EventArgs e)
         {
             simulationSpeedHalfAction.Checked = false;
+            simulationSpeedNormalAction.Checked = true;
             simulationSpeedDoubleAction.Checked = false;
+            _commandManager.Execute("SimulationSpeedNormal");
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
 
         private void simulationSpeedDoubleAction_Execute(object sender, EventArgs e)
         {
             simulationSpeedHalfAction.Checked = false;
             simulationSpeedNormalAction.Checked = false;
+            simulationSpeedDoubleAction.Checked = true;
+            _commandManager.Execute("SimulationSpeedDouble");
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
 
         private void simulationSpeedIncreaseAction_Execute(object sender, EventArgs e)
         {
-
+            _commandManager.Execute("SimulationSpeedIncrease");
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
 
         private void simulationSpeedDecreaseAction_Execute(object sender, EventArgs e)
         {
-
+            _commandManager.Execute("SimulationSpeedDecrease");
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
         }
         #endregion
     }

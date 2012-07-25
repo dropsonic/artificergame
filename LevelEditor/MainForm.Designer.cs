@@ -151,6 +151,7 @@ namespace LevelEditor
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.simulationSpeedToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
             this.simulateAction = new Crad.Windows.Forms.Actions.Action();
@@ -1794,10 +1795,11 @@ namespace LevelEditor
             this.toolStripButton5,
             this.toolStripSeparator2,
             this.toolStripButton6,
+            this.simulationSpeedToolStripLabel,
             this.toolStripButton7});
             this.simulationToolStrip.Location = new System.Drawing.Point(38, 24);
             this.simulationToolStrip.Name = "simulationToolStrip";
-            this.simulationToolStrip.Size = new System.Drawing.Size(185, 25);
+            this.simulationToolStrip.Size = new System.Drawing.Size(249, 25);
             this.simulationToolStrip.TabIndex = 7;
             // 
             // toolStripButton1
@@ -1873,6 +1875,12 @@ namespace LevelEditor
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton6.Text = "Decrease by 0.25";
+            // 
+            // simulationSpeedToolStripLabel
+            // 
+            this.simulationSpeedToolStripLabel.Name = "simulationSpeedToolStripLabel";
+            this.simulationSpeedToolStripLabel.Size = new System.Drawing.Size(33, 22);
+            this.simulationSpeedToolStripLabel.Text = "1.00x";
             // 
             // toolStripButton7
             // 
@@ -2185,6 +2193,7 @@ namespace LevelEditor
         private PreviewScreen previewScreen;
         private Crad.Windows.Forms.Actions.Action addPreviewObjectAction;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripLabel simulationSpeedToolStripLabel;
     }
 }
 
