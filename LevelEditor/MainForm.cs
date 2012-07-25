@@ -375,19 +375,19 @@ namespace LevelEditor
         }
         #endregion
 
-        private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
+        private void UpdateAbsoluteULPoint(object sender)
         {
-            levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
+            levelScreen.AbsoluteULPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
         }
 
         private void levelPage_Scroll(object sender, ScrollEventArgs e)
         {
-            UpdateLevelScreenUpperLeftLocalPoint(sender);
+            UpdateAbsoluteULPoint(sender);
         }
 
         private void levelPage_MouseWheel(object sender, MouseEventArgs e)
         {
-            UpdateLevelScreenUpperLeftLocalPoint(sender);
+            UpdateAbsoluteULPoint(sender);
         }
 
         #region Actions
@@ -449,7 +449,7 @@ namespace LevelEditor
             {
                 if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null)
                 {
-                    levelScreen.CurrentGameObject = _objectLevelManager.PreviewObject;
+                    levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
                     //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
                 }
                 else
@@ -459,7 +459,7 @@ namespace LevelEditor
                 }
             }
             else
-                levelScreen.CurrentGameObject = null;
+                levelScreen.PreviewGameObject = null;
         }
 
         private void simulationSpeedHalfAction_Execute(object sender, EventArgs e)

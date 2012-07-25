@@ -1550,7 +1550,7 @@ namespace LevelEditor
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
             this.levelScreen.Text = "levelScreen";
-            this.levelScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
+            this.levelScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.levelScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseClick);
             this.levelScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.levelScreen_MouseDown);
             this.levelScreen.MouseEnter += new System.EventHandler(this.levelScreen_MouseEnter);
@@ -1583,7 +1583,7 @@ namespace LevelEditor
             this.objectScreen.Size = new System.Drawing.Size(829, 752);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
-            this.objectScreen.UpperLeftLocalPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
+            this.objectScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             // 
             // propertyGrid
             // 

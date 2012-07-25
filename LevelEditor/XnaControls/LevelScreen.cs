@@ -22,7 +22,7 @@ namespace LevelEditor
         GameLevel _gameLevel;
         Camera _camera;
         SpriteFont _font;
-        private GameObject _currentGameObject;
+        private GameObject _previewGameObject;
 
         FixedMouseJoint _mouseJoint;
         DebugViewXNA _debugView;
@@ -42,7 +42,7 @@ namespace LevelEditor
                 if (_gameLevel != null)
                 {
                     SetDebugView();
-                    _debugView.TranslateDebugPerfomancePair(_upperLeftLocalPoint);
+                    _debugView.TranslateDebugPerfomancePair(_absoluteULPoint);
                 }
             }
         }
@@ -54,17 +54,17 @@ namespace LevelEditor
         }
 
         [Browsable(false)]
-        public GameObject CurrentGameObject
+        public GameObject PreviewGameObject
         {
             set
             {
                 if (value == null)
-                    _currentGameObject = null;
+                    _previewGameObject = null;
                 else
                 {
-                    _currentGameObject = value;
-                    _currentGameObject.Camera = _camera;
-                    _currentGameObject.SpriteBatch = _spriteBatch;
+                    _previewGameObject = value;
+                    _previewGameObject.Camera = _camera;
+                    _previewGameObject.SpriteBatch = _spriteBatch;
                 }
             }
         }
@@ -98,17 +98,17 @@ namespace LevelEditor
         }
 
 
-        private Vector2 _upperLeftLocalPoint;
-        public Vector2 UpperLeftLocalPoint 
+        private Vector2 _absoluteULPoint;
+        public Vector2 AbsoluteULPoint 
         {
             get
             {
-                return _upperLeftLocalPoint;
+                return _absoluteULPoint;
             }
             
             set
             {
-                _upperLeftLocalPoint = value;
+                _absoluteULPoint = value;
                 if (_debugView != null) //если null, то это дизайнер пытается присвоить значение при создании формы
                     _debugView.TranslateDebugPerfomancePair(value);
             }
@@ -176,11 +176,11 @@ namespace LevelEditor
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            if (_currentGameObject != null && DrawCurrentGameObject)
+            if (_previewGameObject != null && DrawCurrentGameObject)
             {
-                _currentGameObject.Camera.Position = -_mousePosition;
-                _currentGameObject.Draw(GameTimer.GameTime);
-                _currentGameObject.Camera.Position = Vector2.Zero;
+                _previewGameObject.Camera.Position = -_mousePosition;
+                _previewGameObject.Draw(GameTimer.GameTime);
+                _previewGameObject.Camera.Position = Vector2.Zero;
             }
 
             if (_gameLevel != null)
