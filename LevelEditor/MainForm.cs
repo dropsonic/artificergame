@@ -126,6 +126,7 @@ namespace LevelEditor
 
             this.Location = settings.MainFormLocation;
             this.Size = settings.MainFormSize;
+            this.WindowState = settings.MainFormWindowState;
 
             toolStripContainer.SuspendLayout();
             mainToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.mainToolStripParentName);
@@ -145,6 +146,7 @@ namespace LevelEditor
             Properties.Settings settings = Properties.Settings.Default;
 
             settings.MainFormLocation = this.Location;
+            settings.MainFormWindowState = this.WindowState;
             if (this.WindowState == FormWindowState.Normal)
                 settings.MainFormSize = this.Size;
             else
