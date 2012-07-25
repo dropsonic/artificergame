@@ -121,6 +121,9 @@ namespace LevelEditor
             this.objectTab = new System.Windows.Forms.TabPage();
             this.objectScreen = new LevelEditor.LevelScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
+            this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,9 +143,6 @@ namespace LevelEditor
             this.simulationSpeedIncreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationSpeedDecreaseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.simulationToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -154,7 +154,10 @@ namespace LevelEditor
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.simulationSpeedToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
+            this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
+            this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.simulateAction = new Crad.Windows.Forms.Actions.Action();
             this.pauseSimulationAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedHalfAction = new Crad.Windows.Forms.Actions.Action();
@@ -162,9 +165,6 @@ namespace LevelEditor
             this.simulationSpeedDoubleAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedIncreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
-            this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
-            this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
-            this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -217,8 +217,8 @@ namespace LevelEditor
             this.viewTabControl.SuspendLayout();
             this.levelPage.SuspendLayout();
             this.objectTab.SuspendLayout();
-            this.menuStrip.SuspendLayout();
             this.toolsToolStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.simulationToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList)).BeginInit();
             this.SuspendLayout();
@@ -233,7 +233,7 @@ namespace LevelEditor
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.tableLayoutPanel);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 790);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 740);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
@@ -243,8 +243,8 @@ namespace LevelEditor
             // 
             // toolStripContainer.TopToolStripPanel
             // 
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolsToolStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.simulationToolStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.mainToolStrip);
             // 
@@ -281,7 +281,7 @@ namespace LevelEditor
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 790);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 740);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // paramsTabControl
@@ -292,7 +292,7 @@ namespace LevelEditor
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
             this.paramsTabControl.SelectedIndex = 0;
-            this.paramsTabControl.Size = new System.Drawing.Size(314, 784);
+            this.paramsTabControl.Size = new System.Drawing.Size(314, 734);
             this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
@@ -305,7 +305,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(306, 758);
+            this.previewPage.Size = new System.Drawing.Size(306, 708);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -1494,7 +1494,7 @@ namespace LevelEditor
             this.jointPage.Location = new System.Drawing.Point(4, 22);
             this.jointPage.Name = "jointPage";
             this.jointPage.Padding = new System.Windows.Forms.Padding(3);
-            this.jointPage.Size = new System.Drawing.Size(306, 758);
+            this.jointPage.Size = new System.Drawing.Size(306, 708);
             this.jointPage.TabIndex = 1;
             this.jointPage.Text = "Joints";
             this.jointPage.UseVisualStyleBackColor = true;
@@ -1513,7 +1513,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1118, 784);
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 734);
             this.splitContainer1.SplitterDistance = 843;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1525,7 +1525,7 @@ namespace LevelEditor
             this.viewTabControl.Location = new System.Drawing.Point(0, 0);
             this.viewTabControl.Name = "viewTabControl";
             this.viewTabControl.SelectedIndex = 0;
-            this.viewTabControl.Size = new System.Drawing.Size(843, 784);
+            this.viewTabControl.Size = new System.Drawing.Size(843, 734);
             this.viewTabControl.TabIndex = 0;
             // 
             // levelPage
@@ -1535,7 +1535,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(835, 758);
+            this.levelPage.Size = new System.Drawing.Size(835, 708);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1569,7 +1569,7 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(835, 758);
+            this.objectTab.Size = new System.Drawing.Size(835, 708);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
@@ -1595,9 +1595,42 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(271, 784);
+            this.propertyGrid.Size = new System.Drawing.Size(271, 734);
             this.propertyGrid.TabIndex = 0;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
+            // 
+            // toolsToolStrip
+            // 
+            this.toolsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton8,
+            this.toolStripButton9});
+            this.toolsToolStrip.Location = new System.Drawing.Point(3, 0);
+            this.toolsToolStrip.Name = "toolsToolStrip";
+            this.toolsToolStrip.Size = new System.Drawing.Size(58, 25);
+            this.toolsToolStrip.TabIndex = 6;
+            // 
+            // toolStripButton8
+            // 
+            this.actionList.SetAction(this.toolStripButton8, this.addPreviewObjectAction);
+            this.toolStripButton8.CheckOnClick = true;
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = global::LevelEditor.Properties.Resources.addPreviewObject;
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton8.Text = "Place object";
+            // 
+            // toolStripButton9
+            // 
+            this.actionList.SetAction(this.toolStripButton9, this.selectObjectPartAction);
+            this.toolStripButton9.CheckOnClick = true;
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = global::LevelEditor.Properties.Resources.objectPart;
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "Select object part";
             // 
             // menuStrip
             // 
@@ -1608,7 +1641,7 @@ namespace LevelEditor
             this.resoursesToolStripMenuItem,
             this.simulationToolStripMenuItem,
             this.debugToolStripMenuItem});
-            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Location = new System.Drawing.Point(0, 25);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(1444, 24);
             this.menuStrip.TabIndex = 5;
@@ -1766,38 +1799,6 @@ namespace LevelEditor
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
             // 
-            // toolsToolStrip
-            // 
-            this.toolsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton8,
-            this.toolStripButton9});
-            this.toolsToolStrip.Location = new System.Drawing.Point(53, 24);
-            this.toolsToolStrip.Name = "toolsToolStrip";
-            this.toolsToolStrip.Size = new System.Drawing.Size(58, 25);
-            this.toolsToolStrip.TabIndex = 6;
-            // 
-            // toolStripButton8
-            // 
-            this.actionList.SetAction(this.toolStripButton8, this.addPreviewObjectAction);
-            this.toolStripButton8.CheckOnClick = true;
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = global::LevelEditor.Properties.Resources.addPreviewObject;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton8.Text = "Place object";
-            // 
-            // toolStripButton9
-            // 
-            this.actionList.SetAction(this.toolStripButton9, this.selectObjectPartAction);
-            this.toolStripButton9.CheckOnClick = true;
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton9.Text = "Select object part";
-            // 
             // simulationToolStrip
             // 
             this.simulationToolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -1812,7 +1813,7 @@ namespace LevelEditor
             this.toolStripButton6,
             this.simulationSpeedToolStripLabel,
             this.toolStripButton7});
-            this.simulationToolStrip.Location = new System.Drawing.Point(111, 24);
+            this.simulationToolStrip.Location = new System.Drawing.Point(3, 49);
             this.simulationToolStrip.Name = "simulationToolStrip";
             this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
             this.simulationToolStrip.TabIndex = 7;
@@ -1907,6 +1908,14 @@ namespace LevelEditor
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton7.Text = "Increase by 0.25";
             // 
+            // mainToolStrip
+            // 
+            this.mainToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.mainToolStrip.Location = new System.Drawing.Point(39, 74);
+            this.mainToolStrip.Name = "mainToolStrip";
+            this.mainToolStrip.Size = new System.Drawing.Size(111, 25);
+            this.mainToolStrip.TabIndex = 8;
+            // 
             // actionList
             // 
             this.actionList.Actions.Add(this.simulateAction);
@@ -1919,6 +1928,23 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.addPreviewObjectAction);
             this.actionList.Actions.Add(this.selectObjectPartAction);
             this.actionList.ContainerControl = this;
+            // 
+            // addPreviewObjectAction
+            // 
+            this.addPreviewObjectAction.CheckOnClick = true;
+            this.addPreviewObjectAction.Image = global::LevelEditor.Properties.Resources.addPreviewObject;
+            this.addPreviewObjectAction.ShortcutKeys = System.Windows.Forms.Keys.Q;
+            this.addPreviewObjectAction.Text = "Place object";
+            this.addPreviewObjectAction.ToolTipText = "Place object on level";
+            this.addPreviewObjectAction.Execute += new System.EventHandler(this.addPreviewObjectAction_Execute);
+            // 
+            // selectObjectPartAction
+            // 
+            this.selectObjectPartAction.CheckOnClick = true;
+            this.selectObjectPartAction.Image = global::LevelEditor.Properties.Resources.objectPart;
+            this.selectObjectPartAction.Text = "Select object part";
+            this.selectObjectPartAction.ToolTipText = "Select object part in level";
+            this.selectObjectPartAction.Execute += new System.EventHandler(this.selectObjectPartAction_Execute);
             // 
             // simulateAction
             // 
@@ -1981,29 +2007,6 @@ namespace LevelEditor
             this.simulationSpeedDecreaseAction.Text = "Decrease by 0.25";
             this.simulationSpeedDecreaseAction.ToolTipText = "Decrease simulation speed by 0.25";
             this.simulationSpeedDecreaseAction.Execute += new System.EventHandler(this.simulationSpeedDecreaseAction_Execute);
-            // 
-            // addPreviewObjectAction
-            // 
-            this.addPreviewObjectAction.CheckOnClick = true;
-            this.addPreviewObjectAction.Image = global::LevelEditor.Properties.Resources.addPreviewObject;
-            this.addPreviewObjectAction.ShortcutKeys = System.Windows.Forms.Keys.Q;
-            this.addPreviewObjectAction.Text = "Place object";
-            this.addPreviewObjectAction.ToolTipText = "Place object on level";
-            this.addPreviewObjectAction.Execute += new System.EventHandler(this.addPreviewObjectAction_Execute);
-            // 
-            // selectObjectPartAction
-            // 
-            this.selectObjectPartAction.CheckOnClick = true;
-            this.selectObjectPartAction.Text = "Select object part";
-            this.selectObjectPartAction.ToolTipText = "Select object part in level";
-            // 
-            // mainToolStrip
-            // 
-            this.mainToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.mainToolStrip.Location = new System.Drawing.Point(10, 24);
-            this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.Size = new System.Drawing.Size(43, 25);
-            this.mainToolStrip.TabIndex = 8;
             // 
             // MainForm
             // 
@@ -2082,10 +2085,10 @@ namespace LevelEditor
             this.viewTabControl.ResumeLayout(false);
             this.levelPage.ResumeLayout(false);
             this.objectTab.ResumeLayout(false);
-            this.menuStrip.ResumeLayout(false);
-            this.menuStrip.PerformLayout();
             this.toolsToolStrip.ResumeLayout(false);
             this.toolsToolStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.simulationToolStrip.ResumeLayout(false);
             this.simulationToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList)).EndInit();

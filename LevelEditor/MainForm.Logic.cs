@@ -122,6 +122,16 @@ namespace LevelEditor
             }
         }
 
+        private void SetLevelScreenCursor()
+        {
+            if (selectObjectPartAction.Checked)
+                _levelScreenCursor = Cursors.Hand;
+            else if (addPreviewObjectAction.Checked)
+                _levelScreenCursor = Cursors.Cross;
+            else
+                _levelScreenCursor = Cursors.Arrow;
+        }
+
         private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)
         {
             return !((height <= bottomRadius * 2) || (height <= topRadius * 2));

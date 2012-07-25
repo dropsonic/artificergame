@@ -29,6 +29,7 @@ namespace LevelEditor
         ObjectLevelManager _objectLevelManager;
         CommandManager _commandManager;
         AssetCreator _assetCreator;
+        Cursor _levelScreenCursor = Cursors.Arrow;
 
         System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
@@ -341,7 +342,7 @@ namespace LevelEditor
         private void levelScreen_MouseEnter(object sender, EventArgs e)
         {
             levelScreen.DrawCurrentGameObject = true;
-            Cursor = Cursors.Cross;
+            Cursor = _levelScreenCursor;
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
@@ -373,6 +374,10 @@ namespace LevelEditor
         {
             if (addPreviewObjectAction.Checked)
                 _commandManager.Execute("AddPreviewObject");
+            if (selectObjectPartAction.Checked)
+            {
+                levelScreen.GameLevel.World.TestPoint(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
+            }
         }
         #endregion
 
@@ -471,8 +476,20 @@ namespace LevelEditor
                 }
             }
             else
+            {
                 levelScreen.PreviewGameObject = null;
+            }
+            SetLevelScreenCursor();
+            
+
         }
+
+        private void selectObjectPartAction_Execute(object sender, EventArgs e)
+        {
+            SetLevelScreenCursor();
+        }
+
+
 
         private void changeSimulationActionState(bool halfAction, bool normalAction, bool doubleAction)
         {
@@ -527,6 +544,10 @@ namespace LevelEditor
             _commandManager.Execute("SimulationSpeedDecrease");
             simulationSpeedIncDecChanged();
         }
+
+
         #endregion
+
+        
     }
 }
