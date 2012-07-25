@@ -474,43 +474,58 @@ namespace LevelEditor
                 levelScreen.PreviewGameObject = null;
         }
 
+        private void changeSimulationActionState(bool halfAction, bool normalAction, bool doubleAction)
+        {
+            simulationSpeedNormalAction.Checked = halfAction;
+            simulationSpeedHalfAction.Checked = normalAction;
+            simulationSpeedDoubleAction.Checked = doubleAction;
+        }
+
         private void simulationSpeedHalfAction_Execute(object sender, EventArgs e)
         {
-            simulationSpeedNormalAction.Checked = false;
-            simulationSpeedHalfAction.Checked = true;
-            simulationSpeedDoubleAction.Checked = false;
+            changeSimulationActionState(true, false, false);
             _commandManager.Execute("SimulationSpeedHalf");
             ShowSimulationStatus();
         }
 
         private void simulationSpeedNormalAction_Execute(object sender, EventArgs e)
         {
-            simulationSpeedHalfAction.Checked = false;
-            simulationSpeedNormalAction.Checked = true;
-            simulationSpeedDoubleAction.Checked = false;
+            changeSimulationActionState(false, true, false);
             _commandManager.Execute("SimulationSpeedNormal");
             ShowSimulationStatus();
         }
 
         private void simulationSpeedDoubleAction_Execute(object sender, EventArgs e)
         {
-            simulationSpeedHalfAction.Checked = false;
-            simulationSpeedNormalAction.Checked = false;
-            simulationSpeedDoubleAction.Checked = true;
+            changeSimulationActionState(false, false, true);
             _commandManager.Execute("SimulationSpeedDouble");
+            ShowSimulationStatus();
+        }
+
+        private void simulationSpeedIncDecChanged()
+        {
+            if (_objectLevelManager.Simulator.SimulationSpeed == 0.50f)
+                changeSimulationActionState(true, false, false);
+            else if (_objectLevelManager.Simulator.SimulationSpeed == 1.00f)
+                changeSimulationActionState(false, true, false);
+            else if (_objectLevelManager.Simulator.SimulationSpeed == 2.00f)
+                changeSimulationActionState(false, false, true);
+            else
+                changeSimulationActionState(false, false, false);
+
             ShowSimulationStatus();
         }
 
         private void simulationSpeedIncreaseAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Execute("SimulationSpeedIncrease");
-            ShowSimulationStatus();
+            simulationSpeedIncDecChanged();
         }
 
         private void simulationSpeedDecreaseAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Execute("SimulationSpeedDecrease");
-            ShowSimulationStatus();
+            simulationSpeedIncDecChanged();
         }
         #endregion
     }
