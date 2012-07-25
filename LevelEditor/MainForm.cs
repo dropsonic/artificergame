@@ -122,7 +122,19 @@ namespace LevelEditor
         /// </summary>
         private void LoadSettings()
         {
+            Properties.Settings settings = Properties.Settings.Default;
 
+            this.Location = settings.MainFormLocation;
+            this.Size = settings.MainFormSize;
+
+            toolStripContainer.SuspendLayout();
+            mainToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.mainToolStripParentName);
+            mainToolStrip.Location = settings.mainToolStripLocation;
+            toolsToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.toolsToolStripParentName);
+            toolsToolStrip.Location = settings.toolsToolStripLocation;
+            simulationToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.simulationToolStripParentName);
+            simulationToolStrip.Location = settings.simulationToolStripLocation;
+            toolStripContainer.ResumeLayout(true);
         }
 
         /// <summary>
@@ -130,12 +142,58 @@ namespace LevelEditor
         /// </summary>
         private void SaveSettings()
         {
+            Properties.Settings settings = Properties.Settings.Default;
 
+            settings.MainFormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Normal)
+                settings.MainFormSize = this.Size;
+            else
+                settings.MainFormSize = this.RestoreBounds.Size;
+            settings.mainToolStripLocation = mainToolStrip.Location;
+            settings.mainToolStripParentName = GetToolStripParentName(mainToolStrip);
+            settings.toolsToolStripLocation = toolsToolStrip.Location;
+            settings.toolsToolStripParentName = GetToolStripParentName(toolsToolStrip);
+            settings.simulationToolStripLocation = simulationToolStrip.Location;
+            settings.simulationToolStripParentName = GetToolStripParentName(simulationToolStrip);
+        }
+
+        private string GetToolStripParentName(ToolStrip toolStrip)
+        {
+            var panel = toolStrip.Parent as ToolStripPanel;
+            var defaultName = String.Empty;
+            if (panel == null)
+                return defaultName;
+            var container = panel.Parent as ToolStripContainer;
+            if (container == null)
+                return defaultName;
+            if (panel == container.LeftToolStripPanel)
+                return "LeftToolStripPanel";
+            if (panel == container.RightToolStripPanel)
+                return "RightToolStripPanel";
+            if (panel == container.TopToolStripPanel)
+                return "TopToolStripPanel";
+            if (panel == container.BottomToolStripPanel)
+                return "BottomToolStripPanel";
+            return defaultName;
+        }
+
+        private ToolStripPanel GetToolStripParentByName(ToolStripContainer container, string parentName)
+        {
+            if (parentName == "LeftToolStripPanel")
+                return container.LeftToolStripPanel;
+            if (parentName == "RightToolStripPanel")
+                return container.RightToolStripPanel;
+            if (parentName == "TopToolStripPanel")
+                return container.TopToolStripPanel;
+            if (parentName == "BottomToolStripPanel")
+                return container.BottomToolStripPanel;
+            return null;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             InitializeAfterLoad();
+            LoadSettings();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

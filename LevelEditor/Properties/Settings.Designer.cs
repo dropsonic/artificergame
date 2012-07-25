@@ -50,36 +50,72 @@ namespace LevelEditor.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10, 24")]
-        public global::System.Drawing.Point mainToolBarLocation {
+        public global::System.Drawing.Point mainToolStripLocation {
             get {
-                return ((global::System.Drawing.Point)(this["mainToolBarLocation"]));
+                return ((global::System.Drawing.Point)(this["mainToolStripLocation"]));
             }
             set {
-                this["mainToolBarLocation"] = value;
+                this["mainToolStripLocation"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("179, 24")]
-        public global::System.Drawing.Point simulationToolBarLocation {
+        public global::System.Drawing.Point simulationToolStripLocation {
             get {
-                return ((global::System.Drawing.Point)(this["simulationToolBarLocation"]));
+                return ((global::System.Drawing.Point)(this["simulationToolStripLocation"]));
             }
             set {
-                this["simulationToolBarLocation"] = value;
+                this["simulationToolStripLocation"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("121, 24")]
-        public global::System.Drawing.Point toolsToolBarLocation {
+        public global::System.Drawing.Point toolsToolStripLocation {
             get {
-                return ((global::System.Drawing.Point)(this["toolsToolBarLocation"]));
+                return ((global::System.Drawing.Point)(this["toolsToolStripLocation"]));
             }
             set {
-                this["toolsToolBarLocation"] = value;
+                this["toolsToolStripLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string mainToolStripParentName {
+            get {
+                return ((string)(this["mainToolStripParentName"]));
+            }
+            set {
+                this["mainToolStripParentName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string simulationToolStripParentName {
+            get {
+                return ((string)(this["simulationToolStripParentName"]));
+            }
+            set {
+                this["simulationToolStripParentName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string toolsToolStripParentName {
+            get {
+                return ((string)(this["toolsToolStripParentName"]));
+            }
+            set {
+                this["toolsToolStripParentName"] = value;
             }
         }
     }

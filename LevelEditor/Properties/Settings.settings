@@ -8,14 +8,23 @@
     <Setting Name="MainFormSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">1460, 899</Value>
     </Setting>
-    <Setting Name="mainToolBarLocation" Type="System.Drawing.Point" Scope="User">
+    <Setting Name="mainToolStripLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">10, 24</Value>
     </Setting>
-    <Setting Name="simulationToolBarLocation" Type="System.Drawing.Point" Scope="User">
+    <Setting Name="simulationToolStripLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">179, 24</Value>
     </Setting>
-    <Setting Name="toolsToolBarLocation" Type="System.Drawing.Point" Scope="User">
+    <Setting Name="toolsToolStripLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">121, 24</Value>
+    </Setting>
+    <Setting Name="mainToolStripParentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TopToolStripPanel</Value>
+    </Setting>
+    <Setting Name="simulationToolStripParentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TopToolStripPanel</Value>
+    </Setting>
+    <Setting Name="toolsToolStripParentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TopToolStripPanel</Value>
     </Setting>
   </Settings>
 </SettingsFile>
