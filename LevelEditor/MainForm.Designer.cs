@@ -1771,7 +1771,7 @@ namespace LevelEditor
             // 
             this.actionList.SetAction(this.simulationSpeedHalfMenuItem, this.simulationSpeedHalfAction);
             this.simulationSpeedHalfMenuItem.CheckOnClick = true;
-            this.simulationSpeedHalfMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedHalfMenuItem.Image")));
+            this.simulationSpeedHalfMenuItem.Image = global::LevelEditor.Properties.Resources.halfSpeed;
             this.simulationSpeedHalfMenuItem.Name = "simulationSpeedHalfMenuItem";
             this.simulationSpeedHalfMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
             this.simulationSpeedHalfMenuItem.Size = new System.Drawing.Size(254, 22);
@@ -2029,7 +2029,7 @@ namespace LevelEditor
             this.actionList.SetAction(this.toolStripButton3, this.simulationSpeedHalfAction);
             this.toolStripButton3.CheckOnClick = true;
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.Image = global::LevelEditor.Properties.Resources.halfSpeed;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
@@ -2149,7 +2149,7 @@ namespace LevelEditor
             // simulationSpeedHalfAction
             // 
             this.simulationSpeedHalfAction.CheckOnClick = true;
-            this.simulationSpeedHalfAction.Image = ((System.Drawing.Image)(resources.GetObject("simulationSpeedHalfAction.Image")));
+            this.simulationSpeedHalfAction.Image = global::LevelEditor.Properties.Resources.halfSpeed;
             this.simulationSpeedHalfAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
             this.simulationSpeedHalfAction.Text = "0.50x";
             this.simulationSpeedHalfAction.ToolTipText = "Select half simulation speed";
