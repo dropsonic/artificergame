@@ -146,7 +146,6 @@ namespace GameLogic
             {
                 Joint newJoint = joint.Copy();
                 result.AddJoint(newJoint);
-                result._world.AddJoint(newJoint);
             }
 
             //Копируем в него все объекты

@@ -17,6 +17,21 @@ namespace LevelEditor.Helpers
         public Vector2 localAnchorA;
         public Vector2 localAnchorB;
     }
+    class AngleJointParameters:IJointParameters
+    {
+        public Body bodyA;
+        public Body bodyB;
+    }
+    class FixedAngleJointParameters:IJointParameters
+    {
+        public Body body;
+    }
+    class FixedDistanceJointParameters:IJointParameters
+    {
+        public Body body;
+        public Vector2 bodyAnchor;
+        public Vector2 worldAnchor;
+    }
 
     public class JointCreationHelper
     {
@@ -55,7 +70,7 @@ namespace LevelEditor.Helpers
                     NextStepFixedAngleJoint(position);
                     break;
                 case JointType.FixedDistance:
-                    NextStepDistanceJoint(position);
+                    NextStepFixedDistanceJoint(position);
                     break;
                 case JointType.FixedFriction:
                     NextStepFixedFrictionJoint(position);
@@ -105,21 +120,43 @@ namespace LevelEditor.Helpers
 
         private void NextStepAngleJoint(Vector2 position)
         {
+            AngleJointParameters jointParameters = (AngleJointParameters)_jointParameters;
             switch (_step)
             {
                 case 0:
-                    _currentStateMessage = string.Format("BodyA (local position - {0}). Choose BodyB...", position.ToString());
+                    _currentStateMessage = "Creating angle joint. Choose BodyA...";
+                    _jointParameters = new AngleJointParameters();
+                    _joint = null;
                     _step++;
                     break;
                 case 1:
-                    _currentStateMessage = string.Format("BodyB (local position - {0}). {1} joint created.", position.ToString(), _jointType.ToString());
+                    Body bodyA = CommonHelpers.FindBody(position, _world);
+                    if (bodyA == null) 
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose BodyA...";
+                        break;
+                    }
+                    _currentStateMessage = "BodyA has been selected. Choose BodyB...";
+                    jointParameters.bodyA = bodyA;
                     _step++;
                     break;
-                default:
-                    _currentStateMessage = "Creation Finished";
+                case 2:
+                    Body bodyB = CommonHelpers.FindBody(position, _world);
+                    if (bodyB == null) 
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose BodyB...";
+                        break;
+                    }
+                    _currentStateMessage = "BodyB has been selected. ANGLE JOINT CREATED";
+                    jointParameters.bodyB = bodyB;
+                    _joint = new AngleJoint(jointParameters.bodyA,jointParameters.bodyB);
+                    _step = 0;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException("Unknown join creation step");
             }
         }
+
         private void NextStepDistanceJoint(Vector2 position)
         {
             DistanceJointParameters jointParameters = (DistanceJointParameters)_jointParameters;
@@ -128,6 +165,7 @@ namespace LevelEditor.Helpers
                 case 0:
                     _currentStateMessage = "Creating distance joint. Choose BodyA...";
                     _jointParameters = new DistanceJointParameters();
+                    _joint = null;
                     _step++;
                     break;
                 case 1:
@@ -162,50 +200,81 @@ namespace LevelEditor.Helpers
                 case 4:
                     Vector2 localAnchorB = Vector2.Transform(position - jointParameters.bodyB.Position,
                                                             Matrix.CreateRotationZ(-jointParameters.bodyB.Rotation));
-                    _currentStateMessage = string.Format("AnchorB has been selected. Position - {0}, local position - {1}. JointCreated.", position.ToString(), localAnchorB.ToString());
+                    _currentStateMessage = string.Format("AnchorB has been selected. Position - {0}, local position - {1}. DISTANCE JOINT CREATED.", position.ToString(), localAnchorB.ToString());
                     jointParameters.localAnchorB = localAnchorB;
                     _joint = new DistanceJoint(jointParameters.bodyA, jointParameters.bodyB, jointParameters.localAnchorA, jointParameters.localAnchorB);
-                    _step++;
+                    _step=0;
                     break;
                 default:
-                    _currentStateMessage = "Creation Finished. Reset";
-                    _joint = null;
-                    _step = 0;
-                    break;
+                    throw new ArgumentOutOfRangeException("Unknown join creation step");
             }
         }
+
         private void NextStepFixedAngleJoint(Vector2 position)
         {
+            FixedAngleJointParameters jointParameters = (FixedAngleJointParameters)_jointParameters;
             switch (_step)
             {
                 case 0:
-                    _currentStateMessage = string.Format("BodyA (local position - {0}). Choose BodyB...", position.ToString());
+                    _currentStateMessage = "Creating fixed angle joint. Choose Body...";
+                    _jointParameters = new FixedAngleJointParameters();
+                    _joint = null;
                     _step++;
                     break;
                 case 1:
-                    _currentStateMessage = string.Format("BodyB (local position - {0}). {1} joint created.", position.ToString(), _jointType.ToString());
-                    _step++;
+                    Body body = CommonHelpers.FindBody(position, _world);
+                    if (body == null)
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose Body...";
+                        break;
+                    }
+                    _currentStateMessage = "Body has been selected. FIXED ANGLE JOINT CREATED";
+                    jointParameters.body = body;
+                    _joint = new FixedAngleJoint(jointParameters.body);
+                    _step = 0;
                     break;
                 default:
-                    _currentStateMessage = "Creation Finished";
-                    break;
+                    throw new ArgumentOutOfRangeException("Unknown join creation step");
             }
         }
+
         private void NextStepFixedDistanceJoint(Vector2 position)
         {
+            FixedDistanceJointParameters jointParameters = (FixedDistanceJointParameters)_jointParameters;
             switch (_step)
             {
                 case 0:
-                    _currentStateMessage = string.Format("BodyA (local position - {0}). Choose BodyB...", position.ToString());
+                    _currentStateMessage = "Creating distance joint. Choose Body...";
+                    _jointParameters = new FixedDistanceJointParameters();
+                    _joint = null;
                     _step++;
                     break;
                 case 1:
-                    _currentStateMessage = string.Format("BodyB (local position - {0}). {1} joint created.", position.ToString(), _jointType.ToString());
+                    Body body = CommonHelpers.FindBody(position, _world);
+                    if (body == null)
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose Body...";
+                        break;
+                    }
+                    _currentStateMessage = "BodyA has been selected. Choose body anchor...";
+                    jointParameters.body = body;
                     _step++;
                     break;
-                default:
-                    _currentStateMessage = "Creation Finished";
+                case 2:
+                    Vector2 bodyAnchor = Vector2.Transform(position - jointParameters.body.Position,
+                                                            Matrix.CreateRotationZ(-jointParameters.body.Rotation));
+                    _currentStateMessage = string.Format("Body anchor has been selected. Position - {0}, local position - {1}. Choose world anchor...", position.ToString(), bodyAnchor.ToString());
+                    jointParameters.bodyAnchor = bodyAnchor;
+                    _step++;
                     break;
+                case 3:
+                    _currentStateMessage = string.Format("World anchor has been selected. Position - {0}. FIXED DISTANCE JOINT CREATED.", position.ToString());
+                    jointParameters.worldAnchor = position;
+                    _joint = new FixedDistanceJoint(jointParameters.body, jointParameters.bodyAnchor, jointParameters.worldAnchor);
+                    _step = 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Unknown join creation step");
             }
         }
         private void NextStepFixedFrictionJoint(Vector2 position)
