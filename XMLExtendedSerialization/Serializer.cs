@@ -121,7 +121,7 @@ namespace XMLExtendedSerialization
                     //Если конвертер для данного типа данных уже есть
                     if (_converters.TryGetValue(field.FieldType, out converter))
                         //то записываем значение поля как атрибут
-                        element.SetAttributeValue(xmlFieldName, converter(fieldValue));
+                        element.SetAttributeValue(xmlFieldName, converter(fieldValue).ToXMLValue());
                     //Если конвертера для данного типа данных нет
                     else
                     {
@@ -176,7 +176,19 @@ namespace XMLExtendedSerialization
 
         public void Serialize(object rootObject)
         {
+            Serialize(rootObject, false);
+        }
+
+        public void Serialize(object rootObject, string metaData)
+        {
+            Serialize(rootObject, true, metaData);
+        }
+
+        private void Serialize(object rootObject, bool addMetaData, string metaData = "")
+        {
             XDocument doc = new XDocument();
+            if (addMetaData)
+                doc.Add(new XComment(metaData.ToXMLComment()));
             Type rootType = rootObject.GetType();
             string typeName = rootType.GetXMLFullName();
             doc.Add(SerializeObject(typeName, rootObject));

@@ -160,7 +160,7 @@ namespace XMLExtendedSerialization
                     {
                         Func<string, object> converter;
                         if (_converters.TryGetValue(fieldType, out converter)) //если есть такой конвертер
-                            fieldValue = converter(value); //то это простой тип данных
+                            fieldValue = converter(value.FromXMLValue()); //то это простой тип данных
                         else
                         {
                             if (element != null)
@@ -199,6 +199,25 @@ namespace XMLExtendedSerialization
 
         public object Deserialize()
         {
+            string s;
+            return Deserialize(false, out s);
+        }
+
+        public object Deserialize(out string metaData)
+        {
+            return Deserialize(true, out metaData);
+        }
+
+        private object Deserialize(bool readMetaData, out string metaData)
+        {
+            //Читаем метаданные
+            if (readMetaData && _doc.FirstNode is XComment)
+            {
+                metaData = (_doc.FirstNode as XComment).Value.FromXMLComment();
+            }
+            else
+                metaData = String.Empty;
+
             //Имя типа для инстанциации - имя корневого тега файла
             string typeName = _doc.Root.Name.LocalName;
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
