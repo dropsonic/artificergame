@@ -584,32 +584,9 @@ namespace LevelEditor
 
             _simulateActionState = !_simulateActionState;
             if (_simulateActionState)
-            {
-                simulateAction.Text = "Stop";
-                simulateAction.ToolTipText = "Stop simulation";
-                simulateAction.Image = LevelEditor.Properties.Resources.StopHS;
-                pauseSimulationAction.Enabled = true;
-
                 _commandManager.Execute("StartSimulation");
-                
-                _propertyGridTimer.Enabled = true;
-                FindPreSimulationObject(propertyGrid);
-
-                ShowSimulationStatus();
-            }
             else
-            {
-                simulateAction.Text = "Start";
-                simulateAction.ToolTipText = "Start simulation";
-                simulateAction.Image = LevelEditor.Properties.Resources.PlayHS;
-                pauseSimulationAction.Enabled = false;
-                ShowReadyStatus();
-
                 _commandManager.Execute("StopSimulation");
-
-                _propertyGridTimer.Enabled = false;
-                propertyGrid.SelectedObject = false;
-            }
 
             //Меняем уровень, который отрисовывается
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
@@ -620,10 +597,28 @@ namespace LevelEditor
         void Simulator_SimulateChanged(object sender, EventArgs e)
         {
             if (_objectLevelManager.Simulator.State == SimulationState.Stopped)
-                //simulateAction.DoExecute();
+            {
+                simulateAction.Text = "Start";
+                simulateAction.ToolTipText = "Start simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.PlayHS;
+                pauseSimulationAction.Enabled = false;
                 ShowReadyStatus();
+
+                _propertyGridTimer.Enabled = false;
+                propertyGrid.SelectedObject = false;
+            }
             else
+            {
+                simulateAction.Text = "Stop";
+                simulateAction.ToolTipText = "Stop simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.StopHS;
+                pauseSimulationAction.Enabled = true;
+
+                _propertyGridTimer.Enabled = true;
+                FindPreSimulationObject(propertyGrid);
+
                 ShowSimulationStatus();
+            }
         }
 
         bool pauseSimulationActionState = false;
