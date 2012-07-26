@@ -453,18 +453,22 @@ namespace LevelEditor
         {
             levelScreen.DrawCurrentGameObject = true;
             Cursor = _levelScreenCursor;
+            ShowMousePosition();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
         {
             levelScreen.DrawCurrentGameObject = false;
             Cursor = Cursors.Arrow;
+
+            toolStripMousePosLabel.Text = String.Empty;
         }
 
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
             levelScreen.MouseState = e;
             _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+            ShowMousePosition();
             HandleLevelScreenMouseInput(MouseEvents.Move, e);
         }
 
@@ -770,7 +774,11 @@ namespace LevelEditor
             SetMouseToolButtonsState(addNewJointAction);
         }
 
-
+        private void ShowMousePosition()
+        {
+            Vector2 pos = ConvertUnits.ToSimUnits(levelScreen.MousePosition);
+            toolStripMousePosLabel.Text = String.Format("(X={0:0.00}, Y={1:0.00})", pos.X, pos.Y);
+        }
 
     }
 }

@@ -293,16 +293,19 @@ namespace LevelEditor
             this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1398, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1248, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripMousePosLabel
             // 
+            this.toolStripMousePosLabel.AutoSize = false;
+            this.toolStripMousePosLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.toolStripMousePosLabel.Name = "toolStripMousePosLabel";
-            this.toolStripMousePosLabel.Size = new System.Drawing.Size(0, 17);
-            this.toolStripMousePosLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripMousePosLabel.Size = new System.Drawing.Size(150, 17);
+            this.toolStripMousePosLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripMousePosLabel.ToolTipText = "Mouse position";
             // 
             // tableLayoutPanel
             // 
