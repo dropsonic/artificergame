@@ -25,7 +25,7 @@ namespace LevelEditor
     {
         enum MouseToolState
         {
-            Default, PlaceObject, MouseJoint, SelectObjectPart, SelectObject, EditPreviewObject
+            PlaceObject, EditPreviewObject, PlaceJoint, EditJoint, SelectObjectPart, SelectObject, MouseJoint, Default
         }
 
         enum MouseEvents
@@ -184,6 +184,16 @@ namespace LevelEditor
                 _levelScreenCursor = Cursors.Arrow;
                 _mouseToolState = MouseToolState.EditPreviewObject;
             }
+            else if (editJointAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Arrow;
+                _mouseToolState = MouseToolState.EditJoint;
+            }
+            else if (addNewJointAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Cross;
+                _mouseToolState = MouseToolState.PlaceJoint;
+            }
             else
             {
                 _levelScreenCursor = Cursors.Arrow;
@@ -194,7 +204,7 @@ namespace LevelEditor
         private void SetMouseToolButtonsState(Crad.Windows.Forms.Actions.Action toolButton)
         {
             bool tempCheck = toolButton.Checked;
-            editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
+            editJointAction.Checked = addNewJointAction.Checked = editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
             toolButton.Checked = tempCheck;
 
             HandlePreviewDisplay();

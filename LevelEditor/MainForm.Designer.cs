@@ -150,10 +150,15 @@ namespace LevelEditor
             this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton16 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.simulationToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -177,10 +182,12 @@ namespace LevelEditor
             this.simulationSpeedDecreaseAction = new Crad.Windows.Forms.Actions.Action();
             this.resetSettingsAction = new Crad.Windows.Forms.Actions.Action();
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
+            this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
+            this.addNewJointAction = new Crad.Windows.Forms.Actions.Action();
+            this.editJointAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
-            this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1868,13 +1875,18 @@ namespace LevelEditor
             this.toolsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.toolsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton8,
+            this.toolStripButton13,
+            this.toolStripSeparator3,
+            this.toolStripButton15,
+            this.toolStripButton16,
+            this.toolStripSeparator4,
             this.toolStripButton9,
             this.toolStripButton11,
-            this.toolStripButton12,
-            this.toolStripButton13});
+            this.toolStripSeparator5,
+            this.toolStripButton12});
             this.toolsToolStrip.Location = new System.Drawing.Point(61, 24);
             this.toolsToolStrip.Name = "toolsToolStrip";
-            this.toolsToolStrip.Size = new System.Drawing.Size(127, 25);
+            this.toolsToolStrip.Size = new System.Drawing.Size(191, 25);
             this.toolsToolStrip.TabIndex = 6;
             // 
             // toolStripButton8
@@ -1887,6 +1899,47 @@ namespace LevelEditor
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton8.Text = "Place object";
+            // 
+            // toolStripButton13
+            // 
+            this.actionList.SetAction(this.toolStripButton13, this.editCurrentObjectAction);
+            this.toolStripButton13.CheckOnClick = true;
+            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton13.Image = global::LevelEditor.Properties.Resources.editObject;
+            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton13.Name = "toolStripButton13";
+            this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton13.Text = "Edit current object";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton15
+            // 
+            this.actionList.SetAction(this.toolStripButton15, this.addNewJointAction);
+            this.toolStripButton15.CheckOnClick = true;
+            this.toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton15.Image = global::LevelEditor.Properties.Resources.placeJoint;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripButton16
+            // 
+            this.actionList.SetAction(this.toolStripButton16, this.editJointAction);
+            this.toolStripButton16.CheckOnClick = true;
+            this.toolStripButton16.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton16.Image = global::LevelEditor.Properties.Resources.editJoint;
+            this.toolStripButton16.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton16.Name = "toolStripButton16";
+            this.toolStripButton16.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButton9
             // 
@@ -1910,6 +1963,11 @@ namespace LevelEditor
             this.toolStripButton11.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton11.Text = "Select object";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButton12
             // 
             this.actionList.SetAction(this.toolStripButton12, this.useMouseJointAction);
@@ -1920,17 +1978,6 @@ namespace LevelEditor
             this.toolStripButton12.Name = "toolStripButton12";
             this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton12.Text = "Use mouse joint";
-            // 
-            // toolStripButton13
-            // 
-            this.actionList.SetAction(this.toolStripButton13, this.editCurrentObjectAction);
-            this.toolStripButton13.CheckOnClick = true;
-            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton13.Image = global::LevelEditor.Properties.Resources.editObject;
-            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton13.Name = "toolStripButton13";
-            this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton13.Text = "Edit current object";
             // 
             // simulationToolStrip
             // 
@@ -2058,6 +2105,8 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.editCurrentObjectAction);
             this.actionList.Actions.Add(this.undoAction);
             this.actionList.Actions.Add(this.redoAction);
+            this.actionList.Actions.Add(this.addNewJointAction);
+            this.actionList.Actions.Add(this.editJointAction);
             this.actionList.ContainerControl = this;
             // 
             // undoAction
@@ -2158,6 +2207,26 @@ namespace LevelEditor
             this.addPreviewObjectAction.ToolTipText = "Place object on level";
             this.addPreviewObjectAction.Execute += new System.EventHandler(this.addPreviewObjectAction_Execute);
             // 
+            // editCurrentObjectAction
+            // 
+            this.editCurrentObjectAction.CheckOnClick = true;
+            this.editCurrentObjectAction.Image = global::LevelEditor.Properties.Resources.editObject;
+            this.editCurrentObjectAction.Text = "Edit current object";
+            this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
+            this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
+            // 
+            // addNewJointAction
+            // 
+            this.addNewJointAction.CheckOnClick = true;
+            this.addNewJointAction.Image = global::LevelEditor.Properties.Resources.placeJoint;
+            this.addNewJointAction.Execute += new System.EventHandler(this.addNewJointAction_Execute);
+            // 
+            // editJointAction
+            // 
+            this.editJointAction.CheckOnClick = true;
+            this.editJointAction.Image = global::LevelEditor.Properties.Resources.editJoint;
+            this.editJointAction.Execute += new System.EventHandler(this.editJointAction_Execute);
+            // 
             // selectObjectPartAction
             // 
             this.selectObjectPartAction.CheckOnClick = true;
@@ -2181,14 +2250,6 @@ namespace LevelEditor
             this.useMouseJointAction.Text = "Use mouse joint";
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
-            // 
-            // editCurrentObjectAction
-            // 
-            this.editCurrentObjectAction.CheckOnClick = true;
-            this.editCurrentObjectAction.Image = global::LevelEditor.Properties.Resources.editObject;
-            this.editCurrentObjectAction.Text = "Edit current object";
-            this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
-            this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
             // 
             // MainForm
             // 
@@ -2431,6 +2492,13 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.Action addNewJointAction;
+        private Crad.Windows.Forms.Actions.Action editJointAction;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButton15;
+        private System.Windows.Forms.ToolStripButton toolStripButton16;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

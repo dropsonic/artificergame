@@ -186,6 +186,8 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\editJoint.png" />
+    <None Include="Resources\placeJoint.png" />
     <None Include="Resources\objectPart1.png" />
     <None Include="Resources\object.png" />
     <None Include="Resources\mouseJoint.png" />

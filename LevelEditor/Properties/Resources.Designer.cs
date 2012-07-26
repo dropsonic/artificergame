@@ -109,6 +109,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap editJoint {
+            get {
+                object obj = ResourceManager.GetObject("editJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap editObject {
             get {
                 object obj = ResourceManager.GetObject("editObject", resourceCulture);
@@ -168,6 +175,13 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap PauseHS {
             get {
                 object obj = ResourceManager.GetObject("PauseHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap placeJoint {
+            get {
+                object obj = ResourceManager.GetObject("placeJoint", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

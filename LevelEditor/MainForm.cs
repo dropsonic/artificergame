@@ -635,6 +635,16 @@ namespace LevelEditor
             SetMouseToolButtonsState(editCurrentObjectAction);
         }
 
+        private void editJointAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(editJointAction);
+        }
+
+        private void addNewJointAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(addNewJointAction);
+        }
+
 
 
         private void changeSimulationActionState(bool halfAction, bool normalAction, bool doubleAction)
@@ -719,5 +729,7 @@ namespace LevelEditor
                 redoAction.Enabled = _commandManager.CanRedo;
         }
         #endregion
+
+
     }
 }

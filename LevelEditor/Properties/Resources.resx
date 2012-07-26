@@ -127,6 +127,9 @@
   <data name="StopHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StopHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="objectPart1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\objectPart1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="halfSpeed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\halfSpeed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -164,6 +167,9 @@
   <data name="normalSpeed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\normalSpeed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="placeJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\placeJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="mouseJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mouseJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -173,7 +179,7 @@
   <data name="PauseHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PauseHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="objectPart1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\objectPart1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="editJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\editJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
