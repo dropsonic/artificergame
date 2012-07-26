@@ -35,6 +35,7 @@ namespace LevelEditor
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripMousePosLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.paramsTabControl = new System.Windows.Forms.TabControl();
             this.previewPage = new System.Windows.Forms.TabPage();
@@ -279,7 +280,8 @@ namespace LevelEditor
             // 
             this.statusStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel});
+            this.toolStripStatusLabel,
+            this.toolStripMousePosLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1444, 22);
@@ -291,10 +293,16 @@ namespace LevelEditor
             this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1429, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1398, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripMousePosLabel
+            // 
+            this.toolStripMousePosLabel.Name = "toolStripMousePosLabel";
+            this.toolStripMousePosLabel.Size = new System.Drawing.Size(0, 17);
+            this.toolStripMousePosLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel
             // 
@@ -2526,6 +2534,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox jointsBox;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripMousePosLabel;
     }
 }
 
