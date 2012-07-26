@@ -220,7 +220,7 @@ namespace LevelEditor
             {
                 levelScreen.PreviewGameObject = null;
             }
-            if (editCurrentObjectAction.Checked)
+            if (editCurrentObjectAction.Checked||addPreviewObjectAction.Checked)
             {
                 propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             }

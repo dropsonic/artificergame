@@ -584,6 +584,7 @@ namespace LevelEditor
             //Меняем уровень, который отрисовывается
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
             SetDebugViewMenu();
+            HandlePreviewDisplay();
         }
 
         bool pauseSimulationActionState = false;
