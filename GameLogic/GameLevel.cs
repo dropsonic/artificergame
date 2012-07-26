@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics.Joints;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace GameLogic
 {
@@ -22,6 +23,11 @@ namespace GameLogic
         private bool _sorted; //показывает, отсортирован ли список по DrawOrder элементов
 
         private List<Joint> _joints; //список joint'ов между игровыми объектами
+        public ReadOnlyCollection<Joint> Joints
+        {
+            get { return new ReadOnlyCollection<Joint>(_joints); }
+        }
+
 
         public World World
         {

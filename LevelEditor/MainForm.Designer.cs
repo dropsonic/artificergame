@@ -115,6 +115,8 @@ namespace LevelEditor
             this.label1 = new System.Windows.Forms.Label();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.jointPage = new System.Windows.Forms.TabPage();
+            this.createdJointsList = new System.Windows.Forms.ListBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.jointsBox = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -293,7 +295,7 @@ namespace LevelEditor
             this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(1248, 17);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(1279, 17);
             this.toolStripStatusLabel.Spring = true;
             this.toolStripStatusLabel.Text = "Ready.";
             this.toolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1529,6 +1531,8 @@ namespace LevelEditor
             // jointPage
             // 
             this.jointPage.AutoScroll = true;
+            this.jointPage.Controls.Add(this.createdJointsList);
+            this.jointPage.Controls.Add(this.label32);
             this.jointPage.Controls.Add(this.label31);
             this.jointPage.Controls.Add(this.jointsBox);
             this.jointPage.Location = new System.Drawing.Point(4, 22);
@@ -1538,6 +1542,24 @@ namespace LevelEditor
             this.jointPage.TabIndex = 1;
             this.jointPage.Text = "Joints";
             this.jointPage.UseVisualStyleBackColor = true;
+            // 
+            // createdJointsList
+            // 
+            this.createdJointsList.FormattingEnabled = true;
+            this.createdJointsList.Location = new System.Drawing.Point(5, 68);
+            this.createdJointsList.Name = "createdJointsList";
+            this.createdJointsList.Size = new System.Drawing.Size(293, 654);
+            this.createdJointsList.TabIndex = 3;
+            this.createdJointsList.SelectedValueChanged += new System.EventHandler(this.createdJointsList_SelectedValueChanged);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 52);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(93, 13);
+            this.label32.TabIndex = 2;
+            this.label32.Text = "Created Joints List";
             // 
             // label31
             // 
@@ -2538,6 +2560,8 @@ namespace LevelEditor
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox jointsBox;
         private System.Windows.Forms.ToolStripStatusLabel toolStripMousePosLabel;
+        private System.Windows.Forms.ListBox createdJointsList;
+        private System.Windows.Forms.Label label32;
     }
 }
 

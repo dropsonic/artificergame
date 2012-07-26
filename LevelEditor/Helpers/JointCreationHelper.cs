@@ -18,7 +18,8 @@ namespace LevelEditor.Helpers
         public Vector2 worldAnchorB;
         public Vector2 axisFirst;
         public Vector2 axisSecond;
-        
+        public Joint jointA;
+        public Joint jointB;
     }
 
     public class JointCreationHelper
@@ -492,7 +493,83 @@ namespace LevelEditor.Helpers
 
         private void NextStepGearJoint(Vector2 position)
         {
-            throw new NotImplementedException("GearJoint");
+            switch (_step)
+            {
+                case 0:
+                    _currentStateMessage = "Creating Gear joint. Choose BodyA with one revolute or prismatic joint...";
+                    _step++;
+                    break;
+                case 1:
+                    Body bodyA = CommonHelpers.FindBody(position, _world);
+                    if (bodyA == null)
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose BodyA...";
+                        break;
+                    }
+                    {
+                        if (bodyA.JointList == null)
+                        {
+                            _currentStateMessage = "This body doesnt contain joints. Choose BodyA with one revolute or prismatic joint...";
+                            break;
+                        }
+                        JointEdge iterator = bodyA.JointList;
+                        int validJoints = 0;
+                        do
+                        {
+                            JointType type = iterator.Joint.JointType;
+                            if (type == JointType.Revolute      ||
+                                type == JointType.Prismatic     ||
+                                type == JointType.FixedRevolute ||
+                                type == JointType.FixedPrismatic)
+                            {
+                                _jointParameters.jointA = iterator.Joint;
+                                validJoints++;
+                            }
+                        } while ((iterator=iterator.Next)!=null);
+                        if (validJoints>1)
+                        {
+                            _currentStateMessage = "This body contains more than one valid joints. Choose BodyA with one revolute or prismatic joint...";
+                            break;
+                        }
+                    }
+                    _currentStateMessage = "BodyA with valid joint has been selected. Choose BodyB with revolute or prismatic joint...";
+                    _step++;
+                    break;
+                case 2:
+                    Body bodyB = CommonHelpers.FindBody(position, _world);
+                    if (bodyB == null)
+                    {
+                        _currentStateMessage = "Cant find body in this position. Choose BodyB...";
+                        break;
+                    }
+                    {
+                        JointEdge iterator = bodyB.JointList;
+                        int validJoints = 0;
+                        do
+                        {
+                            JointType type = iterator.Joint.JointType;
+                            if (type == JointType.Revolute      ||
+                                type == JointType.Prismatic     ||
+                                type == JointType.FixedRevolute ||
+                                type == JointType.FixedPrismatic)
+                            {
+                                _jointParameters.jointB = iterator.Joint;
+                                validJoints++;
+                            }
+                        } while ((iterator=iterator.Next)!=null);
+                        if (validJoints>1)
+                        {
+                            _currentStateMessage = "This body contains more than one valid joints. Choose BodyB with one revolute or prismatic joint...";
+                            break;
+                        }
+                    }
+                    _currentStateMessage = "BodyB wiht valid has been selected. GEAR JOINT CREATED";
+                    _joint = new GearJoint(_jointParameters.jointA,_jointParameters.jointB,1f);
+                    _step = 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Unknown join creation step");
+            }
         }
 
         private void NextStepLineJoint(Vector2 position)

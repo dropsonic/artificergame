@@ -45,6 +45,15 @@ namespace LevelEditor
             //здесь будут джоинт, геймобжекты, геймобжектпарты
         }
 
+        private void UpdateCreatedJointList()
+        {
+            createdJointsList.Items.Clear();
+            foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
+            {
+                createdJointsList.Items.Insert(0, joint);
+            }
+        }
+
 
         private void CreatePreview()
         {

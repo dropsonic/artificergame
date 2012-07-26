@@ -516,43 +516,43 @@ namespace LevelEditor
                             }
                     }
                     break;
+
                 case MouseToolState.PlaceObject:
+                    if (mouseEvent == MouseEvents.Click)
                     {
-                        if (mouseEvent == MouseEvents.Click)
-                        {
-                            _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, _objectLevelManager.Simulator.MousePosition));
-                        }
-                        break;
+                        _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, _objectLevelManager.Simulator.MousePosition));
                     }
+                    break;
+                    
 
                 case MouseToolState.SelectObject:
                     break;
 
                 case MouseToolState.SelectObjectPart:
+                    if (mouseEvent == MouseEvents.Click)
                     {
-                        if (mouseEvent == MouseEvents.Click)
-                        {
-                            propertyGrid.SelectedObject = CommonHelpers.FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel.World);
-                        }
-                        break;
+                        propertyGrid.SelectedObject = CommonHelpers.FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel.World);
                     }
+                    break;
+                    
                 case MouseToolState.PlaceJoint:
+                    if (mouseEvent == MouseEvents.Click)
                     {
-                        if (mouseEvent == MouseEvents.Click)
+                        if (_jointHelper != null)
                         {
-                            if (_jointHelper != null)
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
+                            _jointHelper.NextStep(simPosition);
+                            ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                            if (_jointHelper.CreatedJoint != null)
                             {
-                                Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
-                                _jointHelper.NextStep(simPosition);
-                                ShowTooltipStatus(_jointHelper.CurrentStateMessage);
-                                if (_jointHelper.CreatedJoint != null)
-                                {
-                                    _commandManager.Execute(new Commands.AddLevelJointCommand(_objectLevelManager.GameLevel, _jointHelper.CreatedJoint));
-                                }
+                                _commandManager.Execute(new Commands.AddLevelJointCommand(_objectLevelManager.GameLevel, _jointHelper.CreatedJoint));
+                                UpdateCreatedJointList();
+                                createdJointsList.SelectedIndex = 0;
+                                propertyGrid.SelectedObject = createdJointsList.Items[0];
                             }
                         }
-                        break;
                     }
+                    break;
             }
         }
 
@@ -748,6 +748,7 @@ namespace LevelEditor
         private void undoAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Undo();
+            UpdateCreatedJointList();
         }
 
         private void undoAction_Update(object sender, EventArgs e)
@@ -778,6 +779,11 @@ namespace LevelEditor
         {
             Vector2 pos = ConvertUnits.ToSimUnits(levelScreen.MousePosition);
             toolStripMousePosLabel.Text = String.Format("(X={0:0.00}, Y={1:0.00})", pos.X, pos.Y);
+        }
+
+        private void createdJointsList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = createdJointsList.SelectedItem;
         }
 
     }

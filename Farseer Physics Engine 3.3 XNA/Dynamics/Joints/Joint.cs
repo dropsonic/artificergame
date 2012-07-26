@@ -214,7 +214,13 @@ namespace FarseerPhysics.Dynamics.Joints
         /// <value><c>true</c> if active; otherwise, <c>false</c>.</value>
         public bool Active
         {
-            get { return BodyA.Enabled && BodyB.Enabled; }
+            get 
+            {
+                if (JointType.ToString().Contains("Fixed")) 
+                    return BodyA.Enabled; 
+                else 
+                    return (BodyA.Enabled && BodyB.Enabled);
+            }
         }
 
         /// <summary>
