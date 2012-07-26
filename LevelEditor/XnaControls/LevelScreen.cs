@@ -22,9 +22,6 @@ namespace LevelEditor
         GameLevel _gameLevel;
         Camera _camera;
         SpriteFont _font;
-        private GameObject _previewGameObject;
-
-        FixedMouseJoint _mouseJoint;
         DebugViewXNA _debugView;
 
         public SpriteBatch SpriteBatch
@@ -52,6 +49,8 @@ namespace LevelEditor
             get { return _camera; }
             set { _camera = value; }
         }
+
+        private GameObject _previewGameObject;
 
         [Browsable(false)]
         public GameObject PreviewGameObject
