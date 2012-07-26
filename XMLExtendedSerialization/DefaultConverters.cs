@@ -7,79 +7,79 @@ using System.Globalization;
 
 namespace XMLExtendedSerialization
 {
-    internal static class DefaultConverters
+    public static class DefaultConverters
     {
-        private static readonly CultureInfo defaultCulture = CultureInfo.CreateSpecificCulture("en-US");
-        private static readonly char[] splitters = new char[] { ' ', ',' };
-        private static readonly char defaultSplitter = splitters[0];
+        public static readonly CultureInfo DefaultCulture = CultureInfo.CreateSpecificCulture("en-US");
+        public static readonly char[] Splitters = new char[] { ' ', ',' };
+        public static readonly char DefaultSplitter = Splitters[0];
 
         #region Convert (string to type)
-        internal static object StringToBool(string x)
+        public static object StringToBool(string x)
         {
             return bool.Parse(x);
         }
 
-        internal static object StringToByte(string x)
+        public static object StringToByte(string x)
         {
-            return byte.Parse(x, defaultCulture);
+            return byte.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToChar(string x)
+        public static object StringToChar(string x)
         {
             return char.Parse(x);
         }
 
-        internal static object StringToDecimal(string x)
+        public static object StringToDecimal(string x)
         {
-            return decimal.Parse(x, defaultCulture);
+            return decimal.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToDouble(string x)
+        public static object StringToDouble(string x)
         {
-            return double.Parse(x, defaultCulture);
+            return double.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToFloat(string x)
+        public static object StringToFloat(string x)
         {
-            return float.Parse(x, defaultCulture);
+            return float.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToInt(string x)
+        public static object StringToInt(string x)
         {
-            return int.Parse(x, defaultCulture);
+            return int.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToLong(string x)
+        public static object StringToLong(string x)
         {
-            return long.Parse(x, defaultCulture);
+            return long.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToSByte(string x)
+        public static object StringToSByte(string x)
         {
-            return sbyte.Parse(x, defaultCulture);
+            return sbyte.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToShort(string x)
+        public static object StringToShort(string x)
         {
-            return short.Parse(x, defaultCulture);
+            return short.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToUInt(string x)
+        public static object StringToUInt(string x)
         {
-            return uint.Parse(x, defaultCulture);
+            return uint.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToULong(string x)
+        public static object StringToULong(string x)
         {
-            return ulong.Parse(x, defaultCulture);
+            return ulong.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToUShort(string x)
+        public static object StringToUShort(string x)
         {
-            return ushort.Parse(x, defaultCulture);
+            return ushort.Parse(x, DefaultCulture);
         }
 
-        internal static object StringToColor(string x)
+        public static object StringToColor(string x)
         {
             string[] coords = x.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
             if (coords.Length < 3)
@@ -97,113 +97,113 @@ namespace XMLExtendedSerialization
                 return new Color(r, g, b);
         }
 
-        internal static object StringToVector2(string x)
+        public static object StringToVector2(string x)
         {
-            string[] coords = x.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+            string[] coords = x.Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
             return new Vector2((float)StringToFloat(coords[0]), (float)StringToFloat(coords[1]));
         }
 
-        internal static object StringToVector3(string x)
+        public static object StringToVector3(string x)
         {
-            string[] coords = x.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+            string[] coords = x.Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
             return new Vector3((float)StringToFloat(coords[0]), (float)StringToFloat(coords[1]), (float)StringToFloat(coords[2]));
         }
 
-        internal static object StringToVector4(string x)
+        public static object StringToVector4(string x)
         {
-            string[] coords = x.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+            string[] coords = x.Split(Splitters, StringSplitOptions.RemoveEmptyEntries);
             return new Vector4((float)StringToFloat(coords[0]), (float)StringToFloat(coords[1]), (float)StringToFloat(coords[2]), (float)StringToFloat(coords[3]));
         }
         #endregion
 
         #region Convert back (type to string)
-        internal static string BoolToString(object x)
+        public static string BoolToString(object x)
         {
-            return ((bool)x).ToString(defaultCulture);
+            return ((bool)x).ToString(DefaultCulture);
         }
 
-        internal static string ByteToString(object x)
+        public static string ByteToString(object x)
         {
-            return ((byte)x).ToString(defaultCulture);
+            return ((byte)x).ToString(DefaultCulture);
         }
 
-        internal static string CharToString(object x)
+        public static string CharToString(object x)
         {
-            return ((char)x).ToString(defaultCulture);
+            return ((char)x).ToString(DefaultCulture);
         }
 
-        internal static string DecimalToString(object x)
+        public static string DecimalToString(object x)
         {
-            return ((decimal)x).ToString(defaultCulture);
+            return ((decimal)x).ToString(DefaultCulture);
         }
 
-        internal static string DoubleToString(object x)
+        public static string DoubleToString(object x)
         {
-            return ((double)x).ToString(defaultCulture);
+            return ((double)x).ToString(DefaultCulture);
         }
 
-        internal static string FloatToString(object x)
+        public static string FloatToString(object x)
         {
-            return ((float)x).ToString(defaultCulture);
+            return ((float)x).ToString(DefaultCulture);
         }
 
-        internal static string IntToString(object x)
+        public static string IntToString(object x)
         {
-            return ((int)x).ToString(defaultCulture);
+            return ((int)x).ToString(DefaultCulture);
         }
 
-        internal static string LongToString(object x)
+        public static string LongToString(object x)
         {
-            return ((long)x).ToString(defaultCulture);
+            return ((long)x).ToString(DefaultCulture);
         }
 
-        internal static string SByteToString(object x)
+        public static string SByteToString(object x)
         {
-            return ((sbyte)x).ToString(defaultCulture);
+            return ((sbyte)x).ToString(DefaultCulture);
         }
 
-        internal static string ShortToString(object x)
+        public static string ShortToString(object x)
         {
-            return ((short)x).ToString(defaultCulture);
+            return ((short)x).ToString(DefaultCulture);
         }
 
-        internal static string UIntToString(object x)
+        public static string UIntToString(object x)
         {
-            return ((uint)x).ToString(defaultCulture);
+            return ((uint)x).ToString(DefaultCulture);
         }
 
-        internal static string ULongToString(object x)
+        public static string ULongToString(object x)
         {
-            return ((ulong)x).ToString(defaultCulture);
+            return ((ulong)x).ToString(DefaultCulture);
         }
 
-        internal static string UShortToString(object x)
+        public static string UShortToString(object x)
         {
-            return ((ushort)x).ToString(defaultCulture);
+            return ((ushort)x).ToString(DefaultCulture);
         }
 
-        internal static string ColorToString (object x)
+        public static string ColorToString (object x)
         {
             Color color = (Color)x;
             return String.Format("{0} {1} {2} {3}", color.R, color.G, color.B, color.A);
         }
 
-        internal static string Vector2ToString(object x)
+        public static string Vector2ToString(object x)
         {
             Vector2 vector = (Vector2)x;
-            return String.Format("{1}{0}{2}", defaultSplitter, vector.X, vector.Y);
+            return String.Format("{1}{0}{2}", DefaultSplitter, vector.X, vector.Y);
         }
 
-        internal static string Vector3ToString(object x)
+        public static string Vector3ToString(object x)
         {
             Vector3 vector = (Vector3)x;
-            return String.Format("{1}{0}{2}{0}{3}", defaultSplitter, vector.X, vector.Y, vector.Z);
+            return String.Format("{1}{0}{2}{0}{3}", DefaultSplitter, vector.X, vector.Y, vector.Z);
         }
 
-        internal static string Vector4ToString(object x)
+        public static string Vector4ToString(object x)
         {
             Vector4 vector = (Vector4)x;
-            return String.Format("{1}{0}{2}{0}{3}{0}{4}", defaultSplitter, vector.X, vector.Y, vector.Z, vector.W);
+            return String.Format("{1}{0}{2}{0}{3}{0}{4}", DefaultSplitter, vector.X, vector.Y, vector.Z, vector.W);
         }
         #endregion
     }

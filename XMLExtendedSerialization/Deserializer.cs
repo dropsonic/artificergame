@@ -103,21 +103,15 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public object Deserialize()
-        {
-            //Имя типа для инстанциации - имя корневого тега файла
-            string typeName = _doc.Root.Name.LocalName;
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
-            Type rootType = GetTypeByName(typeName, assemblies); //получаем тип по имени
-
-            return DeserializeObject(_doc.Root, rootType);
-        }
-
         /// <summary>
         /// Рекурсивно десериализует объект.
         /// </summary>
         private object DeserializeObject(XElement root, Type rootType)
         {
+            //Если это массив, то десериализуем его в отдельном методе
+            if (rootType.IsArray)
+                return DeserializeArray(root, rootType);
+
             //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
             object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
 
@@ -183,6 +177,35 @@ namespace XMLExtendedSerialization
             }
 
             return rootObject;
+        }
+
+        /// <summary>
+        /// Десериализует массив из элементов.
+        /// </summary>
+        /// <param name="root">XML-элемент с данными о массиве.</param>
+        /// <param name="rootType">Тип массива.</param>
+        /// <returns>Массив элементов.</returns>
+        private object DeserializeArray(XElement root, Type rootType)
+        {
+            var elements = root.Elements("Element");
+            Type arrayElementType = rootType.GetElementType();
+            Array rootObject = Array.CreateInstance(arrayElementType, elements.Count());
+            int i = 0;
+            foreach (XElement element in elements)
+                rootObject.SetValue(DeserializeObject(element, arrayElementType), i++);
+
+            return rootObject;
+        }
+
+        public object Deserialize()
+        {
+            //Имя типа для инстанциации - имя корневого тега файла
+            string typeName = _doc.Root.Name.LocalName;
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
+            string typeFullName = typeName.GetFullNameFromXML();
+            Type rootType = GetTypeByName(typeFullName, assemblies); //получаем тип по имени
+
+            return DeserializeObject(_doc.Root, rootType);
         }
     }
 }

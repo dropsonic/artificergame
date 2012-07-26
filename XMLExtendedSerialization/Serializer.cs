@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace XMLExtendedSerialization
 {
@@ -65,12 +66,37 @@ namespace XMLExtendedSerialization
             }
         }
 
+        private IXMLCustomSerializer GetCustomSerializer(FieldInfo field)
+        {
+            Attribute[] attributes = Attribute.GetCustomAttributes(field);
+            foreach (Attribute attribute in attributes)
+            {
+                if (attribute.GetType().SameType(typeof(XMLCustomSerializerAttribute)))
+                    return (attribute as XMLCustomSerializerAttribute).Serializer;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
-        private void SerializeObject(XElement root, object rootObject)
+        private XElement SerializeObject(string name, object rootObject)
         {
+            XElement element = new XElement(name);
+
+            if (rootObject == null)
+                return null;
+
             Type rootType = rootObject.GetType();
+            //Если объект - массив, сериализуем его в отдельном методе
+            if (rootType.IsArray)
+                return SerializeArray(name, (Array)rootObject);
+            //Если объект - generic, сериализуем его в отдельном методе
+            //if (rootType.IsGenericType)
+            //    return SerializeGenericObject(name, rootObject);
+
+            //Получаем все поля объекта
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             //PropertyInfo[] properties = rootType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
@@ -88,33 +114,72 @@ namespace XMLExtendedSerialization
 
                     if (fieldValue == null)
                     {
-                        root.SetAttributeValue(xmlFieldName, fieldValue);
+                        element.SetAttributeValue(xmlFieldName, fieldValue);
                         continue;
                     }
 
                     //Если конвертер для данного типа данных уже есть
                     if (_converters.TryGetValue(field.FieldType, out converter))
                         //то записываем значение поля как атрибут
-                        root.SetAttributeValue(xmlFieldName, converter(fieldValue));
+                        element.SetAttributeValue(xmlFieldName, converter(fieldValue));
                     //Если конвертера для данного типа данных нет
                     else
                     {
-                        //то рекурсивно сериализуем значение поля
-                        XElement child = new XElement(xmlFieldName);
-                        SerializeObject(child, fieldValue);
-                        root.Add(child);
+                        //то проверяем наличие custom-сериализатора для данного типа
+                        XElement child;
+
+                        //Если он есть
+                        if (field.HasAttribute(typeof(XMLCustomSerializerAttribute)))
+                        {
+                            IXMLCustomSerializer serializer = GetCustomSerializer(field);
+                            child = serializer.Serialize(fieldValue, xmlFieldName);
+                        }
+                        else
+                        {
+                            // иначе рекурсивно сериализуем значение поля
+                            child = SerializeObject(xmlFieldName, fieldValue);
+                        }
+
+                        element.Add(child);
                     }
                 }
             }
+
+            return element;
         }
+
+        /// <summary>
+        /// Сериализует массив элементов.
+        /// </summary>
+        /// <param name="name">Имя XML-элемента.</param>
+        /// <param name="rootObject">Массив для записи.</param>
+        /// <returns>XML-элемент с данными о массиве.</returns>
+        private XElement SerializeArray(string name, Array rootObject)
+        {
+            XElement element = new XElement(name);
+            Type rootType = rootObject.GetType();
+            //IList array = (rootObject as IList);
+            foreach (object x in rootObject)
+                element.Add(SerializeObject("Element", x));
+
+            return element;
+        }
+
+        //private XElement SerializeGenericObject(string name, object rootObject)
+        //{
+        //    XElement element = new XElement(name);
+        //    Type rootType = rootObject.GetType();
+
+        //    return element;
+        //    throw new NotImplementedException();
+        //}
 
         public void Serialize(object rootObject)
         {
             XDocument doc = new XDocument();
             Type rootType = rootObject.GetType();
-            string typeName = rootType.FullName;
-            doc.Add(new XElement(typeName));
-            SerializeObject(doc.Root, rootObject);
+            string typeName = rootType.GetXMLFullName();
+            doc.Add(SerializeObject(typeName, rootObject));
             doc.Save(_stream);
         }
     }
