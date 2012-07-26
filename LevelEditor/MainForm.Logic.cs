@@ -50,6 +50,15 @@ namespace LevelEditor
                 return null;
             }
         }
+        
+        private void FindPreSimulationObject(PropertyGrid grid)
+        {
+            if (grid.SelectedObject.GetType() == typeof(Body))
+            {
+                propertyGrid.SelectedObject = FindBody(((Body)propertyGrid.SelectedObject).Position);
+            }
+            //здесь будут джоинт, геймобжекты, геймобжектпарты
+        }
 
         private void CreatePreview()
         {

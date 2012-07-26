@@ -55,8 +55,7 @@ namespace LevelEditor
             _updateTimer.Interval = 10;
 
             _propertyGridTimer.Enabled = false;
-            _propertyGridTimer.Tick += (object sen, EventArgs args) => { 
-                propertyGrid.Refresh(); };
+            _propertyGridTimer.Tick += (object sen, EventArgs args) => { propertyGrid.Refresh(); };
             _propertyGridTimer.Interval = 100;
 
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
@@ -565,7 +564,7 @@ namespace LevelEditor
                 _commandManager.Execute("StartSimulation");
                 
                 _propertyGridTimer.Enabled = true;
-                propertyGrid.SelectedObject = propertyGrid.SelectedObject==null ? null : FindBody(((Body)propertyGrid.SelectedObject).Position);
+                FindPreSimulationObject(propertyGrid);
 
                 ShowSimulationStatus();
             }

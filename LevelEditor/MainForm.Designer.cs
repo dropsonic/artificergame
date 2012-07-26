@@ -250,7 +250,7 @@ namespace LevelEditor
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.tableLayoutPanel);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 765);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 790);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
@@ -298,7 +298,7 @@ namespace LevelEditor
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 765);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 790);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // paramsTabControl
@@ -309,7 +309,7 @@ namespace LevelEditor
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
             this.paramsTabControl.SelectedIndex = 0;
-            this.paramsTabControl.Size = new System.Drawing.Size(314, 759);
+            this.paramsTabControl.Size = new System.Drawing.Size(314, 784);
             this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
@@ -322,7 +322,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(306, 733);
+            this.previewPage.Size = new System.Drawing.Size(306, 758);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -1530,7 +1530,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1118, 759);
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 784);
             this.splitContainer1.SplitterDistance = 843;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1542,7 +1542,7 @@ namespace LevelEditor
             this.viewTabControl.Location = new System.Drawing.Point(0, 0);
             this.viewTabControl.Name = "viewTabControl";
             this.viewTabControl.SelectedIndex = 0;
-            this.viewTabControl.Size = new System.Drawing.Size(843, 759);
+            this.viewTabControl.Size = new System.Drawing.Size(843, 784);
             this.viewTabControl.TabIndex = 0;
             // 
             // levelPage
@@ -1552,7 +1552,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(835, 733);
+            this.levelPage.Size = new System.Drawing.Size(835, 758);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1612,7 +1612,7 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(271, 759);
+            this.propertyGrid.Size = new System.Drawing.Size(271, 784);
             this.propertyGrid.TabIndex = 0;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
@@ -1914,9 +1914,9 @@ namespace LevelEditor
             this.toolStripButton6,
             this.simulationSpeedToolStripLabel,
             this.toolStripButton7});
-            this.simulationToolStrip.Location = new System.Drawing.Point(3, 49);
+            this.simulationToolStrip.Location = new System.Drawing.Point(189, 24);
             this.simulationToolStrip.Name = "simulationToolStrip";
-            this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
+            this.simulationToolStrip.Size = new System.Drawing.Size(249, 25);
             this.simulationToolStrip.TabIndex = 7;
             // 
             // toolStripButton1
