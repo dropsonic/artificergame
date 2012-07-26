@@ -166,7 +166,7 @@ namespace LevelEditor
             }
             else if (selectObjectAction.Checked)
             {
-                _levelScreenCursor = Cursors.IBeam;
+                _levelScreenCursor = Cursors.Hand;
                 _mouseToolState = MouseToolState.SelectObject;
             }
             else if (addPreviewObjectAction.Checked)
@@ -176,7 +176,7 @@ namespace LevelEditor
             }
             else if (useMouseJointAction.Checked)
             {
-                _levelScreenCursor = Cursors.HSplit;
+                _levelScreenCursor = Cursors.Cross;
                 _mouseToolState = MouseToolState.MouseJoint;
             }
             else if (editCurrentObjectAction.Checked)

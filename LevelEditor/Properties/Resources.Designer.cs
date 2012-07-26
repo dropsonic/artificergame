@@ -60,6 +60,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap _object {
+            get {
+                object obj = ResourceManager.GetObject("object", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap addPreviewObject {
             get {
                 object obj = ResourceManager.GetObject("addPreviewObject", resourceCulture);
@@ -102,6 +109,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap editObject {
+            get {
+                object obj = ResourceManager.GetObject("editObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Erase {
             get {
                 object obj = ResourceManager.GetObject("Erase", resourceCulture);
@@ -123,6 +137,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap mouseJoint {
+            get {
+                object obj = ResourceManager.GetObject("mouseJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap normalSpeed {
             get {
                 object obj = ResourceManager.GetObject("normalSpeed", resourceCulture);
@@ -133,6 +154,13 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap objectPart {
             get {
                 object obj = ResourceManager.GetObject("objectPart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap objectPart1 {
+            get {
+                object obj = ResourceManager.GetObject("objectPart1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
