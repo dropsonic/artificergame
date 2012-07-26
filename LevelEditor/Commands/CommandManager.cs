@@ -39,10 +39,12 @@ namespace LevelEditor.Commands
                     }
                     else
                     {
-                        if (_currentCommandIndex >= _executedCommandList.Count - 1)
+                        //Если мы в конце списка (нельзя сделать redo) - просто добавляем новую команду
+                        if (!CanRedo)
                             _executedCommandList.Add(command);
                         else
                         {
+                            //Иначе добавляем команду в текущее положение в списке, а все команды в списке после неё удаляем.
                             _executedCommandList[_currentCommandIndex + 1] = command;
                             int deleteIndex = _currentCommandIndex + 2;
                             int deleteCount = _executedCommandList.Count - deleteIndex;
