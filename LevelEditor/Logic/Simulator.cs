@@ -23,36 +23,13 @@ namespace LevelEditor
 
     public class Simulator
     {
-        /// <summary>
-        /// Частота обновления, Гц.
-        /// </summary>
-        private const int updateRate = 100;
         public const float NormalSimulationSpeed = 1.0f;
 
         public Simulator()
         {
-            //_updateTimer = new Timer();
-            //_updateTimer.Interval = 10;
-            //_updateTimer.Tick += new EventHandler(_updateTimer_Tick);
-            _updateTimer = new Timer(1000.0/updateRate);
-            _updateTimer.Elapsed += new ElapsedEventHandler(_updateTimer_Elapsed);
-            _gameTimeTimer = new StopwatchGameTimer();
-            
             _simulationSpeed = NormalSimulationSpeed;
             Stop();
         }
-
-        void _updateTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            _gameTimeTimer.UpdateGameTime();
-            Update();
-        }
-
-        //void _updateTimer_Tick(object sender, EventArgs e)
-        //{
-        //    _gameTimeTimer.UpdateGameTime();
-        //    Update();
-        //}
 
         public Simulator(GameLevel level)
             : this()
@@ -61,8 +38,6 @@ namespace LevelEditor
         }
 
         private SimulationState _state;
-        private StopwatchGameTimer _gameTimeTimer;
-        private Timer _updateTimer;
         private TimeSpan _worldTime = TimeSpan.Zero;
 
         private GameLevel _initialLevel;
@@ -124,8 +99,6 @@ namespace LevelEditor
                 ResetLevelTo(_initialLevel);
             
             State = SimulationState.Simulation;
-            _gameTimeTimer.Enabled = true;
-            _updateTimer.Start();
         }
 
         /// <summary>
@@ -135,9 +108,7 @@ namespace LevelEditor
         {
             if (_state == SimulationState.Simulation)
             {
-                _updateTimer.Stop();
                 State = SimulationState.Paused;
-                _gameTimeTimer.Enabled = false;
             }
         }
 
@@ -146,9 +117,7 @@ namespace LevelEditor
         /// </summary>
         public void Stop()
         {
-            _updateTimer.Stop();
             State = SimulationState.Stopped;
-            _gameTimeTimer.Enabled = false;
             ResetLevelTo(_initialLevel);
         }
 
@@ -175,24 +144,25 @@ namespace LevelEditor
         }
         #endregion
 
-        private void Update()
+        public void Update(GameTime gameTime)
         {
             if (_state == SimulationState.Simulation)
             {
                 if (_worldTime == TimeSpan.Zero && _simulationSpeed <= 0)
                     throw new Exception("Попытка запустить симуляцию с отрицательным значением шага");
 
-                TimeSpan elapsed = TimeSpan.FromMilliseconds(_gameTimeTimer.GameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
+                TimeSpan elapsed = TimeSpan.FromMilliseconds(gameTime.ElapsedGameTime.TotalMilliseconds * _simulationSpeed);
                 _worldTime += elapsed;
                 if (_worldTime <= TimeSpan.Zero)
                 {
                     State = SimulationState.Stopped;
                     return;
                 }
+
                 if (_simulationSpeed == NormalSimulationSpeed)
-                    _simulatedLevel.Update(_gameTimeTimer.GameTime);
+                    _simulatedLevel.Update(gameTime);
                 else
-                    _simulatedLevel.Update(new GameTime(_gameTimeTimer.GameTime.TotalGameTime, elapsed));
+                    _simulatedLevel.Update(new GameTime(gameTime.TotalGameTime, elapsed));
             }
         }
 

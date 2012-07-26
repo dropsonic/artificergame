@@ -92,6 +92,7 @@ namespace LevelEditor
         {
             _mouseToolState = MouseToolState.Default;
             _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+            levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
 

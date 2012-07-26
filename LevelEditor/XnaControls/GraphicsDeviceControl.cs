@@ -101,7 +101,7 @@ namespace LevelEditor
                 _frameTimer.Interval = (int)((float)1000/(float)_fps);
                 _frameTimer.Enabled = true;
 
-                _gameTimer.Enabled = false;
+                _gameTimer.Enabled = true;
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();

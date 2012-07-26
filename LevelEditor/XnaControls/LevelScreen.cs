@@ -191,14 +191,19 @@ namespace LevelEditor
                 Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
                 _debugView.RenderDebugData(ref proj);
             }
+
+            var test = GameTimer.GameTime;
         }
 
         protected override void LoadContent()
         {
         }
 
+        public delegate void UpdateDelegate(GameTime gameTime);
+        public UpdateDelegate UpdateSubscriber;
         protected override void UpdateFrame()
         {
+            UpdateSubscriber(GameTimer.GameTime);
         }
     }
 }   
