@@ -114,6 +114,8 @@ namespace LevelEditor
             this.label1 = new System.Windows.Forms.Label();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.jointPage = new System.Windows.Forms.TabPage();
+            this.label31 = new System.Windows.Forms.Label();
+            this.jointsBox = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.viewTabControl = new System.Windows.Forms.TabControl();
             this.levelPage = new System.Windows.Forms.TabPage();
@@ -233,6 +235,7 @@ namespace LevelEditor
             this.emptyTab.SuspendLayout();
             this.commonParameters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).BeginInit();
+            this.jointPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1515,6 +1518,8 @@ namespace LevelEditor
             // jointPage
             // 
             this.jointPage.AutoScroll = true;
+            this.jointPage.Controls.Add(this.label31);
+            this.jointPage.Controls.Add(this.jointsBox);
             this.jointPage.Location = new System.Drawing.Point(4, 22);
             this.jointPage.Name = "jointPage";
             this.jointPage.Padding = new System.Windows.Forms.Padding(3);
@@ -1522,6 +1527,24 @@ namespace LevelEditor
             this.jointPage.TabIndex = 1;
             this.jointPage.Text = "Joints";
             this.jointPage.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(6, 3);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(34, 13);
+            this.label31.TabIndex = 1;
+            this.label31.Text = "Joints";
+            // 
+            // jointsBox
+            // 
+            this.jointsBox.FormattingEnabled = true;
+            this.jointsBox.Location = new System.Drawing.Point(5, 19);
+            this.jointsBox.Name = "jointsBox";
+            this.jointsBox.Size = new System.Drawing.Size(293, 21);
+            this.jointsBox.TabIndex = 0;
+            this.jointsBox.SelectedValueChanged += new System.EventHandler(this.jointsBox_SelectedValueChanged);
             // 
             // splitContainer1
             // 
@@ -2322,6 +2345,8 @@ namespace LevelEditor
             this.commonParameters.ResumeLayout(false);
             this.commonParameters.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.materialScale)).EndInit();
+            this.jointPage.ResumeLayout(false);
+            this.jointPage.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -2499,6 +2524,8 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripButton toolStripButton16;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox jointsBox;
     }
 }
 

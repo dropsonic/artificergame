@@ -115,6 +115,12 @@ namespace GameLogic
         public void AddJoint(Joint joint)
         {
             _joints.Add(joint);
+            _world.AddJoint(joint);
+        }
+        public void RemoveJoint(Joint joint)
+        {
+            _joints.Remove(joint);
+            _world.RemoveJoint(joint);
         }
 
         /// <summary>

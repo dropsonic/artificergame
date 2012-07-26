@@ -18,11 +18,14 @@ using Microsoft.Xna.Framework.Graphics;
 using GameLogic;
 using FarseerPhysics;
 using LevelEditor.Commands;
+using LevelEditor.Helpers;
+
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
     using Microsoft.Xna.Framework.Input;
+    using FarseerPhysics.Dynamics.Joints;
 
     public partial class MainForm : Form
     {
@@ -31,6 +34,7 @@ namespace LevelEditor
         AssetCreator _assetCreator;
         Cursor _levelScreenCursor = Cursors.Arrow;
         MouseToolState _mouseToolState;
+        JointCreationHelper _jointHelper;
 
         Timer _updateTimer = new Timer();
         Timer _propertyGridTimer = new Timer();
@@ -86,6 +90,7 @@ namespace LevelEditor
 
         private void InitializeAfterLoad()
         {
+            _mouseToolState = MouseToolState.Default;
             _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
@@ -117,6 +122,11 @@ namespace LevelEditor
             foreach (string colorName in _colorDictionary.Keys)
             {
                 colorBox.Items.Add(colorName);
+            }
+
+            foreach (JointType joint in Enum.GetValues(typeof(JointType)))
+            {
+                jointsBox.Items.Add(joint);
             }
 
             InitializeCommandManager();
@@ -516,7 +526,24 @@ namespace LevelEditor
                     {
                         if (mouseEvent == MouseEvents.Click)
                         {
-                            propertyGrid.SelectedObject = FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))));
+                            propertyGrid.SelectedObject = CommonHelpers.FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel.World);
+                        }
+                        break;
+                    }
+                case MouseToolState.PlaceJoint:
+                    {
+                        if (mouseEvent == MouseEvents.Click)
+                        {
+                            if (_jointHelper != null)
+                            {
+                                Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
+                                _jointHelper.NextStep(simPosition);
+                                ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                                if (_jointHelper.CreatedJoint != null)
+                                {
+                                    _commandManager.Execute(new Commands.AddLevelJointCommand(_objectLevelManager.GameLevel, _jointHelper.CreatedJoint));
+                                }
+                            }
                         }
                         break;
                     }
@@ -729,6 +756,13 @@ namespace LevelEditor
                 redoAction.Enabled = _commandManager.CanRedo;
         }
         #endregion
+
+        private void jointsBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            addNewJointAction.Checked = true;
+            SetMouseToolButtonsState(addNewJointAction);
+        }
+
 
 
     }

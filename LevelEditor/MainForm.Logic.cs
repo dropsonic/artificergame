@@ -15,17 +15,19 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using LevelEditor.Helpers;
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
     using Path = System.IO.Path;
+    using FarseerPhysics.Dynamics.Joints;
 
     public partial class MainForm : Form
     {
         enum MouseToolState
         {
-            PlaceObject, EditPreviewObject, PlaceJoint, EditJoint, SelectObjectPart, SelectObject, MouseJoint, Default
+            Default, PlaceObject, EditPreviewObject, PlaceJoint, EditJoint, SelectObjectPart, SelectObject, MouseJoint
         }
 
         enum MouseEvents
@@ -33,32 +35,16 @@ namespace LevelEditor
             Click,Up,Down,Move
         }
         
-        string GetParent(string path, int nesting)
-        {
-            return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
-        }
-
-        Body FindBody(Vector2 point)
-        {
-            Fixture foundFixture = _objectLevelManager.GameLevel.World.TestPoint(point);
-            if (foundFixture != null)
-            {
-               return foundFixture.Body;
-            }
-            else
-            {
-                return null;
-            }
-        }
-        
+   
         private void FindPreSimulationObject(PropertyGrid grid)
         {
             if (grid.SelectedObject.GetType() == typeof(Body))
             {
-                propertyGrid.SelectedObject = FindBody(((Body)propertyGrid.SelectedObject).Position);
+                propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position,_objectLevelManager.GameLevel.World);
             }
             //здесь будут джоинт, геймобжекты, геймобжектпарты
         }
+
 
         private void CreatePreview()
         {
@@ -208,7 +194,26 @@ namespace LevelEditor
             toolButton.Checked = tempCheck;
 
             HandlePreviewDisplay();
+            HandleJointCreation();
             ChangeMouseToolState();
+        }
+
+
+        private void HandleJointCreation()
+        {
+            if (addNewJointAction.Checked)
+            {
+                if (jointsBox.SelectedItem != null)
+                {
+                    _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                }
+            }
+            else
+            {
+                _jointHelper = null;
+                ShowReadyStatus();
+            }
         }
 
         private void HandlePreviewDisplay()

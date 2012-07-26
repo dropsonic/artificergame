@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddLevelJointCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\SimulationSpeedDecreaseCommand.cs" />
     <Compile Include="Commands\SimulationSpeedIncreaseCommand.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\JointCreationHelper.cs" />
     <Compile Include="Logic\ObjectLevelManager.cs" />
     <Compile Include="Logic\Simulator.cs" />
     <Compile Include="MainForm.Designer.cs">
