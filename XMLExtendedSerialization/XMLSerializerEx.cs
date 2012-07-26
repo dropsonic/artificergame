@@ -25,12 +25,12 @@ namespace XMLExtendedSerialization
         /// Сериализует объект в виде XML-документа.
         /// </summary>
         /// <param name="obj">Объект для сериализации.</param>
-        /// <param name="metaData">Метаданные для сохранения в XML-документ.</param>
+        /// <param name="metadata">Метаданные для сохранения в XML-документ.</param>
         /// <param name="stream">Поток, в который будет сохранён XML-документ.</param>
-        public static void Serialize(object obj, string metaData, Stream stream)
+        public static void Serialize(object obj, string metadata, Stream stream)
         {
             Serializer serializer = new Serializer(stream);
-            serializer.Serialize(obj, metaData);
+            serializer.Serialize(obj, metadata);
         }
 
         public static object Deserialize(Stream stream)
@@ -40,11 +40,11 @@ namespace XMLExtendedSerialization
             return deserializer.Deserialize();
         }
 
-        public static object Deserialize(Stream stream, out string metaData)
+        public static object Deserialize(Stream stream, out string metadata)
         {
             XDocument doc = XDocument.Load(stream);
             Deserializer deserializer = new Deserializer(doc);
-            object result = deserializer.Deserialize(out metaData);
+            object result = deserializer.Deserialize(out metadata);
             return result;
         }
 

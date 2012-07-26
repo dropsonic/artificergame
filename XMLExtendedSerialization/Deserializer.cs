@@ -104,6 +104,17 @@ namespace XMLExtendedSerialization
         }
 
         /// <summary>
+        /// Считывает метаданные из XML-элемента и записывает их в объект.
+        /// </summary>
+        /// <param name="root">XML-элемент для чтения.</param>
+        /// <param name="rootObject">Объект, в который необходимо записать метаданные.</param>
+        private void DeserializeMetadata(XElement root, object rootObject)
+        {
+            if (rootObject.GetType().IsClass && root.FirstNode is XComment)
+                rootObject.SetXMLMetadata((root.FirstNode as XComment).Value.FromXMLComment());
+        }
+
+        /// <summary>
         /// Рекурсивно десериализует объект.
         /// </summary>
         private object DeserializeObject(XElement root, Type rootType)
@@ -114,6 +125,7 @@ namespace XMLExtendedSerialization
 
             //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
             object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
+            DeserializeMetadata(root, rootObject);
 
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем список полей, включая автоматически созданные для свойств
             //PropertyInfo[] properties = rootType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем списк свойств
@@ -190,6 +202,7 @@ namespace XMLExtendedSerialization
             var elements = root.Elements("Element");
             Type arrayElementType = rootType.GetElementType();
             Array rootObject = Array.CreateInstance(arrayElementType, elements.Count());
+            DeserializeMetadata(root, rootObject);
             int i = 0;
             foreach (XElement element in elements)
                 rootObject.SetValue(DeserializeObject(element, arrayElementType), i++);
@@ -203,20 +216,20 @@ namespace XMLExtendedSerialization
             return Deserialize(false, out s);
         }
 
-        public object Deserialize(out string metaData)
+        public object Deserialize(out string metadata)
         {
-            return Deserialize(true, out metaData);
+            return Deserialize(true, out metadata);
         }
 
-        private object Deserialize(bool readMetaData, out string metaData)
+        private object Deserialize(bool readMetadata, out string metadata)
         {
             //Читаем метаданные
-            if (readMetaData && _doc.FirstNode is XComment)
+            if (readMetadata && _doc.FirstNode is XComment)
             {
-                metaData = (_doc.FirstNode as XComment).Value.FromXMLComment();
+                metadata = (_doc.FirstNode as XComment).Value.FromXMLComment();
             }
             else
-                metaData = String.Empty;
+                metadata = String.Empty;
 
             //Имя типа для инстанциации - имя корневого тега файла
             string typeName = _doc.Root.Name.LocalName;

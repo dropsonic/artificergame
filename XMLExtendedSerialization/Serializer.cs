@@ -78,6 +78,16 @@ namespace XMLExtendedSerialization
             return null;
         }
 
+        private void SerializeMetadata(XElement root, object rootObject)
+        {
+            if (rootObject.GetType().IsClass)
+            {
+                string metadata = rootObject.GetXMLMetadata();
+                if (metadata != null)
+                    root.Add(new XComment(metadata.ToXMLComment()));
+            }
+        }
+
         /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
@@ -89,12 +99,16 @@ namespace XMLExtendedSerialization
                 return null;
 
             Type rootType = rootObject.GetType();
+
             //Если объект - массив, сериализуем его в отдельном методе
             if (rootType.IsArray)
                 return SerializeArray(name, (Array)rootObject);
             //Если объект - generic, сериализуем его в отдельном методе
             //if (rootType.IsGenericType)
             //    return SerializeGenericObject(name, rootObject);
+
+            //Записываем метаданные
+            SerializeMetadata(element, rootObject);
 
             //Получаем все поля объекта
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
@@ -157,6 +171,7 @@ namespace XMLExtendedSerialization
         private XElement SerializeArray(string name, Array rootObject)
         {
             XElement element = new XElement(name);
+            SerializeMetadata(element, rootObject);
             Type rootType = rootObject.GetType();
             //IList array = (rootObject as IList);
             foreach (object x in rootObject)
@@ -184,11 +199,11 @@ namespace XMLExtendedSerialization
             Serialize(rootObject, true, metaData);
         }
 
-        private void Serialize(object rootObject, bool addMetaData, string metaData = "")
+        private void Serialize(object rootObject, bool addMetadata, string metadata = "")
         {
             XDocument doc = new XDocument();
-            if (addMetaData)
-                doc.Add(new XComment(metaData.ToXMLComment()));
+            if (addMetadata)
+                doc.Add(new XComment(metadata.ToXMLComment()));
             Type rootType = rootObject.GetType();
             string typeName = rootType.GetXMLFullName();
             doc.Add(SerializeObject(typeName, rootObject));
