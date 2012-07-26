@@ -23,6 +23,11 @@ namespace LevelEditor.Helpers
             }
         }
 
+        public static Vector2 CalculateLocalPoint(Vector2 position, Body body)
+        {
+            return Vector2.Transform(position - body.Position, Matrix.CreateRotationZ(-body.Rotation));
+        }
+
         public static string GetParent(string path, int nesting)
         {
             return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
