@@ -38,7 +38,7 @@ namespace LevelEditor
    
         private void FindPreSimulationObject(PropertyGrid grid)
         {
-            if (grid.SelectedObject.GetType() == typeof(Body))
+            if (grid.SelectedObject != null && grid.SelectedObject.GetType() == typeof(Body))
             {
                 propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position,_objectLevelManager.GameLevel.World);
             }

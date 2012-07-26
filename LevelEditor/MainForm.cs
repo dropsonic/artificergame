@@ -92,6 +92,7 @@ namespace LevelEditor
         {
             _mouseToolState = MouseToolState.Default;
             _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _objectLevelManager.Simulator.SimulateChanged += new EventHandler(Simulator_SimulateChanged);
             levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
@@ -605,6 +606,7 @@ namespace LevelEditor
                 ShowReadyStatus();
 
                 _commandManager.Execute("StopSimulation");
+
                 _propertyGridTimer.Enabled = false;
                 propertyGrid.SelectedObject = false;
             }
@@ -613,6 +615,15 @@ namespace LevelEditor
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
             SetDebugViewMenu();
             HandlePreviewDisplay();
+        }
+
+        void Simulator_SimulateChanged(object sender, EventArgs e)
+        {
+            if (_objectLevelManager.Simulator.State == SimulationState.Stopped)
+                //simulateAction.DoExecute();
+                ShowReadyStatus();
+            else
+                ShowSimulationStatus();
         }
 
         bool pauseSimulationActionState = false;
