@@ -16,9 +16,16 @@ namespace XMLExtendedSerialization
         private Assembly[] _assemblies;
         private Dictionary<Type, Func<string, object>> _converters;
 
+        /// <summary>
+        /// Список из всех десериализованных reference-type объектов.
+        /// Ключ - hash-код объекта, значение - ссылка на объект.
+        /// </summary>
+        private Dictionary<string, object> _refList;
+
         internal Deserializer(XDocument doc)
         {
             _doc = doc;
+            _refList = new Dictionary<string, object>(32);
 
             InitializeConverters();
             _assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -113,7 +120,8 @@ namespace XMLExtendedSerialization
         /// <param name="rootObject">Объект, в который необходимо записать метаданные.</param>
         private void DeserializeMetadata(XElement root, object rootObject)
         {
-            if (rootObject.GetType().IsClass && root.FirstNode is XComment)
+            Type rootType = rootObject.GetType();
+            if (rootType.IsClass && root.FirstNode is XComment)
                 rootObject.SetXMLMetadata((root.FirstNode as XComment).Value.FromXMLComment());
         }
 
@@ -139,6 +147,15 @@ namespace XMLExtendedSerialization
 
             //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
             object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
+
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsValue(rootObject))
+                    _refList.Add(_refList.Count.ToString(), rootObject);
+            }
+            
             DeserializeMetadata(root, rootObject);
 
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем список полей, включая автоматически созданные для свойств
@@ -194,11 +211,18 @@ namespace XMLExtendedSerialization
                         else
                         {
                             if (element != null)
-                            {
                                 fieldValue = DeserializeObject(element); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
-                            }
                             else
-                                throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
+                            {
+                                //Если элемента нет, но есть атрибут с непустым значением, то это ссылка либо неизвестное поле
+                                object refObject;
+                                //Если значение элемента - hash-код, и объект с таким hash-кодом есть в списке десериализованных объектов
+                                if (_refList.TryGetValue(value.FromXMLValue(), out refObject))
+                                    //то это ссылка
+                                    fieldValue = refObject;
+                                else
+                                    throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
+                            }
                         }
                     }
 
@@ -220,6 +244,13 @@ namespace XMLExtendedSerialization
             var elements = root.Elements("Element");
             Type arrayElementType = rootType.GetElementType();
             Array rootObject = Array.CreateInstance(arrayElementType, elements.Count());
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsValue(rootObject))
+                    _refList.Add(_refList.Count.ToString(), rootObject);
+            }
             DeserializeMetadata(root, rootObject);
             int i = 0;
             foreach (XElement element in elements)

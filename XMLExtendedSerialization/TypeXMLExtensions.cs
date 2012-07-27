@@ -5,17 +5,17 @@ using System.Text;
 
 namespace XMLExtendedSerialization
 {
-    public static class TypeXMLExtensions
+    internal static class TypeXMLExtensions
     {
         /// <summary>
         /// Проверяет два типа из разных сборок на соответствие.
         /// </summary>
-        public static bool SameType(this Type a, Type x)
+        internal static bool SameType(this Type a, Type x)
         {
             return (a.FullName == x.FullName);
         }
 
-        public static string GetXMLFullName(this Type x)
+        internal static string GetXMLFullName(this Type x)
         {
             string result = x.FullName;
             result = result.Replace("<", "lt--");

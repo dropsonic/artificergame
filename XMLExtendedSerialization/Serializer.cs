@@ -15,6 +15,12 @@ namespace XMLExtendedSerialization
         private Stream _stream;
         private Dictionary<Type, Func<object, string>> _converters;
 
+        /// <summary>
+        /// Список из всех сериализованных reference-type объектов.
+        /// Ключ - ссылка на объект, значение - hash-код объекта.
+        /// </summary>
+        private Dictionary<object, string> _refList;
+
         private void InitializeConverters()
         {
             _converters = new Dictionary<Type, Func<object, string>>();
@@ -44,6 +50,7 @@ namespace XMLExtendedSerialization
         internal Serializer(Stream stream)
         {
             _stream = stream;
+            _refList = new Dictionary<object, string>(32);
 
             InitializeConverters();
         }
@@ -98,6 +105,16 @@ namespace XMLExtendedSerialization
         /// </summary>
         private XElement SerializeObject(string name, object rootObject)
         {
+            Type rootType = rootObject.GetType();
+
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsKey(rootObject))
+                    _refList.Add(rootObject, _refList.Count.ToString());
+            }
+
             XElement element = new XElement(name);
 
             if (rootObject == null)
@@ -105,8 +122,6 @@ namespace XMLExtendedSerialization
 
             if (rootObject is IDictionary)
                 return SerializeDictionary(name, (IDictionary)rootObject);
-
-            Type rootType = rootObject.GetType();
 
             //Если объект - массив, сериализуем его в отдельном методе
             if (rootType.IsArray)
@@ -148,6 +163,20 @@ namespace XMLExtendedSerialization
                         element.SetAttributeValue(xmlFieldName, fieldValue);
                         continue;
                     }
+
+                    
+                    if (!field.FieldType.IsValueType)
+                    {
+                        //Получаем данные о ссылке на объект
+                        string hashCode;
+                        if (_refList.TryGetValue(fieldValue, out hashCode))
+                        {
+                            //Если объект уже был сериализован, то записываем только ссылку на него
+                            element.SetAttributeValue(xmlFieldName, hashCode.ToXMLValue());
+                            continue;
+                        }
+                    }
+
 
                     //Если конвертер для данного типа данных уже есть
                     if (_converters.TryGetValue(field.FieldType, out converter))
@@ -240,8 +269,6 @@ namespace XMLExtendedSerialization
             XDocument doc = new XDocument();
             if (addMetadata)
                 doc.Add(new XComment(metadata.ToXMLComment()));
-            //Type rootType = rootObject.GetType();
-            //string typeName = rootType.GetXMLFullName();
             doc.Add(SerializeObject(rootName, rootObject));
             doc.Save(_stream);
         }
