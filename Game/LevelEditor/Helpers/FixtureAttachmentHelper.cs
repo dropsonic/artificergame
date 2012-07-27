@@ -33,6 +33,15 @@ namespace LevelEditor.Helpers
         {
             get { return _finished; }
         }
+        public bool ShowPreview
+        {
+            get
+            {
+                return _step == 2 ? true : false;
+
+            }
+        }
+        
         public void GetAttachmentResult(out Body body, out List<Shape> shapeList)
         {
             body = _foundBody;
