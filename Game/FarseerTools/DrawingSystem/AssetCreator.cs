@@ -539,10 +539,13 @@ namespace FarseerTools
             //worst case scenario
             int width = (int)Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height);
             int height = width;
+            /*
+            width = (int)(Math.Cos(radians) * sprite.Texture.Width);
+            height = (int)(Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height)*Math.Cos(MathHelper.ToRadians(90)-radians-Math.Atan(sprite.Texture.Height/sprite.Texture.Width)));*/
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
                                                         DepthFormat.Depth24Stencil8, 8,
                                                         RenderTargetUsage.DiscardContents);
-
+            
 
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             SpriteBatch batch = new SpriteBatch(_device);
