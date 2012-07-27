@@ -22,5 +22,113 @@ namespace LevelEditor.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point MainFormLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["MainFormLocation"]));
+            }
+            set {
+                this["MainFormLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1460, 899")]
+        public global::System.Drawing.Size MainFormSize {
+            get {
+                return ((global::System.Drawing.Size)(this["MainFormSize"]));
+            }
+            set {
+                this["MainFormSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10, 24")]
+        public global::System.Drawing.Point mainToolStripLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["mainToolStripLocation"]));
+            }
+            set {
+                this["mainToolStripLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("179, 24")]
+        public global::System.Drawing.Point simulationToolStripLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["simulationToolStripLocation"]));
+            }
+            set {
+                this["simulationToolStripLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("121, 24")]
+        public global::System.Drawing.Point toolsToolStripLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["toolsToolStripLocation"]));
+            }
+            set {
+                this["toolsToolStripLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string mainToolStripParentName {
+            get {
+                return ((string)(this["mainToolStripParentName"]));
+            }
+            set {
+                this["mainToolStripParentName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string simulationToolStripParentName {
+            get {
+                return ((string)(this["simulationToolStripParentName"]));
+            }
+            set {
+                this["simulationToolStripParentName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TopToolStripPanel")]
+        public string toolsToolStripParentName {
+            get {
+                return ((string)(this["toolsToolStripParentName"]));
+            }
+            set {
+                this["toolsToolStripParentName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public global::System.Windows.Forms.FormWindowState MainFormWindowState {
+            get {
+                return ((global::System.Windows.Forms.FormWindowState)(this["MainFormWindowState"]));
+            }
+            set {
+                this["MainFormWindowState"] = value;
+            }
+        }
     }
 }

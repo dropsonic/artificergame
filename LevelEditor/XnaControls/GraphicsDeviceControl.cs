@@ -1,4 +1,4 @@
-﻿#region File Description
+#region File Description
 //-----------------------------------------------------------------------------
 // GraphicsDeviceControl.cs
 //
@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using System.ComponentModel;
 #endregion
 
 namespace LevelEditor
@@ -22,55 +24,7 @@ namespace LevelEditor
     // types. To avoid conflicts, we specify exactly which ones to use.
     using Color = System.Drawing.Color;
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
-using Microsoft.Xna.Framework.Content;
-using System.ComponentModel;
 
-
-    public class StopwatchGameTimer
-    {
-        private GameTime _gameTime;
-        private Stopwatch _stopwatch;
-        private bool _enabled;
-        public GameTime GameTime
-        {
-            get
-            {
-                return _gameTime;
-            }
-        }
-        public bool Enabled
-        {
-            get
-            {
-                return _enabled;
-            }
-            set
-            {
-                if (value == true)
-                {
-                    _stopwatch.Restart();
-                    _gameTime = new GameTime();
-                }
-                else
-                {
-                    _stopwatch.Reset();
-                    _gameTime = new GameTime();
-                }
-                _enabled = value;
-            }
-        }
-        public StopwatchGameTimer()
-        {
-            _gameTime = new GameTime();
-            _stopwatch = new Stopwatch();
-            _enabled = false;
-        }
-        public void UpdateGameTime()
-        {
-            if(_enabled)
-                _gameTime = new GameTime(_stopwatch.Elapsed, _stopwatch.Elapsed - _gameTime.TotalGameTime);
-        }
-    }
     /// <summary>
     /// Custom control uses the XNA Framework GraphicsDevice to render onto
     /// a Windows Form. Derived classes can override the Initialize and Draw
@@ -147,7 +101,7 @@ using System.ComponentModel;
                 _frameTimer.Interval = (int)((float)1000/(float)_fps);
                 _frameTimer.Enabled = true;
 
-                _gameTimer.Enabled = false;
+                _gameTimer.Enabled = true;
                 // Give derived classes a chance to initialize themselves.
                 Initialize();
                 LoadContent();

@@ -6,19 +6,29 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.IO;
 using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace XMLExtendedSerialization
 {
     internal class Deserializer
     {
         private XDocument _doc;
+        private Assembly[] _assemblies;
         private Dictionary<Type, Func<string, object>> _converters;
+
+        /// <summary>
+        /// Список из всех десериализованных reference-type объектов.
+        /// Ключ - hash-код объекта, значение - ссылка на объект.
+        /// </summary>
+        private Dictionary<string, object> _refList;
 
         internal Deserializer(XDocument doc)
         {
             _doc = doc;
+            _refList = new Dictionary<string, object>(32);
 
             InitializeConverters();
+            _assemblies = AppDomain.CurrentDomain.GetAssemblies();
         }
 
         private void InitializeConverters()
@@ -103,23 +113,50 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public object Deserialize()
+        /// <summary>
+        /// Считывает метаданные из XML-элемента и записывает их в объект.
+        /// </summary>
+        /// <param name="root">XML-элемент для чтения.</param>
+        /// <param name="rootObject">Объект, в который необходимо записать метаданные.</param>
+        private void DeserializeMetadata(XElement root, object rootObject)
         {
-            //Имя типа для инстанциации - имя корневого тега файла
-            string typeName = _doc.Root.Name.LocalName;
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
-            Type rootType = GetTypeByName(typeName, assemblies); //получаем тип по имени
+            Type rootType = rootObject.GetType();
+            if (rootType.IsClass && root.FirstNode is XComment)
+                rootObject.SetXMLMetadata((root.FirstNode as XComment).Value.FromXMLComment());
+        }
 
-            return DeserializeObject(_doc.Root, rootType);
+        private string DeserializeTypeName(XElement root)
+        {
+            return root.Attribute("Type-").Value.FromXMLValue();
         }
 
         /// <summary>
         /// Рекурсивно десериализует объект.
         /// </summary>
-        private object DeserializeObject(XElement root, Type rootType)
+        private object DeserializeObject(XElement root)
         {
+            string typeName = DeserializeTypeName(root);
+            Type rootType = GetTypeByName(typeName, _assemblies);
+
+            //Если это массив, то десериализуем его в отдельном методе
+            if (rootType.IsArray)
+                return DeserializeArray(root, rootType);
+
+            if (rootType == typeof(string))
+                return root.Value.FromXMLValue();
+
             //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
             object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
+
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsValue(rootObject))
+                    _refList.Add(_refList.Count.ToString(), rootObject);
+            }
+            
+            DeserializeMetadata(root, rootObject);
 
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем список полей, включая автоматически созданные для свойств
             //PropertyInfo[] properties = rootType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем списк свойств
@@ -131,14 +168,17 @@ namespace XMLExtendedSerialization
                 {
                     CheckCustomConverter(field);
 
-                    Type fieldType = field.FieldType;
-
                     //Считываем значение элемента/атрибута с именем данного свойства
                     string value;
                     XName xname = XName.Get(field.GetXMLName());
                     XElement element = root.Element(xname);
+
+                    
+                    Type fieldType;
+
                     if (element == null)
                     {
+                        fieldType = field.FieldType;
                         XAttribute attribute = root.Attribute(xname);
                         if (attribute == null)
                             //throw new MissingMemberException(rootType.Name, field.Name);
@@ -148,10 +188,11 @@ namespace XMLExtendedSerialization
                     }
                     else
                     {
-                        //Если это Enum, то он сохраняет своё значение как int в атрибут "__value"
+                        fieldType = GetTypeByName(DeserializeTypeName(element), _assemblies);
+                        //Если это Enum, то он сохраняет своё значение как int в атрибут "value__"
                         if (fieldType.IsEnum)
                         {
-                            value = element.FirstAttribute.Value;
+                            value = element.Attribute("value__").Value;
                             fieldType = typeof(int);
                         }
                         else
@@ -166,15 +207,22 @@ namespace XMLExtendedSerialization
                     {
                         Func<string, object> converter;
                         if (_converters.TryGetValue(fieldType, out converter)) //если есть такой конвертер
-                            fieldValue = converter(value); //то это простой тип данных
+                            fieldValue = converter(value.FromXMLValue()); //то это простой тип данных
                         else
                         {
                             if (element != null)
-                            {
-                                fieldValue = DeserializeObject(element, fieldType); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
-                            }
+                                fieldValue = DeserializeObject(element); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
                             else
-                                throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
+                            {
+                                //Если элемента нет, но есть атрибут с непустым значением, то это ссылка либо неизвестное поле
+                                object refObject;
+                                //Если значение элемента - hash-код, и объект с таким hash-кодом есть в списке десериализованных объектов
+                                if (_refList.TryGetValue(value.FromXMLValue(), out refObject))
+                                    //то это ссылка
+                                    fieldValue = refObject;
+                                else
+                                    throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
+                            }
                         }
                     }
 
@@ -183,6 +231,75 @@ namespace XMLExtendedSerialization
             }
 
             return rootObject;
+        }
+
+        /// <summary>
+        /// Десериализует массив из элементов.
+        /// </summary>
+        /// <param name="root">XML-элемент с данными о массиве.</param>
+        /// <param name="rootType">Тип массива.</param>
+        /// <returns>Массив элементов.</returns>
+        private object DeserializeArray(XElement root, Type rootType)
+        {
+            var elements = root.Elements("Element");
+            Type arrayElementType = rootType.GetElementType();
+            Array rootObject = Array.CreateInstance(arrayElementType, elements.Count());
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsValue(rootObject))
+                    _refList.Add(_refList.Count.ToString(), rootObject);
+            }
+            DeserializeMetadata(root, rootObject);
+            int i = 0;
+            foreach (XElement element in elements)
+                rootObject.SetValue(DeserializeObject(element), i++);
+
+            return rootObject;
+        }
+
+        private object DeserializeDictionary(XElement root, Type rootType)
+        {
+            var elements = root.Elements("Item");
+            IDictionary rootObject = (IDictionary)CreateInstance(rootType);
+            DeserializeMetadata(root, rootObject);
+            Type[] genericParams = rootType.GetGenericParameterConstraints();
+            foreach (XElement element in elements)
+            {
+                
+            }
+            
+            throw new NotImplementedException();
+        }
+
+        public object Deserialize()
+        {
+            string s;
+            return Deserialize(false, out s);
+        }
+
+        public object Deserialize(out string metadata)
+        {
+            return Deserialize(true, out metadata);
+        }
+
+        private object Deserialize(bool readMetadata, out string metadata)
+        {
+            //Читаем метаданные
+            if (readMetadata && _doc.FirstNode is XComment)
+            {
+                metadata = (_doc.FirstNode as XComment).Value.FromXMLComment();
+            }
+            else
+                metadata = String.Empty;
+
+            //Имя типа для инстанциации - имя корневого тега файла
+            //string typeFullName = DeserializeTypeName(_doc.Root);
+            //Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
+            //Type rootType = GetTypeByName(typeFullName, assemblies); //получаем тип по имени
+
+            return DeserializeObject(_doc.Root);
         }
     }
 }

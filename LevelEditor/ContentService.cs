@@ -96,7 +96,7 @@ namespace LevelEditor
             result = new RenderTarget2D(graphicsDevice, file.Width, file.Height);
             //graphicsDevice.Reset();
             //result = new RenderTarget2D(graphicsDevice, file.Width, file.Height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
-
+            
             graphicsDevice.SetRenderTarget(result);
             graphicsDevice.Clear(Color.Black);
 
@@ -127,7 +127,7 @@ namespace LevelEditor
 
             //Release the GPU back to drawing to the screen
             graphicsDevice.SetRenderTarget(null);
-
+            
 
             return result as Texture2D;
 

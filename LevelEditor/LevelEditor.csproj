@@ -56,9 +56,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddLevelJointCommand.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\AttachFixtureCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedDecreaseCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedIncreaseCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedDoubleCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedHalfCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\AddPreviewObjectCommand.cs" />
+    <Compile Include="Commands\PauseSimulationCommand.cs" />
+    <Compile Include="Commands\SimulationSpeedNormalCommand.cs" />
+    <Compile Include="Commands\StartSimulationCommand.cs" />
+    <Compile Include="Commands\StopSimulationCommand.cs" />
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
+    <Compile Include="Helpers\FixtureAttachmentHelper.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\JointCreationHelper.cs" />
+    <Compile Include="Logic\ObjectLevelManager.cs" />
+    <Compile Include="Logic\Simulator.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -66,6 +84,7 @@
       <SubType>Form</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StopwatchGameTimer.cs" />
     <Compile Include="TabHiddenHeadersControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -87,6 +106,7 @@
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -171,6 +191,30 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\addJoint1.png" />
+    <None Include="Resources\attachFixture1.png" />
+    <None Include="Resources\attachBodyFixture.png" />
+    <None Include="Resources\attachBodyFixture1.png" />
+    <Content Include="Resources\mouseJoint.png" />
+    <None Include="Resources\editJoint.png" />
+    <None Include="Resources\placeJoint.png" />
+    <None Include="Resources\objectPart1.png" />
+    <None Include="Resources\object.png" />
+    <None Include="Resources\editObject.png" />
+    <None Include="Resources\Edit_RedoHS.png" />
+    <None Include="Resources\Edit_UndoHS.png" />
+    <None Include="Resources\Erase1.png" />
+    <None Include="Resources\objectPart.png" />
+    <None Include="Resources\ContinueHS.png" />
+    <None Include="Resources\increaseSpeed.png" />
+    <None Include="Resources\decreaseSpeed.png" />
+    <None Include="Resources\addPreviewObject.png" />
+    <None Include="Resources\normalSpeed.png" />
+    <None Include="Resources\halfSpeed.png" />
+    <None Include="Resources\doubleSpeed.png" />
+    <None Include="Resources\StopHS.png" />
+    <None Include="Resources\PauseHS.png" />
+    <None Include="Resources\PlayHS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

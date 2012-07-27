@@ -43,13 +43,18 @@
   <ItemGroup>
     <Compile Include="DefaultConverters.cs" />
     <Compile Include="Deserializer.cs" />
-    <Compile Include="FieldInfoExtensions.cs" />
+    <Compile Include="FieldInfoXMLExtensions.cs" />
+    <Compile Include="IXMLCustomSerializer.cs" />
     <Compile Include="IXMLValueConverter.cs" />
+    <Compile Include="ObjectXMLExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="StringXMLExtensions.cs" />
+    <Compile Include="TypeXMLExtensions.cs" />
     <Compile Include="XMLCustomConverterAttribute.cs" />
+    <Compile Include="XMLCustomSerializerAttribute.cs" />
     <Compile Include="XMLDoNotSerializeAttribute.cs" />
+    <Compile Include="XMLMetadataAttribute.cs" />
     <Compile Include="XMLSerializerEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,20 +17,35 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using GameLogic;
 using FarseerPhysics;
+using LevelEditor.Commands;
+using LevelEditor.Helpers;
+
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
     using Microsoft.Xna.Framework.Input;
+    using FarseerPhysics.Dynamics.Joints;
+    using FarseerPhysics.Collision.Shapes;
 
     public partial class MainForm : Form
     {
-        GameObject currentObject;
+        ObjectLevelManager _objectLevelManager;
+        CommandManager _commandManager;
         AssetCreator _assetCreator;
-        System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-        readonly Dictionary<string, Color> colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
-                .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
+        Cursor _levelScreenCursor = Cursors.Arrow;
+        MouseToolState _mouseToolState;
+        JointCreationHelper _jointHelper;
+        FixtureAttachmentHelper _attachmentHelper;
+
+        Timer _updateTimer = new Timer();
+        Timer _propertyGridTimer = new Timer();
         
+                
+
+        Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
+                .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
+
         public MainForm()
         {
             InitializeComponent();
@@ -41,22 +56,204 @@ namespace LevelEditor
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
 
-            updateTimer.Enabled = false;
-            updateTimer.Tick += new EventHandler(UpdatePreview);
-            updateTimer.Interval = 10;
+            _updateTimer.Enabled = false;
+            _updateTimer.Tick += new EventHandler(UpdatePreview);
+            _updateTimer.Interval = 10;
+
+            _propertyGridTimer.Enabled = false;
+            _propertyGridTimer.Tick += (object sen, EventArgs args) => { propertyGrid.Refresh(); };
+            _propertyGridTimer.Interval = 100;
+
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
+
             this.shapeParametersControl.SelectedTab = this.emptyTab;
+
             levelScreen.DrawCurrentGameObject = false;
 
-            currentObject = new GameObject();
-            Body body = new Body(currentObject.World);
-            currentObject.AddPart(new Sprite(null,Vector2.Zero), body);
-            propertyGrid.SelectedObject = currentObject[0].Body;
-
             InitializeStatusStrip();
+
             ShowReadyStatus();
         }
 
+        private void InitializeCommandManager()
+        {
+            _commandManager = new CommandManager();
+
+            _commandManager.AddCommand(new StartSimulationCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new PauseSimulationCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new StopSimulationCommand(_objectLevelManager.Simulator));
+
+            _commandManager.AddCommand(new SimulationSpeedHalfCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedNormalCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedDoubleCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedIncreaseCommand(_objectLevelManager.Simulator));
+            _commandManager.AddCommand(new SimulationSpeedDecreaseCommand(_objectLevelManager.Simulator));
+        }
+
+        private void InitializeAfterLoad()
+        {
+            _mouseToolState = MouseToolState.Default;
+            _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _objectLevelManager.Simulator.SimulateChanged += new EventHandler(Simulator_SimulateChanged);
+            levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
+            propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
+            levelScreen.GameLevel = _objectLevelManager.GameLevel;
+
+            //load assetCreator Materials
+            _assetCreator = ContentService.GetContentService().AssetCreator;
+            _assetCreator.UseTexture = setAsTextureCheck.Checked;
+            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
+
+            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
+            {
+                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
+                _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
+                materialBox.Items.Add(filename);
+            }
+
+            foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
+            {
+                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
+                _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
+                shapeFromTextureBox.Items.Add(filename);
+            }
+
+            foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
+            {
+                shapeBox.Items.Add(obj);
+            }
+
+            foreach (string colorName in _colorDictionary.Keys)
+            {
+                colorBox.Items.Add(colorName);
+            }
+
+            foreach (JointType joint in Enum.GetValues(typeof(JointType)))
+            {
+                jointsBox.Items.Add(joint);
+            }
+
+            InitializeCommandManager();
+            PopulateDebugViewMenu();
+        }
+
+        /// <summary>
+        /// Загружает общие для формы и её элементов настройки.
+        /// </summary>
+        private void LoadSettings()
+        {
+            Properties.Settings settings = Properties.Settings.Default;
+
+            this.Location = settings.MainFormLocation;
+            this.Size = settings.MainFormSize;
+            this.WindowState = settings.MainFormWindowState;
+
+            toolStripContainer.SuspendLayout();
+            mainToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.mainToolStripParentName);
+            mainToolStrip.Location = settings.mainToolStripLocation;
+            toolsToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.toolsToolStripParentName);
+            toolsToolStrip.Location = settings.toolsToolStripLocation;
+            simulationToolStrip.Parent = GetToolStripParentByName(toolStripContainer, settings.simulationToolStripParentName);
+            simulationToolStrip.Location = settings.simulationToolStripLocation;
+            toolStripContainer.ResumeLayout(true);
+        }
+
+        /// <summary>
+        /// Сохраняет общие для формы и её элементов настройки.
+        /// </summary>
+        private void SaveSettings()
+        {
+            Properties.Settings settings = Properties.Settings.Default;
+
+            if (this.Location.X < 0 || this.Location.Y < 0)
+                settings.MainFormLocation = new System.Drawing.Point(0, 0);
+            else
+                settings.MainFormLocation = this.Location;
+
+            if (this.WindowState == FormWindowState.Minimized)
+                settings.MainFormWindowState = FormWindowState.Normal;
+            else
+                settings.MainFormWindowState = this.WindowState;
+
+            if (this.WindowState == FormWindowState.Normal)
+                settings.MainFormSize = this.Size;
+            else
+                settings.MainFormSize = this.RestoreBounds.Size;
+
+            settings.mainToolStripLocation = mainToolStrip.Location;
+            settings.mainToolStripParentName = GetToolStripParentName(mainToolStrip);
+            settings.toolsToolStripLocation = toolsToolStrip.Location;
+            settings.toolsToolStripParentName = GetToolStripParentName(toolsToolStrip);
+            settings.simulationToolStripLocation = simulationToolStrip.Location;
+            settings.simulationToolStripParentName = GetToolStripParentName(simulationToolStrip);
+        }
+
+        private string GetToolStripParentName(ToolStrip toolStrip)
+        {
+            var panel = toolStrip.Parent as ToolStripPanel;
+            var defaultName = String.Empty;
+            if (panel == null)
+                return defaultName;
+            var container = panel.Parent as ToolStripContainer;
+            if (container == null)
+                return defaultName;
+            if (panel == container.LeftToolStripPanel)
+                return "LeftToolStripPanel";
+            if (panel == container.RightToolStripPanel)
+                return "RightToolStripPanel";
+            if (panel == container.TopToolStripPanel)
+                return "TopToolStripPanel";
+            if (panel == container.BottomToolStripPanel)
+                return "BottomToolStripPanel";
+            return defaultName;
+        }
+
+        private ToolStripPanel GetToolStripParentByName(ToolStripContainer container, string parentName)
+        {
+            if (parentName == "LeftToolStripPanel")
+                return container.LeftToolStripPanel;
+            if (parentName == "RightToolStripPanel")
+                return container.RightToolStripPanel;
+            if (parentName == "TopToolStripPanel")
+                return container.TopToolStripPanel;
+            if (parentName == "BottomToolStripPanel")
+                return container.BottomToolStripPanel;
+            return null;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            InitializeAfterLoad();
+            LoadSettings();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                previewScreen.FrameTimer.Enabled = false;
+                levelScreen.FrameTimer.Enabled = false;
+                objectScreen.FrameTimer.Enabled = false;
+            }
+            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
+            {
+                previewScreen.FrameTimer.Enabled = true;
+                levelScreen.FrameTimer.Enabled = true;
+                objectScreen.FrameTimer.Enabled = true;
+            }
+        }
+        
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            propertyGrid.Refresh();
+        }
+
+        #region DebugView
         private void PopulateDebugViewMenu()
         {
             int i = 0;
@@ -98,58 +295,11 @@ namespace LevelEditor
                 flag = flag | DebugViewFlags.ContactPoints;
 
             levelScreen.SwitchDebugViewFlag(flag);
+            levelScreen.GameLevel.World.ProcessChanges();
             SetDebugViewMenu();
         }
+        #endregion
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            //load assetCreator Materials
-            _assetCreator = ContentService.GetContentService().AssetCreator;
-            _assetCreator.UseTexture = setAsTextureCheck.Checked;
-            _assetCreator.DrawOutline = drawOutlineCheck.Checked;
-
-            foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
-            {
-                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
-                _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
-                materialBox.Items.Add(filename);
-            }
-
-            foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
-            {
-                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
-                _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
-                shapeFromTextureBox.Items.Add(filename);
-            }
-            
-            foreach (ObjectType obj in Enum.GetValues(typeof(ObjectType)))
-            {
-                shapeBox.Items.Add(obj);
-            }
-            
-            foreach (string colorName in colorDictionary.Keys)
-            {
-                colorBox.Items.Add(colorName);
-            }
-
-            PopulateDebugViewMenu();
-        }
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                previewScreen.FrameTimer.Enabled = false;
-                levelScreen.FrameTimer.Enabled = false;
-                objectScreen.FrameTimer.Enabled = false;
-            }
-            if (WindowState == FormWindowState.Normal || WindowState == FormWindowState.Maximized)
-            {
-                previewScreen.FrameTimer.Enabled = true;
-                levelScreen.FrameTimer.Enabled = true;
-                objectScreen.FrameTimer.Enabled = true;
-            }
-        }
         #region Настройка превью
         private void ShapeParameterSwitch(object sender, EventArgs e)
         {
@@ -161,24 +311,23 @@ namespace LevelEditor
 
         private void HandlePreview(object sender, EventArgs e)
         {
-            updateTimer.Enabled = true;
+            _updateTimer.Enabled = true;
         }
 
         private void UpdatePreview(object sender, EventArgs e)
         {
             try
             {
-                SetPreview();
-                ShowReadyStatus();
+                CreatePreview();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
                 ShowErrorStatus(ex);
             }
-            SetCurrentObject();
             propertyGrid.Refresh();
 
-            updateTimer.Enabled = false;
+            _updateTimer.Enabled = false;
         }
 
         private void setAsTextureCheck_CheckedChanged(object sender, EventArgs e)
@@ -200,7 +349,7 @@ namespace LevelEditor
             try
             {
                 LoadMaterial();
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
@@ -213,7 +362,7 @@ namespace LevelEditor
             try
             {
                 LoadShape();
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
             }
             catch (Exception ex)
             {
@@ -231,7 +380,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void capsuleBottomRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -242,7 +391,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void capsuleTopRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -253,7 +402,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleHeight_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -264,7 +413,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleYRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -275,7 +424,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleWidth_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -286,7 +435,7 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
 
         private void roundedRectangleXRadius_ValueChanging(object sender, ValueChangingEventArgs e)
@@ -297,143 +446,368 @@ namespace LevelEditor
                 e.KeepOldValue = true;
             }
             else
-                ShowReadyStatus();
+                ShowCurrentNormalStatus();
         }
         #endregion
 
-
+        #region MouseHandlers
         private void levelScreen_MouseEnter(object sender, EventArgs e)
         {
             levelScreen.DrawCurrentGameObject = true;
-            Cursor = Cursors.Cross;
-        }
-
-        private void levelScreen_MouseMove(object sender, MouseEventArgs e)
-        {
-            levelScreen.MouseState = e;
-        }
-
-        private void levelScreen_MouseDown(object sender, MouseEventArgs e)
-        {
-            levelScreen.CreateMouseJoint();
-            levelPage.Focus();
-            //levelScreen.Focus();
-        }
-
-        private void levelScreen_MouseUp(object sender, MouseEventArgs e)
-        {
-            levelScreen.RemoveMouseJoint();
-        }
-
-        private void levelScreen_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (placeObjectCheck.Checked)
-                levelScreen.AddCurrentObject();
+            Cursor = _levelScreenCursor;
+            ShowMousePosition();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
         {
             levelScreen.DrawCurrentGameObject = false;
             Cursor = Cursors.Arrow;
+
+            toolStripMousePosLabel.Text = String.Empty;
         }
 
-        private void placeObjectCheck_CheckedChanged(object sender, EventArgs e)
+        private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            SetCurrentObject();
+            levelScreen.MouseState = e;
+            _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+            ShowMousePosition();
+            HandleLevelScreenMouseInput(MouseEvents.Move, e);
         }
 
-        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void levelScreen_MouseDown(object sender, MouseEventArgs e)
         {
-            propertyGrid.Refresh();
+            HandleLevelScreenMouseInput(MouseEvents.Down, e);
         }
 
-        private void simulateMenuItem_Click(object sender, EventArgs e)
+        private void levelScreen_MouseUp(object sender, MouseEventArgs e)
         {
-            if (!levelScreen.Simulate && levelScreen.SimulationSpeed <= 0)
+            HandleLevelScreenMouseInput(MouseEvents.Up, e);
+        }
+
+        private void levelScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            HandleLevelScreenMouseInput(MouseEvents.Click, e);
+        }
+
+        private void HandleLevelScreenMouseInput(MouseEvents mouseEvent,MouseEventArgs args)
+        {
+            //TODO: для каждого типа своя ф-ия с передачей mouseEvent
+            switch (_mouseToolState)
             {
-                simulationSpeedMenuItem_Click(simulationSpeedNormalMenuItem, EventArgs.Empty); //устанавливаем значение скорости в 1х.
-                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
-            }
-            else
-            {
-                levelScreen.Simulate = !levelScreen.Simulate;
-                SetDebugViewMenu();
+                case MouseToolState.Default:
+                    break;
+
+                case MouseToolState.MouseJoint:
+                    switch (mouseEvent)
+                    {
+                        case MouseEvents.Down:
+                            {
+                                _objectLevelManager.Simulator.CreateMouseJoint();
+                                levelPage.Focus();
+                                break;
+                            }
+                        case MouseEvents.Up:
+                            {
+                                _objectLevelManager.Simulator.RemoveMouseJoint();
+                                break;
+                            }
+                        case MouseEvents.Move:
+                            {
+                                _objectLevelManager.Simulator.UpdateMouseJoint();
+                                break;
+                            }
+                    }
+                    break;
+
+                case MouseToolState.PlaceObject:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, _objectLevelManager.Simulator.MousePosition));
+                    }
+                    break;
+                    
+
+                case MouseToolState.SelectObject:
+                    break;
+
+                case MouseToolState.SelectObjectPart:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        propertyGrid.SelectedObject = CommonHelpers.FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel.World);
+                    }
+                    break;
+                    
+                case MouseToolState.PlaceJoint:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        if (_jointHelper != null)
+                        {
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
+                            _jointHelper.NextStep(simPosition);
+                            ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                            if (_jointHelper.CreatedJoint != null)
+                            {
+                                _commandManager.Execute(new Commands.AddLevelJointCommand(_objectLevelManager.GameLevel, _jointHelper.CreatedJoint));
+                                UpdateCreatedJointList();
+                                createdJointsList.SelectedIndex = 0;
+                                propertyGrid.SelectedObject = createdJointsList.Items[0];
+                            }
+                        }
+                    }
+                    break;
+                case MouseToolState.AttachFixture:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        if (_attachmentHelper != null)
+                        {
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
+                            _attachmentHelper.NextStep(simPosition);
+                            ShowTooltipStatus(_attachmentHelper.StatusMessage);
+                            if (_attachmentHelper.Finished)
+                            {
+                                Body body;
+                                List<Shape> shapes;
+                                _attachmentHelper.GetAttachmentResult(out body, out shapes);
+
+                                Vector2 offset = Vector2.Transform(ConvertUnits.ToDisplayUnits(body.Position) - new Vector2(args.X, args.Y), Matrix.CreateRotationZ(-body.Rotation));
+                                Texture2D rotatedTexture = _assetCreator.CreateRotatedTexture(_objectLevelManager.PreviewObject[0].Sprites[0], -body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation);
+                                _commandManager.Execute(new Commands.AttachFixtureCommand(_objectLevelManager.GameLevel, body, shapes, new Sprite(rotatedTexture,offset)));
+                            }
+                        }
+                    }
+                    break;
             }
         }
 
-        /// <summary>
-        /// Метод-хелпер для изменения состояния checked элементов меню изменения скорости симуляции.
-        /// </summary>
-        private void ChangeSimSpeedMenuItemsCheckedStateHelper(bool halfItem, bool normalItem, bool doubleItem)
+        #endregion
+
+        #region UpdateULPoint
+        private void UpdateAbsoluteULPoint(object sender)
         {
-            simulationSpeedHalfMenuItem.Checked = halfItem;
-            simulationSpeedNormalMenuItem.Checked = normalItem;
-            simulationSpeedDoubleMenuItem.Checked = doubleItem;
-        }
-
-        private void simulationSpeedMenuItem_Click(object sender, EventArgs e)
-        {
-            const float inc = 0.25f; //шаг изменения скорости симуляции
-
-            if (sender == simulationSpeedHalfMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(true, false, false);
-                levelScreen.SimulationSpeed = 0.5f;
-            }
-            else if (sender == simulationSpeedNormalMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, true, false);
-                levelScreen.SimulationSpeed = LevelScreen.NormalSimulationSpeed;
-            }
-            else if (sender == simulationSpeedDoubleMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, true);
-                levelScreen.SimulationSpeed = 2.0f;
-            }
-            else if (sender == simulationSpeedIncreaseMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                levelScreen.SimulationSpeed += inc;
-            }
-            else if (sender == simulationSpeedDecreaseMenuItem)
-            {
-                ChangeSimSpeedMenuItemsCheckedStateHelper(false, false, false);
-                levelScreen.SimulationSpeed -= inc;
-            }
-
-            if (_status == StatusType.Simulation)
-                ShowSimulationStatus(levelScreen.SimulationSpeed);
-            else
-                ShowReadyStatus(); //для того, чтобы убрать показ предупреждения или ошибки
-        }
-
-        private void levelScreen_SimulateChanged(object sender, EventArgs e)
-        {
-            if (levelScreen.Simulate)
-            {
-                simulateMenuItem.Text = "Stop simulation";
-                ShowSimulationStatus(levelScreen.SimulationSpeed);
-            }
-            else
-            {
-                simulateMenuItem.Text = "Simulate";
-                ShowReadyStatus();
-            }
-        }
-
-        private void UpdateLevelScreenUpperLeftLocalPoint(object sender)
-        {
-            levelScreen.UpperLeftLocalPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
+            levelScreen.AbsoluteULPoint = new Vector2(-((System.Windows.Forms.TabPage)sender).DisplayRectangle.X, -((System.Windows.Forms.TabPage)sender).DisplayRectangle.Y);    
         }
 
         private void levelPage_Scroll(object sender, ScrollEventArgs e)
         {
-            UpdateLevelScreenUpperLeftLocalPoint(sender);
+            UpdateAbsoluteULPoint(sender);
         }
 
         private void levelPage_MouseWheel(object sender, MouseEventArgs e)
         {
-            UpdateLevelScreenUpperLeftLocalPoint(sender);
+            UpdateAbsoluteULPoint(sender);
         }
+        #endregion
+
+        #region Actions
+        bool _simulateActionState = false;
+        private void simulateAction_Execute(object sender, EventArgs e)
+        {
+            if (!_simulateActionState && _objectLevelManager.Simulator.SimulationSpeed <= 0)
+            {
+                ShowWarningStatus("Невозможно начать симуляцию с отрицательным или нулевым значением скорости времени. Значение скорости установлено в 1x.");
+                _commandManager.Execute("SimulationSpeedNormal");
+                return;
+            }
+
+            _simulateActionState = !_simulateActionState;
+            if (_simulateActionState)
+                _commandManager.Execute("StartSimulation");
+            else
+                _commandManager.Execute("StopSimulation");
+
+            //Меняем уровень, который отрисовывается
+            levelScreen.GameLevel = _objectLevelManager.GameLevel;
+            SetDebugViewMenu();
+            HandlePreviewDisplay();
+        }
+
+        void Simulator_SimulateChanged(object sender, EventArgs e)
+        {
+            if (_objectLevelManager.Simulator.State == SimulationState.Stopped)
+            {
+                simulateAction.Text = "Start";
+                simulateAction.ToolTipText = "Start simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.PlayHS;
+                pauseSimulationAction.Enabled = false;
+                ShowReadyStatus();
+
+                _propertyGridTimer.Enabled = false;
+                propertyGrid.SelectedObject = false;
+            }
+            else
+            {
+                simulateAction.Text = "Stop";
+                simulateAction.ToolTipText = "Stop simulation";
+                simulateAction.Image = LevelEditor.Properties.Resources.StopHS;
+                pauseSimulationAction.Enabled = true;
+
+                _propertyGridTimer.Enabled = true;
+                FindPreSimulationObject(propertyGrid);
+
+                ShowSimulationStatus();
+            }
+        }
+
+        bool pauseSimulationActionState = false;
+        private void pauseSimulationAction_Execute(object sender, EventArgs e)
+        {
+            pauseSimulationActionState = !pauseSimulationActionState;
+
+            if (pauseSimulationActionState)
+            {
+                _commandManager.Execute("PauseSimulation");
+                pauseSimulationAction.Text = "Continue";
+                pauseSimulationAction.ToolTipText = "Continue simulation";
+                pauseSimulationAction.Image = LevelEditor.Properties.Resources.ContinueHS;
+            }
+            else
+            {
+                _commandManager.Execute("StartSimulation");
+                pauseSimulationAction.Text = "Pause";
+                pauseSimulationAction.ToolTipText = "Pause simulation";
+                pauseSimulationAction.Image = LevelEditor.Properties.Resources.PauseHS;
+            }
+
+            ShowSimulationStatus();
+        }
+
+        private void addPreviewObjectAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(addPreviewObjectAction);
+        }
+
+        private void selectObjectPartAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(selectObjectPartAction);
+        }
+
+        private void selectObjectAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(selectObjectAction);
+        }
+
+        private void useMouseJointAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(useMouseJointAction);
+        }
+
+        private void editCurrentObjectAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(editCurrentObjectAction);
+        }
+
+        private void attachFixtureAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(attachFixture);
+        }
+
+        private void addNewJointAction_Execute(object sender, EventArgs e)
+        {
+            SetMouseToolButtonsState(addNewJointAction);
+        }
+
+
+
+        private void changeSimulationActionState(bool halfAction, bool normalAction, bool doubleAction)
+        {
+            simulationSpeedNormalAction.Checked = halfAction;
+            simulationSpeedHalfAction.Checked = normalAction;
+            simulationSpeedDoubleAction.Checked = doubleAction;
+        }
+
+        private void simulationSpeedHalfAction_Execute(object sender, EventArgs e)
+        {
+            changeSimulationActionState(true, false, false);
+            _commandManager.Execute("SimulationSpeedHalf");
+            ShowSimulationStatus();
+        }
+
+        private void simulationSpeedNormalAction_Execute(object sender, EventArgs e)
+        {
+            changeSimulationActionState(false, true, false);
+            _commandManager.Execute("SimulationSpeedNormal");
+            ShowSimulationStatus();
+        }
+
+        private void simulationSpeedDoubleAction_Execute(object sender, EventArgs e)
+        {
+            changeSimulationActionState(false, false, true);
+            _commandManager.Execute("SimulationSpeedDouble");
+            ShowSimulationStatus();
+        }
+
+        private void simulationSpeedIncDecChanged()
+        {
+            if (_objectLevelManager.Simulator.SimulationSpeed == 0.50f)
+                changeSimulationActionState(true, false, false);
+            else if (_objectLevelManager.Simulator.SimulationSpeed == 1.00f)
+                changeSimulationActionState(false, true, false);
+            else if (_objectLevelManager.Simulator.SimulationSpeed == 2.00f)
+                changeSimulationActionState(false, false, true);
+            else
+                changeSimulationActionState(false, false, false);
+
+            ShowSimulationStatus();
+        }
+
+        private void simulationSpeedIncreaseAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Execute("SimulationSpeedIncrease");
+            simulationSpeedIncDecChanged();
+        }
+
+        private void simulationSpeedDecreaseAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Execute("SimulationSpeedDecrease");
+            simulationSpeedIncDecChanged();
+        }
+
+        private void resetSettingsAction_Execute(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            LoadSettings();
+        }
+
+        private void undoAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Undo();
+            UpdateCreatedJointList();
+        }
+
+        private void undoAction_Update(object sender, EventArgs e)
+        {
+            if (undoAction.Enabled != _commandManager.CanUndo)
+                undoAction.Enabled = _commandManager.CanUndo;
+        }
+
+        private void redoAction_Execute(object sender, EventArgs e)
+        {
+            _commandManager.Redo();
+        }
+
+        private void redoAction_Update(object sender, EventArgs e)
+        {
+            if (redoAction.Enabled != _commandManager.CanRedo)
+                redoAction.Enabled = _commandManager.CanRedo;
+        }
+        #endregion
+
+        private void jointsBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            addNewJointAction.Checked = true;
+            SetMouseToolButtonsState(addNewJointAction);
+        }
+
+        private void ShowMousePosition()
+        {
+            Vector2 pos = ConvertUnits.ToSimUnits(levelScreen.MousePosition);
+            toolStripMousePosLabel.Text = String.Format("(X={0:0.00}, Y={1:0.00})", pos.X, pos.Y);
+        }
+
+        private void createdJointsList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = createdJointsList.SelectedItem;
+        }
+
     }
 }

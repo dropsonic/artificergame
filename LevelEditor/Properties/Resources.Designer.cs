@@ -60,9 +60,177 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap _object {
+            get {
+                object obj = ResourceManager.GetObject("object", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap addJoint {
+            get {
+                object obj = ResourceManager.GetObject("addJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap addPreviewObject {
+            get {
+                object obj = ResourceManager.GetObject("addPreviewObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachBodyFixture {
+            get {
+                object obj = ResourceManager.GetObject("attachBodyFixture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachBodyFixture1 {
+            get {
+                object obj = ResourceManager.GetObject("attachBodyFixture1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachFixture {
+            get {
+                object obj = ResourceManager.GetObject("attachFixture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ContinueHS {
+            get {
+                object obj = ResourceManager.GetObject("ContinueHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap decreaseSpeed {
+            get {
+                object obj = ResourceManager.GetObject("decreaseSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap doubleSpeed {
+            get {
+                object obj = ResourceManager.GetObject("doubleSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Edit_RedoHS {
+            get {
+                object obj = ResourceManager.GetObject("Edit_RedoHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Edit_UndoHS {
+            get {
+                object obj = ResourceManager.GetObject("Edit_UndoHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap editJoint {
+            get {
+                object obj = ResourceManager.GetObject("editJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap editObject {
+            get {
+                object obj = ResourceManager.GetObject("editObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Erase {
+            get {
+                object obj = ResourceManager.GetObject("Erase", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap halfSpeed {
+            get {
+                object obj = ResourceManager.GetObject("halfSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap increaseSpeed {
+            get {
+                object obj = ResourceManager.GetObject("increaseSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap mouseJoint {
+            get {
+                object obj = ResourceManager.GetObject("mouseJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap normalSpeed {
+            get {
+                object obj = ResourceManager.GetObject("normalSpeed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap objectPart {
+            get {
+                object obj = ResourceManager.GetObject("objectPart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap objectPart1 {
+            get {
+                object obj = ResourceManager.GetObject("objectPart1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PauseHS {
+            get {
+                object obj = ResourceManager.GetObject("PauseHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap placeJoint {
+            get {
+                object obj = ResourceManager.GetObject("placeJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PlayHS {
+            get {
+                object obj = ResourceManager.GetObject("PlayHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap simulationStatusImage {
             get {
                 object obj = ResourceManager.GetObject("simulationStatusImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap StopHS {
+            get {
+                object obj = ResourceManager.GetObject("StopHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

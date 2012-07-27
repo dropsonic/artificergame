@@ -533,5 +533,27 @@ namespace FarseerTools
             vertices = new Vertices(textureVertices);
             outputTexture = TextureFromVertices(textureVertices, materialType, color, materialScale);
         }
+
+        public Texture2D CreateRotatedTexture(Sprite sprite, float radians)
+        {
+            //worst case scenario
+            int width = (int)Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height);
+            int height = width;
+            RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
+                                                        DepthFormat.Depth24Stencil8, 8,
+                                                        RenderTargetUsage.DiscardContents);
+
+
+            Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
+            SpriteBatch batch = new SpriteBatch(_device);
+            _device.SetRenderTarget(outputTexture);
+            _device.Clear(Color.Transparent);
+            batch.Begin(SpriteSortMode.Immediate, null, SamplerState.LinearClamp, null, RasterizerState.CullNone);
+            batch.Draw(sprite.Texture, new Vector2(outputTexture.Width/2, outputTexture.Height/2), null, Color.White, radians, sprite.Origin, 1f,SpriteEffects.None, 0f);
+            batch.End(); 
+
+            _device.SetRenderTarget(null);
+            return outputTexture;
+        }
     }
 }

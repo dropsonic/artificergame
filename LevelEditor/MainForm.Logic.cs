@@ -15,20 +15,47 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using LevelEditor.Helpers;
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
     using Path = System.IO.Path;
+    using FarseerPhysics.Dynamics.Joints;
 
     public partial class MainForm : Form
     {
-        string GetParent(string path, int nesting)
+        enum MouseToolState
         {
-            return nesting == 0 ? path : GetParent(Directory.GetParent(path).ToString(), --nesting);
+            Default, PlaceObject, EditPreviewObject, PlaceJoint, AttachFixture, SelectObjectPart, SelectObject, MouseJoint
         }
 
-        private void SetPreview()
+        enum MouseEvents
+        {
+            Click,Up,Down,Move
+        }
+        
+   
+        private void FindPreSimulationObject(PropertyGrid grid)
+        {
+            if (grid.SelectedObject != null && grid.SelectedObject.GetType() == typeof(Body))
+            {
+                propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position,_objectLevelManager.GameLevel.World);
+            }
+            //здесь будут джоинт, геймобжекты, геймобжектпарты
+        }
+
+        private void UpdateCreatedJointList()
+        {
+            createdJointsList.Items.Clear();
+            foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
+            {
+                createdJointsList.Items.Insert(0, joint);
+            }
+        }
+
+
+        private void CreatePreview()
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
@@ -38,38 +65,38 @@ namespace LevelEditor
                 {
                     case ObjectType.Arc:
                         shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians(float.Parse(arcDegrees.Value.ToString())), int.Parse(arcSides.Value.ToString()), float.Parse(arcRadius.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Capsule:
                         shapeVertices = PolygonTools.CreateCapsule(float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Gear:
                         shapeVertices = PolygonTools.CreateGear(float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Rectangle:
                         shapeVertices = PolygonTools.CreateRectangle(float.Parse(rectangleWidth.Value.ToString()), float.Parse(rectangleHeight.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.RoundedRectangle:
                         shapeVertices = PolygonTools.CreateRoundedRectangle(float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Ellipse:
                         shapeVertices = PolygonTools.CreateEllipse(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.EllipseTexture(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.EllipseTexture(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.Circle:
                         shapeVertices = PolygonTools.CreateCircle(float.Parse(circleRadius.Value.ToString()), AssetCreator.CircleSegments);
-                        previewTexture = ContentService.GetContentService().AssetCreator.CircleTexture(float.Parse(circleRadius.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        previewTexture = ContentService.GetContentService().AssetCreator.CircleTexture(float.Parse(circleRadius.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
                         break;
                     case ObjectType.CustomShape:
                         if (shapeFromTextureBox.SelectedItem == null) break;
                         if (useOriginalTextureCheck.Checked)
-                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), colorDictionary[colorBox.SelectedItem.ToString()], out previewTexture, out shapeVertices);
+                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), _colorDictionary[colorBox.SelectedItem.ToString()], out previewTexture, out shapeVertices);
                         else
-                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), materialBox.SelectedItem.ToString(), colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()), out previewTexture, out shapeVertices);
+                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()), out previewTexture, out shapeVertices);
                         break;
                     default:
                          throw new Exception("Unknown Shape");
@@ -77,28 +104,192 @@ namespace LevelEditor
                 }
                 if (shapeVertices != null && previewTexture != null)
                 {
-                    float? previousDensity = currentObject[0].Body.Density;
-                    currentObject[0].Body.FixtureList.Clear();
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, currentObject[0].Body);
-                    currentObject[0].Sprite = new Sprite(previewTexture);
-                    previewScreen.PreviewGameObject = currentObject[0];
+                    float? previousDensity = _objectLevelManager.PreviewObject[0].Body.Density;
+
+                    _objectLevelManager.PreviewObject[0].Body.FixtureList.Clear();
+
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 
+                                                         previousDensity == null ? 1f : (float)previousDensity, 
+                                                         _objectLevelManager.PreviewObject[0].Body);
+
+                    _objectLevelManager.PreviewObject[0].Sprites[0] = new Sprite(previewTexture);
+
+                    _objectLevelManager.PreviewVertices = shapeVertices;
+
+                    previewScreen.PreviewGameObject = _objectLevelManager.PreviewObject[0];
+
+                    
+                    editCurrentObjectAction.Checked = true;
+                    SetMouseToolButtonsState(editCurrentObjectAction);
                 }
             }
         }
 
-        void SetCurrentObject()
+        /// <summary>
+        /// Переключает видимость вкладки параметров фигуры в зависимости от типа фигуры.
+        /// </summary>
+        /// <param name="shapeType">Тип фигуры.</param>
+        private void SwitchShapeParametersTab(ObjectType shapeType)
         {
-            if (currentObject[0].Sprite.Texture != null && placeObjectCheck.Checked)
+            this.shapeParameters.Text = "Shape Parameters - " + shapeType.ToString();
+            switch (shapeType)
             {
-                levelScreen.CurrentGameObject = currentObject;
+                case ObjectType.Arc:
+                    this.shapeParametersControl.SelectedTab = this.arcTab;
+                    break;
+                case ObjectType.Capsule:
+                    this.shapeParametersControl.SelectedTab = this.capsuleTab;
+                    break;
+                case ObjectType.Circle:
+                    this.shapeParametersControl.SelectedTab = this.circleTab;
+                    break;
+                case ObjectType.CustomShape:
+                    this.shapeParametersControl.SelectedTab = this.customShapeTab;
+                    break;
+                case ObjectType.Ellipse:
+                    this.shapeParametersControl.SelectedTab = this.ellipseTab;
+                    break;
+                case ObjectType.Gear:
+                    this.shapeParametersControl.SelectedTab = this.gearTab;
+                    break;
+                case ObjectType.Rectangle:
+                    this.shapeParametersControl.SelectedTab = this.rectangleTab;
+                    break;
+                case ObjectType.RoundedRectangle:
+                    this.shapeParametersControl.SelectedTab = this.roundedRectangleTab;
+                    break;
+            }
+        }
+
+        private void ChangeMouseToolState()
+        {
+            if (selectObjectPartAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Hand;
+                _mouseToolState = MouseToolState.SelectObjectPart;
+            }
+            else if (selectObjectAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Hand;
+                _mouseToolState = MouseToolState.SelectObject;
+            }
+            else if (addPreviewObjectAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Cross;
+                _mouseToolState = MouseToolState.PlaceObject;
+            }
+            else if (useMouseJointAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Cross;
+                _mouseToolState = MouseToolState.MouseJoint;
+            }
+            else if (editCurrentObjectAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Arrow;
+                _mouseToolState = MouseToolState.EditPreviewObject;
+            }
+            else if (attachFixture.Checked)
+            {
+                _levelScreenCursor = Cursors.NoMove2D;
+                _mouseToolState = MouseToolState.AttachFixture;
+            }
+            else if (addNewJointAction.Checked)
+            {
+                _levelScreenCursor = Cursors.Cross;
+                _mouseToolState = MouseToolState.PlaceJoint;
             }
             else
             {
-                levelScreen.CurrentGameObject = null;
+                _levelScreenCursor = Cursors.Arrow;
+                _mouseToolState = MouseToolState.Default;
             }
-
         }
 
+        private void SetMouseToolButtonsState(Crad.Windows.Forms.Actions.Action toolButton)
+        {
+            bool tempCheck = toolButton.Checked;
+            attachFixture.Checked = addNewJointAction.Checked = editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
+            toolButton.Checked = tempCheck;
+
+            HandlePreviewDisplay();
+            HandleJointCreation();
+            HandleFixtureAttachment();
+            ChangeMouseToolState();
+        }
+
+
+        private void HandleJointCreation()
+        {
+            if (addNewJointAction.Checked)
+            {
+                if (jointsBox.SelectedItem != null)
+                {
+                    if (_jointHelper==null)
+                        _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                }
+            }
+            else
+            {
+                _jointHelper = null;
+                ShowReadyStatus();
+            }
+        }
+
+        private void HandlePreviewDisplay()
+        {
+            if (addPreviewObjectAction.Checked)
+            {
+                if (_objectLevelManager.PreviewObject[0].Sprites[0].Texture != null)
+                {
+                    levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
+                    //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
+                }
+                else
+                {
+                    addPreviewObjectAction.Checked = false;
+                    ShowWarningStatus("Необходимо установить текстуру.");
+                }
+            }
+            else
+            {
+                levelScreen.PreviewGameObject = null;
+            }
+            if (editCurrentObjectAction.Checked||addPreviewObjectAction.Checked)
+            {
+                propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
+            }
+        }
+
+        private void HandleFixtureAttachment()
+        {
+            if (attachFixture.Checked)
+            {
+                if (_attachmentHelper == null)
+                {
+                    if (_attachmentHelper == null)
+                        _attachmentHelper = new FixtureAttachmentHelper(_objectLevelManager.PreviewVertices,_objectLevelManager.PreviewObject[0].Body, _objectLevelManager.GameLevel.World);
+                    ShowTooltipStatus(_attachmentHelper.StatusMessage);
+                }
+            }
+            else
+            {
+                _attachmentHelper = null;
+                ShowReadyStatus();
+            }
+        }
+
+        private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)
+        {
+            return !((height <= bottomRadius * 2) || (height <= topRadius * 2));
+        }
+
+        private bool CheckRoundedRectangleParams(decimal side, decimal radius)
+        {
+            return !(side < radius * 2);
+        }
+
+        #region Load Dialogs
         /// <summary>
         /// Загружает custom-материал.
         /// </summary>
@@ -164,54 +355,7 @@ namespace LevelEditor
                 }
             }
         }
-
-                
-
-        /// <summary>
-        /// Переключает видимость вкладки параметров фигуры в зависимости от типа фигуры.
-        /// </summary>
-        /// <param name="shapeType">Тип фигуры.</param>
-        private void SwitchShapeParametersTab(ObjectType shapeType)
-        {
-            this.shapeParameters.Text = "Shape Parameters - " + shapeType.ToString();
-            switch (shapeType)
-            {
-                case ObjectType.Arc:
-                    this.shapeParametersControl.SelectedTab = this.arcTab;
-                    break;
-                case ObjectType.Capsule:
-                    this.shapeParametersControl.SelectedTab = this.capsuleTab;
-                    break;
-                case ObjectType.Circle:
-                    this.shapeParametersControl.SelectedTab = this.circleTab;
-                    break;
-                case ObjectType.CustomShape:
-                    this.shapeParametersControl.SelectedTab = this.customShapeTab;
-                    break;
-                case ObjectType.Ellipse:
-                    this.shapeParametersControl.SelectedTab = this.ellipseTab;
-                    break;
-                case ObjectType.Gear:
-                    this.shapeParametersControl.SelectedTab = this.gearTab;
-                    break;
-                case ObjectType.Rectangle:
-                    this.shapeParametersControl.SelectedTab = this.rectangleTab;
-                    break;
-                case ObjectType.RoundedRectangle:
-                    this.shapeParametersControl.SelectedTab = this.roundedRectangleTab;
-                    break;
-            }
-        }
-
-        private bool CheckCapsuleParams(decimal height, decimal bottomRadius, decimal topRadius)
-        {
-            return !((height <= bottomRadius * 2) || (height <= topRadius * 2));
-        }
-
-        private bool CheckRoundedRectangleParams(decimal side, decimal radius)
-        {
-            return !(side < radius * 2);
-        }
+        #endregion
 
         #region Status
         private enum StatusType
@@ -220,7 +364,8 @@ namespace LevelEditor
             Ready,
             Error,
             Warning,
-            Simulation
+            Simulation,
+            Tooltip
         }
 
         private StatusType _status = StatusType.Undefined;
@@ -232,6 +377,7 @@ namespace LevelEditor
             _statusImages.Images.Add(StatusType.Error.ToString(), SystemIcons.Error);
             _statusImages.Images.Add(StatusType.Warning.ToString(), SystemIcons.Warning);
             _statusImages.Images.Add(StatusType.Simulation.ToString(), LevelEditor.Properties.Resources.simulationStatusImage);
+            _statusImages.Images.Add(StatusType.Tooltip.ToString(), SystemIcons.Information);
         }
 
         private void ShowErrorStatus(Exception ex)
@@ -253,11 +399,36 @@ namespace LevelEditor
             }
         }
 
-        private void ShowSimulationStatus(float simulationSpeed)
+        /// <summary>
+        /// Скрывает все ошибки и предупреждения и показывает текущий статус.
+        /// </summary>
+        private void ShowCurrentNormalStatus()
         {
+            if (_objectLevelManager.Simulator.State == SimulationState.Simulation || _objectLevelManager.Simulator.State == SimulationState.Paused)
+                ShowSimulationStatus();
+            else
+                ShowReadyStatus();
+        }
+
+        private void ShowSimulationStatus()
+        {
+            ShowSimulationStatus(_objectLevelManager.Simulator.SimulationSpeed, _objectLevelManager.Simulator.State);
+        }
+
+        private void ShowSimulationStatus(float simulationSpeed, SimulationState state)
+        {
+            simulationSpeedToolStripLabel.Text = String.Format("{0:0.00}x", simulationSpeed);
+
+            if (state == SimulationState.Stopped)
+                return;
+
             toolStripStatusLabel.BackColor = System.Drawing.Color.CornflowerBlue;
             toolStripStatusLabel.Image = null;
-            toolStripStatusLabel.Text = String.Format("Simulating ({0:0.##}x time)...", simulationSpeed);
+            if (state == SimulationState.Simulation)
+                toolStripStatusLabel.Text = String.Format("Simulating ({0:0.##}x time)...", simulationSpeed);
+            else
+                toolStripStatusLabel.Text = String.Format("Simulation paused ({0:0.##}x time)...", simulationSpeed);
+
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Simulation.ToString()];
             _status = StatusType.Simulation;
         }
@@ -268,6 +439,14 @@ namespace LevelEditor
             toolStripStatusLabel.Image = _statusImages.Images[StatusType.Warning.ToString()];
             toolStripStatusLabel.Text = message;
             _status = StatusType.Warning;
+        }
+
+        private void ShowTooltipStatus(string message)
+        {
+            toolStripStatusLabel.BackColor = System.Drawing.Color.BlanchedAlmond;
+            toolStripStatusLabel.Image = _statusImages.Images[StatusType.Tooltip.ToString()];
+            toolStripStatusLabel.Text = message;
+            _status = StatusType.Tooltip;
         }
         #endregion
     }
