@@ -562,6 +562,7 @@ namespace LevelEditor
                         {
                             Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
                             _attachmentHelper.NextStep(simPosition);
+                            HandlePreviewDisplay();
                             ShowTooltipStatus(_attachmentHelper.StatusMessage);
                             if (_attachmentHelper.Finished)
                             {

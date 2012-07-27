@@ -253,7 +253,10 @@ namespace LevelEditor
             }
             else
             {
-                levelScreen.PreviewGameObject = null;
+                if(attachFixture.Checked && _attachmentHelper!=null && _attachmentHelper.ShowPreview)
+                    levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
+                else
+                    levelScreen.PreviewGameObject = null;
             }
             if (editCurrentObjectAction.Checked||addPreviewObjectAction.Checked)
             {
