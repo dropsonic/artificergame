@@ -250,6 +250,13 @@ namespace LevelEditor
         
         private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
+            if (_objectLevelManager.Simulator.State == SimulationState.Stopped)
+            {
+                PropertyDescriptor propertyDescriptor = e.ChangedItem.PropertyDescriptor;
+                object selectedObject = propertyGrid.SelectedObject;
+                _commandManager.Execute(new PropertyGridChangeParamCommand(selectedObject, propertyDescriptor, e.OldValue, propertyDescriptor.GetValue(selectedObject), () => propertyGrid.Refresh()));
+            }
+            
             propertyGrid.Refresh();
         }
 
