@@ -210,7 +210,8 @@ namespace LevelEditor
             bool tempCheck = toolButton.Checked;
             attachFixture.Checked = addNewJointAction.Checked = editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
             toolButton.Checked = tempCheck;
-
+            //TODO: выделить нижестоящие handle функции в одну с деревом, чтобы статусы друг друга не перекрывали.
+            ShowReadyStatus();
             HandlePreviewDisplay();
             HandleJointCreation();
             HandleFixtureAttachment();
@@ -232,7 +233,6 @@ namespace LevelEditor
             else
             {
                 _jointHelper = null;
-                ShowReadyStatus();
             }
         }
 
@@ -278,7 +278,6 @@ namespace LevelEditor
             else
             {
                 _attachmentHelper = null;
-                ShowReadyStatus();
             }
         }
 
