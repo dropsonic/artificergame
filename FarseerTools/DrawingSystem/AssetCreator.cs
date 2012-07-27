@@ -536,14 +536,17 @@ namespace FarseerTools
 
         public Texture2D CreateRotatedTexture(Sprite sprite, float radians)
         {
-            //worst case scenario
-            int width = (int)Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height);
-            int height = width;
             /*
             radians = MathHelper.ToRadians(MathHelper.ToDegrees(radians) - (((int)MathHelper.ToDegrees(radians)) / (int)90) * 90);
             width = (int)(Math.Cos(radians) * sprite.Texture.Width);
             height = (int)(Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height)*Math.Cos(MathHelper.ToRadians(90)-radians-Math.Atan(sprite.Texture.Height/sprite.Texture.Width)));
              */
+
+            Vector2 boundsHelper = Vector2.Transform(new Vector2(sprite.Texture.Width / 2, sprite.Texture.Height / 2), Matrix.CreateRotationZ(radians));
+            double angleOffset = Math.Sqrt(2)*Math.Min(sprite.Texture.Height, sprite.Texture.Width)+1;
+            int width = (int)(Math.Abs(boundsHelper.X * 2) + angleOffset);
+            int height = (int)(Math.Abs(boundsHelper.Y * 2) + angleOffset);
+
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
                                                         DepthFormat.Depth24Stencil8, 8,
                                                         RenderTargetUsage.DiscardContents);
@@ -552,7 +555,7 @@ namespace FarseerTools
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0f);
             SpriteBatch batch = new SpriteBatch(_device);
             _device.SetRenderTarget(outputTexture);
-            _device.Clear(Color.Black);
+            _device.Clear(Color.Transparent);
             batch.Begin(SpriteSortMode.Immediate, null, SamplerState.LinearClamp, null, RasterizerState.CullNone);
             batch.Draw(sprite.Texture, new Vector2(outputTexture.Width/2, outputTexture.Height/2), null, Color.White, radians, sprite.Origin, 1f,SpriteEffects.None, 0f);
             batch.End(); 
