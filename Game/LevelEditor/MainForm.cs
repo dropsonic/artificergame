@@ -578,7 +578,9 @@ namespace LevelEditor
                                 _attachmentHelper.GetAttachmentResult(out body, out shapes);
 
                                 Vector2 offset = Vector2.Transform(ConvertUnits.ToDisplayUnits(body.Position) - new Vector2(args.X, args.Y), Matrix.CreateRotationZ(-body.Rotation));
-                                Texture2D rotatedTexture = _assetCreator.CreateRotatedTexture(_objectLevelManager.PreviewObject[0].Sprites[0], -body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation);
+                                Texture2D rotatedTexture = ((-body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation)==0) ? 
+                                                                                        _objectLevelManager.PreviewObject[0].Sprites[0].Texture :
+                                                                                        _assetCreator.CreateRotatedTexture(_objectLevelManager.PreviewObject[0].Sprites[0], -body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation);
                                 _commandManager.Execute(new Commands.AttachFixtureCommand(_objectLevelManager.GameLevel, body, shapes, new Sprite(rotatedTexture,offset)));
                             }
                         }
