@@ -36,7 +36,7 @@ namespace LevelEditor.Commands
         public void Execute()
         {
             foreach (GameObjectPart part in _objectToAdd)
-                if (part.Sprite.Texture == null)
+                if (part.Sprites[0].Texture == null)
                     throw new NullReferenceException("Texture cannot be null.");
             _addedObject = _objectToAdd.CopyObjectToWorld(_level.World, ConvertUnits.ToSimUnits(_position));
             _level.AddObject(_addedObject);

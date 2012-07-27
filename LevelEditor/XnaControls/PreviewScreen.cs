@@ -61,9 +61,9 @@ namespace LevelEditor
             if (previewGameObject != null)
             {
                 spriteBatch.Begin(SpriteSortMode.Immediate,null,null,null,null,null,Matrix.CreateTranslation(new Vector3(ClientSize.Width/2,ClientSize.Height/2,0)));
-                spriteBatch.Draw(previewGameObject.Sprite.Texture, ConvertUnits.ToDisplayUnits(previewGameObject.Body.Position),
+                spriteBatch.Draw(previewGameObject.Sprites[0].Texture, ConvertUnits.ToDisplayUnits(previewGameObject.Body.Position),
                                                null,
-                                               Color.White, previewGameObject.Body.Rotation, previewGameObject.Sprite.Origin, 1f,
+                                               Color.White, previewGameObject.Body.Rotation, previewGameObject.Sprites[0].Origin, 1f,
                                                SpriteEffects.None, 0f);
                 spriteBatch.End();
             }

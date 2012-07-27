@@ -5,19 +5,35 @@ namespace FarseerTools
 {
     public struct Sprite
     {
+        //Center of texture
         public Vector2 Origin;
+        //Distance between body(body position) and sprite origin
+        public Vector2 Offset;
         public Texture2D Texture;
 
-        public Sprite(Texture2D texture, Vector2 origin)
+        public Sprite(Texture2D texture)
         {
             this.Texture = texture;
-            this.Origin = origin;
+            this.Origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            this.Offset = Vector2.Zero;
         }
 
-        public Sprite(Texture2D sprite)
+        public Sprite(Texture2D texture, Vector2 offset)
         {
-            Texture = sprite;
-            Origin = new Vector2(sprite.Width / 2f, sprite.Height / 2f);
+            this.Texture = texture;
+            this.Origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            this.Offset = offset;
         }
+
+        public Sprite(Texture2D texture, Vector2 offset, Vector2? origin=null)
+        {
+            this.Texture = texture;
+            if (origin == null)
+                this.Origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            else
+                this.Origin = (Vector2)origin;
+            this.Offset = offset;
+        }
+        
     }
 }

@@ -112,7 +112,7 @@ namespace LevelEditor
                                                          previousDensity == null ? 1f : (float)previousDensity, 
                                                          _objectLevelManager.PreviewObject[0].Body);
 
-                    _objectLevelManager.PreviewObject[0].Sprite = new Sprite(previewTexture);
+                    _objectLevelManager.PreviewObject[0].Sprites[0] = new Sprite(previewTexture);
 
                     _objectLevelManager.PreviewVertices = shapeVertices;
 
@@ -240,7 +240,7 @@ namespace LevelEditor
         {
             if (addPreviewObjectAction.Checked)
             {
-                if (_objectLevelManager.PreviewObject[0].Sprite.Texture != null)
+                if (_objectLevelManager.PreviewObject[0].Sprites[0].Texture != null)
                 {
                     levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
                     //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;

@@ -9,6 +9,9 @@ using FarseerPhysics.Common;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Common.Decomposition;
 using FarseerPhysics.Collision.Shapes;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using FarseerTools;
 
 namespace LevelEditor.Commands
 {
@@ -18,20 +21,16 @@ namespace LevelEditor.Commands
         private Body _body;
         private List<Shape> _shapes;
         private List<Fixture> _createdFixtures;
+        private Sprite _sprite;
+        private GameObjectPart _objectPart;
 
-
-        /// <summary>
-        /// Создаёт новый экземпляр AddPreviewObjectCommand.
-        /// </summary>
-        /// <param name="objectToAdd">Объект для добавления.</param>
-        /// <param name="level">Уровень, в который необходимо добавить объект.</param>
-        /// <param name="position">Позиция точки Origin объекта в уровне.</param>
-        public AttachFixtureCommand(GameLevel gameLevel, Body body, List<Shape> shapes)
+        public AttachFixtureCommand(GameLevel gameLevel, Body body, List<Shape> shapes, Sprite sprite)
         {
             _gameLevel = gameLevel;
             _body = body;
             _shapes = shapes;
             _createdFixtures = new List<Fixture>(_shapes.Count);
+            _sprite = sprite;
         }
 
         public string Name
@@ -42,9 +41,16 @@ namespace LevelEditor.Commands
         public void Execute()
         {
             foreach (Shape shape in _shapes)
-            {
                 _createdFixtures.Add(_body.CreateFixture(shape));
-            }
+            
+
+            foreach (GameObject go in _gameLevel)
+                foreach (GameObjectPart gop in go)
+                    if (gop.Body == _body)
+                    {
+                        gop.Sprites.Add(_sprite);
+                        _objectPart = gop;
+                    }
             _gameLevel.World.ProcessChanges();
         }
 
@@ -54,6 +60,7 @@ namespace LevelEditor.Commands
             {
                 _body.FixtureList.Remove(fix);
             }
+            _objectPart.Sprites.Remove(_sprite);
             _gameLevel.World.ProcessChanges();
         }
     }

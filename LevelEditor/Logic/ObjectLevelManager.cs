@@ -19,7 +19,7 @@ namespace LevelEditor
             //Создаём PreviewObject
             _previewObject = new GameObject(camera, spriteBatch);
             Body body = new Body(_previewObject.World);
-            _previewObject.AddPart(new Sprite(null, Vector2.Zero), body);
+            _previewObject.AddPart(new Sprite(null, Vector2.Zero,Vector2.Zero), body);
 
             //Создаём GameLevel
             _gameLevel = new GameLevel(camera, spriteBatch);

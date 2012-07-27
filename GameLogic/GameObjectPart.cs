@@ -11,13 +11,13 @@ namespace GameLogic
 {
     public class GameObjectPart : IDrawable
     {
-        private Sprite _sprite;
+        private List<Sprite> _sprites;
         private Body _body;
 
-        public Sprite Sprite
+        public List<Sprite> Sprites
         {
-            get { return _sprite; }
-            set { _sprite = value; }
+            get { return _sprites; }
+            set { _sprites = value; }
         }
 
         public Body Body
@@ -34,7 +34,8 @@ namespace GameLogic
 
         public GameObjectPart(Sprite sprite, Body body)
         {
-            _sprite = sprite;
+            _sprites = new List<Sprite>();
+            _sprites.Add(sprite);
             _body = body;
 
             Visible = true;
@@ -42,6 +43,20 @@ namespace GameLogic
 
         public GameObjectPart(SpriteBatch spriteBatch, Sprite sprite, Body body)
             : this(sprite, body)
+        {
+            _spriteBatch = spriteBatch;
+        }
+
+        public GameObjectPart(List<Sprite> sprites,Body body)
+        {
+            _sprites = sprites;
+            _body = body;
+
+            Visible = true;
+        }
+
+        public GameObjectPart(SpriteBatch spriteBatch,List<Sprite> sprites,Body body)
+            :this(sprites,body)
         {
             _spriteBatch = spriteBatch;
         }
@@ -55,7 +70,8 @@ namespace GameLogic
         {
             Body newBody = Body.DeepClone(world);
             newBody.Position += origin;
-            return new GameObjectPart(_spriteBatch, Sprite, newBody);
+            
+            return new GameObjectPart(_spriteBatch, new List<Sprite>(_sprites), newBody);
         }
 
 
@@ -69,10 +85,13 @@ namespace GameLogic
         {
             if (_visible)
             {
-                _spriteBatch.Draw(Sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
-                                               null,
-                                               Color.White, Body.Rotation, Sprite.Origin, 1f,
-                                               SpriteEffects.None, 0f);
+                foreach (Sprite sprite in _sprites)
+                {
+                    _spriteBatch.Draw(sprite.Texture, ConvertUnits.ToDisplayUnits(Body.Position),
+                                                   null,
+                                                   Color.White, Body.Rotation, sprite.Origin+sprite.Offset, 1f,
+                                                   SpriteEffects.None, 0f);
+                }
             }
         }
 
