@@ -88,6 +88,11 @@ namespace XMLExtendedSerialization
             }
         }
 
+        private void SerializeTypeName(XElement root, Type rootType)
+        {
+            root.Add(new XAttribute("Type-", rootType.FullName.ToXMLValue()));
+        }
+
         /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
@@ -98,11 +103,23 @@ namespace XMLExtendedSerialization
             if (rootObject == null)
                 return null;
 
+            if (rootObject is IDictionary)
+                return SerializeDictionary(name, (IDictionary)rootObject);
+
             Type rootType = rootObject.GetType();
 
             //Если объект - массив, сериализуем его в отдельном методе
             if (rootType.IsArray)
                 return SerializeArray(name, (Array)rootObject);
+
+            SerializeTypeName(element, rootType);
+
+            if (rootObject is string)
+            {
+                element.Add(((string)rootObject).ToXMLValue());
+                return element;
+            }
+
             //Если объект - generic, сериализуем его в отдельном методе
             //if (rootType.IsGenericType)
             //    return SerializeGenericObject(name, rootObject);
@@ -173,9 +190,28 @@ namespace XMLExtendedSerialization
             XElement element = new XElement(name);
             SerializeMetadata(element, rootObject);
             Type rootType = rootObject.GetType();
-            //IList array = (rootObject as IList);
-            foreach (object x in rootObject)
-                element.Add(SerializeObject("Element", x));
+            SerializeTypeName(element, rootType);
+            
+            foreach (object item in rootObject)
+                element.Add(SerializeObject("Element", item));
+
+            return element;
+        }
+
+        private XElement SerializeDictionary(string name, IDictionary rootObject)
+        {
+            XElement element = new XElement(name);
+            SerializeMetadata(element, rootObject);
+            Type rootType = rootObject.GetType();
+            SerializeTypeName(element, rootType);
+
+            foreach (DictionaryEntry item in rootObject)
+            {
+                XElement itemElement = new XElement("Item");
+                itemElement.Add(SerializeObject("Key", item.Key));
+                itemElement.Add(SerializeObject("Value", item.Value));
+                element.Add(itemElement);
+            }
 
             return element;
         }
@@ -189,24 +225,24 @@ namespace XMLExtendedSerialization
         //    throw new NotImplementedException();
         //}
 
-        public void Serialize(object rootObject)
+        public void Serialize(object rootObject, string rootName = "Object")
         {
-            Serialize(rootObject, false);
+            Serialize(rootObject, false, String.Empty, rootName);
         }
 
-        public void Serialize(object rootObject, string metaData)
+        public void Serialize(object rootObject, string metaData, string rootName = "Object")
         {
-            Serialize(rootObject, true, metaData);
+            Serialize(rootObject, true, metaData, rootName);
         }
 
-        private void Serialize(object rootObject, bool addMetadata, string metadata = "")
+        private void Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
         {
             XDocument doc = new XDocument();
             if (addMetadata)
                 doc.Add(new XComment(metadata.ToXMLComment()));
-            Type rootType = rootObject.GetType();
-            string typeName = rootType.GetXMLFullName();
-            doc.Add(SerializeObject(typeName, rootObject));
+            //Type rootType = rootObject.GetType();
+            //string typeName = rootType.GetXMLFullName();
+            doc.Add(SerializeObject(rootName, rootObject));
             doc.Save(_stream);
         }
     }

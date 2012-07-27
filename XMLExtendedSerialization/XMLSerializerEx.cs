@@ -15,10 +15,11 @@ namespace XMLExtendedSerialization
         /// </summary>
         /// <param name="obj">Объект для сериализации.</param>
         /// <param name="stream">Поток, в который будет сохранён XML-документ.</param>
-        public static void Serialize(object obj, Stream stream)
+        /// <param name="rootName">Имя корневого тега XML-документа.</param>
+        public static void Serialize(object obj, Stream stream, string rootName = "Object")
         {
             Serializer serializer = new Serializer(stream);
-            serializer.Serialize(obj);
+            serializer.Serialize(obj, rootName);
         }
 
         /// <summary>
@@ -27,10 +28,11 @@ namespace XMLExtendedSerialization
         /// <param name="obj">Объект для сериализации.</param>
         /// <param name="metadata">Метаданные для сохранения в XML-документ.</param>
         /// <param name="stream">Поток, в который будет сохранён XML-документ.</param>
-        public static void Serialize(object obj, string metadata, Stream stream)
+        /// <param name="rootName">Имя корневого тега XML-документа.</param>
+        public static void Serialize(object obj, string metadata, Stream stream, string rootName = "Object")
         {
             Serializer serializer = new Serializer(stream);
-            serializer.Serialize(obj, metadata);
+            serializer.Serialize(obj, metadata, rootName);
         }
 
         public static object Deserialize(Stream stream)
