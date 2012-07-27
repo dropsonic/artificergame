@@ -127,8 +127,14 @@
   <data name="StopHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StopHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="editObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\editObject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="objectPart1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\objectPart1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="addJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\addJoint1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="halfSpeed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\halfSpeed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -146,11 +152,11 @@
   <data name="ContinueHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ContinueHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="attachFixture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\attachFixture1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="addPreviewObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\addPreviewObject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="editObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\editObject.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlayHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -173,13 +179,19 @@
   <data name="mouseJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mouseJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="editJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\editJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="objectPart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\objectPart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PauseHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PauseHS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="editJoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\editJoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="attachBodyFixture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\attachBodyFixture.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="attachBodyFixture1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\attachBodyFixture1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

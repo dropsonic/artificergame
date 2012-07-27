@@ -27,7 +27,7 @@ namespace LevelEditor
     {
         enum MouseToolState
         {
-            Default, PlaceObject, EditPreviewObject, PlaceJoint, EditJoint, SelectObjectPart, SelectObject, MouseJoint
+            Default, PlaceObject, EditPreviewObject, PlaceJoint, AttachFixture, SelectObjectPart, SelectObject, MouseJoint
         }
 
         enum MouseEvents
@@ -105,10 +105,19 @@ namespace LevelEditor
                 if (shapeVertices != null && previewTexture != null)
                 {
                     float? previousDensity = _objectLevelManager.PreviewObject[0].Body.Density;
+
                     _objectLevelManager.PreviewObject[0].Body.FixtureList.Clear();
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), previousDensity == null ? 1f : (float)previousDensity, _objectLevelManager.PreviewObject[0].Body);
+
+                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 
+                                                         previousDensity == null ? 1f : (float)previousDensity, 
+                                                         _objectLevelManager.PreviewObject[0].Body);
+
                     _objectLevelManager.PreviewObject[0].Sprite = new Sprite(previewTexture);
+
+                    _objectLevelManager.PreviewVertices = shapeVertices;
+
                     previewScreen.PreviewGameObject = _objectLevelManager.PreviewObject[0];
+
                     
                     editCurrentObjectAction.Checked = true;
                     SetMouseToolButtonsState(editCurrentObjectAction);
@@ -179,10 +188,10 @@ namespace LevelEditor
                 _levelScreenCursor = Cursors.Arrow;
                 _mouseToolState = MouseToolState.EditPreviewObject;
             }
-            else if (editJointAction.Checked)
+            else if (attachFixture.Checked)
             {
-                _levelScreenCursor = Cursors.Arrow;
-                _mouseToolState = MouseToolState.EditJoint;
+                _levelScreenCursor = Cursors.NoMove2D;
+                _mouseToolState = MouseToolState.AttachFixture;
             }
             else if (addNewJointAction.Checked)
             {
@@ -199,11 +208,12 @@ namespace LevelEditor
         private void SetMouseToolButtonsState(Crad.Windows.Forms.Actions.Action toolButton)
         {
             bool tempCheck = toolButton.Checked;
-            editJointAction.Checked = addNewJointAction.Checked = editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
+            attachFixture.Checked = addNewJointAction.Checked = editCurrentObjectAction.Checked = selectObjectPartAction.Checked = selectObjectAction.Checked = addPreviewObjectAction.Checked = useMouseJointAction.Checked = false;
             toolButton.Checked = tempCheck;
 
             HandlePreviewDisplay();
             HandleJointCreation();
+            HandleFixtureAttachment();
             ChangeMouseToolState();
         }
 
@@ -214,7 +224,8 @@ namespace LevelEditor
             {
                 if (jointsBox.SelectedItem != null)
                 {
-                    _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    if (_jointHelper==null)
+                        _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
                     ShowTooltipStatus(_jointHelper.CurrentStateMessage);
                 }
             }
@@ -247,6 +258,24 @@ namespace LevelEditor
             if (editCurrentObjectAction.Checked||addPreviewObjectAction.Checked)
             {
                 propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
+            }
+        }
+
+        private void HandleFixtureAttachment()
+        {
+            if (attachFixture.Checked)
+            {
+                if (_attachmentHelper == null)
+                {
+                    if (_attachmentHelper == null)
+                        _attachmentHelper = new FixtureAttachmentHelper(_objectLevelManager.PreviewVertices,_objectLevelManager.PreviewObject[0].Body, _objectLevelManager.GameLevel.World);
+                    ShowTooltipStatus(_attachmentHelper.StatusMessage);
+                }
+            }
+            else
+            {
+                _attachmentHelper = null;
+                ShowReadyStatus();
             }
         }
 

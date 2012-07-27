@@ -67,9 +67,37 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap addJoint {
+            get {
+                object obj = ResourceManager.GetObject("addJoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap addPreviewObject {
             get {
                 object obj = ResourceManager.GetObject("addPreviewObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachBodyFixture {
+            get {
+                object obj = ResourceManager.GetObject("attachBodyFixture", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachBodyFixture1 {
+            get {
+                object obj = ResourceManager.GetObject("attachBodyFixture1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap attachFixture {
+            get {
+                object obj = ResourceManager.GetObject("attachFixture", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -40,11 +40,13 @@ namespace LevelEditor.Commands
                     throw new NullReferenceException("Texture cannot be null.");
             _addedObject = _objectToAdd.CopyObjectToWorld(_level.World, ConvertUnits.ToSimUnits(_position));
             _level.AddObject(_addedObject);
+            _level.World.ProcessChanges();
         }
 
         public void Unexecute()
         {
             _level.RemoveObject(_addedObject);
+            _level.World.ProcessChanges();
         }
     }
 }

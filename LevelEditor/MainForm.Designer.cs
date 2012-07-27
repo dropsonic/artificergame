@@ -189,10 +189,11 @@ namespace LevelEditor
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.addNewJointAction = new Crad.Windows.Forms.Actions.Action();
-            this.editJointAction = new Crad.Windows.Forms.Actions.Action();
+            this.attachFixture = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1666,7 +1667,7 @@ namespace LevelEditor
             this.objectScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(829, 752);
+            this.objectScreen.Size = new System.Drawing.Size(829, 727);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
             // 
@@ -1933,8 +1934,9 @@ namespace LevelEditor
             this.toolStripButton8,
             this.toolStripButton13,
             this.toolStripSeparator3,
-            this.toolStripButton15,
             this.toolStripButton16,
+            this.toolStripSeparator6,
+            this.toolStripButton15,
             this.toolStripSeparator4,
             this.toolStripButton9,
             this.toolStripButton11,
@@ -1942,7 +1944,7 @@ namespace LevelEditor
             this.toolStripButton12});
             this.toolsToolStrip.Location = new System.Drawing.Point(61, 24);
             this.toolsToolStrip.Name = "toolsToolStrip";
-            this.toolsToolStrip.Size = new System.Drawing.Size(191, 25);
+            this.toolsToolStrip.Size = new System.Drawing.Size(228, 25);
             this.toolsToolStrip.TabIndex = 6;
             // 
             // toolStripButton8
@@ -1977,20 +1979,22 @@ namespace LevelEditor
             this.actionList.SetAction(this.toolStripButton15, this.addNewJointAction);
             this.toolStripButton15.CheckOnClick = true;
             this.toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton15.Image = global::LevelEditor.Properties.Resources.placeJoint;
+            this.toolStripButton15.Image = global::LevelEditor.Properties.Resources.addJoint;
             this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton15.Name = "toolStripButton15";
             this.toolStripButton15.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton15.Text = "Add new joint";
             // 
             // toolStripButton16
             // 
-            this.actionList.SetAction(this.toolStripButton16, this.editJointAction);
+            this.actionList.SetAction(this.toolStripButton16, this.attachFixture);
             this.toolStripButton16.CheckOnClick = true;
             this.toolStripButton16.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton16.Image = global::LevelEditor.Properties.Resources.editJoint;
+            this.toolStripButton16.Image = global::LevelEditor.Properties.Resources.attachBodyFixture1;
             this.toolStripButton16.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton16.Name = "toolStripButton16";
             this.toolStripButton16.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton16.Text = "Attach fixture";
             // 
             // toolStripSeparator4
             // 
@@ -2162,7 +2166,7 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.undoAction);
             this.actionList.Actions.Add(this.redoAction);
             this.actionList.Actions.Add(this.addNewJointAction);
-            this.actionList.Actions.Add(this.editJointAction);
+            this.actionList.Actions.Add(this.attachFixture);
             this.actionList.ContainerControl = this;
             // 
             // undoAction
@@ -2274,14 +2278,18 @@ namespace LevelEditor
             // addNewJointAction
             // 
             this.addNewJointAction.CheckOnClick = true;
-            this.addNewJointAction.Image = global::LevelEditor.Properties.Resources.placeJoint;
+            this.addNewJointAction.Image = global::LevelEditor.Properties.Resources.addJoint;
+            this.addNewJointAction.Text = "Add new joint";
+            this.addNewJointAction.ToolTipText = "Add new joint in several steps";
             this.addNewJointAction.Execute += new System.EventHandler(this.addNewJointAction_Execute);
             // 
-            // editJointAction
+            // attachFixture
             // 
-            this.editJointAction.CheckOnClick = true;
-            this.editJointAction.Image = global::LevelEditor.Properties.Resources.editJoint;
-            this.editJointAction.Execute += new System.EventHandler(this.editJointAction_Execute);
+            this.attachFixture.CheckOnClick = true;
+            this.attachFixture.Image = global::LevelEditor.Properties.Resources.attachBodyFixture1;
+            this.attachFixture.Text = "Attach fixture";
+            this.attachFixture.ToolTipText = "Attach fixture to body";
+            this.attachFixture.Execute += new System.EventHandler(this.attachFixtureAction_Execute);
             // 
             // selectObjectPartAction
             // 
@@ -2306,6 +2314,11 @@ namespace LevelEditor
             this.useMouseJointAction.Text = "Use mouse joint";
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm
             // 
@@ -2551,7 +2564,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
         private Crad.Windows.Forms.Actions.Action addNewJointAction;
-        private Crad.Windows.Forms.Actions.Action editJointAction;
+        private Crad.Windows.Forms.Actions.Action attachFixture;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButton15;
         private System.Windows.Forms.ToolStripButton toolStripButton16;
@@ -2562,6 +2575,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripStatusLabel toolStripMousePosLabel;
         private System.Windows.Forms.ListBox createdJointsList;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

@@ -7,6 +7,7 @@ using FarseerPhysics.Dynamics;
 using FarseerTools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FarseerPhysics.Common;
 
 namespace LevelEditor
 {
@@ -47,6 +48,12 @@ namespace LevelEditor
         {
             get { return _previewObject; }
             set { _previewObject = value; }
+        }
+
+        public Vertices PreviewVertices
+        {
+            get;
+            set;
         }
     }
 }

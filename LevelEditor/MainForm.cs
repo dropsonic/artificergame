@@ -26,6 +26,7 @@ namespace LevelEditor
     using Color = Microsoft.Xna.Framework.Color;
     using Microsoft.Xna.Framework.Input;
     using FarseerPhysics.Dynamics.Joints;
+    using FarseerPhysics.Collision.Shapes;
 
     public partial class MainForm : Form
     {
@@ -35,6 +36,7 @@ namespace LevelEditor
         Cursor _levelScreenCursor = Cursors.Arrow;
         MouseToolState _mouseToolState;
         JointCreationHelper _jointHelper;
+        FixtureAttachmentHelper _attachmentHelper;
 
         Timer _updateTimer = new Timer();
         Timer _propertyGridTimer = new Timer();
@@ -553,6 +555,24 @@ namespace LevelEditor
                         }
                     }
                     break;
+                case MouseToolState.AttachFixture:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        if (_attachmentHelper != null)
+                        {
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
+                            _attachmentHelper.NextStep(simPosition);
+                            ShowTooltipStatus(_attachmentHelper.StatusMessage);
+                            if (_attachmentHelper.Finished)
+                            {
+                                Body body;
+                                List<Shape> shapes;
+                                _attachmentHelper.GetAttachmentResult(out body, out shapes);
+                                _commandManager.Execute(new Commands.AttachFixtureCommand(_objectLevelManager.GameLevel, body, shapes));
+                            }
+                        }
+                    }
+                    break;
             }
         }
 
@@ -673,9 +693,9 @@ namespace LevelEditor
             SetMouseToolButtonsState(editCurrentObjectAction);
         }
 
-        private void editJointAction_Execute(object sender, EventArgs e)
+        private void attachFixtureAction_Execute(object sender, EventArgs e)
         {
-            SetMouseToolButtonsState(editJointAction);
+            SetMouseToolButtonsState(attachFixture);
         }
 
         private void addNewJointAction_Execute(object sender, EventArgs e)
