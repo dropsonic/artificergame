@@ -105,6 +105,9 @@ namespace XMLExtendedSerialization
         /// </summary>
         private XElement SerializeObject(string name, object rootObject)
         {
+            if (rootObject == null)
+                return new XElement(name, null);
+
             Type rootType = rootObject.GetType();
 
             //Если reference-type, то добавляем объект в список
@@ -216,13 +219,29 @@ namespace XMLExtendedSerialization
         /// <returns>XML-элемент с данными о массиве.</returns>
         private XElement SerializeArray(string name, Array rootObject)
         {
+            Type rootType = rootObject.GetType();
+            Type elementType = rootType.GetElementType();
+            object defaultValue;
+            if (elementType.IsValueType)
+                defaultValue = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(elementType);
+            else
+                defaultValue = null;
+
             XElement element = new XElement(name);
             SerializeMetadata(element, rootObject);
-            Type rootType = rootObject.GetType();
             SerializeTypeName(element, rootType);
-            
-            foreach (object item in rootObject)
-                element.Add(SerializeObject("Element", item));
+            element.Add(new XAttribute("Length-", rootObject.Length.ToString()));
+
+            for (int i = 0; i < rootObject.Length; i++)
+            {
+                object item = rootObject.GetValue(i);
+                if (!object.Equals(item, defaultValue))
+                {
+                    XElement xItem = SerializeObject("Element", item);
+                    xItem.Add(new XAttribute("Index-", i));
+                    element.Add(xItem);
+                }
+            }
 
             return element;
         }

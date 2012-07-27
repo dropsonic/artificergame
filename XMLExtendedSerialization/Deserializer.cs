@@ -135,6 +135,9 @@ namespace XMLExtendedSerialization
         /// </summary>
         private object DeserializeObject(XElement root)
         {
+            if (root.Attribute("Type-") == null)
+                return null;
+
             string typeName = DeserializeTypeName(root);
             Type rootType = GetTypeByName(typeName, _assemblies);
 
@@ -243,7 +246,8 @@ namespace XMLExtendedSerialization
         {
             var elements = root.Elements("Element");
             Type arrayElementType = rootType.GetElementType();
-            Array rootObject = Array.CreateInstance(arrayElementType, elements.Count());
+            XAttribute lengthAttr = root.Attribute("Length-");
+            Array rootObject = Array.CreateInstance(arrayElementType, int.Parse(lengthAttr.Value));
             //Если reference-type, то добавляем объект в список
             if (!rootType.IsValueType)
             {
@@ -252,9 +256,11 @@ namespace XMLExtendedSerialization
                     _refList.Add(_refList.Count.ToString(), rootObject);
             }
             DeserializeMetadata(root, rootObject);
-            int i = 0;
             foreach (XElement element in elements)
-                rootObject.SetValue(DeserializeObject(element), i++);
+            {
+                XAttribute indexAttr = element.Attribute("Index-");
+                rootObject.SetValue(DeserializeObject(element), int.Parse(indexAttr.Value));
+            }
 
             return rootObject;
         }
