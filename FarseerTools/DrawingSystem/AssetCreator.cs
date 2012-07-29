@@ -524,9 +524,15 @@ namespace FarseerTools
             uint[] data = new uint[shapeTexture.Width * shapeTexture.Height];
             shapeTexture.GetData(data);
             Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
-            Vector2 centroid = -textureVertices.GetCentroid();
+
+           /* Vector2 centroid = -textureVertices.GetCentroid();
             textureVertices.Translate(ref centroid);
-            Vector2 origin = -centroid;
+            Vector2 origin = -centroid;*/
+
+            AABB vertsBounds = textureVertices.GetCollisionBox();
+            Vector2 origin = vertsBounds.Center;
+            textureVertices.Translate(-origin);
+
             textureVertices = SimplifyTools.ReduceByDistance(textureVertices, 4f);
             Vector2 vertScale = new Vector2(ConvertUnits.ToSimUnits(1)) * scale;
             textureVertices.Scale(ref vertScale);
@@ -548,7 +554,7 @@ namespace FarseerTools
             int height = (int)(Math.Abs(boundsHelper.Y * 2) + angleOffset);
 
             RenderTarget2D outputTexture = new RenderTarget2D(_device, width + 2, height + 2, false, SurfaceFormat.Color,
-                                                        DepthFormat.Depth24Stencil8, 8,
+                                                        DepthFormat.None, 8,
                                                         RenderTargetUsage.DiscardContents);
             
 
