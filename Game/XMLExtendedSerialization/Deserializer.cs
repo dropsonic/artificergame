@@ -244,23 +244,8 @@ namespace XMLExtendedSerialization
                             }
                         }
                     }
-#if SAVEDEBUGINFO
-                    try
-                    {
-#endif
+
                     field.SetValue(rootObject, fieldValue);
-#if SAVEDEBUGINFO
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine("");
-                        System.Diagnostics.Debug.WriteLine("D E S E R I A L I Z E R _refList content ({0} elements):", _refList.Count);
-                        foreach (string s in _refListContent)
-                            System.Diagnostics.Debug.WriteLine(s);
-                        System.Diagnostics.Debug.WriteLine("");
-                        throw ex;
-                    }
-#endif
                 }
             }
 
@@ -337,12 +322,34 @@ namespace XMLExtendedSerialization
             else
                 metadata = String.Empty;
 
-            //Имя типа для инстанциации - имя корневого тега файла
-            //string typeFullName = DeserializeTypeName(_doc.Root);
-            //Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies(); //получаем все сборки, которые есть в solution'е
-            //Type rootType = GetTypeByName(typeFullName, assemblies); //получаем тип по имени
-
-            return DeserializeObject(_doc.Root);
+#if SAVEDEBUGINFO
+            try
+            {
+#endif
+                return DeserializeObject(_doc.Root);
+#if SAVEDEBUGINFO
+            }
+            catch (Exception ex)
+            {
+                WriteDebugInfo();
+                throw ex;
+            }
+            finally
+            {
+                WriteDebugInfo();
+            }
+#endif
         }
+
+#if SAVEDEBUGINFO
+        private void WriteDebugInfo()
+        {
+            System.Diagnostics.Debug.WriteLine("");
+            System.Diagnostics.Debug.WriteLine("D E S E R I A L I Z E R _refList content ({0} elements):", _refList.Count);
+            foreach (string s in _refListContent)
+                System.Diagnostics.Debug.WriteLine(s);
+            System.Diagnostics.Debug.WriteLine("");
+        }
+#endif
     }
 }
