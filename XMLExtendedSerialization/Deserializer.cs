@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define SAVEDEBUGINFO
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace XMLExtendedSerialization
         private XDocument _doc;
         private Assembly[] _assemblies;
         private Dictionary<Type, Func<string, object>> _converters;
+#if SAVEDEBUGINFO
+        private List<string> _refListContent;
+#endif
 
         /// <summary>
         /// Список из всех десериализованных reference-type объектов.
@@ -25,7 +29,11 @@ namespace XMLExtendedSerialization
         internal Deserializer(XDocument doc)
         {
             _doc = doc;
-            _refList = new Dictionary<string, object>(32);
+            _refList = new Dictionary<string, object>(Settings.DefaultRefListSize);
+
+#if SAVEDEBUGINFO
+            _refListContent = new List<string>(Settings.DefaultRefListSize);
+#endif
 
             InitializeConverters();
             _assemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -127,7 +135,7 @@ namespace XMLExtendedSerialization
 
         private string DeserializeTypeName(XElement root)
         {
-            return root.Attribute("Type-").Value.FromXMLValue();
+            return root.Attribute(Settings.TypeNameTag).Value.FromXMLValue();
         }
 
         /// <summary>
@@ -135,7 +143,7 @@ namespace XMLExtendedSerialization
         /// </summary>
         private object DeserializeObject(XElement root)
         {
-            if (root.Attribute("Type-") == null)
+            if (root.Attribute(Settings.TypeNameTag) == null)
                 return null;
 
             string typeName = DeserializeTypeName(root);
@@ -148,6 +156,9 @@ namespace XMLExtendedSerialization
             if (rootType == typeof(string))
                 return root.Value.FromXMLValue();
 
+            if (rootType.GetInterface(typeof(IDictionary).Name) != null)
+                return DeserializeDictionary(root, rootType);
+
             //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
             object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
 
@@ -156,9 +167,14 @@ namespace XMLExtendedSerialization
             {
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsValue(rootObject))
+                {
                     _refList.Add(_refList.Count.ToString(), rootObject);
+#if SAVEDEBUGINFO
+                    _refListContent.Add(rootType.FullName);
+#endif
+                }
             }
-            
+
             DeserializeMetadata(root, rootObject);
 
             FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем список полей, включая автоматически созданные для свойств
@@ -176,7 +192,7 @@ namespace XMLExtendedSerialization
                     XName xname = XName.Get(field.GetXMLName());
                     XElement element = root.Element(xname);
 
-                    
+
                     Type fieldType;
 
                     if (element == null)
@@ -195,7 +211,7 @@ namespace XMLExtendedSerialization
                         //Если это Enum, то он сохраняет своё значение как int в атрибут "value__"
                         if (fieldType.IsEnum)
                         {
-                            value = element.Attribute("value__").Value;
+                            value = element.Attribute(Settings.EnumValueAttribute).Value;
                             fieldType = typeof(int);
                         }
                         else
@@ -228,8 +244,23 @@ namespace XMLExtendedSerialization
                             }
                         }
                     }
-
+#if SAVEDEBUGINFO
+                    try
+                    {
+#endif
                     field.SetValue(rootObject, fieldValue);
+#if SAVEDEBUGINFO
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("");
+                        System.Diagnostics.Debug.WriteLine("D E S E R I A L I Z E R _refList content ({0} elements):", _refList.Count);
+                        foreach (string s in _refListContent)
+                            System.Diagnostics.Debug.WriteLine(s);
+                        System.Diagnostics.Debug.WriteLine("");
+                        throw ex;
+                    }
+#endif
                 }
             }
 
@@ -244,21 +275,26 @@ namespace XMLExtendedSerialization
         /// <returns>Массив элементов.</returns>
         private object DeserializeArray(XElement root, Type rootType)
         {
-            var elements = root.Elements("Element");
+            var elements = root.Elements(Settings.ArrayElementTag);
             Type arrayElementType = rootType.GetElementType();
-            XAttribute lengthAttr = root.Attribute("Length-");
+            XAttribute lengthAttr = root.Attribute(Settings.LengthTag);
             Array rootObject = Array.CreateInstance(arrayElementType, int.Parse(lengthAttr.Value));
             //Если reference-type, то добавляем объект в список
             if (!rootType.IsValueType)
             {
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsValue(rootObject))
+                {
                     _refList.Add(_refList.Count.ToString(), rootObject);
+#if SAVEDEBUGINFO
+                    _refListContent.Add(rootType.FullName);
+#endif
+                }
             }
             DeserializeMetadata(root, rootObject);
             foreach (XElement element in elements)
             {
-                XAttribute indexAttr = element.Attribute("Index-");
+                XAttribute indexAttr = element.Attribute(Settings.IndexTag);
                 rootObject.SetValue(DeserializeObject(element), int.Parse(indexAttr.Value));
             }
 
@@ -267,16 +303,17 @@ namespace XMLExtendedSerialization
 
         private object DeserializeDictionary(XElement root, Type rootType)
         {
-            var elements = root.Elements("Item");
+            var elements = root.Elements(Settings.DictionaryItemTag);
             IDictionary rootObject = (IDictionary)CreateInstance(rootType);
             DeserializeMetadata(root, rootObject);
-            Type[] genericParams = rootType.GetGenericParameterConstraints();
             foreach (XElement element in elements)
             {
-                
+                object key = DeserializeObject(element.Element(Settings.DictionaryKeyTag));
+                object value = DeserializeObject(element.Element(Settings.DictionaryValueTag));
+                rootObject.Add(key, value);
             }
-            
-            throw new NotImplementedException();
+
+            return rootObject;
         }
 
         public object Deserialize()

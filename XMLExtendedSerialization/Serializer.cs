@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define SAVEDEBUGINFO
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace XMLExtendedSerialization
 {
     internal class Serializer
     {
+#if SAVEDEBUGINFO
+        private XDocument _document;
+        private int _recursionDepth = 0;
+        private List<string> _refListContent;
+#endif
         private Stream _stream;
         private Dictionary<Type, Func<object, string>> _converters;
 
@@ -50,9 +56,15 @@ namespace XMLExtendedSerialization
         internal Serializer(Stream stream)
         {
             _stream = stream;
-            _refList = new Dictionary<object, string>(32);
+            _refList = new Dictionary<object, string>(Settings.DefaultRefListSize);
 
             InitializeConverters();
+
+#if SAVEDEBUGINFO
+            _document = new XDocument();
+            _document.Add(new XElement("Root"));
+            _refListContent = new List<string>(Settings.DefaultRefListSize);
+#endif
         }
 
         /// <summary>
@@ -97,7 +109,7 @@ namespace XMLExtendedSerialization
 
         private void SerializeTypeName(XElement root, Type rootType)
         {
-            root.Add(new XAttribute("Type-", rootType.FullName.ToXMLValue()));
+            root.Add(new XAttribute(Settings.TypeNameTag, rootType.FullName.ToXMLValue()));
         }
 
         /// <summary>
@@ -105,30 +117,62 @@ namespace XMLExtendedSerialization
         /// </summary>
         private XElement SerializeObject(string name, object rootObject)
         {
+#if SAVEDEBUGINFO
+            _recursionDepth++;
+            if (_recursionDepth > Settings.Debug.MaxRecursionDepth)
+                throw new ApplicationException("DEBUG: Max recursion depth.");
+#endif
+
             if (rootObject == null)
                 return new XElement(name, null);
 
             Type rootType = rootObject.GetType();
 
+            //Делегаты не сериализуем
+            if (rootObject is Delegate)
+                return null;
+
+            XElement element = new XElement(name);
+
+            //***CIRCULAR REFERENCES***
             //Если reference-type, то добавляем объект в список
             if (!rootType.IsValueType)
             {
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsKey(rootObject))
+                {
+#if SAVEDEBUGINFO
+                    element.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList.Count, rootType.FullName)));
+                    _refListContent.Add(rootType.FullName);
+#endif
                     _refList.Add(rootObject, _refList.Count.ToString());
+                }
             }
+            //*************************
 
-            XElement element = new XElement(name);
-
-            if (rootObject == null)
-                return null;
-
+            //Если объект - словарь, то сериализуем его в отдельном методе. В принципе, работает и без этого, но XML тогда не такой читаемый и больше по объему.
             if (rootObject is IDictionary)
+            {
+#if SAVEDEBUGINFO
+                XElement dictElement = SerializeDictionary(name, (IDictionary)rootObject);
+                if (_refList.ContainsKey(rootObject))
+                    dictElement.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootType.FullName)));
+                return dictElement;
+#endif
                 return SerializeDictionary(name, (IDictionary)rootObject);
+            }
 
             //Если объект - массив, сериализуем его в отдельном методе
             if (rootType.IsArray)
+            {
+#if SAVEDEBUGINFO
+                XElement arrayElement = SerializeArray(name, (Array)rootObject);
+                if (_refList.ContainsKey(rootObject))
+                    arrayElement.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootType.FullName)));
+                return arrayElement;
+#endif
                 return SerializeArray(name, (Array)rootObject);
+            }
 
             SerializeTypeName(element, rootType);
 
@@ -167,7 +211,7 @@ namespace XMLExtendedSerialization
                         continue;
                     }
 
-                    
+                    //***CIRCULAR REFERENCES***
                     if (!field.FieldType.IsValueType)
                     {
                         //Получаем данные о ссылке на объект
@@ -179,7 +223,7 @@ namespace XMLExtendedSerialization
                             continue;
                         }
                     }
-
+                    //*************************
 
                     //Если конвертер для данного типа данных уже есть
                     if (_converters.TryGetValue(field.FieldType, out converter))
@@ -207,7 +251,9 @@ namespace XMLExtendedSerialization
                     }
                 }
             }
-
+#if SAVEDEBUGINFO
+            _document.Root.Add(element);
+#endif
             return element;
         }
 
@@ -230,15 +276,15 @@ namespace XMLExtendedSerialization
             XElement element = new XElement(name);
             SerializeMetadata(element, rootObject);
             SerializeTypeName(element, rootType);
-            element.Add(new XAttribute("Length-", rootObject.Length.ToString()));
+            element.Add(new XAttribute(Settings.LengthTag, rootObject.Length.ToString()));
 
             for (int i = 0; i < rootObject.Length; i++)
             {
                 object item = rootObject.GetValue(i);
                 if (!object.Equals(item, defaultValue))
                 {
-                    XElement xItem = SerializeObject("Element", item);
-                    xItem.Add(new XAttribute("Index-", i));
+                    XElement xItem = SerializeObject(Settings.ArrayElementTag, item);
+                    xItem.Add(new XAttribute(Settings.IndexTag, i));
                     element.Add(xItem);
                 }
             }
@@ -255,30 +301,21 @@ namespace XMLExtendedSerialization
 
             foreach (DictionaryEntry item in rootObject)
             {
-                XElement itemElement = new XElement("Item");
-                itemElement.Add(SerializeObject("Key", item.Key));
-                itemElement.Add(SerializeObject("Value", item.Value));
+                XElement itemElement = new XElement(Settings.DictionaryItemTag);
+                itemElement.Add(SerializeObject(Settings.DictionaryKeyTag, item.Key));
+                itemElement.Add(SerializeObject(Settings.DictionaryValueTag, item.Value));
                 element.Add(itemElement);
             }
 
             return element;
         }
 
-        //private XElement SerializeGenericObject(string name, object rootObject)
-        //{
-        //    XElement element = new XElement(name);
-        //    Type rootType = rootObject.GetType();
-
-        //    return element;
-        //    throw new NotImplementedException();
-        //}
-
-        public void Serialize(object rootObject, string rootName = "Object")
+        public void Serialize(object rootObject, string rootName = Settings.DefaultRootName)
         {
             Serialize(rootObject, false, String.Empty, rootName);
         }
 
-        public void Serialize(object rootObject, string metaData, string rootName = "Object")
+        public void Serialize(object rootObject, string metaData, string rootName = Settings.DefaultRootName)
         {
             Serialize(rootObject, true, metaData, rootName);
         }
@@ -286,10 +323,32 @@ namespace XMLExtendedSerialization
         private void Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
         {
             XDocument doc = new XDocument();
+
+#if SAVEDEBUGINFO
+            try
+            {
+#endif
             if (addMetadata)
                 doc.Add(new XComment(metadata.ToXMLComment()));
             doc.Add(SerializeObject(rootName, rootObject));
             doc.Save(_stream);
+#if SAVEDEBUGINFO
+            }
+            finally
+            {
+                using (Stream debugStream = File.Create("XML debug info.xml"))
+                {
+                    _document.Save(debugStream);
+                }
+
+                System.Diagnostics.Debug.WriteLine("");
+                System.Diagnostics.Debug.WriteLine("S E R I A L I Z E R _refList content ({0} elements):", _refList.Count);
+                foreach (string s in _refListContent)
+                    System.Diagnostics.Debug.WriteLine(s);
+                System.Diagnostics.Debug.WriteLine("");
+                //throw ex;
+            }
+#endif
         }
     }
 }
