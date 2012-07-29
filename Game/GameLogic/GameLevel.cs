@@ -71,6 +71,14 @@ namespace GameLogic
             }
         }
 
+        /// <summary>
+        /// Количество объектов GameObject, которые содержит уровень.
+        /// </summary>
+        public int ObjectsCount
+        {
+            get { return _objects.Count; }
+        }
+
         public GameLevel()
         {
             _objects = new List<GameObject>();
