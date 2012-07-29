@@ -9,6 +9,7 @@ using FarseerPhysics.Dynamics.Joints;
 using System.Reflection;
 using FarseerTools;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace GameLogic
 {
@@ -52,9 +53,9 @@ namespace GameLogic
             set { _origin = value; }
         }
 
-        public Joint[] Joints
+        public ReadOnlyCollection<Joint> Joints
         {
-            get { return _joints.ToArray(); }
+            get { return _joints.AsReadOnly(); }
         }
 
         public GameObjectPart this[int index]

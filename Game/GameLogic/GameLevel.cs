@@ -25,9 +25,8 @@ namespace GameLogic
         private List<Joint> _joints; //список joint'ов между игровыми объектами
         public ReadOnlyCollection<Joint> Joints
         {
-            get { return new ReadOnlyCollection<Joint>(_joints); }
+            get { return _joints.AsReadOnly(); }
         }
-
 
         public World World
         {
