@@ -43,20 +43,22 @@
   <ItemGroup>
     <Compile Include="DefaultConverters.cs" />
     <Compile Include="Deserializer.cs" />
-    <Compile Include="FieldInfoXMLExtensions.cs" />
+    <Compile Include="Extension Classes\FieldInfoXMLExtensions.cs" />
     <Compile Include="IXMLCustomSerializer.cs" />
     <Compile Include="IXMLValueConverter.cs" />
-    <Compile Include="ObjectXMLExtensions.cs" />
+    <Compile Include="Extension Classes\ObjectXMLExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="StringXMLExtensions.cs" />
-    <Compile Include="TypeXMLExtensions.cs" />
-    <Compile Include="XMLCustomConverterAttribute.cs" />
-    <Compile Include="XMLCustomSerializerAttribute.cs" />
-    <Compile Include="XMLDoNotSerializeAttribute.cs" />
-    <Compile Include="XMLMetadataAttribute.cs" />
+    <Compile Include="Extension Classes\StringXMLExtensions.cs" />
+    <Compile Include="Extension Classes\TypeXMLExtensions.cs" />
+    <Compile Include="Attributes\XMLCustomConverterAttribute.cs" />
+    <Compile Include="Attributes\XMLCustomSerializerAttribute.cs" />
+    <Compile Include="Attributes\XMLDoNotSerializeAttribute.cs" />
+    <Compile Include="Attributes\XMLMetadataAttribute.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="XMLSerializerEx.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
