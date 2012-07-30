@@ -70,6 +70,9 @@ namespace LevelEditor.Helpers
 		{
 			set
 			{
+				_selectedGameObjects.Clear();
+				_selectedGameObjectParts.Clear();
+				_selectedJoints.Clear();
 				foreach (object obj in value)
 				{
 					if (obj is Joint)
@@ -79,6 +82,24 @@ namespace LevelEditor.Helpers
 					else if (obj is GameObjectPart)
 						_selectedGameObjectParts.Add((GameObjectPart)obj);
 				}
+			}
+		}
+
+		public Object SelectedItem
+		{
+			set
+			{
+				_selectedGameObjects.Clear();
+				_selectedGameObjectParts.Clear();
+				_selectedJoints.Clear();
+
+				if (value is Joint)
+					_selectedJoints.Add((Joint)value);
+				else if (value is GameObject)
+					_selectedGameObjects.Add((GameObject)value);
+				else if (value is GameObjectPart)
+					_selectedGameObjectParts.Add((GameObjectPart)value);
+
 			}
 		}
 
@@ -92,7 +113,7 @@ namespace LevelEditor.Helpers
 			_selectedGameObjectParts = new List<GameObjectPart>();
 		}
 
-		private void DrawJoint(Joint joint)
+		private void DrawJoint(Joint joint, Color mainColor)
 		{
 			if (!joint.Enabled)
 				return;
@@ -114,20 +135,18 @@ namespace LevelEditor.Helpers
 			Vector2 p2 = joint.WorldAnchorB;
 			Vector2 x1 = xf1.Position;
 
-			Color color = new Color(0.5f, 0.8f, 0.8f);
-			color = Color.Red;
 			switch (joint.JointType)
 			{
 				case JointType.Distance:
-					DrawSegment(p1, p2, color);
+					DrawSegment(p1, p2, mainColor);
 					break;
 				case JointType.Pulley:
 					PulleyJoint pulley = (PulleyJoint)joint;
 					Vector2 s1 = pulley.GroundAnchorA;
 					Vector2 s2 = pulley.GroundAnchorB;
-					DrawSegment(s1, p1, color);
-					DrawSegment(s2, p2, color);
-					DrawSegment(s1, s2, color);
+					DrawSegment(s1, p1, mainColor);
+					DrawSegment(s2, p2, mainColor);
+					DrawSegment(s1, s2, mainColor);
 					break;
 				case JointType.FixedMouse:
 					DrawPoint(p1, 1.0f, new Color(0.0f, 1.0f, 0.0f));
@@ -135,7 +154,7 @@ namespace LevelEditor.Helpers
 					break;
 				case JointType.Revolute:
 					//DrawSegment(x2, p1, color);
-					DrawSegment(p2, p1, color);
+					DrawSegment(p2, p1, mainColor);
 					DrawSolidCircle(p2, 0.5f, Vector2.Zero, Color.Green);
 					DrawSolidCircle(p1, 0.5f, Vector2.Zero, Color.Blue);
 					break;
@@ -143,42 +162,60 @@ namespace LevelEditor.Helpers
 					//Should not draw anything.
 					break;
 				case JointType.FixedRevolute:
-					DrawSegment(x1, p1, color);
+					DrawSegment(x1, p1, mainColor);
 					DrawSolidCircle(p1, 0.5f, Vector2.Zero, Color.Blue);
 					break;
 				case JointType.FixedLine:
-					DrawSegment(x1, p1, color);
-					DrawSegment(p1, p2, color);
+					DrawSegment(x1, p1, mainColor);
+					DrawSegment(p1, p2, mainColor);
 					break;
 				case JointType.FixedDistance:
-					DrawSegment(x1, p1, color);
-					DrawSegment(p1, p2, color);
+					DrawSegment(x1, p1, mainColor);
+					DrawSegment(p1, p2, mainColor);
 					break;
 				case JointType.FixedPrismatic:
-					DrawSegment(x1, p1, color);
-					DrawSegment(p1, p2, color);
+					DrawSegment(x1, p1, mainColor);
+					DrawSegment(p1, p2, mainColor);
 					break;
 				case JointType.Gear:
-					DrawSegment(x1, x2, color);
+					DrawSegment(x1, x2, mainColor);
 					break;
 				//case JointType.Weld:
 				//    break;
 				default:
-					DrawSegment(x1, p1, color);
-					DrawSegment(p1, p2, color);
-					DrawSegment(x2, p2, color);
+					DrawSegment(x1, p1, mainColor);
+					DrawSegment(p1, p2, mainColor);
+					DrawSegment(x2, p2, mainColor);
 					break;
 			}
 		}
 
-		private void DrawObjectPart(GameObjectPart objectPart)
+		private void DrawObjectPart(GameObjectPart objectPart, Color color)
 		{
 			List<Fixture> fixtureList = objectPart.Body.FixtureList;
 			Transform xf;
 			objectPart.Body.GetTransform(out xf);
+			if (DrawAssociatedJoints)
+			{
+				JointEdge iterator = objectPart.Body.JointList;
+				while (iterator != null)
+				{
+					DrawJoint(iterator.Joint, Color.Multiply(Color.Blue, 0.5f));
+					iterator = iterator.Next;
+				}
+
+			}
 			foreach (Fixture fix in fixtureList)
 			{
-                DrawShape(fix, xf, Color.Multiply(Color.Red,0.5f));
+				DrawShape(fix, xf, Color.Multiply(color, 0.5f));
+			}
+		}
+
+		private void DrawObject(GameObject gameObject, Color color)
+		{
+			foreach (GameObjectPart part in gameObject)
+			{
+				DrawObjectPart(part, color);
 			}
 		}
 
@@ -240,7 +277,6 @@ namespace LevelEditor.Helpers
 					break;
 			}
 		}
-
 
 		private void DrawCircle(Vector2 center, float radius, Color color)
 		{
@@ -374,10 +410,11 @@ namespace LevelEditor.Helpers
 			Matrix view = Matrix.Identity;
 			_primitiveBatch.Begin(ref projection,ref view);
 			foreach (Joint joint in _selectedJoints)
-				DrawJoint(joint);
-
+				DrawJoint(joint,Color.Red);
 			foreach (GameObjectPart gop in _selectedGameObjectParts)
-				DrawObjectPart(gop);
+				DrawObjectPart(gop,Color.Red);
+			foreach (GameObject go in _selectedGameObjects)
+				DrawObject(go, Color.Yellow);
 			_primitiveBatch.End();
 		}
 
