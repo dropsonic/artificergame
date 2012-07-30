@@ -130,6 +130,10 @@ namespace XMLExtendedSerialization
             if (rootObject is Delegate)
                 return null;
 
+            //Указатели тоже не сериализуем
+            if (rootObject is Pointer)
+                return null;
+
             XElement element = new XElement(name);
 
             Type rootType = rootObject.GetType();
