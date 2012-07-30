@@ -191,19 +191,19 @@ namespace XMLExtendedSerialization
         public static string Vector2ToString(object x)
         {
             Vector2 vector = (Vector2)x;
-            return String.Format("{1}{0}{2}", DefaultSplitter, vector.X, vector.Y);
+            return String.Format(DefaultCulture, "{1}{0}{2}", DefaultSplitter, FloatToString(vector.X), FloatToString(vector.Y));
         }
 
         public static string Vector3ToString(object x)
         {
             Vector3 vector = (Vector3)x;
-            return String.Format("{1}{0}{2}{0}{3}", DefaultSplitter, vector.X, vector.Y, vector.Z);
+            return String.Format("{1}{0}{2}{0}{3}", DefaultSplitter, FloatToString(vector.X), FloatToString(vector.Y), FloatToString(vector.Z));
         }
 
         public static string Vector4ToString(object x)
         {
             Vector4 vector = (Vector4)x;
-            return String.Format("{1}{0}{2}{0}{3}{0}{4}", DefaultSplitter, vector.X, vector.Y, vector.Z, vector.W);
+            return String.Format(DefaultCulture, "{1}{0}{2}{0}{3}{0}{4}", DefaultSplitter, FloatToString(vector.X), FloatToString(vector.Y), FloatToString(vector.Z), FloatToString(vector.W));
         }
         #endregion
     }

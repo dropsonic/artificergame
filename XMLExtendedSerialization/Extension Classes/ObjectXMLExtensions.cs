@@ -35,7 +35,7 @@ namespace XMLExtendedSerialization
         {
             if (x.GetType().IsValueType)
                 throw new InvalidOperationException("Cannot write metadata in value type.");
-
+            
             TypeDescriptor.AddAttributes(x, new Attribute[] { new XMLMetadataAttribute(metadata) });
         }
     }
