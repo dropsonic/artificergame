@@ -33,7 +33,7 @@ namespace XMLExtendedSerialization
         /// </summary>
         public static void SetXMLMetadata(this object x, string metadata)
         {
-            if (!x.GetType().IsClass)
+            if (x.GetType().IsValueType)
                 throw new InvalidOperationException("Cannot write metadata in value type.");
 
             TypeDescriptor.AddAttributes(x, new Attribute[] { new XMLMetadataAttribute(metadata) });
