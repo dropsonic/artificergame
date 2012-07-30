@@ -22,6 +22,7 @@ namespace LevelEditor
     using Color = Microsoft.Xna.Framework.Color;
     using Path = System.IO.Path;
     using FarseerPhysics.Dynamics.Joints;
+    using GameLogic;
 
     public partial class MainForm : Form
     {
@@ -38,11 +39,48 @@ namespace LevelEditor
    
         private void FindPreSimulationObject(PropertyGrid grid)
         {
-            if (grid.SelectedObject != null && grid.SelectedObject.GetType() == typeof(Body))
+            if (grid.SelectedObject != null)
             {
-                propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position,_objectLevelManager.GameLevel.World);
+                if (grid.SelectedObject.GetType() == typeof(Body))
+                {
+                    propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position, _objectLevelManager.GameLevel.World);
+                }
+                else if (grid.SelectedObject.GetType() == typeof(GameObject))
+                {
+                    propertyGrid.SelectedObject = CommonHelpers.FindGameObject(((GameObject)propertyGrid.SelectedObject)[0].Body.Position, _objectLevelManager.GameLevel);
+                }
+                else if (grid.SelectedObject.GetType() == typeof(GameObjectPart))
+                {
+                    propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(((GameObjectPart)propertyGrid.SelectedObject).Body.Position, _objectLevelManager.GameLevel);
+                }
+                else if (grid.SelectedObject.GetType() == typeof(Joint))
+                {
+                    //находим индект нужного нам джоинта в списке
+                    Joint selectedJoint = ((Joint)propertyGrid.SelectedObject);
+                    JointEdge iterator = selectedJoint.BodyA.JointList;
+                    int jointIndex = 0;
+                    do
+                    {
+                       if (selectedJoint == iterator.Joint)
+                            break;
+                       jointIndex++;
+                    } while ((iterator=iterator.Next)!=null);
+
+                    //находим джоинт с найденным индексом в списке джоинтов нового боди
+                    JointEdge newJointList = CommonHelpers.FindBody(selectedJoint.BodyA.Position, _objectLevelManager.GameLevel.World).JointList;
+                    int index = 0;
+                    do
+                    {
+                        if (jointIndex == index)
+                        {
+                            propertyGrid.SelectedObject = newJointList.Joint;
+                            break;
+                        }
+                        index++;
+                    } while ((newJointList = newJointList.Next) != null);
+                }
+
             }
-            //здесь будут джоинт, геймобжекты, геймобжектпарты
         }
 
         private void UpdateCreatedJointList()

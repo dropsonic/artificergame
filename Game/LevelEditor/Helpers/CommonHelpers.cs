@@ -24,9 +24,9 @@ namespace LevelEditor.Helpers
             }
         }
 
-        public static GameObjectPart FindGameObjectPart(Vector2 point, GameLevel gameLevel, World world)
+        public static GameObjectPart FindGameObjectPart(Vector2 point, GameLevel gameLevel)
         {
-            return FindGameObjectPart(gameLevel, FindBody(point, world));
+            return FindGameObjectPart(gameLevel, FindBody(point, gameLevel.World));
         }
         public static GameObjectPart FindGameObjectPart(GameLevel gameLevel, Body body)
         {
@@ -37,9 +37,9 @@ namespace LevelEditor.Helpers
             return null;
         }
 
-        public static GameObject FindGameObject(Vector2 point, GameLevel gameLevel, World world)
+        public static GameObject FindGameObject(Vector2 point, GameLevel gameLevel)
         {
-            return FindGameObject(gameLevel, FindBody(point, world));
+            return FindGameObject(gameLevel, FindBody(point, gameLevel.World));
         }
         public static GameObject FindGameObject(GameLevel gameLevel, Body body)
         {
