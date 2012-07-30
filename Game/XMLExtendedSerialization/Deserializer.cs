@@ -149,12 +149,12 @@ namespace XMLExtendedSerialization
             string typeName = DeserializeTypeName(root);
             Type rootType = GetTypeByName(typeName, _assemblies);
 
+            if (rootType == typeof(string))
+                return root.Value.FromXMLValue();
+
             //Если это массив, то десериализуем его в отдельном методе
             if (rootType.IsArray)
                 return DeserializeArray(root, rootType);
-
-            if (rootType == typeof(string))
-                return root.Value.FromXMLValue();
 
             if (rootType.GetInterface(typeof(IDictionary).Name) != null)
                 return DeserializeDictionary(root, rootType);
@@ -305,6 +305,12 @@ namespace XMLExtendedSerialization
             return rootObject;
         }
 
+        /// <summary>
+        /// Десериализует словарь типа "ключ-значение".
+        /// </summary>
+        /// <param name="root">XML-элемент с информацией о словаре.</param>
+        /// <param name="rootType">Тип.</param>
+        /// <returns>Объект словаря.</returns>
         private object DeserializeDictionary(XElement root, Type rootType)
         {
             var elements = root.Elements(Settings.DictionaryItemTag);
@@ -325,8 +331,19 @@ namespace XMLExtendedSerialization
             DeserializeMetadata(root, rootObject);
             foreach (XElement element in elements)
             {
-                object key = DeserializeObject(element.Element(Settings.DictionaryKeyTag));
-                object value = DeserializeObject(element.Element(Settings.DictionaryValueTag));
+                XElement keyElement = element.Element(Settings.DictionaryKeyTag);
+                XElement valueElement = element.Element(Settings.DictionaryValueTag);
+
+                string keyHashCode = keyElement.Value.FromXMLValue();
+                object key;
+                if (keyElement.HasElements || !_refList.TryGetValue(keyHashCode, out key))
+                    key = DeserializeObject(keyElement);
+
+                string valueHashCode = keyElement.Value.FromXMLValue();
+                object value;
+                if (keyElement.HasElements || !_refList.TryGetValue(keyHashCode, out value))
+                    value = DeserializeObject(valueElement);
+
                 rootObject.Add(key, value);
             }
 
