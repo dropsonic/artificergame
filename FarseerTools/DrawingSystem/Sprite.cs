@@ -5,10 +5,17 @@ namespace FarseerTools
 {
     public struct Sprite
     {
-        //Center of texture
+        /// <summary>
+        /// Center of texture
+        /// </summary>
         public Vector2 Origin;
-        //Distance between body(body position) and sprite origin
+
+        /// <summary>
+        /// Distance between body(body position) and sprite origin
+        /// </summary>
         public Vector2 Offset;
+
+        [XMLExtendedSerialization.XMLCustomSerializer(typeof(Texture2DXMLSerializer))]
         public Texture2D Texture;
 
         public Sprite(Texture2D texture)
