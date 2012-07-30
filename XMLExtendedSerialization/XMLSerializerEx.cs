@@ -18,8 +18,9 @@ namespace XMLExtendedSerialization
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         public static void Serialize(object obj, Stream stream, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer(stream);
-            serializer.Serialize(obj, rootName);
+            Serializer serializer = new Serializer();
+            XDocument document = serializer.Serialize(obj, rootName);
+            document.Save(stream);
         }
 
         /// <summary>
@@ -31,8 +32,34 @@ namespace XMLExtendedSerialization
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         public static void Serialize(object obj, string metadata, Stream stream, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer(stream);
-            serializer.Serialize(obj, metadata, rootName);
+            Serializer serializer = new Serializer();
+            XDocument document = serializer.Serialize(obj, metadata, rootName);
+            document.Save(stream);
+        }
+
+        /// <summary>
+        /// Сериализует объект в виде XML-документа.
+        /// </summary>
+        /// <param name="obj">Объект для сериализации.</param>
+        /// <param name="rootName">Имя корневого тега XML-документа.</param>
+        /// <returns>XML-документ.</returns>
+        public static XDocument Serialize(object obj, string rootName = Settings.DefaultRootName)
+        {
+            Serializer serializer = new Serializer();
+            return serializer.Serialize(obj, rootName);
+        }
+
+        /// <summary>
+        /// Сериализует объект в виде XML-документа.
+        /// </summary>
+        /// <param name="obj">Объект для сериализации.</param>
+        /// <param name="metadata">Метаданные для сохранения в XML-документ.</param>
+        /// <param name="rootName">Имя корневого тега XML-документа.</param>
+        /// <returns>XML-документ.</returns>
+        public static XDocument Serialize(object obj, string metadata, string rootName = Settings.DefaultRootName)
+        {
+            Serializer serializer = new Serializer();
+            return serializer.Serialize(obj, metadata, rootName);
         }
 
         public static object Deserialize(Stream stream)

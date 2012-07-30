@@ -18,7 +18,6 @@ namespace XMLExtendedSerialization
         private int _recursionDepth = 0;
         private List<string> _refListContent;
 #endif
-        private Stream _stream;
         private Dictionary<Type, Func<object, string>> _converters;
 
         /// <summary>
@@ -53,9 +52,8 @@ namespace XMLExtendedSerialization
             _converters.Add(typeof(Vector4), DefaultConverters.Vector4ToString);
         }
 
-        internal Serializer(Stream stream)
+        internal Serializer()
         {
-            _stream = stream;
             _refList = new Dictionary<object, string>(Settings.DefaultRefListSize);
 
             InitializeConverters();
@@ -287,28 +285,26 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public void Serialize(object rootObject, string rootName = Settings.DefaultRootName)
+        public XDocument Serialize(object rootObject, string rootName = Settings.DefaultRootName)
         {
-            Serialize(rootObject, false, String.Empty, rootName);
+            return Serialize(rootObject, false, String.Empty, rootName);
         }
 
-        public void Serialize(object rootObject, string metaData, string rootName = Settings.DefaultRootName)
+        public XDocument Serialize(object rootObject, string metadata, string rootName = Settings.DefaultRootName)
         {
-            Serialize(rootObject, true, metaData, rootName);
+            return Serialize(rootObject, true, metadata, rootName);
         }
 
-        private void Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
+        private XDocument Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
         {
-            XDocument doc = new XDocument();
-
+            XDocument document = new XDocument(rootName);
 #if SAVEDEBUGINFO
             try
             {
 #endif
             if (addMetadata)
-                doc.Add(new XComment(metadata.ToXMLComment()));
-            doc.Add(SerializeObject(rootName, rootObject));
-            doc.Save(_stream);
+                document.Add(new XComment(metadata.ToXMLComment()));
+            document.Add(SerializeObject(rootName, rootObject));
 #if SAVEDEBUGINFO
             }
             finally
@@ -326,6 +322,7 @@ namespace XMLExtendedSerialization
                 //throw ex;
             }
 #endif
+            return document;
         }
     }
 }
