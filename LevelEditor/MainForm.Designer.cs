@@ -130,6 +130,7 @@ namespace LevelEditor
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -158,6 +159,7 @@ namespace LevelEditor
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton18 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton20 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton19 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
@@ -208,8 +210,6 @@ namespace LevelEditor
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.saveAsLevelAction = new Crad.Windows.Forms.Actions.Action();
-            this.toolStripButton20 = new System.Windows.Forms.ToolStripButton();
-            this.saveasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1743,6 +1743,13 @@ namespace LevelEditor
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
             this.saveToolStripMenuItem.Text = "Save level";
             // 
+            // saveasToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.saveasToolStripMenuItem, this.saveAsLevelAction);
+            this.saveasToolStripMenuItem.Name = "saveasToolStripMenuItem";
+            this.saveasToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
+            this.saveasToolStripMenuItem.Text = "Save Level As...";
+            // 
             // exportToolStripMenuItem
             // 
             this.actionList.SetAction(this.exportToolStripMenuItem, this.exportLevelAction);
@@ -1995,6 +2002,15 @@ namespace LevelEditor
             this.toolStripButton18.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton18.Text = "Save level";
             // 
+            // toolStripButton20
+            // 
+            this.actionList.SetAction(this.toolStripButton20, this.saveAsLevelAction);
+            this.toolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton20.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton20.Name = "toolStripButton20";
+            this.toolStripButton20.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton20.Text = "Save Level As...";
+            // 
             // toolStripButton19
             // 
             this.actionList.SetAction(this.toolStripButton19, this.exportLevelAction);
@@ -2047,9 +2063,9 @@ namespace LevelEditor
             this.toolStripButton11,
             this.toolStripSeparator5,
             this.toolStripButton12});
-            this.toolsToolStrip.Location = new System.Drawing.Point(159, 24);
+            this.toolsToolStrip.Location = new System.Drawing.Point(221, 49);
             this.toolsToolStrip.Name = "toolsToolStrip";
-            this.toolsToolStrip.Size = new System.Drawing.Size(197, 25);
+            this.toolsToolStrip.Size = new System.Drawing.Size(228, 25);
             this.toolsToolStrip.TabIndex = 6;
             // 
             // toolStripButton8
@@ -2463,22 +2479,6 @@ namespace LevelEditor
             // 
             this.saveAsLevelAction.Text = "Save Level As...";
             this.saveAsLevelAction.ToolTipText = "Save level to file with the specified name";
-            // 
-            // toolStripButton20
-            // 
-            this.actionList.SetAction(this.toolStripButton20, this.saveAsLevelAction);
-            this.toolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton20.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton20.Name = "toolStripButton20";
-            this.toolStripButton20.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton20.Text = "Save Level As...";
-            // 
-            // saveasToolStripMenuItem
-            // 
-            this.actionList.SetAction(this.saveasToolStripMenuItem, this.saveAsLevelAction);
-            this.saveasToolStripMenuItem.Name = "saveasToolStripMenuItem";
-            this.saveasToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
-            this.saveasToolStripMenuItem.Text = "Save Level As...";
             // 
             // MainForm
             // 
