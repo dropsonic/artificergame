@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace LevelEditor
+namespace FarseerTools
 {
     public class ObjectMetadataDictionaryAttribute : Attribute
     {
