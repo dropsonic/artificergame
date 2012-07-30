@@ -15,7 +15,7 @@ namespace XMLExtendedSerialization
         /// <returns>Метаданные; null в случае, если метаданных нет.</returns>
         public static string GetXMLMetadata(this object x)
         {
-            if (!x.GetType().IsClass)
+            if (x.GetType().IsValueType)
                 throw new InvalidOperationException("Cannot read metadata from value type.");
 
             AttributeCollection attributes = TypeDescriptor.GetAttributes(x);
