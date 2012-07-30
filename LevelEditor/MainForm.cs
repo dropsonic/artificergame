@@ -535,12 +535,16 @@ namespace LevelEditor
                     
 
                 case MouseToolState.SelectObject:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        propertyGrid.SelectedObject = CommonHelpers.FindGameObject(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel);
+                    }
                     break;
 
                 case MouseToolState.SelectObjectPart:
                     if (mouseEvent == MouseEvents.Click)
                     {
-                        propertyGrid.SelectedObject = CommonHelpers.FindBody(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel.World);
+                        propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel);
                     }
                     break;
                     
