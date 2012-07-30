@@ -128,9 +128,14 @@ namespace LevelEditor
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -151,6 +156,10 @@ namespace LevelEditor
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainToolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton18 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton19 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
@@ -177,8 +186,12 @@ namespace LevelEditor
             this.simulationSpeedToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
+            this.openLevelAction = new Crad.Windows.Forms.Actions.Action();
+            this.saveLevelAction = new Crad.Windows.Forms.Actions.Action();
+            this.exportLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.undoAction = new Crad.Windows.Forms.Actions.Action();
             this.redoAction = new Crad.Windows.Forms.Actions.Action();
+            this.drawAssociatedJoints = new Crad.Windows.Forms.Actions.Action();
             this.simulateAction = new Crad.Windows.Forms.Actions.Action();
             this.pauseSimulationAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedHalfAction = new Crad.Windows.Forms.Actions.Action();
@@ -189,14 +202,14 @@ namespace LevelEditor
             this.resetSettingsAction = new Crad.Windows.Forms.Actions.Action();
             this.addPreviewObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.editCurrentObjectAction = new Crad.Windows.Forms.Actions.Action();
-            this.addNewJointAction = new Crad.Windows.Forms.Actions.Action();
             this.attachFixture = new Crad.Windows.Forms.Actions.Action();
+            this.addNewJointAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawAssociatedJoints = new Crad.Windows.Forms.Actions.Action();
-            this.lblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsLevelAction = new Crad.Windows.Forms.Actions.Action();
+            this.toolStripButton20 = new System.Windows.Forms.ToolStripButton();
+            this.saveasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1703,9 +1716,41 @@ namespace LevelEditor
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.saveasToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.openToolStripMenuItem, this.openLevelAction);
+            this.openToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.openHS;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
+            this.openToolStripMenuItem.Text = "Open level";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.saveToolStripMenuItem, this.saveLevelAction);
+            this.saveToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.saveHS;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
+            this.saveToolStripMenuItem.Text = "Save level";
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.exportToolStripMenuItem, this.exportLevelAction);
+            this.exportToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.exportHS;
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Shift+S";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
+            this.exportToolStripMenuItem.Text = "Export level in phone format";
             // 
             // editToolStripMenuItem
             // 
@@ -1723,7 +1768,7 @@ namespace LevelEditor
             this.undoToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.Edit_UndoHS;
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
@@ -1733,8 +1778,24 @@ namespace LevelEditor
             this.redoToolStripMenuItem.Image = global::LevelEditor.Properties.Resources.Edit_RedoHS;
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.redoToolStripMenuItem.Text = "Redo";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // lblToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.lblToolStripMenuItem, this.drawAssociatedJoints);
+            this.lblToolStripMenuItem.CheckOnClick = true;
+            this.lblToolStripMenuItem.Name = "lblToolStripMenuItem";
+            this.lblToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.lblToolStripMenuItem.Text = "Draw associated joints";
             // 
             // levelToolStripMenuItem
             // 
@@ -1749,19 +1810,19 @@ namespace LevelEditor
             // createLevelToolStripMenuItem
             // 
             this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.createLevelToolStripMenuItem.Text = "Create Level";
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.loadLevelToolStripMenuItem.Text = "Load Level";
             // 
             // clearLevelToolStripMenuItem
             // 
             this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
-            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.clearLevelToolStripMenuItem.Text = "Clear Level";
             // 
             // resoursesToolStripMenuItem
@@ -1776,14 +1837,14 @@ namespace LevelEditor
             // loadMaterialToolStripMenuItem
             // 
             this.loadMaterialToolStripMenuItem.Name = "loadMaterialToolStripMenuItem";
-            this.loadMaterialToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadMaterialToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadMaterialToolStripMenuItem.Text = "Load Material";
             this.loadMaterialToolStripMenuItem.Click += new System.EventHandler(this.loadMaterialToolStripMenuItem_Click);
             // 
             // loadShapeToolStripMenuItem
             // 
             this.loadShapeToolStripMenuItem.Name = "loadShapeToolStripMenuItem";
-            this.loadShapeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadShapeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.loadShapeToolStripMenuItem.Text = "Load Shape";
             this.loadShapeToolStripMenuItem.Click += new System.EventHandler(this.loadShapeToolStripMenuItem_Click);
             // 
@@ -1902,12 +1963,52 @@ namespace LevelEditor
             // 
             this.mainToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton17,
+            this.toolStripButton18,
+            this.toolStripButton20,
+            this.toolStripButton19,
+            this.toolStripSeparator7,
             this.toolStripButton10,
             this.toolStripButton14});
             this.mainToolStrip.Location = new System.Drawing.Point(3, 24);
             this.mainToolStrip.Name = "mainToolStrip";
-            this.mainToolStrip.Size = new System.Drawing.Size(58, 25);
+            this.mainToolStrip.Size = new System.Drawing.Size(156, 25);
             this.mainToolStrip.TabIndex = 8;
+            // 
+            // toolStripButton17
+            // 
+            this.actionList.SetAction(this.toolStripButton17, this.openLevelAction);
+            this.toolStripButton17.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton17.Image = global::LevelEditor.Properties.Resources.openHS;
+            this.toolStripButton17.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton17.Name = "toolStripButton17";
+            this.toolStripButton17.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton17.Text = "Open level";
+            // 
+            // toolStripButton18
+            // 
+            this.actionList.SetAction(this.toolStripButton18, this.saveLevelAction);
+            this.toolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton18.Image = global::LevelEditor.Properties.Resources.saveHS;
+            this.toolStripButton18.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton18.Name = "toolStripButton18";
+            this.toolStripButton18.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton18.Text = "Save level";
+            // 
+            // toolStripButton19
+            // 
+            this.actionList.SetAction(this.toolStripButton19, this.exportLevelAction);
+            this.toolStripButton19.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton19.Image = global::LevelEditor.Properties.Resources.exportHS;
+            this.toolStripButton19.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton19.Name = "toolStripButton19";
+            this.toolStripButton19.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton19.Text = "Export level in phone format";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButton10
             // 
@@ -1946,7 +2047,7 @@ namespace LevelEditor
             this.toolStripButton11,
             this.toolStripSeparator5,
             this.toolStripButton12});
-            this.toolsToolStrip.Location = new System.Drawing.Point(61, 24);
+            this.toolsToolStrip.Location = new System.Drawing.Point(159, 24);
             this.toolsToolStrip.Name = "toolsToolStrip";
             this.toolsToolStrip.Size = new System.Drawing.Size(197, 25);
             this.toolsToolStrip.TabIndex = 6;
@@ -2177,7 +2278,33 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.addNewJointAction);
             this.actionList.Actions.Add(this.attachFixture);
             this.actionList.Actions.Add(this.drawAssociatedJoints);
+            this.actionList.Actions.Add(this.openLevelAction);
+            this.actionList.Actions.Add(this.saveLevelAction);
+            this.actionList.Actions.Add(this.exportLevelAction);
+            this.actionList.Actions.Add(this.saveAsLevelAction);
             this.actionList.ContainerControl = this;
+            // 
+            // openLevelAction
+            // 
+            this.openLevelAction.Image = global::LevelEditor.Properties.Resources.openHS;
+            this.openLevelAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openLevelAction.Text = "Open level";
+            this.openLevelAction.ToolTipText = "Open level from file";
+            // 
+            // saveLevelAction
+            // 
+            this.saveLevelAction.Image = global::LevelEditor.Properties.Resources.saveHS;
+            this.saveLevelAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveLevelAction.Text = "Save level";
+            this.saveLevelAction.ToolTipText = "Save level to file";
+            // 
+            // exportLevelAction
+            // 
+            this.exportLevelAction.Image = global::LevelEditor.Properties.Resources.exportHS;
+            this.exportLevelAction.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.exportLevelAction.Text = "Export level in phone format";
+            this.exportLevelAction.ToolTipText = "Export level to file in mobile phone format";
             // 
             // undoAction
             // 
@@ -2198,6 +2325,13 @@ namespace LevelEditor
             this.redoAction.ToolTipText = "Redo last undone action";
             this.redoAction.Execute += new System.EventHandler(this.redoAction_Execute);
             this.redoAction.Update += new System.EventHandler(this.redoAction_Update);
+            // 
+            // drawAssociatedJoints
+            // 
+            this.drawAssociatedJoints.CheckOnClick = true;
+            this.drawAssociatedJoints.Text = "Draw associated joints";
+            this.drawAssociatedJoints.ToolTipText = "Draw associated with body joints";
+            this.drawAssociatedJoints.Execute += new System.EventHandler(this.drawAssociatedJoints_Execute);
             // 
             // simulateAction
             // 
@@ -2285,14 +2419,6 @@ namespace LevelEditor
             this.editCurrentObjectAction.ToolTipText = "Edit current object (preview object)";
             this.editCurrentObjectAction.Execute += new System.EventHandler(this.editCurrentObjectAction_Execute);
             // 
-            // addNewJointAction
-            // 
-            this.addNewJointAction.CheckOnClick = true;
-            this.addNewJointAction.Image = global::LevelEditor.Properties.Resources.addJoint;
-            this.addNewJointAction.Text = "Add new joint";
-            this.addNewJointAction.ToolTipText = "Add new joint in several steps";
-            this.addNewJointAction.Execute += new System.EventHandler(this.addNewJointAction_Execute);
-            // 
             // attachFixture
             // 
             this.attachFixture.CheckOnClick = true;
@@ -2300,6 +2426,14 @@ namespace LevelEditor
             this.attachFixture.Text = "Attach fixture";
             this.attachFixture.ToolTipText = "Attach fixture to body";
             this.attachFixture.Execute += new System.EventHandler(this.attachFixtureAction_Execute);
+            // 
+            // addNewJointAction
+            // 
+            this.addNewJointAction.CheckOnClick = true;
+            this.addNewJointAction.Image = global::LevelEditor.Properties.Resources.addJoint;
+            this.addNewJointAction.Text = "Add new joint";
+            this.addNewJointAction.ToolTipText = "Add new joint in several steps";
+            this.addNewJointAction.Execute += new System.EventHandler(this.addNewJointAction_Execute);
             // 
             // selectObjectPartAction
             // 
@@ -2325,28 +2459,26 @@ namespace LevelEditor
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
             // 
-            // viewToolStripMenuItem
+            // saveAsLevelAction
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "View";
+            this.saveAsLevelAction.Text = "Save Level As...";
+            this.saveAsLevelAction.ToolTipText = "Save level to file with the specified name";
             // 
-            // drawAssociatedJoints
+            // toolStripButton20
             // 
-            this.drawAssociatedJoints.CheckOnClick = true;
-            this.drawAssociatedJoints.Text = "Draw associated joints";
-            this.drawAssociatedJoints.ToolTipText = "Draw associated with body joints";
-            this.drawAssociatedJoints.Execute += new System.EventHandler(this.drawAssociatedJoints_Execute);
+            this.actionList.SetAction(this.toolStripButton20, this.saveAsLevelAction);
+            this.toolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton20.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton20.Name = "toolStripButton20";
+            this.toolStripButton20.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton20.Text = "Save Level As...";
             // 
-            // lblToolStripMenuItem
+            // saveasToolStripMenuItem
             // 
-            this.actionList.SetAction(this.lblToolStripMenuItem, this.drawAssociatedJoints);
-            this.lblToolStripMenuItem.CheckOnClick = true;
-            this.lblToolStripMenuItem.Name = "lblToolStripMenuItem";
-            this.lblToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.lblToolStripMenuItem.Text = "Draw associated joints";
+            this.actionList.SetAction(this.saveasToolStripMenuItem, this.saveAsLevelAction);
+            this.saveasToolStripMenuItem.Name = "saveasToolStripMenuItem";
+            this.saveasToolStripMenuItem.Size = new System.Drawing.Size(295, 22);
+            this.saveasToolStripMenuItem.Text = "Save Level As...";
             // 
             // MainForm
             // 
@@ -2607,6 +2739,19 @@ namespace LevelEditor
         private Crad.Windows.Forms.Actions.Action drawAssociatedJoints;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lblToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.Action openLevelAction;
+        private Crad.Windows.Forms.Actions.Action saveLevelAction;
+        private Crad.Windows.Forms.Actions.Action exportLevelAction;
+        private System.Windows.Forms.ToolStripButton toolStripButton17;
+        private System.Windows.Forms.ToolStripButton toolStripButton18;
+        private System.Windows.Forms.ToolStripButton toolStripButton19;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.Action saveAsLevelAction;
+        private System.Windows.Forms.ToolStripMenuItem saveasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton20;
     }
 }
 

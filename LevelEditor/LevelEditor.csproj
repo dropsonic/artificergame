@@ -193,11 +193,15 @@
     <Content Include="Content\Textures\Shapes\object.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Windows Phone.png" />
+    <None Include="Resources\saveHS.png" />
+    <None Include="Resources\openHS.png" />
     <None Include="Resources\addJoint1.png" />
     <None Include="Resources\attachFixture1.png" />
     <None Include="Resources\attachBodyFixture.png" />
     <None Include="Resources\attachBodyFixture1.png" />
     <Content Include="Content\Textures\Shapes\Test.png" />
+    <None Include="Resources\exportHS.png" />
     <Content Include="Resources\mouseJoint.png" />
     <None Include="Resources\editJoint.png" />
     <None Include="Resources\placeJoint.png" />
