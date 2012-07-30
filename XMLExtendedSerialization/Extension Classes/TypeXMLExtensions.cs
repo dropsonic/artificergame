@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace XMLExtendedSerialization
 {
@@ -27,6 +28,21 @@ namespace XMLExtendedSerialization
             result = result.Replace(" ", "--spc--");
             result = result.Replace("=", "--eq--");
             return result;
+        }
+
+        /// <summary>
+        /// Возвращает коллекцию FieldInfo для всех полей типа, включая определённые в типах-предках.
+        /// </summary>
+        /// <param name="flags">Битовая маска, составленная из одного или нескольких объектов BindingFlags и указывающая, как ведется поиск,
+        /// или
+        /// 0, чтобы было возвращено значение null.</param>
+        /// <returns>Коллекция FieldInfo с информацией о полях.</returns>
+        internal static IEnumerable<FieldInfo> GetFieldsIncludingBase(this Type t, BindingFlags flags)
+        {
+            if (t == null)
+                return Enumerable.Empty<FieldInfo>();
+
+            return t.GetFields(flags).Union(GetFieldsIncludingBase(t.BaseType, flags));
         }
     }
 }

@@ -126,59 +126,60 @@ namespace XMLExtendedSerialization
             if (rootObject == null)
                 return new XElement(name, null);
 
-            Type rootType = rootObject.GetType();
-
             //Делегаты не сериализуем
             if (rootObject is Delegate)
                 return null;
 
             XElement element = new XElement(name);
 
+            Type rootType = rootObject.GetType();
+
+            if (rootObject is string)
+            {
+                element.Add(((string)rootObject).ToXMLValue());
+                SerializeTypeName(element, rootType);
+                return element;
+            }
+
             //***CIRCULAR REFERENCES***
             //Если reference-type, то добавляем объект в список
             if (!rootType.IsValueType)
             {
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
-                if (!_refList.ContainsKey(rootObject))
+                string hashCode;
+                if (_refList.TryGetValue(rootObject, out hashCode))
+                {
+                    element.Add(hashCode.ToXMLValue());
+                    return element;
+                }
+                else
                 {
 #if SAVEDEBUGINFO
                     element.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList.Count, rootType.FullName)));
                     _refListContent.Add(rootType.FullName);
 #endif
-                    _refList.Add(rootObject, _refList.Count.ToString());
+                    hashCode = _refList.Count.ToString();
+                    _refList.Add(rootObject, hashCode);
+                    element.Add(new XAttribute(Settings.CRIndexAttributeName, hashCode.ToXMLValue()));
                 }
             }
-            //*************************
+
+            //Записываем информацию о типе
+            SerializeTypeName(element, rootType);
+            //Записываем метаданные
+            SerializeMetadata(element, rootObject);
 
             //Если объект - словарь, то сериализуем его в отдельном методе. В принципе, работает и без этого, но XML тогда не такой читаемый и больше по объему.
             if (rootObject is IDictionary)
             {
-#if SAVEDEBUGINFO
-                XElement dictElement = SerializeDictionary(name, (IDictionary)rootObject);
-                if (_refList.ContainsKey(rootObject))
-                    dictElement.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootType.FullName)));
-                return dictElement;
-#endif
-                return SerializeDictionary(name, (IDictionary)rootObject);
+                SerializeDictionary(element, (IDictionary)rootObject);
+                return element;
             }
 
             //Если объект - массив, сериализуем его в отдельном методе
             if (rootType.IsArray)
             {
-#if SAVEDEBUGINFO
-                XElement arrayElement = SerializeArray(name, (Array)rootObject);
-                if (_refList.ContainsKey(rootObject))
-                    arrayElement.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootType.FullName)));
-                return arrayElement;
-#endif
-                return SerializeArray(name, (Array)rootObject);
-            }
-
-            SerializeTypeName(element, rootType);
-
-            if (rootObject is string)
-            {
-                element.Add(((string)rootObject).ToXMLValue());
+                SerializeArray(element, (Array)rootObject);
                 return element;
             }
 
@@ -186,11 +187,8 @@ namespace XMLExtendedSerialization
             //if (rootType.IsGenericType)
             //    return SerializeGenericObject(name, rootObject);
 
-            //Записываем метаданные
-            SerializeMetadata(element, rootObject);
-
             //Получаем все поля объекта
-            FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            IEnumerable<FieldInfo> fields = rootType.GetFieldsIncludingBase(Settings.DefaultFieldFlags);
             //PropertyInfo[] properties = rootType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
             foreach (var field in fields)
@@ -210,20 +208,6 @@ namespace XMLExtendedSerialization
                         element.SetAttributeValue(xmlFieldName, fieldValue);
                         continue;
                     }
-
-                    //***CIRCULAR REFERENCES***
-                    if (!field.FieldType.IsValueType)
-                    {
-                        //Получаем данные о ссылке на объект
-                        string hashCode;
-                        if (_refList.TryGetValue(fieldValue, out hashCode))
-                        {
-                            //Если объект уже был сериализован, то записываем только ссылку на него
-                            element.SetAttributeValue(xmlFieldName, hashCode.ToXMLValue());
-                            continue;
-                        }
-                    }
-                    //*************************
 
                     //Если конвертер для данного типа данных уже есть
                     if (_converters.TryGetValue(field.FieldType, out converter))
@@ -260,23 +244,25 @@ namespace XMLExtendedSerialization
         /// <summary>
         /// Сериализует массив элементов.
         /// </summary>
-        /// <param name="name">Имя XML-элемента.</param>
+        /// <param name="root">XML-элемент, в который необходимо записать данные.</param>
         /// <param name="rootObject">Массив для записи.</param>
-        /// <returns>XML-элемент с данными о массиве.</returns>
-        private XElement SerializeArray(string name, Array rootObject)
+        private void SerializeArray(XElement root, Array rootObject)
         {
             Type rootType = rootObject.GetType();
             Type elementType = rootType.GetElementType();
+
+#if SAVEDEBUGINFO
+                if (_refList.ContainsKey(rootObject))
+                    root.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootType.FullName)));
+#endif
+
             object defaultValue;
             if (elementType.IsValueType)
                 defaultValue = System.Runtime.Serialization.FormatterServices.GetUninitializedObject(elementType);
             else
                 defaultValue = null;
 
-            XElement element = new XElement(name);
-            SerializeMetadata(element, rootObject);
-            SerializeTypeName(element, rootType);
-            element.Add(new XAttribute(Settings.LengthTag, rootObject.Length.ToString()));
+            root.Add(new XAttribute(Settings.LengthTag, rootObject.Length.ToString()));
 
             for (int i = 0; i < rootObject.Length; i++)
             {
@@ -285,29 +271,31 @@ namespace XMLExtendedSerialization
                 {
                     XElement xItem = SerializeObject(Settings.ArrayElementTag, item);
                     xItem.Add(new XAttribute(Settings.IndexTag, i));
-                    element.Add(xItem);
+                    root.Add(xItem);
                 }
             }
-
-            return element;
         }
 
-        private XElement SerializeDictionary(string name, IDictionary rootObject)
+        /// <summary>
+        /// Сериализует словарь типа "ключ-значение".
+        /// </summary>
+        /// <param name="root">XML-элемент, в который необходимо записать информацию о словаре.</param>
+        /// <param name="rootObject">Словарь для записи.</param>
+        /// <returns>XML-элемент с данными о словаре.</returns>
+        private void SerializeDictionary(XElement root, IDictionary rootObject)
         {
-            XElement element = new XElement(name);
-            SerializeMetadata(element, rootObject);
-            Type rootType = rootObject.GetType();
-            SerializeTypeName(element, rootType);
+#if SAVEDEBUGINFO
+                if (_refList.ContainsKey(rootObject))
+                    root.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList[rootObject], rootObject.GetType().FullName)));
+#endif
 
             foreach (DictionaryEntry item in rootObject)
             {
                 XElement itemElement = new XElement(Settings.DictionaryItemTag);
                 itemElement.Add(SerializeObject(Settings.DictionaryKeyTag, item.Key));
                 itemElement.Add(SerializeObject(Settings.DictionaryValueTag, item.Value));
-                element.Add(itemElement);
+                root.Add(itemElement);
             }
-
-            return element;
         }
 
         public void Serialize(object rootObject, string rootName = Settings.DefaultRootName)

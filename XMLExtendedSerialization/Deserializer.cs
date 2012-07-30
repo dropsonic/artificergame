@@ -168,7 +168,12 @@ namespace XMLExtendedSerialization
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsValue(rootObject))
                 {
-                    _refList.Add(_refList.Count.ToString(), rootObject);
+                    XAttribute crIndexAttribute = root.Attribute(Settings.CRIndexAttributeName);
+                    if (crIndexAttribute == null)
+                        throw new System.Xml.XmlException("CRIndex attribute not found.");
+
+                    string hashCode = crIndexAttribute.Value.FromXMLValue();
+                    _refList.Add(hashCode, rootObject);
 #if SAVEDEBUGINFO
                     _refListContent.Add(rootType.FullName);
 #endif
@@ -177,7 +182,7 @@ namespace XMLExtendedSerialization
 
             DeserializeMetadata(root, rootObject);
 
-            FieldInfo[] fields = rootType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем список полей, включая автоматически созданные для свойств
+            IEnumerable<FieldInfo> fields = rootType.GetFieldsIncludingBase(Settings.DefaultFieldFlags); //получаем список полей, включая автоматически созданные для свойств
             //PropertyInfo[] properties = rootType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public); //получаем списк свойств
 
             foreach (var field in fields)
@@ -194,6 +199,7 @@ namespace XMLExtendedSerialization
 
 
                     Type fieldType;
+                    object fieldValue;
 
                     if (element == null)
                     {
@@ -207,11 +213,23 @@ namespace XMLExtendedSerialization
                     }
                     else
                     {
+                        //Проверяем, если объект с таким хеш-кодом есть в списке ссылок, то возвращаем его из списка
+                        string hashCode;
+                        if (!element.HasElements)
+                        {
+                            hashCode = element.Value.FromXMLValue();
+                            if (_refList.TryGetValue(hashCode, out fieldValue))
+                            {
+                                field.SetValue(rootObject, fieldValue);
+                                continue;
+                            }
+                        }
+
                         fieldType = GetTypeByName(DeserializeTypeName(element), _assemblies);
                         //Если это Enum, то он сохраняет своё значение как int в атрибут "value__"
                         if (fieldType.IsEnum)
                         {
-                            value = element.Attribute(Settings.EnumValueAttribute).Value;
+                            value = element.Attribute(Settings.EnumValueAttributeName).Value;
                             fieldType = typeof(int);
                         }
                         else
@@ -219,7 +237,6 @@ namespace XMLExtendedSerialization
                     }
 
                     //Конвертируем значение
-                    object fieldValue;
                     if (value == null)
                         fieldValue = null;
                     else
@@ -232,20 +249,14 @@ namespace XMLExtendedSerialization
                             if (element != null)
                                 fieldValue = DeserializeObject(element); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
                             else
-                            {
-                                //Если элемента нет, но есть атрибут с непустым значением, то это ссылка либо неизвестное поле
-                                object refObject;
-                                //Если значение элемента - hash-код, и объект с таким hash-кодом есть в списке десериализованных объектов
-                                if (_refList.TryGetValue(value.FromXMLValue(), out refObject))
-                                    //то это ссылка
-                                    fieldValue = refObject;
-                                else
-                                    throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
-                            }
+                                throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
                         }
                     }
 
-                    field.SetValue(rootObject, fieldValue);
+                    //Если null, то ничего не присваиваем, чтобы не сбивать значения по умолчанию
+                    if (fieldValue != null)
+                        //Устанавливаем значение
+                        field.SetValue(rootObject, fieldValue);
                 }
             }
 
@@ -279,8 +290,16 @@ namespace XMLExtendedSerialization
             DeserializeMetadata(root, rootObject);
             foreach (XElement element in elements)
             {
+                //Считываем индекс элемента в массиве
                 XAttribute indexAttr = element.Attribute(Settings.IndexTag);
-                rootObject.SetValue(DeserializeObject(element), int.Parse(indexAttr.Value));
+
+                object item;
+
+                string hashCode = element.Value.FromXMLValue();
+                if (element.HasElements || !_refList.TryGetValue(hashCode, out item))
+                    item = DeserializeObject(element);
+
+                rootObject.SetValue(item, int.Parse(indexAttr.Value));
             }
 
             return rootObject;
@@ -290,6 +309,19 @@ namespace XMLExtendedSerialization
         {
             var elements = root.Elements(Settings.DictionaryItemTag);
             IDictionary rootObject = (IDictionary)CreateInstance(rootType);
+
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                if (!_refList.ContainsValue(rootObject))
+                {
+                    _refList.Add(_refList.Count.ToString(), rootObject);
+#if SAVEDEBUGINFO
+                    _refListContent.Add(rootType.FullName);
+#endif
+                }
+            }
+
             DeserializeMetadata(root, rootObject);
             foreach (XElement element in elements)
             {
@@ -326,7 +358,7 @@ namespace XMLExtendedSerialization
             try
             {
 #endif
-                return DeserializeObject(_doc.Root);
+            return DeserializeObject(_doc.Root);
 #if SAVEDEBUGINFO
             }
             catch (Exception ex)
