@@ -153,6 +153,11 @@ namespace FarseerPhysics.Dynamics.Contacts
         internal int TOICount;
         private ContactType _type;
 
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
+        private Contact() { }
+
         private Contact(Fixture fA, int indexA, Fixture fB, int indexB)
         {
             Reset(fA, indexA, fB, indexB);
