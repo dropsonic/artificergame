@@ -1,32 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using FarseerTools;
 using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
-using FarseerPhysics.Common.Decomposition;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using GameLogic;
 using FarseerPhysics;
 using LevelEditor.Commands;
 using LevelEditor.Helpers;
-
+using FarseerPhysics.Dynamics.Joints;
+using FarseerPhysics.Collision.Shapes;
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
-    using Microsoft.Xna.Framework.Input;
-    using FarseerPhysics.Dynamics.Joints;
-    using FarseerPhysics.Collision.Shapes;
+
 
     public partial class MainForm : Form
     {
@@ -86,7 +78,7 @@ namespace LevelEditor
                 levelScreen.SelectedItemsDisplay.SelectedGameObjects = (grid.SelectedObjects.Select((item) => (GameObject)item)).ToList();
             if (grid.SelectedObject is GameObjectPart)
                 levelScreen.SelectedItemsDisplay.SelectedGameObjectParts = (grid.SelectedObjects.Select((item) => (GameObjectPart)item)).ToList();*/
-            levelScreen.SelectedItemsDisplay.SelectedItems = ((PropertyGrid)sender).SelectedObjects.ToList();
+            levelScreen.SelectedItemsDisplay.SelectedItem = ((PropertyGrid)sender).SelectedObject;
 
         }
 
@@ -838,6 +830,12 @@ namespace LevelEditor
         private void createdJointsList_SelectedValueChanged(object sender, EventArgs e)
         {
             propertyGrid.SelectedObject = createdJointsList.SelectedItem;
+        }
+
+        private void drawAssociatedJoints_Execute(object sender, EventArgs e)
+        {
+            levelScreen.SelectedItemsDisplay.DrawAssociatedJoints = drawAssociatedJoints.Checked;
+            levelScreen.SelectedItemsDisplay.SelectedItem = propertyGrid.SelectedObject;
         }
 
     }
