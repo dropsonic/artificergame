@@ -74,7 +74,7 @@
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
     <Compile Include="Helpers\FixtureAttachmentHelper.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\CommonHelpers.cs" />
     <Compile Include="Helpers\JointCreationHelper.cs" />
     <Compile Include="Logic\ObjectLevelManager.cs" />
     <Compile Include="Logic\Simulator.cs" />
@@ -196,6 +196,7 @@
     <None Include="Resources\attachFixture1.png" />
     <None Include="Resources\attachBodyFixture.png" />
     <None Include="Resources\attachBodyFixture1.png" />
+    <Content Include="Content\Textures\Shapes\Test.png" />
     <Content Include="Resources\mouseJoint.png" />
     <None Include="Resources\editJoint.png" />
     <None Include="Resources\placeJoint.png" />

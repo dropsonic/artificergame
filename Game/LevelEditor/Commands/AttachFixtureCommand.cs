@@ -12,6 +12,7 @@ using FarseerPhysics.Collision.Shapes;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using FarseerTools;
+using LevelEditor.Helpers;
 
 namespace LevelEditor.Commands
 {
@@ -42,15 +43,10 @@ namespace LevelEditor.Commands
         {
             foreach (Shape shape in _shapes)
                 _createdFixtures.Add(_body.CreateFixture(shape));
-            
 
-            foreach (GameObject go in _gameLevel)
-                foreach (GameObjectPart gop in go)
-                    if (gop.Body == _body)
-                    {
-                        gop.Sprites.Add(_sprite);
-                        _objectPart = gop;
-                    }
+            _objectPart = CommonHelpers.FindGameObjectPart(_gameLevel, _body);
+            _objectPart.Sprites.Add(_sprite);
+
             _gameLevel.World.ProcessChanges();
         }
 
