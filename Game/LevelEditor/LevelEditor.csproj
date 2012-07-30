@@ -76,6 +76,7 @@
     <Compile Include="Helpers\FixtureAttachmentHelper.cs" />
     <Compile Include="Helpers\CommonHelpers.cs" />
     <Compile Include="Helpers\JointCreationHelper.cs" />
+    <Compile Include="Helpers\SelectedItemsDisplay.cs" />
     <Compile Include="Logic\ObjectLevelManager.cs" />
     <Compile Include="Logic\Simulator.cs" />
     <Compile Include="MainForm.Designer.cs">

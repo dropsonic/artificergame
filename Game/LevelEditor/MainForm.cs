@@ -64,6 +64,8 @@ namespace LevelEditor
             _propertyGridTimer.Tick += (object sen, EventArgs args) => { propertyGrid.Refresh(); };
             _propertyGridTimer.Interval = 100;
 
+            propertyGrid.SelectedObjectsChanged += new EventHandler(propertyGrid_SelectedObjectsChanged);
+
             ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / 100);
 
             this.shapeParametersControl.SelectedTab = this.emptyTab;
@@ -73,6 +75,18 @@ namespace LevelEditor
             InitializeStatusStrip();
 
             ShowReadyStatus();
+        }
+
+        private void propertyGrid_SelectedObjectsChanged(object sender, EventArgs args)
+        {
+            PropertyGrid grid = (PropertyGrid)sender;
+            if (grid.SelectedObject is Joint)
+                levelScreen.SelectedItemsDisplay.SelectedJoints = (grid.SelectedObjects.Select((item) => (Joint)item)).ToList();
+            if (grid.SelectedObject is GameObject)
+                levelScreen.SelectedItemsDisplay.SelectedGameObjects = (grid.SelectedObjects.Select((item) => (GameObject)item)).ToList();
+            if (grid.SelectedObject is GameObjectPart)
+                levelScreen.SelectedItemsDisplay.SelectedGameObjectParts = (grid.SelectedObjects.Select((item) => (GameObjectPart)item)).ToList();
+
         }
 
         private void InitializeCommandManager()
@@ -135,6 +149,8 @@ namespace LevelEditor
 
             InitializeCommandManager();
             PopulateDebugViewMenu();
+
+
         }
 
         /// <summary>
