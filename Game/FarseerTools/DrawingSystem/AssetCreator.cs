@@ -74,6 +74,15 @@ namespace FarseerTools
             _shapes[key] = shape;
         }
 
+        public void RemoveMaterial(string key)
+        {
+            _materials.Remove(key);
+        }
+
+        public void RemoveShape(string key)
+        {
+            _shapes.Remove(key);
+        }
 
         public Texture2D TextureFromShape(Shape shape, string type, Color color, float materialScale)
         {
@@ -411,6 +420,7 @@ namespace FarseerTools
             return outputTexture as Texture2D;
         }
         
+
         /// <summary>Takes a list of fixtures with convex polygons.</summary>
         /// <returns>Returns Texture2D.</returns>
         public Texture2D TextureFromFixtures(List<Fixture> fixtures, string type, Color color, float materialScale)

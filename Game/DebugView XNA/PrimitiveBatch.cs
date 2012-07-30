@@ -43,7 +43,10 @@ namespace FarseerPhysics.DebugViews
                 throw new ArgumentNullException("graphicsDevice");
             }
             _device = graphicsDevice;
-
+            PresentationParameters pp = _device.PresentationParameters;
+            pp.MultiSampleCount = 8;
+            _device.Reset(pp);
+            
             _triangleVertices = new VertexPositionColor[bufferSize - bufferSize % 3];
             _lineVertices = new VertexPositionColor[bufferSize - bufferSize % 2];
 

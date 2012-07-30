@@ -79,13 +79,14 @@ namespace LevelEditor
 
         private void propertyGrid_SelectedObjectsChanged(object sender, EventArgs args)
         {
-            PropertyGrid grid = (PropertyGrid)sender;
+            /*PropertyGrid grid = (PropertyGrid)sender;
             if (grid.SelectedObject is Joint)
                 levelScreen.SelectedItemsDisplay.SelectedJoints = (grid.SelectedObjects.Select((item) => (Joint)item)).ToList();
             if (grid.SelectedObject is GameObject)
                 levelScreen.SelectedItemsDisplay.SelectedGameObjects = (grid.SelectedObjects.Select((item) => (GameObject)item)).ToList();
             if (grid.SelectedObject is GameObjectPart)
-                levelScreen.SelectedItemsDisplay.SelectedGameObjectParts = (grid.SelectedObjects.Select((item) => (GameObjectPart)item)).ToList();
+                levelScreen.SelectedItemsDisplay.SelectedGameObjectParts = (grid.SelectedObjects.Select((item) => (GameObjectPart)item)).ToList();*/
+            levelScreen.SelectedItemsDisplay.SelectedItems = ((PropertyGrid)sender).SelectedObjects.ToList();
 
         }
 
