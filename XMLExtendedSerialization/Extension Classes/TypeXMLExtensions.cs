@@ -6,17 +6,17 @@ using System.Reflection;
 
 namespace XMLExtendedSerialization
 {
-    internal static class TypeXMLExtensions
+    public static class TypeXMLExtensions
     {
         /// <summary>
         /// Проверяет два типа из разных сборок на соответствие.
         /// </summary>
-        internal static bool SameType(this Type a, Type x)
+        public static bool SameType(this Type a, Type x)
         {
             return (a.FullName == x.FullName);
         }
 
-        internal static string GetXMLFullName(this Type x)
+        public static string GetXMLFullName(this Type x)
         {
             string result = x.FullName;
             result = result.Replace("<", "lt--");
@@ -37,7 +37,7 @@ namespace XMLExtendedSerialization
         /// или
         /// 0, чтобы было возвращено значение null.</param>
         /// <returns>Коллекция FieldInfo с информацией о полях.</returns>
-        internal static IEnumerable<FieldInfo> GetFieldsIncludingBase(this Type t, BindingFlags flags)
+        public static IEnumerable<FieldInfo> GetFieldsIncludingBase(this Type t, BindingFlags flags)
         {
             if (t == null)
                 return Enumerable.Empty<FieldInfo>();

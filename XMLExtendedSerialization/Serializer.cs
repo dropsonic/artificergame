@@ -97,21 +97,6 @@ namespace XMLExtendedSerialization
             return null;
         }
 
-        private void SerializeMetadata(XElement root, object rootObject)
-        {
-            if (rootObject.GetType().IsClass)
-            {
-                string metadata = rootObject.GetXMLMetadata();
-                if (metadata != null)
-                    root.Add(new XComment(metadata.ToXMLComment()));
-            }
-        }
-
-        private void SerializeTypeName(XElement root, Type rootType)
-        {
-            root.Add(new XAttribute(Settings.TypeNameTag, rootType.FullName.ToXMLValue()));
-        }
-
         /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
@@ -141,7 +126,7 @@ namespace XMLExtendedSerialization
             if (rootObject is string)
             {
                 element.Add(((string)rootObject).ToXMLValue());
-                SerializeTypeName(element, rootType);
+                SerializerHelpers.SerializeTypeName(element, rootType);
                 return element;
             }
 
@@ -169,9 +154,9 @@ namespace XMLExtendedSerialization
             }
 
             //Записываем информацию о типе
-            SerializeTypeName(element, rootType);
+            SerializerHelpers.SerializeTypeName(element, rootType);
             //Записываем метаданные
-            SerializeMetadata(element, rootObject);
+            SerializerHelpers.SerializeMetadata(element, rootObject);
 
             //Если объект - словарь, то сериализуем его в отдельном методе. В принципе, работает и без этого, но XML тогда не такой читаемый и больше по объему.
             if (rootObject is IDictionary)
