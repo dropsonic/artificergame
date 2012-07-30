@@ -85,6 +85,7 @@
       <SubType>Form</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjectMetadataDictionary.cs" />
     <Compile Include="StopwatchGameTimer.cs" />
     <Compile Include="TabHiddenHeadersControl.cs">
       <SubType>Component</SubType>
