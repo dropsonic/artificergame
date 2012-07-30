@@ -65,6 +65,14 @@ namespace FarseerPhysics.Dynamics
         /// </summary>
         public PreSolveDelegate PreSolve;
 
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
+        private ContactManager()
+        {
+            OnBroadphaseCollision = AddPair;
+        }
+
         internal ContactManager(IBroadPhase broadPhase)
         {
             BroadPhase = broadPhase;
