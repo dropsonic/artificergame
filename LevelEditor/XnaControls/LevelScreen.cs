@@ -12,6 +12,7 @@ using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.DebugViews;
 using FarseerPhysics;
 using System.ComponentModel;
+using LevelEditor.Helpers;
 
 
 namespace LevelEditor
@@ -23,6 +24,15 @@ namespace LevelEditor
         Camera _camera;
         SpriteFont _font;
         DebugViewXNA _debugView;
+        SelectedItemsDisplay _selectedItemsDisplay;
+
+        public SelectedItemsDisplay SelectedItemsDisplay
+        {
+            get
+            {
+                return _selectedItemsDisplay;
+            }
+        }
 
         public SpriteBatch SpriteBatch
         {
@@ -124,6 +134,8 @@ namespace LevelEditor
 
             _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
+
+            _selectedItemsDisplay = new SelectedItemsDisplay(GraphicsDevice);
         }
 
         void SetDebugView()
@@ -189,9 +201,11 @@ namespace LevelEditor
             {
                 Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
                 _debugView.RenderDebugData(ref proj);
+
+                _selectedItemsDisplay.DrawSelectedItems(ref proj);
             }
 
-            var test = GameTimer.GameTime;
+            
         }
 
         protected override void LoadContent()

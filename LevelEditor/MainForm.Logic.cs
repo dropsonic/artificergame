@@ -263,8 +263,7 @@ namespace LevelEditor
             {
                 if (jointsBox.SelectedItem != null)
                 {
-                    if (_jointHelper==null)
-                        _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
                     ShowTooltipStatus(_jointHelper.CurrentStateMessage);
                 }
             }
