@@ -190,6 +190,7 @@ namespace LevelEditor
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
             this.openLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.saveLevelAction = new Crad.Windows.Forms.Actions.Action();
+            this.saveAsLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.exportLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.undoAction = new Crad.Windows.Forms.Actions.Action();
             this.redoAction = new Crad.Windows.Forms.Actions.Action();
@@ -209,7 +210,6 @@ namespace LevelEditor
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
-            this.saveAsLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -280,7 +280,7 @@ namespace LevelEditor
             // toolStripContainer.ContentPanel
             // 
             this.toolStripContainer.ContentPanel.Controls.Add(this.tableLayoutPanel);
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 765);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(1444, 740);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer.Name = "toolStripContainer";
@@ -292,8 +292,8 @@ namespace LevelEditor
             // 
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.menuStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.mainToolStrip);
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolsToolStrip);
             this.toolStripContainer.TopToolStripPanel.Controls.Add(this.simulationToolStrip);
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolsToolStrip);
             // 
             // statusStrip
             // 
@@ -338,7 +338,7 @@ namespace LevelEditor
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 765);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1444, 740);
             this.tableLayoutPanel.TabIndex = 5;
             // 
             // paramsTabControl
@@ -349,7 +349,7 @@ namespace LevelEditor
             this.paramsTabControl.Location = new System.Drawing.Point(3, 3);
             this.paramsTabControl.Name = "paramsTabControl";
             this.paramsTabControl.SelectedIndex = 0;
-            this.paramsTabControl.Size = new System.Drawing.Size(314, 759);
+            this.paramsTabControl.Size = new System.Drawing.Size(314, 734);
             this.paramsTabControl.TabIndex = 0;
             // 
             // previewPage
@@ -362,7 +362,7 @@ namespace LevelEditor
             this.previewPage.Location = new System.Drawing.Point(4, 22);
             this.previewPage.Name = "previewPage";
             this.previewPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewPage.Size = new System.Drawing.Size(306, 733);
+            this.previewPage.Size = new System.Drawing.Size(306, 708);
             this.previewPage.TabIndex = 0;
             this.previewPage.Text = "Preview";
             this.previewPage.UseVisualStyleBackColor = true;
@@ -1555,7 +1555,7 @@ namespace LevelEditor
             this.jointPage.Location = new System.Drawing.Point(4, 22);
             this.jointPage.Name = "jointPage";
             this.jointPage.Padding = new System.Windows.Forms.Padding(3);
-            this.jointPage.Size = new System.Drawing.Size(306, 733);
+            this.jointPage.Size = new System.Drawing.Size(306, 708);
             this.jointPage.TabIndex = 1;
             this.jointPage.Text = "Joints";
             this.jointPage.UseVisualStyleBackColor = true;
@@ -1610,7 +1610,7 @@ namespace LevelEditor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.propertyGrid);
-            this.splitContainer1.Size = new System.Drawing.Size(1118, 759);
+            this.splitContainer1.Size = new System.Drawing.Size(1118, 734);
             this.splitContainer1.SplitterDistance = 843;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -1622,7 +1622,7 @@ namespace LevelEditor
             this.viewTabControl.Location = new System.Drawing.Point(0, 0);
             this.viewTabControl.Name = "viewTabControl";
             this.viewTabControl.SelectedIndex = 0;
-            this.viewTabControl.Size = new System.Drawing.Size(843, 759);
+            this.viewTabControl.Size = new System.Drawing.Size(843, 734);
             this.viewTabControl.TabIndex = 0;
             // 
             // levelPage
@@ -1632,7 +1632,7 @@ namespace LevelEditor
             this.levelPage.Location = new System.Drawing.Point(4, 22);
             this.levelPage.Name = "levelPage";
             this.levelPage.Padding = new System.Windows.Forms.Padding(3);
-            this.levelPage.Size = new System.Drawing.Size(835, 733);
+            this.levelPage.Size = new System.Drawing.Size(835, 708);
             this.levelPage.TabIndex = 0;
             this.levelPage.Text = "Level";
             this.levelPage.UseVisualStyleBackColor = true;
@@ -1666,7 +1666,7 @@ namespace LevelEditor
             this.objectTab.Location = new System.Drawing.Point(4, 22);
             this.objectTab.Name = "objectTab";
             this.objectTab.Padding = new System.Windows.Forms.Padding(3);
-            this.objectTab.Size = new System.Drawing.Size(835, 733);
+            this.objectTab.Size = new System.Drawing.Size(835, 708);
             this.objectTab.TabIndex = 1;
             this.objectTab.Text = "Object";
             this.objectTab.UseVisualStyleBackColor = true;
@@ -1692,7 +1692,7 @@ namespace LevelEditor
             this.propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid.Name = "propertyGrid";
-            this.propertyGrid.Size = new System.Drawing.Size(271, 759);
+            this.propertyGrid.Size = new System.Drawing.Size(271, 734);
             this.propertyGrid.TabIndex = 0;
             this.propertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid_PropertyValueChanged);
             // 
@@ -2063,9 +2063,9 @@ namespace LevelEditor
             this.toolStripButton11,
             this.toolStripSeparator5,
             this.toolStripButton12});
-            this.toolsToolStrip.Location = new System.Drawing.Point(221, 49);
+            this.toolsToolStrip.Location = new System.Drawing.Point(3, 74);
             this.toolsToolStrip.Name = "toolsToolStrip";
-            this.toolsToolStrip.Size = new System.Drawing.Size(228, 25);
+            this.toolsToolStrip.Size = new System.Drawing.Size(197, 25);
             this.toolsToolStrip.TabIndex = 6;
             // 
             // toolStripButton8
@@ -2306,6 +2306,7 @@ namespace LevelEditor
             this.openLevelAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openLevelAction.Text = "Open level";
             this.openLevelAction.ToolTipText = "Open level from file";
+            this.openLevelAction.Execute += new System.EventHandler(this.openLevelAction_Execute);
             // 
             // saveLevelAction
             // 
@@ -2313,6 +2314,13 @@ namespace LevelEditor
             this.saveLevelAction.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveLevelAction.Text = "Save level";
             this.saveLevelAction.ToolTipText = "Save level to file";
+            this.saveLevelAction.Execute += new System.EventHandler(this.saveLevelAction_Execute);
+            // 
+            // saveAsLevelAction
+            // 
+            this.saveAsLevelAction.Text = "Save Level As...";
+            this.saveAsLevelAction.ToolTipText = "Save level to file with the specified name";
+            this.saveAsLevelAction.Execute += new System.EventHandler(this.saveAsLevelAction_Execute);
             // 
             // exportLevelAction
             // 
@@ -2321,6 +2329,7 @@ namespace LevelEditor
             | System.Windows.Forms.Keys.S)));
             this.exportLevelAction.Text = "Export level in phone format";
             this.exportLevelAction.ToolTipText = "Export level to file in mobile phone format";
+            this.exportLevelAction.Execute += new System.EventHandler(this.exportLevelAction_Execute);
             // 
             // undoAction
             // 
@@ -2474,11 +2483,6 @@ namespace LevelEditor
             this.useMouseJointAction.Text = "Use mouse joint";
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
-            // 
-            // saveAsLevelAction
-            // 
-            this.saveAsLevelAction.Text = "Save Level As...";
-            this.saveAsLevelAction.ToolTipText = "Save level to file with the specified name";
             // 
             // MainForm
             // 

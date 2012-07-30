@@ -813,6 +813,27 @@ namespace LevelEditor
             if (redoAction.Enabled != _commandManager.CanRedo)
                 redoAction.Enabled = _commandManager.CanRedo;
         }
+
+
+        private void openLevelAction_Execute(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveLevelAction_Execute(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveAsLevelAction_Execute(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exportLevelAction_Execute(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         private void jointsBox_SelectedValueChanged(object sender, EventArgs e)
