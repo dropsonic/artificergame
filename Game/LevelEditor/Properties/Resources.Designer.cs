@@ -158,6 +158,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap exportHS {
+            get {
+                object obj = ResourceManager.GetObject("exportHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap halfSpeed {
             get {
                 object obj = ResourceManager.GetObject("halfSpeed", resourceCulture);
@@ -200,6 +207,13 @@ namespace LevelEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap openHS {
+            get {
+                object obj = ResourceManager.GetObject("openHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PauseHS {
             get {
                 object obj = ResourceManager.GetObject("PauseHS", resourceCulture);
@@ -217,6 +231,13 @@ namespace LevelEditor.Properties {
         internal static System.Drawing.Bitmap PlayHS {
             get {
                 object obj = ResourceManager.GetObject("PlayHS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap saveHS {
+            get {
+                object obj = ResourceManager.GetObject("saveHS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
