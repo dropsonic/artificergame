@@ -656,6 +656,7 @@ namespace LevelEditor
 
                 _propertyGridTimer.Enabled = false;
                 propertyGrid.SelectedObject = false;
+                createdJointsList.SelectedItem = null;
             }
             else
             {
@@ -665,7 +666,7 @@ namespace LevelEditor
                 pauseSimulationAction.Enabled = true;
 
                 _propertyGridTimer.Enabled = true;
-                FindPreSimulationObject(propertyGrid);
+                SwitchToSimulation();
 
                 ShowSimulationStatus();
             }
