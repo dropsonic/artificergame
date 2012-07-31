@@ -35,26 +35,27 @@ namespace LevelEditor
         {
             Click,Up,Down,Move
         }
-        
-   
-        private void FindPreSimulationObject(PropertyGrid grid)
+
+
+        private void SwitchToSimulation()
         {
-            if (grid.SelectedObject != null)
+            if (propertyGrid.SelectedObject != null)
             {
-                if (grid.SelectedObject.GetType() == typeof(Body))
+                if (propertyGrid.SelectedObject.GetType() == typeof(Body))
                 {
                     propertyGrid.SelectedObject = CommonHelpers.FindBody(((Body)propertyGrid.SelectedObject).Position, _objectLevelManager.GameLevel.World);
                 }
-                else if (grid.SelectedObject.GetType() == typeof(GameObject))
+                else if (propertyGrid.SelectedObject.GetType() == typeof(GameObject))
                 {
                     propertyGrid.SelectedObject = CommonHelpers.FindGameObject(((GameObject)propertyGrid.SelectedObject)[0].Body.Position, _objectLevelManager.GameLevel);
                 }
-                else if (grid.SelectedObject.GetType() == typeof(GameObjectPart))
+                else if (propertyGrid.SelectedObject.GetType() == typeof(GameObjectPart))
                 {
                     propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(((GameObjectPart)propertyGrid.SelectedObject).Body.Position, _objectLevelManager.GameLevel);
                 }
-                else if (grid.SelectedObject.GetType() == typeof(Joint))
+                else if (propertyGrid.SelectedObject is Joint)
                 {
+                    /*
                     //находим индект нужного нам джоинта в списке
                     Joint selectedJoint = ((Joint)propertyGrid.SelectedObject);
                     JointEdge iterator = selectedJoint.BodyA.JointList;
@@ -78,6 +79,8 @@ namespace LevelEditor
                         }
                         index++;
                     } while ((newJointList = newJointList.Next) != null);
+                     */
+                    UpdateCreatedJointList();
                 }
 
             }
@@ -85,11 +88,22 @@ namespace LevelEditor
 
         private void UpdateCreatedJointList()
         {
+            bool wasSelected = false;
+            int selectedIndex = 0;
+            if (createdJointsList.SelectedItem!=null)
+            {
+                wasSelected = true;
+                selectedIndex= createdJointsList.SelectedIndex;
+            }
+
             createdJointsList.Items.Clear();
             foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
             {
                 createdJointsList.Items.Insert(0, joint);
             }
+
+            if (wasSelected)
+                createdJointsList.SelectedIndex = selectedIndex;
         }
 
 
