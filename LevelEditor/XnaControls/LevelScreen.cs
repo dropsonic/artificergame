@@ -216,7 +216,8 @@ namespace LevelEditor
         public UpdateDelegate UpdateSubscriber;
         protected override void UpdateFrame()
         {
-            UpdateSubscriber(GameTimer.GameTime);
+            if (UpdateSubscriber!=null)
+                UpdateSubscriber(GameTimer.GameTime);
         }
     }
 }   
