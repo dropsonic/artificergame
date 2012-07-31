@@ -32,8 +32,11 @@ namespace LevelEditor
 
         Timer _updateTimer = new Timer();
         Timer _propertyGridTimer = new Timer();
-        
-                
+
+        /// <summary>
+        /// Имя текущего файла. Если создан новый уровень, то это String.Empty.
+        /// </summary>
+        string _currentFileName = String.Empty;        
 
         Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -818,7 +821,22 @@ namespace LevelEditor
 
         private void openLevelAction_Execute(object sender, EventArgs e)
         {
+            pauseSimulationAction.DoExecute();
+            if (openLevelDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (_objectLevelManager.Simulator.State != SimulationState.Stopped)
+                    simulateAction.DoExecute();
 
+                try
+                {
+                    _commandManager.Execute(new OpenLevelCommand(openLevelDialog.FileName, _objectLevelManager));
+                    _currentFileName = openLevelDialog.FileName;
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorStatus(ex);
+                }
+            }
         }
 
         private void saveLevelAction_Execute(object sender, EventArgs e)

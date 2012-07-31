@@ -59,6 +59,7 @@
     <Compile Include="Commands\AddLevelJointCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\AttachFixtureCommand.cs" />
+    <Compile Include="Commands\OpenLevelCommand.cs" />
     <Compile Include="Commands\PropertyGridChangeParamCommand.cs" />
     <Compile Include="Commands\SimulationSpeedDecreaseCommand.cs" />
     <Compile Include="Commands\SimulationSpeedIncreaseCommand.cs" />
@@ -160,6 +161,10 @@
     <ProjectReference Include="..\NumericUpDownEx\NumericUpDownEx.csproj">
       <Project>{05FFAA83-793F-44C9-AB6A-143D132D96D6}</Project>
       <Name>NumericUpDownEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMLExtendedSerialization\XMLExtendedSerialization.csproj">
+      <Project>{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}</Project>
+      <Name>XMLExtendedSerialization</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
