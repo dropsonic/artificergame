@@ -158,7 +158,7 @@ namespace LevelEditor
                     case ObjectType.CustomShape:
                         if (shapeFromTextureBox.SelectedItem == null) break;
                         shapeParameters.Add(ShapeParametersKeys.CustomObjectScale,float.Parse(customShapeScale.Value.ToString()));
-                        shapeParameters.Add(ShapeParametersKeys.CustomObjectShape,float.Parse(shapeFromTextureBox.SelectedItem.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CustomObjectShape,shapeFromTextureBox.SelectedItem.ToString());
                         shapeParameters.Add(ShapeParametersKeys.CustomObjectUseOriginalTexture, useOriginalTextureCheck.Checked);
                         break;
                     default:
