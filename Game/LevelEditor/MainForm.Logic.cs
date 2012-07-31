@@ -111,49 +111,64 @@ namespace LevelEditor
         {
             if (materialBox.SelectedItem != null && colorBox.SelectedItem != null && shapeBox.SelectedItem != null)
             {
-                Vertices shapeVertices = null;
-                Texture2D previewTexture = null;
+                Dictionary<string,object> shapeParameters = new Dictionary<string,object>();
+                shapeParameters.Add(ShapeParametersKeys.Material,materialBox.SelectedItem.ToString());
+                shapeParameters.Add(ShapeParametersKeys.MaterialScale,float.Parse(materialScale.Value.ToString()));
+                shapeParameters.Add(ShapeParametersKeys.Color, _colorDictionary[colorBox.SelectedItem.ToString()]);
                 switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                 {
                     case ObjectType.Arc:
-                        shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians(float.Parse(arcDegrees.Value.ToString())), int.Parse(arcSides.Value.ToString()), float.Parse(arcRadius.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.ArcDegrees,float.Parse(arcDegrees.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.ArcRadius,float.Parse(arcRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.ArcSides,int.Parse(arcSides.Value.ToString()));
                         break;
                     case ObjectType.Capsule:
-                        shapeVertices = PolygonTools.CreateCapsule(float.Parse(capsuleHeight.Value.ToString()), float.Parse(capsuleBottomRadius.Value.ToString()), int.Parse(capsuleBottomEdges.Value.ToString()), float.Parse(capsuleTopRadius.Value.ToString()), int.Parse(capsuleTopEdges.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CapsuleHeight,float.Parse(capsuleHeight.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CapsuleBottomRadius,float.Parse(capsuleBottomRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CapsuleBottomEdges,int.Parse(capsuleBottomEdges.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CapsuleTopRadius,float.Parse(capsuleTopRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CapsuleTopEdges,int.Parse(capsuleTopEdges.Value.ToString()));
                         break;
                     case ObjectType.Gear:
-                        shapeVertices = PolygonTools.CreateGear(float.Parse(gearRadius.Value.ToString()), int.Parse(gearNumberOfTeeth.Value.ToString()), float.Parse(gearTipPercentage.Value.ToString()), float.Parse(gearToothHeight.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.GearRadius,float.Parse(gearRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.GearNumberOfTeeth,int.Parse(gearNumberOfTeeth.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.GearTipPercentage,float.Parse(gearTipPercentage.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.GearToothHeigt,float.Parse(gearToothHeight.Value.ToString()));
                         break;
                     case ObjectType.Rectangle:
-                        shapeVertices = PolygonTools.CreateRectangle(float.Parse(rectangleWidth.Value.ToString()), float.Parse(rectangleHeight.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RectangleWidth,float.Parse(rectangleWidth.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RectangleHeight,float.Parse(rectangleHeight.Value.ToString()));
                         break;
                     case ObjectType.RoundedRectangle:
-                        shapeVertices = PolygonTools.CreateRoundedRectangle(float.Parse(roundedRectangleWidth.Value.ToString()), float.Parse(roundedRectangleHeight.Value.ToString()), float.Parse(roundedRectangleXRadius.Value.ToString()), float.Parse(roundedRectangleYRadius.Value.ToString()), int.Parse(roundedRectangleSegments.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RoundedRectangleHeight,float.Parse(roundedRectangleWidth.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RoundedRectangleWidth,float.Parse(roundedRectangleHeight.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RoundedRectangleXRadius,float.Parse(roundedRectangleXRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RoundedRectangleYRadius,float.Parse(roundedRectangleYRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.RoundedRectangleSegments,int.Parse(roundedRectangleSegments.Value.ToString()));
                         break;
                     case ObjectType.Ellipse:
-                        shapeVertices = PolygonTools.CreateEllipse(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), int.Parse(ellipseNumberOfEdges.Value.ToString()));
-                        previewTexture = ContentService.GetContentService().AssetCreator.EllipseTexture(float.Parse(ellipseXRadius.Value.ToString()), float.Parse(ellipseYRadius.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.EllipseXRadius,float.Parse(ellipseXRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.EllipseYRadius,float.Parse(ellipseYRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.EllipseNumberOfEdges,int.Parse(ellipseNumberOfEdges.Value.ToString()));
                         break;
                     case ObjectType.Circle:
-                        shapeVertices = PolygonTools.CreateCircle(float.Parse(circleRadius.Value.ToString()), AssetCreator.CircleSegments);
-                        previewTexture = ContentService.GetContentService().AssetCreator.CircleTexture(float.Parse(circleRadius.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CircleRadius,float.Parse(circleRadius.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CircleSegments,AssetCreator.CircleSegments);
                         break;
                     case ObjectType.CustomShape:
                         if (shapeFromTextureBox.SelectedItem == null) break;
-                        if (useOriginalTextureCheck.Checked)
-                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), _colorDictionary[colorBox.SelectedItem.ToString()], out previewTexture, out shapeVertices);
-                        else
-                            ContentService.GetContentService().AssetCreator.ShapeFromTexture(shapeFromTextureBox.SelectedItem.ToString(), float.Parse(customShapeScale.Value.ToString()), materialBox.SelectedItem.ToString(), _colorDictionary[colorBox.SelectedItem.ToString()], float.Parse(materialScale.Value.ToString()), out previewTexture, out shapeVertices);
+                        shapeParameters.Add(ShapeParametersKeys.CustomObjectScale,float.Parse(customShapeScale.Value.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CustomObjectShape,float.Parse(shapeFromTextureBox.SelectedItem.ToString()));
+                        shapeParameters.Add(ShapeParametersKeys.CustomObjectUseOriginalTexture, useOriginalTextureCheck.Checked);
                         break;
                     default:
                          throw new Exception("Unknown Shape");
                         
                 }
+
+                Vertices shapeVertices;
+                Texture2D previewTexture;
+                TextureFromDictionary(shapeParameters,(ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), out previewTexture, out shapeVertices);
                 if (shapeVertices != null && previewTexture != null)
                 {
                     float? previousDensity = _objectLevelManager.PreviewObject[0].Body.Density;
@@ -175,6 +190,100 @@ namespace LevelEditor
                     SetMouseToolButtonsState(editCurrentObjectAction);
                 }
             }
+        }
+
+        class ShapeParametersKeys
+        {
+            public const string Material = "Material";
+            public const string Color = "Color";
+            public const string MaterialScale = "MaterialScale";
+
+            public const string ArcDegrees = "ArcDegrees";
+            public const string ArcSides = "ArSides";
+            public const string ArcRadius = "ArcRadius";
+
+            public const string CapsuleHeight = "CapsuleHeight";
+            public const string CapsuleBottomRadius = "CapsuleBottomRadius";
+            public const string CapsuleBottomEdges = "CapsuleBottomEdges";
+            public const string CapsuleTopRadius = "CapsuleTopRadius";
+            public const string CapsuleTopEdges = "CapsuleTopEdges";
+
+            public const string GearRadius = "GearRadius";
+            public const string GearNumberOfTeeth = "GearNumberOfTeeth";
+            public const string GearTipPercentage = "GearTipPercentage";
+            public const string GearToothHeigt = "GearToothHeigt";
+
+            public const string RectangleHeight = "RectangleHeight";
+            public const string RectangleWidth = "RectangleWidth";
+
+            public const string RoundedRectangleWidth = "RoundedRectangleWidth";
+            public const string RoundedRectangleHeight = "RoundedRectangleHeight";
+            public const string RoundedRectangleXRadius = "RoundedRectangleXRadius";
+            public const string RoundedRectangleYRadius = "RoundedRectangleYRadius";
+            public const string RoundedRectangleSegments = "RoundedRectangleSegments";
+
+            public const string EllipseXRadius = "EllipseXRadius";
+            public const string EllipseYRadius = "EllipseYRadius";
+            public const string EllipseNumberOfEdges = "EllipseNumberOfEdges";
+
+            public const string CircleRadius = "CircleRadius";
+            public const string CircleSegments = "CircleSegments";
+
+            public const string CustomObjectShape = "CustomObjectShape";
+            public const string CustomObjectScale = "CustomObjectScale";
+            public const string CustomObjectUseOriginalTexture = "CustomObjectUseOriginalTexture";
+
+        }
+
+        private void TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType, out Texture2D texture)
+        {
+            Vertices vert;
+            TextureFromDictionary(shapeParam, objectType, out texture, out vert);
+        }
+        private void TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType, out Texture2D texture, out Vertices shapeVertices)
+        {
+            shapeVertices = null;
+            texture = null;
+            switch (objectType)
+            {
+                case ObjectType.Arc:
+                    shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians((float)shapeParam[ShapeParametersKeys.ArcDegrees]), (int)shapeParam[ShapeParametersKeys.ArcSides], (float)shapeParam[ShapeParametersKeys.ArcRadius]);
+                    texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.Capsule:
+                    shapeVertices = PolygonTools.CreateCapsule((float)shapeParam[ShapeParametersKeys.CapsuleHeight], (float)shapeParam[ShapeParametersKeys.CapsuleBottomRadius], (int)shapeParam[ShapeParametersKeys.CapsuleBottomEdges], (float)shapeParam[ShapeParametersKeys.CapsuleTopRadius], (int)shapeParam[ShapeParametersKeys.CapsuleTopEdges]);
+                    texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.Gear:
+                    shapeVertices = PolygonTools.CreateGear((float)shapeParam[ShapeParametersKeys.GearTipPercentage], (int)shapeParam[ShapeParametersKeys.GearNumberOfTeeth], (float)shapeParam[ShapeParametersKeys.GearTipPercentage], (float)shapeParam[ShapeParametersKeys.GearToothHeigt]);
+                    texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.Rectangle:
+                    shapeVertices = PolygonTools.CreateRectangle((float)shapeParam[ShapeParametersKeys.RectangleWidth], (float)shapeParam[ShapeParametersKeys.RectangleHeight]);
+                    texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.RoundedRectangle:
+                    shapeVertices = PolygonTools.CreateRoundedRectangle((float)shapeParam[ShapeParametersKeys.RoundedRectangleWidth], (float)shapeParam[ShapeParametersKeys.RoundedRectangleHeight], (float)shapeParam[ShapeParametersKeys.RoundedRectangleXRadius], (float)shapeParam[ShapeParametersKeys.RoundedRectangleYRadius], (int)shapeParam[ShapeParametersKeys.RoundedRectangleSegments]);
+                    texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.Ellipse:
+                    shapeVertices = PolygonTools.CreateEllipse((float)shapeParam[ShapeParametersKeys.EllipseXRadius], (float)shapeParam[ShapeParametersKeys.EllipseYRadius], (int)shapeParam[ShapeParametersKeys.EllipseNumberOfEdges]);
+                    texture = ContentService.GetContentService().AssetCreator.EllipseTexture((float)shapeParam[ShapeParametersKeys.EllipseXRadius], (float)shapeParam[ShapeParametersKeys.EllipseYRadius], (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.Circle:
+                    shapeVertices = PolygonTools.CreateCircle((float)shapeParam[ShapeParametersKeys.CircleRadius], (int)shapeParam[ShapeParametersKeys.CircleSegments]);
+                    texture = ContentService.GetContentService().AssetCreator.CircleTexture((float)shapeParam[ShapeParametersKeys.CircleRadius], (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    break;
+                case ObjectType.CustomShape:
+                    if ((bool)shapeParam[ShapeParametersKeys.CustomObjectUseOriginalTexture])
+                        ContentService.GetContentService().AssetCreator.ShapeFromTexture((string)shapeParam[ShapeParametersKeys.CustomObjectShape], (float)shapeParam[ShapeParametersKeys.CustomObjectScale], (Color)shapeParam[ShapeParametersKeys.Color], out texture, out shapeVertices);
+                    else
+                        ContentService.GetContentService().AssetCreator.ShapeFromTexture((string)shapeParam[ShapeParametersKeys.CustomObjectShape], (float)shapeParam[ShapeParametersKeys.CustomObjectScale], (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale], out texture, out shapeVertices);
+                    break;
+                default:
+                    throw new Exception("Unknown Shape");
+            }
+            
         }
 
         /// <summary>
