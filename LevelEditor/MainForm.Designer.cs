@@ -164,6 +164,17 @@ namespace LevelEditor
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.simulationToolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.simulationSpeedToolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
@@ -176,17 +187,6 @@ namespace LevelEditor
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
-            this.simulationToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.simulationSpeedToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.actionList = new Crad.Windows.Forms.Actions.ActionList();
             this.openLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.saveLevelAction = new Crad.Windows.Forms.Actions.Action();
@@ -210,6 +210,7 @@ namespace LevelEditor
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
+            this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -265,8 +266,8 @@ namespace LevelEditor
             this.objectTab.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
-            this.toolsToolStrip.SuspendLayout();
             this.simulationToolStrip.SuspendLayout();
+            this.toolsToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -2048,6 +2049,115 @@ namespace LevelEditor
             this.toolStripButton14.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton14.Text = "Redo";
             // 
+            // simulationToolStrip
+            // 
+            this.simulationToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.simulationToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripSeparator1,
+            this.toolStripButton3,
+            this.toolStripButton4,
+            this.toolStripButton5,
+            this.toolStripSeparator2,
+            this.toolStripButton6,
+            this.simulationSpeedToolStripLabel,
+            this.toolStripButton7});
+            this.simulationToolStrip.Location = new System.Drawing.Point(3, 49);
+            this.simulationToolStrip.Name = "simulationToolStrip";
+            this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
+            this.simulationToolStrip.TabIndex = 7;
+            // 
+            // toolStripButton1
+            // 
+            this.actionList.SetAction(this.toolStripButton1, this.simulateAction);
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::LevelEditor.Properties.Resources.PlayHS;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "Start";
+            // 
+            // toolStripButton2
+            // 
+            this.actionList.SetAction(this.toolStripButton2, this.pauseSimulationAction);
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Enabled = false;
+            this.toolStripButton2.Image = global::LevelEditor.Properties.Resources.PauseHS;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "Pause";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton3
+            // 
+            this.actionList.SetAction(this.toolStripButton3, this.simulationSpeedHalfAction);
+            this.toolStripButton3.CheckOnClick = true;
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::LevelEditor.Properties.Resources.halfSpeed;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "0.50x";
+            // 
+            // toolStripButton4
+            // 
+            this.actionList.SetAction(this.toolStripButton4, this.simulationSpeedNormalAction);
+            this.toolStripButton4.CheckOnClick = true;
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "1.00x";
+            // 
+            // toolStripButton5
+            // 
+            this.actionList.SetAction(this.toolStripButton5, this.simulationSpeedDoubleAction);
+            this.toolStripButton5.CheckOnClick = true;
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "2.00x";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton6
+            // 
+            this.actionList.SetAction(this.toolStripButton6, this.simulationSpeedDecreaseAction);
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = global::LevelEditor.Properties.Resources.decreaseSpeed;
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton6.Text = "Decrease by 0.25";
+            // 
+            // simulationSpeedToolStripLabel
+            // 
+            this.simulationSpeedToolStripLabel.Name = "simulationSpeedToolStripLabel";
+            this.simulationSpeedToolStripLabel.Size = new System.Drawing.Size(33, 22);
+            this.simulationSpeedToolStripLabel.Text = "1.00x";
+            // 
+            // toolStripButton7
+            // 
+            this.actionList.SetAction(this.toolStripButton7, this.simulationSpeedIncreaseAction);
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = global::LevelEditor.Properties.Resources.increaseSpeed;
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton7.Text = "Increase by 0.25";
+            // 
             // toolsToolStrip
             // 
             this.toolsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -2164,115 +2274,6 @@ namespace LevelEditor
             this.toolStripButton12.Name = "toolStripButton12";
             this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton12.Text = "Use mouse joint";
-            // 
-            // simulationToolStrip
-            // 
-            this.simulationToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.simulationToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripSeparator1,
-            this.toolStripButton3,
-            this.toolStripButton4,
-            this.toolStripButton5,
-            this.toolStripSeparator2,
-            this.toolStripButton6,
-            this.simulationSpeedToolStripLabel,
-            this.toolStripButton7});
-            this.simulationToolStrip.Location = new System.Drawing.Point(3, 49);
-            this.simulationToolStrip.Name = "simulationToolStrip";
-            this.simulationToolStrip.Size = new System.Drawing.Size(218, 25);
-            this.simulationToolStrip.TabIndex = 7;
-            // 
-            // toolStripButton1
-            // 
-            this.actionList.SetAction(this.toolStripButton1, this.simulateAction);
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::LevelEditor.Properties.Resources.PlayHS;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Start";
-            // 
-            // toolStripButton2
-            // 
-            this.actionList.SetAction(this.toolStripButton2, this.pauseSimulationAction);
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Enabled = false;
-            this.toolStripButton2.Image = global::LevelEditor.Properties.Resources.PauseHS;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Pause";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton3
-            // 
-            this.actionList.SetAction(this.toolStripButton3, this.simulationSpeedHalfAction);
-            this.toolStripButton3.CheckOnClick = true;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::LevelEditor.Properties.Resources.halfSpeed;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "0.50x";
-            // 
-            // toolStripButton4
-            // 
-            this.actionList.SetAction(this.toolStripButton4, this.simulationSpeedNormalAction);
-            this.toolStripButton4.CheckOnClick = true;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "1.00x";
-            // 
-            // toolStripButton5
-            // 
-            this.actionList.SetAction(this.toolStripButton5, this.simulationSpeedDoubleAction);
-            this.toolStripButton5.CheckOnClick = true;
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "2.00x";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton6
-            // 
-            this.actionList.SetAction(this.toolStripButton6, this.simulationSpeedDecreaseAction);
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = global::LevelEditor.Properties.Resources.decreaseSpeed;
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "Decrease by 0.25";
-            // 
-            // simulationSpeedToolStripLabel
-            // 
-            this.simulationSpeedToolStripLabel.Name = "simulationSpeedToolStripLabel";
-            this.simulationSpeedToolStripLabel.Size = new System.Drawing.Size(33, 22);
-            this.simulationSpeedToolStripLabel.Text = "1.00x";
-            // 
-            // toolStripButton7
-            // 
-            this.actionList.SetAction(this.toolStripButton7, this.simulationSpeedIncreaseAction);
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = global::LevelEditor.Properties.Resources.increaseSpeed;
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "Increase by 0.25";
             // 
             // actionList
             // 
@@ -2484,6 +2485,11 @@ namespace LevelEditor
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
             // 
+            // openLevelDialog
+            // 
+            this.openLevelDialog.Filter = "Level Structure Files (*.lvl)|*.lvl";
+            this.openLevelDialog.Title = "Open Level...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2568,10 +2574,10 @@ namespace LevelEditor
             this.menuStrip.PerformLayout();
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
-            this.toolsToolStrip.ResumeLayout(false);
-            this.toolsToolStrip.PerformLayout();
             this.simulationToolStrip.ResumeLayout(false);
             this.simulationToolStrip.PerformLayout();
+            this.toolsToolStrip.ResumeLayout(false);
+            this.toolsToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.actionList)).EndInit();
             this.ResumeLayout(false);
 
@@ -2756,6 +2762,7 @@ namespace LevelEditor
         private Crad.Windows.Forms.Actions.Action saveAsLevelAction;
         private System.Windows.Forms.ToolStripMenuItem saveasToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton20;
+        private System.Windows.Forms.OpenFileDialog openLevelDialog;
     }
 }
 
