@@ -56,17 +56,17 @@ namespace LevelEditor
                 }
                 else if (propertyGrid.SelectedObject is Joint)
                 {
-                    UpdateCreatedJointList();
+                    UpdateCreatedJointList(false);
                 }
 
             }
         }
 
-        private void UpdateCreatedJointList()
+        private void UpdateCreatedJointList(bool changingTabs)
         {
                 bool wasSelected = false;
                 int selectedIndex = 0;
-                if (createdJointsList.SelectedItem != null)
+                if (createdJointsList.SelectedItem != null && !changingTabs)
                 {
                     wasSelected = true;
                     selectedIndex = createdJointsList.SelectedIndex;

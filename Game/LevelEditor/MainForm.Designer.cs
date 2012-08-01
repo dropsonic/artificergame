@@ -122,9 +122,9 @@ namespace LevelEditor
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.viewTabControl = new System.Windows.Forms.TabControl();
             this.levelPage = new System.Windows.Forms.TabPage();
-            this.objectScreen = new LevelEditor.ObjectScreen();
             this.levelScreen = new LevelEditor.LevelScreen();
             this.objectTab = new System.Windows.Forms.TabPage();
+            this.objectScreen = new LevelEditor.ObjectScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1626,6 +1626,7 @@ namespace LevelEditor
             this.viewTabControl.SelectedIndex = 0;
             this.viewTabControl.Size = new System.Drawing.Size(843, 734);
             this.viewTabControl.TabIndex = 0;
+            this.viewTabControl.SelectedIndexChanged += new System.EventHandler(this.viewTabControl_SelectedIndexChanged);
             // 
             // levelPage
             // 
