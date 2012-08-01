@@ -56,31 +56,6 @@ namespace LevelEditor
                 }
                 else if (propertyGrid.SelectedObject is Joint)
                 {
-                    /*
-                    //находим индект нужного нам джоинта в списке
-                    Joint selectedJoint = ((Joint)propertyGrid.SelectedObject);
-                    JointEdge iterator = selectedJoint.BodyA.JointList;
-                    int jointIndex = 0;
-                    do
-                    {
-                       if (selectedJoint == iterator.Joint)
-                            break;
-                       jointIndex++;
-                    } while ((iterator=iterator.Next)!=null);
-
-                    //находим джоинт с найденным индексом в списке джоинтов нового боди
-                    JointEdge newJointList = CommonHelpers.FindBody(selectedJoint.BodyA.Position, _objectLevelManager.GameLevel.World).JointList;
-                    int index = 0;
-                    do
-                    {
-                        if (jointIndex == index)
-                        {
-                            propertyGrid.SelectedObject = newJointList.Joint;
-                            break;
-                        }
-                        index++;
-                    } while ((newJointList = newJointList.Next) != null);
-                     */
                     UpdateCreatedJointList();
                 }
 
@@ -89,22 +64,34 @@ namespace LevelEditor
 
         private void UpdateCreatedJointList()
         {
-            bool wasSelected = false;
-            int selectedIndex = 0;
-            if (createdJointsList.SelectedItem!=null)
-            {
-                wasSelected = true;
-                selectedIndex= createdJointsList.SelectedIndex;
-            }
+                bool wasSelected = false;
+                int selectedIndex = 0;
+                if (createdJointsList.SelectedItem != null)
+                {
+                    wasSelected = true;
+                    selectedIndex = createdJointsList.SelectedIndex;
+                }
 
-            createdJointsList.Items.Clear();
-            foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
-            {
-                createdJointsList.Items.Insert(0, joint);
-            }
+                createdJointsList.Items.Clear();
 
-            if (wasSelected)
-                createdJointsList.SelectedIndex = selectedIndex;
+                if (viewTabControl.SelectedTab == levelPage)
+                {
+                    foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
+                    {
+                        createdJointsList.Items.Insert(0, joint);
+                    }
+                }
+                else
+                {
+                    foreach (Joint joint in _objectLevelManager.SeparateEditObject.Joints)
+                    {
+                        createdJointsList.Items.Insert(0, joint);
+                    }
+                }
+
+                if (wasSelected)
+                    createdJointsList.SelectedIndex = selectedIndex;
+            
         }
 
 
@@ -360,7 +347,10 @@ namespace LevelEditor
             {
                 if (jointsBox.SelectedItem != null)
                 {
-                    _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    if(viewTabControl.SelectedTab == levelPage)
+                        _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.GameLevel.World);
+                    else
+                        _jointHelper = new JointCreationHelper((JointType)Enum.Parse(typeof(JointType), jointsBox.SelectedItem.ToString()), _objectLevelManager.SeparateEditObject.World);
                     ShowTooltipStatus(_jointHelper.CurrentStateMessage);
                 }
             }
@@ -376,8 +366,8 @@ namespace LevelEditor
             {
                 if (_objectLevelManager.PreviewObject[0].Sprites[0].Texture != null)
                 {
+                    objectScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
                     levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
-                    //levelScreen.DrawCurrentGameObject = addPreviewObjectAction.Checked;
                 }
                 else
                 {
@@ -387,10 +377,16 @@ namespace LevelEditor
             }
             else
             {
-                if(attachFixture.Checked && _attachmentHelper!=null && _attachmentHelper.ShowPreview)
+                if (attachFixture.Checked && _attachmentHelper != null && _attachmentHelper.ShowPreview)
+                {
+                    objectScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
                     levelScreen.PreviewGameObject = _objectLevelManager.PreviewObject;
+                }
                 else
-                    levelScreen.PreviewGameObject = null;
+                {
+                   objectScreen.PreviewGameObject = null;
+                   levelScreen.PreviewGameObject = null;
+                }
             }
             if (editCurrentObjectAction.Checked||addPreviewObjectAction.Checked)
             {
@@ -405,7 +401,12 @@ namespace LevelEditor
                 if (_attachmentHelper == null)
                 {
                     if (_attachmentHelper == null)
-                        _attachmentHelper = new FixtureAttachmentHelper(_objectLevelManager.PreviewVertices,_objectLevelManager.PreviewObject[0].Body, _objectLevelManager.GameLevel.World);
+                    {
+                        if (viewTabControl.SelectedTab == levelPage)
+                            _attachmentHelper = new FixtureAttachmentHelper(_objectLevelManager.PreviewVertices, _objectLevelManager.PreviewObject[0].Body, _objectLevelManager.GameLevel.World);
+                        else
+                            _attachmentHelper = new FixtureAttachmentHelper(_objectLevelManager.PreviewVertices, _objectLevelManager.PreviewObject[0].Body, _objectLevelManager.SeparateEditObject.World);
+                    }
                     ShowTooltipStatus(_attachmentHelper.StatusMessage);
                 }
             }

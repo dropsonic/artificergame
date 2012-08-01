@@ -13,17 +13,17 @@ using FarseerPhysics.DebugViews;
 using FarseerPhysics;
 using System.ComponentModel;
 using LevelEditor.Helpers;
+using FarseerPhysics.Common;
 
 
 namespace LevelEditor
 {
-    class LevelScreen : GraphicsDeviceControl
+    class ObjectScreen : GraphicsDeviceControl
     {
         SpriteBatch _spriteBatch;
-        GameLevel _gameLevel;
+        GameObject _gameObject;
         Camera _camera;
         SpriteFont _font;
-        DebugViewXNA _debugView;
         SelectedItemsDisplay _selectedItemsDisplay;
 
         public SelectedItemsDisplay SelectedItemsDisplay
@@ -39,19 +39,10 @@ namespace LevelEditor
             get { return _spriteBatch; }
         }
 
-        public GameLevel GameLevel
+        public GameObject GameObject
         {
-            get { return _gameLevel; }
-            set 
-            { 
-                _gameLevel = value;
-
-                if (_gameLevel != null)
-                {
-                    SetDebugView();
-                    _debugView.TranslateDebugPerfomancePair(_absoluteULPoint);
-                }
-            }
+            get { return _gameObject; }
+            set { _gameObject = value; }
         }
 
         public Camera Camera
@@ -106,23 +97,6 @@ namespace LevelEditor
             }
         }
 
-
-        private Vector2 _absoluteULPoint;
-        public Vector2 AbsoluteULPoint 
-        {
-            get
-            {
-                return _absoluteULPoint;
-            }
-            
-            set
-            {
-                _absoluteULPoint = value;
-                if (_debugView != null) //если null, то это дизайнер пытается присвоить значение при создании формы
-                    _debugView.TranslateDebugPerfomancePair(value);
-            }
-        }
-
         public bool DrawCurrentGameObject { get; set; }
 
         protected override void Initialize()
@@ -138,40 +112,6 @@ namespace LevelEditor
             _selectedItemsDisplay = new SelectedItemsDisplay(GraphicsDevice);
         }
 
-        void SetDebugView()
-        {
-            DebugViewFlags flags = 0;
-            if (_debugView != null) { flags = _debugView.Flags;}
-            _debugView = new DebugViewXNA(_gameLevel.World);
-            _debugView.DefaultShapeColor = Color.White;
-            _debugView.SleepingShapeColor = Color.LightGray;
-            _debugView.LoadContent(GraphicsDevice, new Viewport(0,0,this.Size.Width,this.Size.Height),Content);
-            _debugView.Flags = flags;
-        }
-
-        public void SwitchDebugViewFlag(DebugViewFlags flag)
-        {
-            if ((_debugView.Flags & flag) == flag)
-            {
-                _debugView.RemoveFlags(flag);
-            }
-            else
-            {
-                _debugView.AppendFlags(flag);
-            }
-        }
-
-
-        public bool DebugViewHasFlag(DebugViewFlags flag)
-        {
-            if (_debugView == null)
-                return false;
-
-            if ((_debugView.Flags & flag) == flag)
-                return true;
-            else
-                return false;
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -185,6 +125,7 @@ namespace LevelEditor
 
         protected override void Draw()
         {
+            
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             if (_previewGameObject != null && DrawCurrentGameObject)
@@ -194,29 +135,21 @@ namespace LevelEditor
                 _previewGameObject.Camera.Position = Vector2.Zero;
             }
 
-            if (_gameLevel != null)
-                _gameLevel.Draw(GameTimer.GameTime);
-
+            if (_gameObject != null)
+                _gameObject.Draw(GameTimer.GameTime);
 
             Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
             _selectedItemsDisplay.DrawSelectedItems(ref proj);
-            if (_debugView != null)
-                _debugView.RenderDebugData(ref proj);
-
-
-            
+          
         }
 
         protected override void LoadContent()
         {
         }
 
-        public delegate void UpdateDelegate(GameTime gameTime);
-        public UpdateDelegate UpdateSubscriber;
         protected override void UpdateFrame()
         {
-            if (UpdateSubscriber!=null)
-                UpdateSubscriber(GameTimer.GameTime);
+
         }
     }
 }   

@@ -18,6 +18,9 @@ using FarseerPhysics.Collision.Shapes;
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
+    using FarseerPhysics.Common;
+    using FarseerPhysics.Factories;
+    using GameLogic;
 
 
     public partial class MainForm : Form
@@ -74,15 +77,19 @@ namespace LevelEditor
 
         private void propertyGrid_SelectedObjectsChanged(object sender, EventArgs args)
         {
-            /*PropertyGrid grid = (PropertyGrid)sender;
-            if (grid.SelectedObject is Joint)
-                levelScreen.SelectedItemsDisplay.SelectedJoints = (grid.SelectedObjects.Select((item) => (Joint)item)).ToList();
-            if (grid.SelectedObject is GameObject)
-                levelScreen.SelectedItemsDisplay.SelectedGameObjects = (grid.SelectedObjects.Select((item) => (GameObject)item)).ToList();
-            if (grid.SelectedObject is GameObjectPart)
-                levelScreen.SelectedItemsDisplay.SelectedGameObjectParts = (grid.SelectedObjects.Select((item) => (GameObjectPart)item)).ToList();*/
-            levelScreen.SelectedItemsDisplay.SelectedItem = ((PropertyGrid)sender).SelectedObject;
+            ShowSelectedObject(propertyGrid.SelectedObject);
+        }
 
+        private void ShowSelectedObject(object selectedObject)
+        {
+            //levelScreen.SelectedItemsDisplay.SelectedItem = objectScreen.SelectedItemsDisplay.SelectedItem = null;
+            if (viewTabControl.SelectedTab == levelPage)
+                levelScreen.SelectedItemsDisplay.SelectedItem = selectedObject;
+            else
+            {
+                if(objectScreen.SelectedItemsDisplay!=null)
+                    objectScreen.SelectedItemsDisplay.SelectedItem = selectedObject;
+            }
         }
 
         private void InitializeCommandManager()
@@ -108,6 +115,7 @@ namespace LevelEditor
             levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
             propertyGrid.SelectedObject = _objectLevelManager.PreviewObject[0].Body;
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
+            objectScreen.GameObject = _objectLevelManager.SeparateEditObject;
 
             //load assetCreator Materials
             _assetCreator = ContentService.GetContentService().AssetCreator;
@@ -474,7 +482,7 @@ namespace LevelEditor
         {
             levelScreen.DrawCurrentGameObject = true;
             Cursor = _levelScreenCursor;
-            ShowMousePosition();
+            ShowLevelScreenMousePosition();
         }
 
         private void levelScreen_MouseLeave(object sender, EventArgs e)
@@ -489,7 +497,7 @@ namespace LevelEditor
         {
             levelScreen.MouseState = e;
             _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
-            ShowMousePosition();
+            ShowLevelScreenMousePosition();
             HandleLevelScreenMouseInput(MouseEvents.Move, e);
         }
 
@@ -895,6 +903,8 @@ namespace LevelEditor
         {
             levelScreen.SelectedItemsDisplay.DrawAssociatedJoints = drawAssociatedJoints.Checked;
             levelScreen.SelectedItemsDisplay.SelectedItem = propertyGrid.SelectedObject;
+            
+            
         }
         #endregion
 
@@ -904,9 +914,15 @@ namespace LevelEditor
             SetMouseToolButtonsState(addNewJointAction);
         }
 
-        private void ShowMousePosition()
+        private void ShowLevelScreenMousePosition()
         {
             Vector2 pos = ConvertUnits.ToSimUnits(levelScreen.MousePosition);
+            toolStripMousePosLabel.Text = String.Format("(X={0:0.00}, Y={1:0.00})", pos.X, pos.Y);
+        }
+
+        private void ShowObjectScreenMousePosition()
+        {
+            Vector2 pos = ConvertUnits.ToSimUnits(objectScreen.MousePosition);
             toolStripMousePosLabel.Text = String.Format("(X={0:0.00}, Y={1:0.00})", pos.X, pos.Y);
         }
 
@@ -914,5 +930,124 @@ namespace LevelEditor
         {
             propertyGrid.SelectedObject = createdJointsList.SelectedItem;
         }
+
+
+        private void objectScreen_MouseEnter(object sender, EventArgs e)
+        {
+            objectScreen.DrawCurrentGameObject = true;
+            Cursor = _levelScreenCursor;
+            ShowObjectScreenMousePosition();
+        }
+
+        private void objectScreen_MouseLeave(object sender, EventArgs e)
+        {
+            objectScreen.DrawCurrentGameObject = false;
+            Cursor = Cursors.Arrow;
+            toolStripMousePosLabel.Text = String.Empty;
+        }
+
+        private void objectScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            objectScreen.MouseState = e;
+            ShowObjectScreenMousePosition();
+            HandleObjectScreenMouseInput(MouseEvents.Move, e);
+        }
+
+        private void objectScreen_MouseClick(object sender, MouseEventArgs e)
+        {
+            HandleObjectScreenMouseInput(MouseEvents.Click, e);
+        }
+
+        private void objectScreen_MouseUp(object sender, MouseEventArgs e)
+        {
+            HandleObjectScreenMouseInput(MouseEvents.Up, e);
+        }
+
+        private void objectScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            HandleObjectScreenMouseInput(MouseEvents.Down, e);
+        }
+
+        private void HandleObjectScreenMouseInput(MouseEvents mouseEvent, MouseEventArgs args)
+        {
+            //TODO: для каждого типа своя ф-ия с передачей mouseEvent
+            switch (_mouseToolState)
+            {
+                case MouseToolState.Default:
+                    break;
+
+                case MouseToolState.MouseJoint:
+                    break;
+
+                case MouseToolState.PlaceObject:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        _commandManager.Execute(new AddObjectPartsToObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.SeparateEditObject,ConvertUnits.ToSimUnits(objectScreen.MousePosition)));
+                    }
+                    break;
+
+                case MouseToolState.SelectObject:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        propertyGrid.SelectedObject = objectScreen.GameObject;
+                    }
+                    break;
+
+                case MouseToolState.SelectObjectPart:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix()))), _objectLevelManager.SeparateEditObject);
+                    }
+                    break;
+
+                case MouseToolState.PlaceJoint:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        if (_jointHelper != null)
+                        {
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            _jointHelper.NextStep(simPosition);
+                            ShowTooltipStatus(_jointHelper.CurrentStateMessage);
+                            if (_jointHelper.CreatedJoint != null)
+                            {
+                                _commandManager.Execute(new Commands.AddGameObjectJointCommand(_objectLevelManager.SeparateEditObject, _jointHelper.CreatedJoint));
+                                UpdateCreatedJointList();
+                                createdJointsList.SelectedIndex = 0;
+                                propertyGrid.SelectedObject = createdJointsList.Items[0];
+                            }
+                        }
+                    }
+                    break;
+                case MouseToolState.AttachFixture:
+                    if (mouseEvent == MouseEvents.Click)
+                    {
+                        if (_attachmentHelper != null)
+                        {
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            _attachmentHelper.NextStep(simPosition);
+                            HandlePreviewDisplay();
+                            ShowTooltipStatus(_attachmentHelper.StatusMessage);
+                            if (_attachmentHelper.Finished)
+                            {
+                                Body body;
+                                List<Shape> shapes;
+                                _attachmentHelper.GetAttachmentResult(out body, out shapes);
+
+                                Vector2 offset = Vector2.Transform(ConvertUnits.ToDisplayUnits(body.Position) - new Vector2(args.X, args.Y), Matrix.CreateRotationZ(-body.Rotation));
+                                Texture2D rotatedTexture = ((-body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation) == 0) ?
+                                                                                        _objectLevelManager.PreviewObject[0].Sprites[0].Texture :
+                                                                                        _assetCreator.CreateRotatedTexture(_objectLevelManager.PreviewObject[0].Sprites[0], -body.Rotation + _objectLevelManager.PreviewObject[0].Body.Rotation);
+                                _commandManager.Execute(new Commands.AttachGameObjectFixtureCommand(_objectLevelManager.SeparateEditObject, body, shapes, new Sprite(rotatedTexture, offset)));
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
+
+
+
+
     }
 }

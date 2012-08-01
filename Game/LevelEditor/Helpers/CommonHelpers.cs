@@ -36,6 +36,17 @@ namespace LevelEditor.Helpers
                         return gop;
             return null;
         }
+        public static GameObjectPart FindGameObjectPart(Vector2 point, GameObject gameObject)
+        {
+            return FindGameObjectPart(gameObject, FindBody(point, gameObject.World));
+        }
+        public static GameObjectPart FindGameObjectPart(GameObject gameObject, Body body)
+        {
+            foreach (GameObjectPart gop in gameObject)
+                if (gop.Body == body)
+                    return gop;
+            return null;
+        }
 
         public static GameObject FindGameObject(Vector2 point, GameLevel gameLevel)
         {

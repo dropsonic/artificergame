@@ -408,6 +408,7 @@ namespace LevelEditor.Helpers
 		public void DrawSelectedItems(ref Matrix projection)
 		{
 			Matrix view = Matrix.Identity;
+			
 			_primitiveBatch.Begin(ref projection,ref view);
 			foreach (Joint joint in _selectedJoints)
 				DrawJoint(joint,Color.Red);
@@ -416,6 +417,7 @@ namespace LevelEditor.Helpers
 			foreach (GameObject go in _selectedGameObjects)
 				DrawObject(go, Color.Yellow);
 			_primitiveBatch.End();
+			 
 		}
 
 

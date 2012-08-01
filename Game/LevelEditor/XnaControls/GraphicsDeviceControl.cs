@@ -309,6 +309,10 @@ namespace LevelEditor
 
         #endregion
 
+        public void ForceInitialize()
+        {
+            Initialize();
+        }
         #region Abstract Methods
 
 

@@ -122,9 +122,9 @@ namespace LevelEditor
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.viewTabControl = new System.Windows.Forms.TabControl();
             this.levelPage = new System.Windows.Forms.TabPage();
+            this.objectScreen = new LevelEditor.ObjectScreen();
             this.levelScreen = new LevelEditor.LevelScreen();
             this.objectTab = new System.Windows.Forms.TabPage();
-            this.objectScreen = new LevelEditor.LevelScreen();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1675,19 +1675,23 @@ namespace LevelEditor
             // 
             // objectScreen
             // 
-            this.objectScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.Camera = null;
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawCurrentGameObject = false;
-            this.objectScreen.GameLevel = null;
+            this.objectScreen.GameObject = null;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
-            this.objectScreen.Margin = new System.Windows.Forms.Padding(0);
             this.objectScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
             this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
-            this.objectScreen.Size = new System.Drawing.Size(829, 727);
+            this.objectScreen.Size = new System.Drawing.Size(829, 702);
             this.objectScreen.TabIndex = 0;
             this.objectScreen.Text = "objectScreen";
+            this.objectScreen.MouseClick += new System.Windows.Forms.MouseEventHandler(this.objectScreen_MouseClick);
+            this.objectScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.objectScreen_MouseDown);
+            this.objectScreen.MouseEnter += new System.EventHandler(this.objectScreen_MouseEnter);
+            this.objectScreen.MouseLeave += new System.EventHandler(this.objectScreen_MouseLeave);
+            this.objectScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.objectScreen_MouseMove);
+            this.objectScreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.objectScreen_MouseUp);
             // 
             // propertyGrid
             // 
@@ -2593,6 +2597,9 @@ namespace LevelEditor
         }
         #endregion
 
+        private ObjectScreen objectScreen;
+        private LevelScreen levelScreen;
+        private PreviewScreen previewScreen;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.TabControl paramsTabControl;
         private System.Windows.Forms.TabPage previewPage;
@@ -2612,8 +2619,6 @@ namespace LevelEditor
         private System.Windows.Forms.TabControl viewTabControl;
         private System.Windows.Forms.TabPage levelPage;
         private System.Windows.Forms.TabPage objectTab;
-        private LevelScreen objectScreen;
-        private LevelScreen levelScreen;
         private WindowsFormsApplication1.TabHiddenHeadersControl shapeParametersControl;
         private System.Windows.Forms.TabPage circleTab;
         private System.Windows.Forms.TabPage ellipseTab;
@@ -2719,7 +2724,6 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
-        private PreviewScreen previewScreen;
         private Crad.Windows.Forms.Actions.Action addPreviewObjectAction;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripLabel simulationSpeedToolStripLabel;
@@ -2773,6 +2777,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.OpenFileDialog openLevelDialog;
         private System.Windows.Forms.SaveFileDialog saveLevelDialog;
+
     }
 }
 

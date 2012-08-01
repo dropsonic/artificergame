@@ -8,6 +8,7 @@ using FarseerTools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Common;
+using FarseerPhysics.Factories;
 
 namespace LevelEditor
 {
@@ -26,11 +27,14 @@ namespace LevelEditor
 
             //Создаём Simulator
             _simulator = new Simulator(_gameLevel);
+
+            _separateEditObject = new GameObject(camera, spriteBatch);
         }
 
         private Simulator _simulator;
         private GameLevel _gameLevel;
         private GameObject _previewObject;
+        private GameObject _separateEditObject;
 
         public Simulator Simulator
         {
@@ -42,6 +46,12 @@ namespace LevelEditor
         {
             get { return _simulator.GameLevel; }
             set { _simulator.GameLevel = value; }
+        }
+
+        public GameObject SeparateEditObject
+        {
+            get { return _separateEditObject; }
+            set { _separateEditObject = value; }
         }
 
         public GameObject PreviewObject
