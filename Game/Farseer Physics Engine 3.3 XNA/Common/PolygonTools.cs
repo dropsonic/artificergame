@@ -179,6 +179,32 @@ namespace FarseerPhysics.Common
             return vertices;
         }
 
+        public static Vertices CreatePreTransformedArt(float radians, int sides, float radius)
+        {
+            Debug.Assert(radians > 0, "The arc needs to be larger than 0");
+            Debug.Assert(sides > 1, "The arc needs to have more than 1 sides");
+            Debug.Assert(radius > 0, "The arc needs to have a radius larger than 0");
+
+            Vertices vertices = new Vertices();
+
+            float stepSize = radians / sides;
+            for (int i = sides - 1; i > 0; i--)
+            {
+                vertices.Add(new Vector2(radius * (float)Math.Cos(stepSize * i),
+                                         radius * (float)Math.Sin(stepSize * i)));
+            }
+
+            if (radians != MathHelper.TwoPi)
+            {
+                vertices.Rotate(MathHelper.PiOver2 - radians / 2);
+                double b = Math.Sqrt(2 * radius * radius * (1 - Math.Cos(radians))) / 2;
+                double x = b / Math.Tan(MathHelper.PiOver2 - radians / 4);
+                float offset = radius - (float)x / 2;
+                vertices.Translate(new Vector2(0, -offset));
+            }
+            return vertices;
+        }
+
         //Capsule contributed by Yobiv
 
         /// <summary>

@@ -177,10 +177,13 @@ namespace LevelEditor
 
                     _objectLevelManager.PreviewObject[0].Body.FixtureList.Clear();
 
+                    if ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()) == ObjectType.Arc)
+                    {
+
+                    }
                     FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 
                                                          previousDensity == null ? 1f : (float)previousDensity, 
                                                          _objectLevelManager.PreviewObject[0].Body);
-
                     _objectLevelManager.PreviewObject[0].Sprites[0] = new Sprite(previewTexture);
 
                     _objectLevelManager.PreviewVertices = shapeVertices;
@@ -208,8 +211,12 @@ namespace LevelEditor
             switch (objectType)
             {
                 case ObjectType.Arc:
-                    shapeVertices = PolygonTools.CreateArc(MathHelper.ToRadians((float)shapeParam[ShapeParametersKeys.ArcDegrees]), (int)shapeParam[ShapeParametersKeys.ArcSides], (float)shapeParam[ShapeParametersKeys.ArcRadius]);
+                    shapeVertices = PolygonTools.CreatePreTransformedArt(MathHelper.ToRadians((float)shapeParam[ShapeParametersKeys.ArcDegrees]), (int)shapeParam[ShapeParametersKeys.ArcSides], (float)shapeParam[ShapeParametersKeys.ArcRadius]);
                     texture = ContentService.GetContentService().AssetCreator.TextureFromVertices(shapeVertices, (string)shapeParam[ShapeParametersKeys.Material], (Color)shapeParam[ShapeParametersKeys.Color], (float)shapeParam[ShapeParametersKeys.MaterialScale]);
+                    
+                    //shapeVertices.GetCollisionBox().;
+                    //Vector2 arcOffset = Vector2.One;
+                    //shapeVertices.Translate(ref arcOffset);
                     break;
                 case ObjectType.Capsule:
                     shapeVertices = PolygonTools.CreateCapsule((float)shapeParam[ShapeParametersKeys.CapsuleHeight], (float)shapeParam[ShapeParametersKeys.CapsuleBottomRadius], (int)shapeParam[ShapeParametersKeys.CapsuleBottomEdges], (float)shapeParam[ShapeParametersKeys.CapsuleTopRadius], (int)shapeParam[ShapeParametersKeys.CapsuleTopEdges]);
