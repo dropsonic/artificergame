@@ -23,6 +23,7 @@ namespace LevelEditor
     using Path = System.IO.Path;
     using FarseerPhysics.Dynamics.Joints;
     using GameLogic;
+    using FarseerTools.Serializing;
 
     public partial class MainForm : Form
     {
@@ -115,7 +116,10 @@ namespace LevelEditor
                 shapeParameters.Add(ShapeParametersKeys.Material,materialBox.SelectedItem.ToString());
                 shapeParameters.Add(ShapeParametersKeys.MaterialScale,float.Parse(materialScale.Value.ToString()));
                 shapeParameters.Add(ShapeParametersKeys.Color, _colorDictionary[colorBox.SelectedItem.ToString()]);
-                switch ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
+
+                ObjectType objectType = (ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString());
+
+                switch (objectType)
                 {
                     case ObjectType.Arc:
                         shapeParameters.Add(ShapeParametersKeys.ArcDegrees,float.Parse(arcDegrees.Value.ToString()));
@@ -156,7 +160,7 @@ namespace LevelEditor
                         shapeParameters.Add(ShapeParametersKeys.CircleSegments,AssetCreator.CircleSegments);
                         break;
                     case ObjectType.CustomShape:
-                        if (shapeFromTextureBox.SelectedItem == null) break;
+                        if (shapeFromTextureBox.SelectedItem == null) return;
                         shapeParameters.Add(ShapeParametersKeys.CustomObjectScale,float.Parse(customShapeScale.Value.ToString()));
                         shapeParameters.Add(ShapeParametersKeys.CustomObjectShape,shapeFromTextureBox.SelectedItem.ToString());
                         shapeParameters.Add(ShapeParametersKeys.CustomObjectUseOriginalTexture, useOriginalTextureCheck.Checked);
@@ -164,6 +168,17 @@ namespace LevelEditor
                     default:
                          throw new Exception("Unknown Shape");
                         
+                }
+
+                //Сохраняем исходную текстуру в словарь метаданных
+                switch (objectType)
+                {
+                    case ObjectType.CustomShape:
+                        shapeParameters.Add(ShapeParametersKeys.Texture, _assetCreator.GetShape((string)shapeParameters[ShapeParametersKeys.CustomObjectShape]));
+                        break;
+                    default:
+                        shapeParameters.Add(ShapeParametersKeys.Texture, _assetCreator.GetMaterial((string)shapeParameters[ShapeParametersKeys.Material]));
+                        break;
                 }
 
                 Vertices shapeVertices;
@@ -192,53 +207,12 @@ namespace LevelEditor
             }
         }
 
-        class ShapeParametersKeys
-        {
-            public const string Material = "Material";
-            public const string Color = "Color";
-            public const string MaterialScale = "MaterialScale";
-
-            public const string ArcDegrees = "ArcDegrees";
-            public const string ArcSides = "ArSides";
-            public const string ArcRadius = "ArcRadius";
-
-            public const string CapsuleHeight = "CapsuleHeight";
-            public const string CapsuleBottomRadius = "CapsuleBottomRadius";
-            public const string CapsuleBottomEdges = "CapsuleBottomEdges";
-            public const string CapsuleTopRadius = "CapsuleTopRadius";
-            public const string CapsuleTopEdges = "CapsuleTopEdges";
-
-            public const string GearRadius = "GearRadius";
-            public const string GearNumberOfTeeth = "GearNumberOfTeeth";
-            public const string GearTipPercentage = "GearTipPercentage";
-            public const string GearToothHeigt = "GearToothHeigt";
-
-            public const string RectangleHeight = "RectangleHeight";
-            public const string RectangleWidth = "RectangleWidth";
-
-            public const string RoundedRectangleWidth = "RoundedRectangleWidth";
-            public const string RoundedRectangleHeight = "RoundedRectangleHeight";
-            public const string RoundedRectangleXRadius = "RoundedRectangleXRadius";
-            public const string RoundedRectangleYRadius = "RoundedRectangleYRadius";
-            public const string RoundedRectangleSegments = "RoundedRectangleSegments";
-
-            public const string EllipseXRadius = "EllipseXRadius";
-            public const string EllipseYRadius = "EllipseYRadius";
-            public const string EllipseNumberOfEdges = "EllipseNumberOfEdges";
-
-            public const string CircleRadius = "CircleRadius";
-            public const string CircleSegments = "CircleSegments";
-
-            public const string CustomObjectShape = "CustomObjectShape";
-            public const string CustomObjectScale = "CustomObjectScale";
-            public const string CustomObjectUseOriginalTexture = "CustomObjectUseOriginalTexture";
-
-        }
-
-        private void TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType, out Texture2D texture)
+        private Texture2D TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType)
         {
             Vertices vert;
+            Texture2D texture;
             TextureFromDictionary(shapeParam, objectType, out texture, out vert);
+            return texture;
         }
         private void TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType, out Texture2D texture, out Vertices shapeVertices)
         {

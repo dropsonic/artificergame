@@ -59,6 +59,7 @@
     <Compile Include="Commands\AddLevelJointCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\AttachFixtureCommand.cs" />
+    <Compile Include="Commands\SaveLevelCommand.cs" />
     <Compile Include="Commands\OpenLevelCommand.cs" />
     <Compile Include="Commands\PropertyGridChangeParamCommand.cs" />
     <Compile Include="Commands\SimulationSpeedDecreaseCommand.cs" />

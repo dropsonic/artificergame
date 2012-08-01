@@ -34,9 +34,9 @@ namespace LevelEditor
         Timer _propertyGridTimer = new Timer();
 
         /// <summary>
-        /// Имя текущего файла. Если создан новый уровень, то это String.Empty.
+        /// Имя текущего файла. Если создан новый уровень, то это null.
         /// </summary>
-        string _currentFileName = String.Empty;        
+        string _currentFileName = null;        
 
         Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -841,17 +841,60 @@ namespace LevelEditor
 
         private void saveLevelAction_Execute(object sender, EventArgs e)
         {
+            if (!String.IsNullOrEmpty(_currentFileName))
+            {
+                try
+                {
+                    _commandManager.Execute(new SaveLevelCommand(_currentFileName, _objectLevelManager.GameLevel));
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorStatus(ex);
+                }
+            }
+        }
 
+        private void saveLevelAction_Update(object sender, EventArgs e)
+        {
+            bool newValue;
+            if (String.IsNullOrEmpty(_currentFileName))
+                newValue = false;
+            else
+                newValue = true;
+
+            if (saveLevelAction.Enabled != newValue)
+                saveLevelAction.Enabled = newValue;
         }
 
         private void saveAsLevelAction_Execute(object sender, EventArgs e)
         {
+            pauseSimulationAction.DoExecute();
+            if (saveLevelDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (_objectLevelManager.Simulator.State != SimulationState.Stopped)
+                    simulateAction.DoExecute();
 
+                try
+                {
+                    _commandManager.Execute(new SaveLevelCommand(saveLevelDialog.FileName, _objectLevelManager.GameLevel));
+                    _currentFileName = saveLevelDialog.FileName;
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorStatus(ex);
+                }
+            }
         }
 
         private void exportLevelAction_Execute(object sender, EventArgs e)
         {
 
+        }
+
+        private void drawAssociatedJoints_Execute(object sender, EventArgs e)
+        {
+            levelScreen.SelectedItemsDisplay.DrawAssociatedJoints = drawAssociatedJoints.Checked;
+            levelScreen.SelectedItemsDisplay.SelectedItem = propertyGrid.SelectedObject;
         }
         #endregion
 
@@ -871,12 +914,5 @@ namespace LevelEditor
         {
             propertyGrid.SelectedObject = createdJointsList.SelectedItem;
         }
-
-        private void drawAssociatedJoints_Execute(object sender, EventArgs e)
-        {
-            levelScreen.SelectedItemsDisplay.DrawAssociatedJoints = drawAssociatedJoints.Checked;
-            levelScreen.SelectedItemsDisplay.SelectedItem = propertyGrid.SelectedObject;
-        }
-
     }
 }

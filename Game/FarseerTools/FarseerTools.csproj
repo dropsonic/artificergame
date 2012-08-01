@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenSystem\ConvertUnits.cs" />
     <Compile Include="Serializing\ObjectMetadataDictionary.cs" />
+    <Compile Include="Serializing\ShapeParametersKeys.cs" />
+    <Compile Include="Serializing\Texture2DHelpers.cs" />
     <Compile Include="Serializing\Texture2DXMLSerializer.cs" />
     <Compile Include="Serializing\TextureMetadataKeys.cs" />
   </ItemGroup>

@@ -297,14 +297,14 @@ namespace XMLExtendedSerialization
 
         private XDocument Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
         {
-            XDocument document = new XDocument(rootName);
+            XDocument document = new XDocument();
 #if SAVEDEBUGINFO
             try
             {
 #endif
             if (addMetadata)
                 document.Add(new XComment(metadata.ToXMLComment()));
-            document.Add(SerializeObject(rootName, rootObject));
+            document.Add(SerializeObject(rootName.GetFullNameFromXML(), rootObject));
 #if SAVEDEBUGINFO
             }
             finally

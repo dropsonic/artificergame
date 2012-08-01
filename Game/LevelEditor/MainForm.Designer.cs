@@ -211,6 +211,7 @@ namespace LevelEditor
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveLevelDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -2316,6 +2317,7 @@ namespace LevelEditor
             this.saveLevelAction.Text = "Save level";
             this.saveLevelAction.ToolTipText = "Save level to file";
             this.saveLevelAction.Execute += new System.EventHandler(this.saveLevelAction_Execute);
+            this.saveLevelAction.Update += new System.EventHandler(this.saveLevelAction_Update);
             // 
             // saveAsLevelAction
             // 
@@ -2489,6 +2491,13 @@ namespace LevelEditor
             // 
             this.openLevelDialog.Filter = "Level Structure Files (*.lvl)|*.lvl";
             this.openLevelDialog.Title = "Open Level...";
+            // 
+            // saveLevelDialog
+            // 
+            this.saveLevelDialog.DefaultExt = "lvl";
+            this.saveLevelDialog.Filter = "Level Structure Files (*.lvl)|*.lvl";
+            this.saveLevelDialog.SupportMultiDottedExtensions = true;
+            this.saveLevelDialog.Title = "Save Level As...";
             // 
             // MainForm
             // 
@@ -2763,6 +2772,7 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem saveasToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.OpenFileDialog openLevelDialog;
+        private System.Windows.Forms.SaveFileDialog saveLevelDialog;
     }
 }
 

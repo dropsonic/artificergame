@@ -84,6 +84,16 @@ namespace FarseerTools
             _shapes.Remove(key);
         }
 
+        public Texture2D GetMaterial(string key)
+        {
+            return _materials[key];
+        }
+
+        public Texture2D GetShape(string key)
+        {
+            return _shapes[key];
+        }
+
         public Texture2D TextureFromShape(Shape shape, string type, Color color, float materialScale)
         {
             switch (shape.ShapeType)
