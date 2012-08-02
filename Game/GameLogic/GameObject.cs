@@ -190,7 +190,7 @@ namespace GameLogic
         public void RemovePart(GameObjectPart part)
         {
             _parts.Find(item => item == part).RemoveBody(World);
-            //_parts.Remove(part);
+            _parts.Remove(part);
         }
 
         public void AddPart(Sprite sprite, Body body)
@@ -201,6 +201,7 @@ namespace GameLogic
         public void AddJoint(Joint joint)
         {
             _joints.Add(joint);
+            _world.AddJoint(joint);
         }
 
         public void RemoveJoint(Joint joint)

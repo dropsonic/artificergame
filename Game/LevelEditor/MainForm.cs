@@ -82,15 +82,26 @@ namespace LevelEditor
 
         private void UpdateAssociatedJointList(object selectedObject)
         {
+            //возможно стоит показывать вообще все джоинты для данного объекта
             if (propertyGrid.SelectedObject is GameObject)
             {
                 associatedJointsList.Items.Clear();
-                foreach (Joint joint in ((GameObject)propertyGrid.SelectedObject).Joints)
-                    associatedJointsList.Items.Insert(0, joint);
+                foreach (Joint joint in _objectLevelManager.GameLevel.Joints)
+                    foreach (GameObjectPart part in ((GameObject)propertyGrid.SelectedObject))
+                    {
+                        JointEdge iterator = part.Body.JointList;
+                        while (iterator != null)
+                        {
+                            if (joint == iterator.Joint)
+                                associatedJointsList.Items.Insert(0, iterator.Joint);
+                            iterator = iterator.Next;
+                        }
+                    }
             }
             else if (propertyGrid.SelectedObject is GameObjectPart)
             {
                 associatedJointsList.Items.Clear();
+
                 JointEdge iterator = ((GameObjectPart)propertyGrid.SelectedObject).Body.JointList;
                 while (iterator != null)
                 {
@@ -324,6 +335,7 @@ namespace LevelEditor
         private void viewTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateCreatedJointList(true);
+            associatedJointsList.Items.Clear();
         }
 
         #region DebugView
