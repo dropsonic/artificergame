@@ -55,8 +55,9 @@ namespace FarseerTools
         public object Deserialize(XElement element)
         {
             object root;
-            throw new NotImplementedException();
-            //TODO: написать десериализацию
+            
+            
+
             return root;
         }
     }
