@@ -17,6 +17,8 @@ namespace GameLogic
 
         private World _world;
         private Camera _camera;
+
+        [XMLExtendedSerialization.XMLDoNotSerialize]
         private SpriteBatch _spriteBatch;
 
         private List<GameObject> _objects;

@@ -25,6 +25,7 @@ namespace GameLogic
             get { return _body; }
         }
 
+        [XMLExtendedSerialization.XMLDoNotSerialize]
         private SpriteBatch _spriteBatch;
         public SpriteBatch SpriteBatch
         {

@@ -22,6 +22,7 @@ namespace GameLogic
 
         private List<Joint> _joints;
 
+        [XMLExtendedSerialization.XMLDoNotSerialize]
         private SpriteBatch _spriteBatch;
         private Camera _camera;
 

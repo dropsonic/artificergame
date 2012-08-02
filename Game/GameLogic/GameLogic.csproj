@@ -80,6 +80,10 @@
       <Project>{A875A73C-7870-4A79-81CD-BEA7DC8CCBD5}</Project>
       <Name>FarseerTools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMLExtendedSerialization\XMLExtendedSerialization.csproj">
+      <Project>{95FAC04B-5A7A-4869-AEBC-CE5033FE3813}</Project>
+      <Name>XMLExtendedSerialization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
