@@ -115,6 +115,8 @@ namespace LevelEditor
             this.label1 = new System.Windows.Forms.Label();
             this.shapeBox = new System.Windows.Forms.ComboBox();
             this.jointPage = new System.Windows.Forms.TabPage();
+            this.associatedJointsList = new System.Windows.Forms.ListBox();
+            this.label33 = new System.Windows.Forms.Label();
             this.createdJointsList = new System.Windows.Forms.ListBox();
             this.label32 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -1550,6 +1552,8 @@ namespace LevelEditor
             // jointPage
             // 
             this.jointPage.AutoScroll = true;
+            this.jointPage.Controls.Add(this.associatedJointsList);
+            this.jointPage.Controls.Add(this.label33);
             this.jointPage.Controls.Add(this.createdJointsList);
             this.jointPage.Controls.Add(this.label32);
             this.jointPage.Controls.Add(this.label31);
@@ -1562,19 +1566,37 @@ namespace LevelEditor
             this.jointPage.Text = "Joints";
             this.jointPage.UseVisualStyleBackColor = true;
             // 
+            // associatedJointsList
+            // 
+            this.associatedJointsList.FormattingEnabled = true;
+            this.associatedJointsList.Location = new System.Drawing.Point(5, 63);
+            this.associatedJointsList.Name = "associatedJointsList";
+            this.associatedJointsList.Size = new System.Drawing.Size(287, 108);
+            this.associatedJointsList.TabIndex = 5;
+            this.associatedJointsList.SelectedValueChanged += new System.EventHandler(this.associatedJointsList_SelectedValueChanged);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(9, 47);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(108, 13);
+            this.label33.TabIndex = 4;
+            this.label33.Text = "Associated Joints List";
+            // 
             // createdJointsList
             // 
             this.createdJointsList.FormattingEnabled = true;
-            this.createdJointsList.Location = new System.Drawing.Point(5, 68);
+            this.createdJointsList.Location = new System.Drawing.Point(5, 198);
             this.createdJointsList.Name = "createdJointsList";
-            this.createdJointsList.Size = new System.Drawing.Size(293, 654);
+            this.createdJointsList.Size = new System.Drawing.Size(287, 524);
             this.createdJointsList.TabIndex = 3;
             this.createdJointsList.SelectedValueChanged += new System.EventHandler(this.createdJointsList_SelectedValueChanged);
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(6, 52);
+            this.label32.Location = new System.Drawing.Point(6, 182);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(93, 13);
             this.label32.TabIndex = 2;
@@ -2778,6 +2800,8 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.OpenFileDialog openLevelDialog;
         private System.Windows.Forms.SaveFileDialog saveLevelDialog;
+        private System.Windows.Forms.ListBox associatedJointsList;
+        private System.Windows.Forms.Label label33;
 
     }
 }

@@ -77,6 +77,37 @@ namespace LevelEditor
         private void propertyGrid_SelectedObjectsChanged(object sender, EventArgs args)
         {
             ShowSelectedObject(propertyGrid.SelectedObject);
+            UpdateAssociatedJointList(propertyGrid.SelectedObject);
+        }
+
+        private void UpdateAssociatedJointList(object selectedObject)
+        {
+            if (propertyGrid.SelectedObject is GameObject)
+            {
+                associatedJointsList.Items.Clear();
+                foreach (Joint joint in ((GameObject)propertyGrid.SelectedObject).Joints)
+                    associatedJointsList.Items.Insert(0, joint);
+            }
+            else if (propertyGrid.SelectedObject is GameObjectPart)
+            {
+                associatedJointsList.Items.Clear();
+                JointEdge iterator = ((GameObjectPart)propertyGrid.SelectedObject).Body.JointList;
+                while (iterator != null)
+                {
+                    associatedJointsList.Items.Insert(0, iterator.Joint);
+                    iterator = iterator.Next;
+                }
+            }
+            else if (propertyGrid.SelectedObject is Joint)
+            {
+                bool sameList = false;
+                foreach (Joint joint in associatedJointsList.Items)
+                {
+                    if (joint == propertyGrid.SelectedObject)
+                        sameList = true;
+                }
+                if (!sameList) associatedJointsList.Items.Clear();
+            }
         }
 
         private void InitializeCommandManager()
@@ -1135,6 +1166,11 @@ namespace LevelEditor
             ShowSelectedObject(propertyGrid.SelectedObject);
         }
         #endregion
+
+        private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = associatedJointsList.SelectedItem;
+        }
 
     }
 }
