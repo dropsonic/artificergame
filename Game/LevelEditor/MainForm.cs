@@ -14,13 +14,12 @@ using LevelEditor.Commands;
 using LevelEditor.Helpers;
 using FarseerPhysics.Dynamics.Joints;
 using FarseerPhysics.Collision.Shapes;
+using GameLogic;
 
 namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
-    using FarseerPhysics.Common;
-    using FarseerPhysics.Factories;
-    using GameLogic;
+    using Point = System.Drawing.Point;
 
 
     public partial class MainForm : Form
@@ -78,6 +77,16 @@ namespace LevelEditor
         {
             ShowSelectedObject(propertyGrid.SelectedObject);
             UpdateAssociatedJointList(propertyGrid.SelectedObject);
+        }
+
+        private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = associatedJointsList.SelectedItem;
+        }
+
+        private void createdJointsList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = createdJointsList.SelectedItem;
         }
 
         private void UpdateAssociatedJointList(object selectedObject)
@@ -312,11 +321,6 @@ namespace LevelEditor
         {
             addNewJointAction.Checked = true;
             SetMouseToolButtonsState(addNewJointAction);
-        }
-
-        private void createdJointsList_SelectedValueChanged(object sender, EventArgs e)
-        {
-            propertyGrid.SelectedObject = createdJointsList.SelectedItem;
         }
 
         private void ShowSelectedObject(object selectedObject)
@@ -1177,16 +1181,10 @@ namespace LevelEditor
             objectScreen.SelectedItemsDisplay.DrawAssociatedJoints = drawAssociatedJoints.Checked;
             ShowSelectedObject(propertyGrid.SelectedObject);
         }
-        #endregion
-
-        private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)
-        {
-            propertyGrid.SelectedObject = associatedJointsList.SelectedItem;
-        }
 
         private void setLevelParametersAction_Execute(object sender, EventArgs e)
         {
-            LevelScreenOptionsForm options = new LevelScreenOptionsForm(levelScreen.Size.Width,levelScreen.Size.Height,(int)ConvertUnits.ToSimUnits(levelScreen.Size.Height));
+            LevelScreenOptionsForm options = new LevelScreenOptionsForm(levelScreen.Size.Width, levelScreen.Size.Height, (int)ConvertUnits.ToSimUnits(levelScreen.Size.Height));
             if (options.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 levelScreen.Width = options.Width;
@@ -1207,6 +1205,11 @@ namespace LevelEditor
                 CreatePreview();
             }
         }
+        #endregion
+
+
+
+
 
 
     }
