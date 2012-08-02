@@ -105,7 +105,7 @@ namespace LevelEditor
                 shapeParameters.Add(ShapeParametersKeys.Color, _colorDictionary[colorBox.SelectedItem.ToString()]);
 
                 ObjectType objectType = (ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString());
-
+                shapeParameters.Add(ShapeParametersKeys.ObjectType, objectType);
                 switch (objectType)
                 {
                     case ObjectType.Arc:
@@ -170,7 +170,7 @@ namespace LevelEditor
 
                 Vertices shapeVertices;
                 Texture2D previewTexture;
-                TextureFromDictionary(shapeParameters,(ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()), out previewTexture, out shapeVertices);
+                TextureFromDictionary(shapeParameters, out previewTexture, out shapeVertices);
                 if (shapeVertices != null && previewTexture != null)
                 {
                     float? previousDensity = _objectLevelManager.PreviewObject[0].Body.Density;
@@ -194,20 +194,23 @@ namespace LevelEditor
                     editCurrentObjectAction.Checked = true;
                     SetMouseToolButtonsState(editCurrentObjectAction);
                 }
+
+                previewTexture.SetMetadataDictionary(shapeParameters);
             }
         }
 
-        private Texture2D TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType)
+        private Texture2D TextureFromDictionary(Dictionary<string,object> shapeParam)
         {
             Vertices vert;
             Texture2D texture;
-            TextureFromDictionary(shapeParam, objectType, out texture, out vert);
+            TextureFromDictionary(shapeParam, out texture, out vert);
             return texture;
         }
-        private void TextureFromDictionary(Dictionary<string,object> shapeParam, ObjectType objectType, out Texture2D texture, out Vertices shapeVertices)
+        private void TextureFromDictionary(Dictionary<string,object> shapeParam, out Texture2D texture, out Vertices shapeVertices)
         {
             shapeVertices = null;
             texture = null;
+            ObjectType objectType = (ObjectType)shapeParam[ShapeParametersKeys.ObjectType];
             switch (objectType)
             {
                 case ObjectType.Arc:

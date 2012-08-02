@@ -6,6 +6,7 @@ using System.IO;
 using XMLExtendedSerialization;
 using GameLogic;
 using System.Xml.Linq;
+using FarseerTools;
 
 namespace LevelEditor.Commands
 {
@@ -25,7 +26,7 @@ namespace LevelEditor.Commands
             XDocument doc;
             try
             {
-                doc = XMLSerializerEx.Serialize(_level, "GameLevel");
+                doc = XMLSerializerEx.Serialize(_level, "GameLevel"); //сохраняет текстуры в temp-папку
             }
             catch (Exception ex)
             {
@@ -37,6 +38,14 @@ namespace LevelEditor.Commands
                 using (Stream stream = File.Create(_fileName))
                 {
                     doc.Save(stream);
+                }
+                //Перемещаем текстуры в текущую папку
+                string currentPath = Path.GetDirectoryName(_fileName);
+                string[] files = Directory.GetFiles(TextureSerializerSettings.FilePath);
+                foreach (string file in files)
+                {
+                    string newFileName = string.Concat(currentPath, Path.GetFileName(file));
+                    File.Move(file, currentPath);
                 }
             }
             catch (Exception ex)

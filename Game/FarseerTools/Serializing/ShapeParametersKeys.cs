@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FarseerTools.Serializing
+namespace FarseerTools
 {
     public static class ShapeParametersKeys
     {
+        public const string ObjectType = "ObjectType";
+
         public const string Texture = "Texture";
 
         public const string Material = "Material";

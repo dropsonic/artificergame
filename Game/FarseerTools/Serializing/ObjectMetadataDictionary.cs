@@ -47,5 +47,18 @@ namespace FarseerTools
             TypeDescriptor.AddAttributes(x, new Attribute[] { newAttribute });
             return newAttribute.Dictionary;
         }
+
+        /// <summary>
+        /// Устанавливает для объекта словарь метаданных, доступных по ключу.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="dictionary"></param>
+        public static void SetMetadataDictionary(this object x, Dictionary<string, object> dictionary)
+        {
+            if (x.GetType().IsValueType)
+                throw new InvalidOperationException("Cannot write metadata in value type.");
+
+            TypeDescriptor.AddAttributes(x, new Attribute[] { new ObjectMetadataDictionaryAttribute() { Dictionary = dictionary } });
+        }
     }
 }

@@ -24,27 +24,27 @@ namespace FarseerTools
 
         public XElement Serialize(object obj, string fieldName)
         {
-            XElement root = new XElement(fieldName);
             Texture2D rootObject = (Texture2D)obj;
+            var metaDict = rootObject.GetMetadataDictionary();
+            if (metaDict.Count == 0)
+                return null;
 
-            //Если метаданных в словаре нет, то просто сохраняем файл текстуры
-            string fileName = root.Name + TextureFileExtension;
-            if (obj.GetMetadataDictionary().Count == 0)
-            {
-                using (Stream stream = File.Create(fileName))
-                {
-                    rootObject.SaveAsPng(stream, rootObject.Width, rootObject.Height);
-                }
+            XElement root = new XElement(fieldName);
+            //Сохраняем файл текстуры
+            Texture2D texture = (Texture2D)metaDict[ShapeParametersKeys.Texture];
 
-                root.Add(new XAttribute(FileNameTag, fileName.ToXMLValue()));
-            }
-            //Иначе сохраняем все метаданные текстуры как элемент тега
-            else
+            if (!Directory.Exists(TextureSerializerSettings.FilePath))
+                Directory.CreateDirectory(TextureSerializerSettings.FilePath);
+
+            string fileName = TextureSerializerSettings.FilePath + texture.Name + TextureFileExtension;
+            using (Stream stream = File.Create(fileName))
             {
-                var metaDict = rootObject.GetMetadataDictionary();
-                XDocument doc = XMLSerializerEx.Serialize(metaDict, TextureMetadataTag);
-                root.Add(doc.Root); 
+                texture.SaveAsPng(stream, rootObject.Width, rootObject.Height);
             }
+            root.Add(new XAttribute(FileNameTag, fileName.ToXMLValue()));
+            //Сохраняем все метаданные текстуры как элемент тега
+            XDocument doc = XMLSerializerEx.Serialize(metaDict, TextureMetadataTag);
+            root.Add(doc.Root);
 
             //Записываем метаданные объекта
             SerializerHelpers.SerializeMetadata(root, rootObject);
@@ -55,8 +55,10 @@ namespace FarseerTools
         public object Deserialize(XElement element)
         {
             object root;
-            
-            
+
+            XDocument doc = new XDocument();
+            doc.Add(element);
+            root = XMLSerializerEx.Deserialize(doc);
 
             return root;
         }

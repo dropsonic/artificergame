@@ -57,7 +57,7 @@ namespace LevelEditor.Commands
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Command {0} executed  incorrectly", command.Name), ex);
+                throw;// new Exception(string.Format("Command {0} executed  incorrectly", command.Name), ex);
             }
         }
 
@@ -102,7 +102,7 @@ namespace LevelEditor.Commands
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format("Command {0} have not unexecuted", command.Name), ex);
+                    throw;// new Exception(string.Format("Command {0} have not unexecuted", command.Name), ex);
                 }
             }
         }

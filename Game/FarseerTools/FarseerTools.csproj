@@ -73,6 +73,7 @@
     <Compile Include="Serializing\Texture2DHelpers.cs" />
     <Compile Include="Serializing\Texture2DXMLSerializer.cs" />
     <Compile Include="Serializing\TextureMetadataKeys.cs" />
+    <Compile Include="Serializing\TextureSerializerSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Farseer Physics Engine 3.3 XNA\Farseer Physics XNA.csproj">
