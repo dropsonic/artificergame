@@ -10,6 +10,10 @@ namespace XMLExtendedSerialization
 {
     public static class XMLSerializerEx
     {
+        private const string SerializeErrorMessage = "Cannot serialize object.";
+        private const string DeserializeErrorMessage = "Cannot deserialize object.";
+
+        #region Сериализация
         /// <summary>
         /// Сериализует объект в виде XML-документа.
         /// </summary>
@@ -18,9 +22,16 @@ namespace XMLExtendedSerialization
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         public static void Serialize(object obj, Stream stream, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer();
-            XDocument document = serializer.Serialize(obj, rootName);
-            document.Save(stream);
+            try
+            {
+                Serializer serializer = new Serializer();
+                XDocument document = serializer.Serialize(obj, rootName);
+                document.Save(stream);
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(SerializeErrorMessage, ex);
+            }
         }
 
         /// <summary>
@@ -32,9 +43,16 @@ namespace XMLExtendedSerialization
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         public static void Serialize(object obj, string metadata, Stream stream, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer();
-            XDocument document = serializer.Serialize(obj, metadata, rootName);
-            document.Save(stream);
+            try
+            {
+                Serializer serializer = new Serializer();
+                XDocument document = serializer.Serialize(obj, metadata, rootName);
+                document.Save(stream);
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(SerializeErrorMessage, ex);
+            }
         }
 
         /// <summary>
@@ -45,8 +63,15 @@ namespace XMLExtendedSerialization
         /// <returns>XML-документ.</returns>
         public static XDocument Serialize(object obj, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer();
-            return serializer.Serialize(obj, rootName);
+            try
+            {
+                Serializer serializer = new Serializer();
+                return serializer.Serialize(obj, rootName);
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(SerializeErrorMessage, ex);
+            }
         }
 
         /// <summary>
@@ -58,29 +83,60 @@ namespace XMLExtendedSerialization
         /// <returns>XML-документ.</returns>
         public static XDocument Serialize(object obj, string metadata, string rootName = Settings.DefaultRootName)
         {
-            Serializer serializer = new Serializer();
-            return serializer.Serialize(obj, metadata, rootName);
+            try
+            {
+                Serializer serializer = new Serializer();
+                return serializer.Serialize(obj, metadata, rootName);
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(SerializeErrorMessage, ex);
+            }
         }
+        #endregion
 
+        #region Десериализация
         public static object Deserialize(Stream stream)
         {
-            XDocument doc = XDocument.Load(stream);
-            Deserializer deserializer = new Deserializer(doc);
-            return deserializer.Deserialize();
+            try
+            {
+                XDocument doc = XDocument.Load(stream);
+                Deserializer deserializer = new Deserializer(doc);
+                return deserializer.Deserialize();
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(DeserializeErrorMessage, ex);
+            }
         }
 
         public static object Deserialize(Stream stream, out string metadata)
         {
-            XDocument doc = XDocument.Load(stream);
-            Deserializer deserializer = new Deserializer(doc);
-            object result = deserializer.Deserialize(out metadata);
-            return result;
+            try
+            {
+                XDocument doc = XDocument.Load(stream);
+                Deserializer deserializer = new Deserializer(doc);
+                object result = deserializer.Deserialize(out metadata);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(DeserializeErrorMessage, ex);
+            }
         }
 
         public static object Deserialize(XDocument doc)
         {
-            Deserializer deserializer = new Deserializer(doc);
-            return deserializer.Deserialize();
+            try
+            {
+                Deserializer deserializer = new Deserializer(doc);
+                return deserializer.Deserialize();
+            }
+            catch (Exception ex)
+            {
+                throw new SerializerException(DeserializeErrorMessage, ex);
+            }
         }
+        #endregion
     }
 }
