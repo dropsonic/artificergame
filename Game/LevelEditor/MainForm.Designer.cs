@@ -141,7 +141,6 @@ namespace LevelEditor
             this.lblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -214,6 +213,8 @@ namespace LevelEditor
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveLevelDialog = new System.Windows.Forms.SaveFileDialog();
+            this.clearLevelAction = new Crad.Windows.Forms.Actions.Action();
+            this.setLevelParametersAction = new Crad.Windows.Forms.Actions.Action();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1837,7 +1838,6 @@ namespace LevelEditor
             // 
             this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createLevelToolStripMenuItem,
-            this.loadLevelToolStripMenuItem,
             this.clearLevelToolStripMenuItem});
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -1845,20 +1845,16 @@ namespace LevelEditor
             // 
             // createLevelToolStripMenuItem
             // 
+            this.actionList.SetAction(this.createLevelToolStripMenuItem, this.setLevelParametersAction);
             this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.createLevelToolStripMenuItem.Text = "Create Level";
-            // 
-            // loadLevelToolStripMenuItem
-            // 
-            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.loadLevelToolStripMenuItem.Text = "Load Level";
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.createLevelToolStripMenuItem.Text = "Set level parameters";
             // 
             // clearLevelToolStripMenuItem
             // 
+            this.actionList.SetAction(this.clearLevelToolStripMenuItem, this.clearLevelAction);
             this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
-            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.clearLevelToolStripMenuItem.Text = "Clear Level";
             // 
             // resoursesToolStripMenuItem
@@ -2327,6 +2323,8 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.saveLevelAction);
             this.actionList.Actions.Add(this.exportLevelAction);
             this.actionList.Actions.Add(this.saveAsLevelAction);
+            this.actionList.Actions.Add(this.clearLevelAction);
+            this.actionList.Actions.Add(this.setLevelParametersAction);
             this.actionList.ContainerControl = this;
             // 
             // openLevelAction
@@ -2526,6 +2524,18 @@ namespace LevelEditor
             this.saveLevelDialog.SupportMultiDottedExtensions = true;
             this.saveLevelDialog.Title = "Save Level As...";
             // 
+            // clearLevelAction
+            // 
+            this.clearLevelAction.Text = "Clear Level";
+            this.clearLevelAction.ToolTipText = "Clear Level";
+            this.clearLevelAction.Execute += new System.EventHandler(this.clearLevelAction_Execute);
+            // 
+            // setLevelParametersAction
+            // 
+            this.setLevelParametersAction.Text = "Set level parameters";
+            this.setLevelParametersAction.ToolTipText = "Set level size, meter to pixel rate";
+            this.setLevelParametersAction.Execute += new System.EventHandler(this.setLevelParametersAction_Execute);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2713,7 +2723,6 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem levelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createLevelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resoursesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadMaterialToolStripMenuItem;
@@ -2802,6 +2811,8 @@ namespace LevelEditor
         private System.Windows.Forms.SaveFileDialog saveLevelDialog;
         private System.Windows.Forms.ListBox associatedJointsList;
         private System.Windows.Forms.Label label33;
+        private Crad.Windows.Forms.Actions.Action clearLevelAction;
+        private Crad.Windows.Forms.Actions.Action setLevelParametersAction;
 
     }
 }

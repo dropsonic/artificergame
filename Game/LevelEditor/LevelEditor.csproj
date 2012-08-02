@@ -82,6 +82,12 @@
     <Compile Include="Helpers\CommonHelpers.cs" />
     <Compile Include="Helpers\JointCreationHelper.cs" />
     <Compile Include="Helpers\SelectedItemsDisplay.cs" />
+    <Compile Include="LevelScreenOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelScreenOptionsForm.Designer.cs">
+      <DependentUpon>LevelScreenOptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logic\ObjectLevelManager.cs" />
     <Compile Include="Logic\Simulator.cs" />
     <Compile Include="MainForm.Designer.cs">
@@ -114,6 +120,9 @@
     <Compile Include="XnaControls\LevelScreen.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="LevelScreenOptionsForm.resx">
+      <DependentUpon>LevelScreenOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>

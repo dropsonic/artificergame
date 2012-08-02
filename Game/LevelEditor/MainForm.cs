@@ -1184,5 +1184,30 @@ namespace LevelEditor
             propertyGrid.SelectedObject = associatedJointsList.SelectedItem;
         }
 
+        private void setLevelParametersAction_Execute(object sender, EventArgs e)
+        {
+            LevelScreenOptionsForm options = new LevelScreenOptionsForm(levelScreen.Size.Width,levelScreen.Size.Height,(int)ConvertUnits.ToSimUnits(levelScreen.Size.Height));
+            if (options.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                levelScreen.Width = options.Width;
+                levelScreen.Height = options.Height;
+                ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / (float)options.HeightInMeters);
+            }
+        }
+
+        private void clearLevelAction_Execute(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do you want to clear level?", "Level Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+                _objectLevelManager.Simulator.SimulateChanged += new EventHandler(Simulator_SimulateChanged);
+                levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
+                levelScreen.GameLevel = _objectLevelManager.GameLevel;
+                objectScreen.GameObject = _objectLevelManager.SeparateEditObject;
+                CreatePreview();
+            }
+        }
+
+
     }
 }
