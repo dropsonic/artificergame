@@ -37,9 +37,12 @@ namespace FarseerTools
                 Directory.CreateDirectory(TextureSerializerSettings.FilePath);
 
             string fileName = TextureSerializerSettings.FilePath + texture.Name + TextureFileExtension;
-            using (Stream stream = File.Create(fileName))
+            if (!File.Exists(fileName))
             {
-                texture.SaveAsPng(stream, rootObject.Width, rootObject.Height);
+                using (Stream stream = File.Create(fileName))
+                {
+                    texture.SaveAsPng(stream, rootObject.Width, rootObject.Height);
+                }
             }
             root.Add(new XAttribute(FileNameTag, fileName.ToXMLValue()));
             //Сохраняем все метаданные текстуры как элемент тега

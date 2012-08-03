@@ -1123,6 +1123,11 @@ namespace LevelEditor
             }
         }
 
+        private DialogResult fileExistsCallback(string fileName)
+        {
+            return MessageBox.Show(String.Format("\"{0}\" already exists. Overwrite?", Path.GetFileName(fileName)), "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+        }
+
         private void saveLevelAction_Execute(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(_currentFileName))
@@ -1160,7 +1165,7 @@ namespace LevelEditor
 
                 try
                 {
-                    _commandManager.Execute(new SaveLevelCommand(saveLevelDialog.FileName, _objectLevelManager.GameLevel));
+                    _commandManager.Execute(new SaveLevelCommand(saveLevelDialog.FileName, _objectLevelManager.GameLevel, fileExistsCallback));
                     _currentFileName = saveLevelDialog.FileName;
                 }
                 catch (Exception ex)
