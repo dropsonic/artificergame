@@ -66,7 +66,8 @@ namespace FarseerTools
 
         public void LoadMaterial(string key, Texture2D material)
         {
-            _materials[key] = material;
+            var test = material.Name;
+            _materials[key] = (Texture2D)material;
         }
 
         public void LoadShape(string key, Texture2D shape)

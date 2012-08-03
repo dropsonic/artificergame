@@ -91,7 +91,6 @@ namespace LevelEditor
             {
                 file = Texture2D.FromStream(graphicsDevice, titleStream); 
             }
-            //НИЧЕГО НЕ ТРОГАТЬ
             //Setup a render target to hold our final texture which will have premulitplied alpha values
             result = new RenderTarget2D(graphicsDevice, file.Width, file.Height);
             //graphicsDevice.Reset();
@@ -127,9 +126,9 @@ namespace LevelEditor
 
             //Release the GPU back to drawing to the screen
             graphicsDevice.SetRenderTarget(null);
-            
-
-            return result as Texture2D;
+            Texture2D resultingTexture = result as Texture2D;
+            resultingTexture.Name = System.IO.Path.GetFileName(fileLocation).Split('.')[0];
+            return resultingTexture;
 
         }
 
