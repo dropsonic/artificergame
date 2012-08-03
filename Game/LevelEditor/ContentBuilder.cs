@@ -197,7 +197,7 @@ namespace LevelEditor
         {
             foreach (string material in materials)
             {
-                this.Add(material, ContentService.GetMaterial() + Path.GetFileName(material).Split('.')[0], null, "TextureProcessor");
+                this.Add(material, ContentService.GetMaterial() + Path.GetFileNameWithoutExtension(material), null, "TextureProcessor");
             }
             
         }

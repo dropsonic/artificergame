@@ -127,7 +127,7 @@ namespace LevelEditor
             //Release the GPU back to drawing to the screen
             graphicsDevice.SetRenderTarget(null);
             Texture2D resultingTexture = result as Texture2D;
-            resultingTexture.Name = System.IO.Path.GetFileName(fileLocation).Split('.')[0];
+            resultingTexture.Name = System.IO.Path.GetFileNameWithoutExtension(fileLocation);
             return resultingTexture;
 
         }

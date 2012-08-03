@@ -455,7 +455,7 @@ namespace LevelEditor
                 {
                     Cursor = Cursors.WaitCursor;
 
-                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string filename = Path.GetFileNameWithoutExtension(fileDialog.FileName);
                     string sourceFile = fileDialog.FileName;
                     string destFile = "Content\\" + ContentService.GetMaterial(Path.GetFileName(fileDialog.FileName));
 
@@ -488,7 +488,7 @@ namespace LevelEditor
                 {
                     Cursor = Cursors.WaitCursor;
 
-                    string filename = Path.GetFileName(fileDialog.FileName).Split('.')[0];
+                    string filename = Path.GetFileNameWithoutExtension(fileDialog.FileName);
                     string sourceFile = fileDialog.FileName;
                     string destFile = "Content\\" + ContentService.GetShape(Path.GetFileName(fileDialog.FileName));
 

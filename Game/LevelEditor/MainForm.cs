@@ -160,14 +160,14 @@ namespace LevelEditor
 
             foreach (string material in Directory.GetFiles("Content\\" + ContentService.GetMaterial()))
             {
-                string filename = System.IO.Path.GetFileName(material).Split('.')[0];
+                string filename = System.IO.Path.GetFileNameWithoutExtension(material);
                 _assetCreator.LoadMaterial(filename, ContentService.GetContentService().LoadTexture(material));
                 materialBox.Items.Add(filename);
             }
 
             foreach (string shape in Directory.GetFiles("Content\\" + ContentService.GetShape()))
             {
-                string filename = System.IO.Path.GetFileName(shape).Split('.')[0];
+                string filename = System.IO.Path.GetFileNameWithoutExtension(shape);
                 _assetCreator.LoadShape(filename, ContentService.GetContentService().LoadTexture(shape));
                 shapeFromTextureBox.Items.Add(filename);
             }
