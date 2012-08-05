@@ -10,6 +10,7 @@ using System.Reflection;
 using FarseerTools;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace GameLogic
 {
@@ -53,7 +54,6 @@ namespace GameLogic
             get { return _origin; }
             set { _origin = value; }
         }
-
         public ReadOnlyCollection<Joint> Joints
         {
             get { return _joints.AsReadOnly(); }

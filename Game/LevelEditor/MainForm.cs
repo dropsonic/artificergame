@@ -20,6 +20,7 @@ namespace LevelEditor
 {
     using Color = Microsoft.Xna.Framework.Color;
     using Point = System.Drawing.Point;
+    using System.Collections.ObjectModel;
 
 
     public partial class MainForm : Form
@@ -103,7 +104,11 @@ namespace LevelEditor
 
         private void SetPropertyGridAttributes()
         {
-            TypeDescriptor.AddAttributes(typeof(Body), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
+            TypeDescriptor.AddAttributes(typeof(Body), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter))});
+            TypeDescriptor.AddAttributes(typeof(Joint), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
+            TypeDescriptor.AddAttributes(typeof(List<Sprite>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Sprite>)) });
+            //TypeDescriptor.AddAttributes(typeof(Sprite), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
+            TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<Joint>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Joint>)) });
         }
 
         private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)
@@ -345,8 +350,8 @@ namespace LevelEditor
                 PropertyDescriptor propertyDescriptor = e.ChangedItem.PropertyDescriptor;
                 object selectedObject = propertyGrid.SelectedObject;
                 
-                //TODO: исправить: вылетает при вызове этой ф-ии.
-                //propertyDescriptor.GetValue(selectedObject);
+               
+                //TODO: исправить: вылетает при вызове этой ф-ии: propertyDescriptor.GetValue(selectedObject);
                 //_commandManager.Execute(new PropertyGridChangeParamCommand(selectedObject, propertyDescriptor, e.OldValue, propertyDescriptor.GetValue(selectedObject), () => propertyGrid.Refresh()));
             }
             
@@ -1284,9 +1289,10 @@ namespace LevelEditor
                     _commandManager.Execute(new RemoveObjectCommand((GameObject)propertyGrid.SelectedObject, _objectLevelManager.GameLevel));
                     propertyGrid.SelectedObject = null;
                 }
+                UpdateCreatedJointList(false);
             }
 
-            UpdateCreatedJointList(false);
+            
         }
     }
 }
