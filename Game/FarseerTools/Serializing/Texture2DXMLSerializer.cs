@@ -22,14 +22,19 @@ namespace FarseerTools
             get { return typeof(Texture2D); }
         }
 
-        public XElement Serialize(object obj, string fieldName)
+        public XElement Serialize(string name, object rootObject, Serializer serializer)
         {
-            Texture2D rootObject = (Texture2D)obj;
+            Texture2D rootTexture = (Texture2D)rootObject;
             var metaDict = rootObject.GetMetadataDictionary();
             if (metaDict.Count == 0)
                 return null;
 
-            XElement root = new XElement(fieldName);
+            XElement root = new XElement(name);
+
+            //Обрабатываем кольцевые ссылки
+            if (serializer.CheckCircularReferences(root, rootObject))
+                return root;
+
             //Сохраняем файл текстуры
             Texture2D texture = (Texture2D)metaDict[ShapeParametersKeys.Texture];
 
@@ -41,7 +46,7 @@ namespace FarseerTools
             {
                 using (Stream stream = File.Create(fileName))
                 {
-                    texture.SaveAsPng(stream, rootObject.Width, rootObject.Height);
+                    texture.SaveAsPng(stream, rootTexture.Width, rootTexture.Height);
                 }
             }
             root.Add(new XAttribute(FileNameTag, fileName.ToXMLValue()));
@@ -50,7 +55,7 @@ namespace FarseerTools
             root.Add(doc.Root);
 
             //Записываем метаданные объекта
-            SerializerHelpers.SerializeMetadata(root, rootObject);
+            Serializer.SerializeMetadata(root, rootObject);
             
             return root;
         }

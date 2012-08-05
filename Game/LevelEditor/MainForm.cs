@@ -24,6 +24,8 @@ namespace LevelEditor
 
     public partial class MainForm : Form
     {
+        const string DefaultFormText = "Level Editor";
+
         ObjectLevelManager _objectLevelManager;
         CommandManager _commandManager;
         AssetCreator _assetCreator;
@@ -36,10 +38,24 @@ namespace LevelEditor
         Timer _updateTimer = new Timer();
         Timer _propertyGridTimer = new Timer();
 
+        
+        string _currentFileName = null;
+
         /// <summary>
         /// Имя текущего файла. Если создан новый уровень, то это null.
         /// </summary>
-        string _currentFileName = null;        
+        string CurrentFileName
+        {
+            get { return _currentFileName; }
+            set
+            {
+                _currentFileName = value;
+                if (String.IsNullOrEmpty(value))
+                    this.Text = DefaultFormText;
+                else
+                    this.Text = String.Format("{0} - \"{1}\"", DefaultFormText, value);
+            }
+        }
 
         Dictionary<string,Color> _colorDictionary = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static).Where((prop) => prop.PropertyType == typeof(Color))
                 .ToDictionary(prop => prop.Name, prop => (Color)prop.GetValue(null, null));
@@ -53,6 +69,8 @@ namespace LevelEditor
         private void Initialize()
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
+
+            this.Text = DefaultFormText; //устанавливаем стандартный заголовок
 
             SetPropertyGridAttributes();
 

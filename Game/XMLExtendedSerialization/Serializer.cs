@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace XMLExtendedSerialization
 {
-    internal class Serializer
+    public class Serializer
     {
 #if SAVEDEBUGINFO
         private XDocument _document;
@@ -19,12 +19,18 @@ namespace XMLExtendedSerialization
         private List<string> _refListContent;
 #endif
         private Dictionary<Type, Func<object, string>> _converters;
+        
+        private Dictionary<object, string> _refList;
 
         /// <summary>
         /// Список из всех сериализованных reference-type объектов.
         /// Ключ - ссылка на объект, значение - hash-код объекта.
         /// </summary>
-        private Dictionary<object, string> _refList;
+        public Dictionary<object, string> RefList
+        {
+            get { return _refList; }
+            set { _refList = value; }
+        }
 
         private void InitializeConverters()
         {
@@ -65,6 +71,21 @@ namespace XMLExtendedSerialization
 #endif
         }
 
+        public static void SerializeMetadata(XElement root, object rootObject)
+        {
+            if (rootObject.GetType().IsClass)
+            {
+                string metadata = rootObject.GetXMLMetadata();
+                if (metadata != null)
+                    root.Add(new XComment(metadata.ToXMLComment()));
+            }
+        }
+
+        public static void SerializeTypeName(XElement root, Type rootType)
+        {
+            root.Add(new XAttribute(Settings.TypeNameTag, rootType.FullName.ToXMLValue()));
+        }
+
         /// <summary>
         /// Проверяет наличие у поля атрибута XMLCustomConverterAttribute и добавляет его значение в словарь конвертеров.
         /// </summary>
@@ -96,9 +117,44 @@ namespace XMLExtendedSerialization
         }
 
         /// <summary>
+        /// Обрабатывает кольцевые ссылки.
+        /// </summary>
+        /// <param name="root">Корневой элемент, в который добавляется информация.</param>
+        /// <param name="rootObject">Объект для сериализации.</param>
+        /// <returns>true, если объект уже был в списке; false в случаях, если объект value-type или его ещё не было в списке (требуется обычная сериализация).</returns>
+        public bool CheckCircularReferences(XElement root, object rootObject)
+        {
+            Type rootType = rootObject.GetType();
+
+            //Если reference-type, то добавляем объект в список
+            if (!rootType.IsValueType)
+            {
+                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
+                string hashCode;
+                if (_refList.TryGetValue(rootObject, out hashCode))
+                {
+                    root.Add(hashCode.ToXMLValue());
+                    return true;
+                }
+                else
+                {
+#if SAVEDEBUGINFO
+                    root.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList.Count, rootType.FullName)));
+                    _refListContent.Add(rootType.FullName);
+#endif
+                    hashCode = _refList.Count.ToString();
+                    _refList.Add(rootObject, hashCode);
+                    root.Add(new XAttribute(Settings.CRIndexAttributeName, hashCode.ToXMLValue()));
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
-        private XElement SerializeObject(string name, object rootObject)
+        internal XElement SerializeObject(string name, object rootObject)
         {
 #if SAVEDEBUGINFO
             _recursionDepth++;
@@ -124,37 +180,18 @@ namespace XMLExtendedSerialization
             if (rootObject is string)
             {
                 element.Add(((string)rootObject).ToXMLValue());
-                SerializerHelpers.SerializeTypeName(element, rootType);
+                SerializeTypeName(element, rootType);
                 return element;
             }
 
-            //***CIRCULAR REFERENCES***
-            //Если reference-type, то добавляем объект в список
-            if (!rootType.IsValueType)
-            {
-                //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
-                string hashCode;
-                if (_refList.TryGetValue(rootObject, out hashCode))
-                {
-                    element.Add(hashCode.ToXMLValue());
-                    return element;
-                }
-                else
-                {
-#if SAVEDEBUGINFO
-                    element.Add(new XComment(String.Format("_refList index: {0}, type: {1}", _refList.Count, rootType.FullName)));
-                    _refListContent.Add(rootType.FullName);
-#endif
-                    hashCode = _refList.Count.ToString();
-                    _refList.Add(rootObject, hashCode);
-                    element.Add(new XAttribute(Settings.CRIndexAttributeName, hashCode.ToXMLValue()));
-                }
-            }
+            //Обрабатывает кольцевые ссылки
+            if (CheckCircularReferences(element, rootObject))
+                return element; //если объект уже был в списке ссылок, то возвращаем его
 
             //Записываем информацию о типе
-            SerializerHelpers.SerializeTypeName(element, rootType);
+            SerializeTypeName(element, rootType);
             //Записываем метаданные
-            SerializerHelpers.SerializeMetadata(element, rootObject);
+            SerializeMetadata(element, rootObject);
 
             //Если объект - словарь, то сериализуем его в отдельном методе. В принципе, работает и без этого, но XML тогда не такой читаемый и больше по объему.
             if (rootObject is IDictionary)
@@ -209,8 +246,9 @@ namespace XMLExtendedSerialization
                         //Если он есть
                         if (field.HasAttribute(typeof(XMLCustomSerializerAttribute)))
                         {
+                            //то сериализуем с помощью него
                             IXMLCustomSerializer serializer = GetCustomSerializer(field);
-                            child = serializer.Serialize(fieldValue, xmlFieldName);
+                            child = serializer.Serialize(xmlFieldName, fieldValue, this);
                         }
                         else
                         {
@@ -233,7 +271,7 @@ namespace XMLExtendedSerialization
         /// </summary>
         /// <param name="root">XML-элемент, в который необходимо записать данные.</param>
         /// <param name="rootObject">Массив для записи.</param>
-        private void SerializeArray(XElement root, Array rootObject)
+        internal void SerializeArray(XElement root, Array rootObject)
         {
             Type rootType = rootObject.GetType();
             Type elementType = rootType.GetElementType();
@@ -269,7 +307,7 @@ namespace XMLExtendedSerialization
         /// <param name="root">XML-элемент, в который необходимо записать информацию о словаре.</param>
         /// <param name="rootObject">Словарь для записи.</param>
         /// <returns>XML-элемент с данными о словаре.</returns>
-        private void SerializeDictionary(XElement root, IDictionary rootObject)
+        internal void SerializeDictionary(XElement root, IDictionary rootObject)
         {
 #if SAVEDEBUGINFO
                 if (_refList.ContainsKey(rootObject))
@@ -285,17 +323,17 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public XDocument Serialize(object rootObject, string rootName = Settings.DefaultRootName)
+        internal XDocument Serialize(object rootObject, string rootName = Settings.DefaultRootName)
         {
             return Serialize(rootObject, false, String.Empty, rootName);
         }
 
-        public XDocument Serialize(object rootObject, string metadata, string rootName = Settings.DefaultRootName)
+        internal XDocument Serialize(object rootObject, string metadata, string rootName = Settings.DefaultRootName)
         {
             return Serialize(rootObject, true, metadata, rootName);
         }
 
-        private XDocument Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
+        internal XDocument Serialize(object rootObject, bool addMetadata, string metadata, string rootName)
         {
             XDocument document = new XDocument();
 #if SAVEDEBUGINFO

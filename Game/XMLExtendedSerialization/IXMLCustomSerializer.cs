@@ -12,7 +12,7 @@ namespace XMLExtendedSerialization
     public interface IXMLCustomSerializer
     {
         Type TargetType { get; }
-        XElement Serialize(object obj, string fieldName);
+        XElement Serialize(string name, object rootObject, Serializer serializer);
         object Deserialize(XElement element);
     }
 }
