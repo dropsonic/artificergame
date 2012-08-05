@@ -21,20 +21,8 @@ namespace LevelEditor
 
             gridWidthBox.Value =  gridWidth;
             gridHeightBox.Value =  gridHeight;
-        }
 
-        private void inMetersCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            if (inMetersCheck.Checked)
-            {
-                gridWidthBox.Value = (int)ConvertUnits.ToSimUnits(Decimal.ToInt32(gridWidthBox.Value));
-                gridHeightBox.Value = (int)ConvertUnits.ToSimUnits(Decimal.ToInt32(gridHeightBox.Value));
-            }
-            else
-            {
-                gridWidthBox.Value = (int)ConvertUnits.ToDisplayUnits(Decimal.ToInt32(gridWidthBox.Value));
-                gridHeightBox.Value = (int)ConvertUnits.ToDisplayUnits(Decimal.ToInt32(gridHeightBox.Value));
-            }
+            ShowDisplayUnits();
         }
 
         private void applyButton_Click(object sender, EventArgs e)
@@ -51,6 +39,21 @@ namespace LevelEditor
             }
         }
 
+        private void size_ValueChanged(object sender, EventArgs e)
+        {
+            ShowDisplayUnits();
+        }
 
+        private void ShowDisplayUnits()
+        {
+            if (inMetersCheck.Checked)
+            {
+                this.displaySize.Text = string.Format("width{0,6:G}\nheight{1,5:G}", ConvertUnits.ToDisplayUnits(Decimal.ToInt32(gridWidthBox.Value)).ToString(), ConvertUnits.ToDisplayUnits(Decimal.ToInt32(gridHeightBox.Value)).ToString());
+            }
+            else
+            {
+                this.displaySize.Text = string.Format("width{0,6:G}\nheight{1,5:G}", gridWidthBox.Value.ToString(), gridHeightBox.Value.ToString());
+            }
+        }
     }
 }

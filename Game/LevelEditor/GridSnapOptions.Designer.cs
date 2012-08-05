@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.applyButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.displaySize = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridWidthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridHeightBox)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -61,6 +63,7 @@
             0,
             0,
             0});
+            this.gridWidthBox.ValueChanged += new System.EventHandler(this.size_ValueChanged);
             // 
             // gridHeightBox
             // 
@@ -83,6 +86,7 @@
             0,
             0,
             0});
+            this.gridHeightBox.ValueChanged += new System.EventHandler(this.size_ValueChanged);
             // 
             // inMetersCheck
             // 
@@ -93,7 +97,7 @@
             this.inMetersCheck.TabIndex = 2;
             this.inMetersCheck.Text = "In meters";
             this.inMetersCheck.UseVisualStyleBackColor = true;
-            this.inMetersCheck.CheckedChanged += new System.EventHandler(this.inMetersCheck_CheckedChanged);
+            this.inMetersCheck.CheckedChanged += new System.EventHandler(this.size_ValueChanged);
             // 
             // label1
             // 
@@ -116,7 +120,7 @@
             // applyButton
             // 
             this.applyButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.applyButton.Location = new System.Drawing.Point(186, 143);
+            this.applyButton.Location = new System.Drawing.Point(183, 173);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 5;
@@ -126,6 +130,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.displaySize);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.gridWidthBox);
             this.groupBox1.Controls.Add(this.inMetersCheck);
@@ -133,15 +139,32 @@
             this.groupBox1.Controls.Add(this.gridHeightBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(249, 125);
+            this.groupBox1.Size = new System.Drawing.Size(249, 155);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
+            // 
+            // displaySize
+            // 
+            this.displaySize.AutoSize = true;
+            this.displaySize.Location = new System.Drawing.Point(91, 123);
+            this.displaySize.Name = "displaySize";
+            this.displaySize.Size = new System.Drawing.Size(0, 13);
+            this.displaySize.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 123);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "In display units:";
             // 
             // GridSnapOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(270, 179);
+            this.ClientSize = new System.Drawing.Size(270, 208);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.applyButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -166,5 +189,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label displaySize;
+        private System.Windows.Forms.Label label3;
     }
 }

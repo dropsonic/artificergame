@@ -54,6 +54,8 @@ namespace LevelEditor
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
 
+            SetPropertyGridAttributes();
+
             _updateTimer.Enabled = false;
             _updateTimer.Tick += new EventHandler(UpdatePreview);
             _updateTimer.Interval = 10;
@@ -75,11 +77,15 @@ namespace LevelEditor
 
             ShowReadyStatus();
         }
-
         private void propertyGrid_SelectedObjectsChanged(object sender, EventArgs args)
         {
             ShowSelectedObject(propertyGrid.SelectedObject);
             UpdateAssociatedJointList(propertyGrid.SelectedObject);
+        }
+
+        private void SetPropertyGridAttributes()
+        {
+            TypeDescriptor.AddAttributes(typeof(Body), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
         }
 
         private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)
@@ -313,14 +319,17 @@ namespace LevelEditor
                 objectScreen.FrameTimer.Enabled = true;
             }
         }
-        
+
         private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             if (_objectLevelManager.Simulator.State == SimulationState.Stopped)
             {
                 PropertyDescriptor propertyDescriptor = e.ChangedItem.PropertyDescriptor;
                 object selectedObject = propertyGrid.SelectedObject;
-                _commandManager.Execute(new PropertyGridChangeParamCommand(selectedObject, propertyDescriptor, e.OldValue, propertyDescriptor.GetValue(selectedObject), () => propertyGrid.Refresh()));
+                
+                //TODO: исправить: вылетает при вызове этой ф-ии.
+                //propertyDescriptor.GetValue(selectedObject);
+                //_commandManager.Execute(new PropertyGridChangeParamCommand(selectedObject, propertyDescriptor, e.OldValue, propertyDescriptor.GetValue(selectedObject), () => propertyGrid.Refresh()));
             }
             
             propertyGrid.Refresh();
