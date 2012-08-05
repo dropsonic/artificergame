@@ -196,6 +196,8 @@ namespace LevelEditor
             this.undoAction = new Crad.Windows.Forms.Actions.Action();
             this.redoAction = new Crad.Windows.Forms.Actions.Action();
             this.drawAssociatedJoints = new Crad.Windows.Forms.Actions.Action();
+            this.setLevelParametersAction = new Crad.Windows.Forms.Actions.Action();
+            this.clearLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.simulateAction = new Crad.Windows.Forms.Actions.Action();
             this.pauseSimulationAction = new Crad.Windows.Forms.Actions.Action();
             this.simulationSpeedHalfAction = new Crad.Windows.Forms.Actions.Action();
@@ -213,8 +215,11 @@ namespace LevelEditor
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
             this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveLevelDialog = new System.Windows.Forms.SaveFileDialog();
-            this.clearLevelAction = new Crad.Windows.Forms.Actions.Action();
-            this.setLevelParametersAction = new Crad.Windows.Forms.Actions.Action();
+            this.setGridSnapAction = new Crad.Windows.Forms.Actions.Action();
+            this.switchGridSnapAction = new Crad.Windows.Forms.Actions.Action();
+            this.aToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer.ContentPanel.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -1674,7 +1679,6 @@ namespace LevelEditor
             this.levelScreen.Location = new System.Drawing.Point(3, 3);
             this.levelScreen.Margin = new System.Windows.Forms.Padding(0);
             this.levelScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
-            this.levelScreen.MouseState = null;
             this.levelScreen.Name = "levelScreen";
             this.levelScreen.Size = new System.Drawing.Size(1200, 800);
             this.levelScreen.TabIndex = 0;
@@ -1705,7 +1709,6 @@ namespace LevelEditor
             this.objectScreen.GameObject = null;
             this.objectScreen.Location = new System.Drawing.Point(3, 3);
             this.objectScreen.MousePosition = new Microsoft.Xna.Framework.Vector2(0F, 0F);
-            this.objectScreen.MouseState = null;
             this.objectScreen.Name = "objectScreen";
             this.objectScreen.Size = new System.Drawing.Size(829, 702);
             this.objectScreen.TabIndex = 0;
@@ -1821,7 +1824,10 @@ namespace LevelEditor
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblToolStripMenuItem});
+            this.lblToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.aToolStripMenuItem,
+            this.bToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -2325,6 +2331,8 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.saveAsLevelAction);
             this.actionList.Actions.Add(this.clearLevelAction);
             this.actionList.Actions.Add(this.setLevelParametersAction);
+            this.actionList.Actions.Add(this.setGridSnapAction);
+            this.actionList.Actions.Add(this.switchGridSnapAction);
             this.actionList.ContainerControl = this;
             // 
             // openLevelAction
@@ -2385,6 +2393,18 @@ namespace LevelEditor
             this.drawAssociatedJoints.Text = "Draw associated joints";
             this.drawAssociatedJoints.ToolTipText = "Draw associated with body joints";
             this.drawAssociatedJoints.Execute += new System.EventHandler(this.drawAssociatedJoints_Execute);
+            // 
+            // setLevelParametersAction
+            // 
+            this.setLevelParametersAction.Text = "Set level parameters";
+            this.setLevelParametersAction.ToolTipText = "Set level size, meter to pixel rate";
+            this.setLevelParametersAction.Execute += new System.EventHandler(this.setLevelParametersAction_Execute);
+            // 
+            // clearLevelAction
+            // 
+            this.clearLevelAction.Text = "Clear Level";
+            this.clearLevelAction.ToolTipText = "Clear Level";
+            this.clearLevelAction.Execute += new System.EventHandler(this.clearLevelAction_Execute);
             // 
             // simulateAction
             // 
@@ -2524,17 +2544,38 @@ namespace LevelEditor
             this.saveLevelDialog.SupportMultiDottedExtensions = true;
             this.saveLevelDialog.Title = "Save Level As...";
             // 
-            // clearLevelAction
+            // setGridSnapAction
             // 
-            this.clearLevelAction.Text = "Clear Level";
-            this.clearLevelAction.ToolTipText = "Clear Level";
-            this.clearLevelAction.Execute += new System.EventHandler(this.clearLevelAction_Execute);
+            this.setGridSnapAction.Text = "Set grid snap";
+            this.setGridSnapAction.ToolTipText = "Set grid snap parameters";
+            this.setGridSnapAction.Execute += new System.EventHandler(this.setGridSnapAction_Execute);
             // 
-            // setLevelParametersAction
+            // switchGridSnapAction
             // 
-            this.setLevelParametersAction.Text = "Set level parameters";
-            this.setLevelParametersAction.ToolTipText = "Set level size, meter to pixel rate";
-            this.setLevelParametersAction.Execute += new System.EventHandler(this.setLevelParametersAction_Execute);
+            this.switchGridSnapAction.CheckOnClick = true;
+            this.switchGridSnapAction.Text = "Grid snap";
+            this.switchGridSnapAction.ToolTipText = "Switch grid snap";
+            this.switchGridSnapAction.Execute += new System.EventHandler(this.switchGridSnapAction_Execute);
+            // 
+            // aToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.aToolStripMenuItem, this.setGridSnapAction);
+            this.aToolStripMenuItem.Name = "aToolStripMenuItem";
+            this.aToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.aToolStripMenuItem.Text = "Set grid snap";
+            // 
+            // bToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.bToolStripMenuItem, this.switchGridSnapAction);
+            this.bToolStripMenuItem.CheckOnClick = true;
+            this.bToolStripMenuItem.Name = "bToolStripMenuItem";
+            this.bToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.bToolStripMenuItem.Text = "Grid snap";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(188, 6);
             // 
             // MainForm
             // 
@@ -2813,6 +2854,11 @@ namespace LevelEditor
         private System.Windows.Forms.Label label33;
         private Crad.Windows.Forms.Actions.Action clearLevelAction;
         private Crad.Windows.Forms.Actions.Action setLevelParametersAction;
+        private Crad.Windows.Forms.Actions.Action setGridSnapAction;
+        private Crad.Windows.Forms.Actions.Action switchGridSnapAction;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem aToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
 
     }
 }

@@ -78,8 +78,15 @@
     <Compile Include="ContentBuilder.cs" />
     <Compile Include="ContentService.cs" />
     <Compile Include="ErrorLogger.cs" />
+    <Compile Include="GridSnapOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridSnapOptions.Designer.cs">
+      <DependentUpon>GridSnapOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\FixtureAttachmentHelper.cs" />
     <Compile Include="Helpers\CommonHelpers.cs" />
+    <Compile Include="Helpers\GridSnap.cs" />
     <Compile Include="Helpers\JointCreationHelper.cs" />
     <Compile Include="Helpers\SelectedItemsDisplay.cs" />
     <Compile Include="LevelScreenOptionsForm.cs">
@@ -120,6 +127,9 @@
     <Compile Include="XnaControls\LevelScreen.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="GridSnapOptions.resx">
+      <DependentUpon>GridSnapOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LevelScreenOptionsForm.resx">
       <DependentUpon>LevelScreenOptionsForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -13,24 +13,33 @@ namespace LevelEditor
     {
         public int Height { get; set; }
         public int Width { get; set; }
+        
         public int HeightInMeters { get; set; }
 
-        public LevelScreenOptionsForm(int width, int height, int heightInMeters)
+        public float GravityX { get; set; }
+        public float GravityY { get; set; }
+
+        public LevelScreenOptionsForm(int width, int height, int heightInMeters, float gravityX, float gravityY)
         {
             InitializeComponent();
 
-            heightBox.Value = Height = height;
-            widthBox.Value = Width = width;
-            meterHeightBox.Value = HeightInMeters = heightInMeters;
+            heightBox.Value =  height;
+            widthBox.Value =  width;
+            meterHeightBox.Value =  heightInMeters;
+            gravityXBox.Value = Decimal.Parse(gravityX.ToString());
+            gravityYBox.Value = Decimal.Parse(gravityY.ToString());
+
         }
 
-        private void valueChanged(object sender, EventArgs e)
+
+        private void applyButton_Click(object sender, EventArgs e)
         {
             Height = Decimal.ToInt32(heightBox.Value);
             Width = Decimal.ToInt32(widthBox.Value);
             HeightInMeters = Decimal.ToInt32(meterHeightBox.Value);
+            GravityX = (float)Decimal.ToDouble(gravityXBox.Value);
+            GravityY = (float)Decimal.ToDouble(gravityYBox.Value);
         }
-
 
     }
 }

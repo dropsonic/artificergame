@@ -25,6 +25,21 @@ namespace LevelEditor
         SpriteFont _font;
         DebugViewXNA _debugView;
         SelectedItemsDisplay _selectedItemsDisplay;
+        GridSnap _gridSnap;
+        Texture2D _lineTexture;
+
+        public GridSnap GridSnap
+        {
+            get
+            {
+                return _gridSnap;
+            }
+            set
+            {
+                _gridSnap = value;
+            }
+        }
+
 
         public SelectedItemsDisplay SelectedItemsDisplay
         {
@@ -78,21 +93,6 @@ namespace LevelEditor
             }
         }
 
-        private MouseEventArgs _mouseState;
-        public MouseEventArgs MouseState 
-        {
-            get
-            {
-                return _mouseState;
-            }
-            set
-            {
-                _mouseState = value;
-                if (value != null)
-                    _mousePosition = new Vector2(value.X, value.Y);
-            }
-        }
-
         private Vector2 _mousePosition;
         public new Vector2 MousePosition
         {
@@ -136,6 +136,9 @@ namespace LevelEditor
             DrawCurrentGameObject = false;
 
             _selectedItemsDisplay = new SelectedItemsDisplay(GraphicsDevice);
+
+            _lineTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _lineTexture.SetData<Color>(new Color[] { Color.Black });
         }
 
         void SetDebugView()
@@ -183,9 +186,26 @@ namespace LevelEditor
             base.Dispose(disposing);
         }
 
+        
         protected override void Draw()
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            if (_gridSnap.Enabled)
+            {
+                int vertCount = this.Size.Height / _gridSnap.GridHeight;
+                int horCount = this.Size.Width / _gridSnap.GridWidth;
+                _spriteBatch.Begin();
+                for (int i = 0; i < vertCount + 1; i++)
+                {
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(0,i*_gridSnap.GridHeight, this.Size.Width, 1), Color.White);
+                }
+                for (int i = 0; i < horCount + 1; i++)
+                {
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(i * _gridSnap.GridWidth, 0, 1,this.Size.Height), Color.White);
+                }
+                _spriteBatch.End();
+            }
 
             if (_previewGameObject != null && DrawCurrentGameObject)
             {

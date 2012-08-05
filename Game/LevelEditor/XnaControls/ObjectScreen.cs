@@ -25,6 +25,19 @@ namespace LevelEditor
         Camera _camera;
         SpriteFont _font;
         SelectedItemsDisplay _selectedItemsDisplay;
+        GridSnap _gridSnap;
+
+        public GridSnap GridSnap
+        {
+            get
+            {
+                return _gridSnap;
+            }
+            set
+            {
+                _gridSnap = value;
+            }
+        }
 
         public SelectedItemsDisplay SelectedItemsDisplay
         {
@@ -66,21 +79,6 @@ namespace LevelEditor
                     _previewGameObject.Camera = _camera;
                     _previewGameObject.SpriteBatch = _spriteBatch;
                 }
-            }
-        }
-
-        private MouseEventArgs _mouseState;
-        public MouseEventArgs MouseState 
-        {
-            get
-            {
-                return _mouseState;
-            }
-            set
-            {
-                _mouseState = value;
-                if (value != null)
-                    _mousePosition = new Vector2(value.X, value.Y);
             }
         }
 

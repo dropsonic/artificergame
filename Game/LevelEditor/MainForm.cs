@@ -31,6 +31,7 @@ namespace LevelEditor
         MouseToolState _mouseToolState;
         JointCreationHelper _jointHelper;
         FixtureAttachmentHelper _attachmentHelper;
+        GridSnap _gridSnap;
 
         Timer _updateTimer = new Timer();
         Timer _propertyGridTimer = new Timer();
@@ -52,6 +53,7 @@ namespace LevelEditor
         private void Initialize()
         {
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US", false);
+
             _updateTimer.Enabled = false;
             _updateTimer.Tick += new EventHandler(UpdatePreview);
             _updateTimer.Interval = 10;
@@ -192,6 +194,10 @@ namespace LevelEditor
             //Если этого не сделать то не будут вовремя вызваны методы initialize наследников GraphicsDeviceControl
             viewTabControl.SelectedIndex = 1;
             viewTabControl.SelectedIndex = 0;
+
+            _gridSnap = new GridSnap();
+            objectScreen.GridSnap = _gridSnap;
+            levelScreen.GridSnap = _gridSnap;
         }
 
         /// <summary>
@@ -570,8 +576,9 @@ namespace LevelEditor
 
         private void levelScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            levelScreen.MouseState = e;
-            _objectLevelManager.Simulator.MousePosition = levelScreen.MousePosition;
+            Point snappedPoint = _gridSnap.SnapToGrid(e.Location);
+            levelScreen.MousePosition = new Vector2(snappedPoint.X, snappedPoint.Y);
+            _objectLevelManager.Simulator.MousePosition = new Vector2(e.X,e.Y);
             ShowLevelScreenMousePosition();
             HandleLevelScreenMouseInput(MouseEvents.Move, e);
         }
@@ -627,7 +634,7 @@ namespace LevelEditor
                 case MouseToolState.PlaceObject:
                     if (mouseEvent == MouseEvents.Click)
                     {
-                        _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, _objectLevelManager.Simulator.MousePosition));
+                        _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, levelScreen.MousePosition));
                     }
                     break;
                     
@@ -748,7 +755,8 @@ namespace LevelEditor
 
         private void objectScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            objectScreen.MouseState = e;
+            Point snappedPoint = _gridSnap.SnapToGrid(e.Location);
+            objectScreen.MousePosition = new Vector2(snappedPoint.X, snappedPoint.Y);
             ShowObjectScreenMousePosition();
             HandleObjectScreenMouseInput(MouseEvents.Move, e);
         }
@@ -1189,12 +1197,14 @@ namespace LevelEditor
 
         private void setLevelParametersAction_Execute(object sender, EventArgs e)
         {
-            LevelScreenOptionsForm options = new LevelScreenOptionsForm(levelScreen.Size.Width, levelScreen.Size.Height, (int)ConvertUnits.ToSimUnits(levelScreen.Size.Height));
+            LevelScreenOptionsForm options = new LevelScreenOptionsForm(levelScreen.Size.Width, levelScreen.Size.Height, (int)ConvertUnits.ToSimUnits(levelScreen.Size.Height),_objectLevelManager.Simulator.GameLevel.World.Gravity.X,_objectLevelManager.Simulator.GameLevel.World.Gravity.Y);
             if (options.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 levelScreen.Width = options.Width;
                 levelScreen.Height = options.Height;
                 ConvertUnits.SetDisplayUnitToSimUnitRatio((float)levelScreen.Size.Height / (float)options.HeightInMeters);
+                _objectLevelManager.Simulator.GameLevel.World.Gravity.X = options.GravityX;
+                _objectLevelManager.Simulator.GameLevel.World.Gravity.Y = options.GravityY;
             }
         }
 
@@ -1212,10 +1222,19 @@ namespace LevelEditor
         }
         #endregion
 
+        private void setGridSnapAction_Execute(object sender, EventArgs e)
+        {
+            GridSnapOptions options = new GridSnapOptions(_gridSnap.GridWidth, _gridSnap.GridHeight);
+            if (options.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _gridSnap.GridWidth = options.GridWidth;
+                _gridSnap.GridHeight = options.GridHeight;
+            }
+        }
 
-
-
-
-
+        private void switchGridSnapAction_Execute(object sender, EventArgs e)
+        {
+            _gridSnap.Enabled = switchGridSnapAction.Checked;
+        }
     }
 }
