@@ -26,6 +26,8 @@ namespace LevelEditor
         SpriteFont _font;
         SelectedItemsDisplay _selectedItemsDisplay;
         GridSnap _gridSnap;
+        Texture2D _lineTexture;
+        DebugViewXNA _jointView;
 
         public GridSnap GridSnap
         {
@@ -108,6 +110,15 @@ namespace LevelEditor
             DrawCurrentGameObject = false;
 
             _selectedItemsDisplay = new SelectedItemsDisplay(GraphicsDevice);
+
+            _lineTexture = new Texture2D(GraphicsDevice, 1, 1);
+            _lineTexture.SetData<Color>(new Color[] { Color.White });
+
+            _jointView = new DebugViewXNA(_gameObject.World);
+            _jointView.DefaultShapeColor = Color.White;
+            _jointView.SleepingShapeColor = Color.LightGray;
+            _jointView.LoadContent(GraphicsDevice, new Viewport(0, 0, this.Size.Width, this.Size.Height), Content);
+            _jointView.AppendFlags(DebugViewFlags.Joint);
         }
 
 
@@ -123,8 +134,23 @@ namespace LevelEditor
 
         protected override void Draw()
         {
-            
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            if (_gridSnap.Enabled)
+            {
+                int vertCount = this.Size.Height / _gridSnap.GridHeight;
+                int horCount = this.Size.Width / _gridSnap.GridWidth;
+                _spriteBatch.Begin();
+                for (int i = 0; i < vertCount + 1; i++)
+                {
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(0, i * _gridSnap.GridHeight, this.Size.Width, 1), Color.Gray);
+                }
+                for (int i = 0; i < horCount + 1; i++)
+                {
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(i * _gridSnap.GridWidth, 0, 1, this.Size.Height), Color.Gray);
+                }
+                _spriteBatch.End();
+            }
 
             if (_previewGameObject != null && DrawCurrentGameObject)
             {
@@ -138,6 +164,7 @@ namespace LevelEditor
 
             Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
             _selectedItemsDisplay.DrawSelectedItems(ref proj);
+            _jointView.RenderDebugData(ref proj);
           
         }
 

@@ -138,7 +138,7 @@ namespace LevelEditor
             _selectedItemsDisplay = new SelectedItemsDisplay(GraphicsDevice);
 
             _lineTexture = new Texture2D(GraphicsDevice, 1, 1);
-            _lineTexture.SetData<Color>(new Color[] { Color.Black });
+            _lineTexture.SetData<Color>(new Color[] { Color.White });
         }
 
         void SetDebugView()
@@ -198,11 +198,11 @@ namespace LevelEditor
                 _spriteBatch.Begin();
                 for (int i = 0; i < vertCount + 1; i++)
                 {
-                    _spriteBatch.Draw(_lineTexture, new Rectangle(0,i*_gridSnap.GridHeight, this.Size.Width, 1), Color.White);
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(0,i*_gridSnap.GridHeight, this.Size.Width, 1), Color.Gray);
                 }
                 for (int i = 0; i < horCount + 1; i++)
                 {
-                    _spriteBatch.Draw(_lineTexture, new Rectangle(i * _gridSnap.GridWidth, 0, 1,this.Size.Height), Color.White);
+                    _spriteBatch.Draw(_lineTexture, new Rectangle(i * _gridSnap.GridWidth, 0, 1, this.Size.Height), Color.Gray);
                 }
                 _spriteBatch.End();
             }

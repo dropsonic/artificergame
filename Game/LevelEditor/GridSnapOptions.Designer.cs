@@ -48,9 +48,19 @@
             0,
             0,
             0});
+            this.gridWidthBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.gridWidthBox.Name = "gridWidthBox";
             this.gridWidthBox.Size = new System.Drawing.Size(120, 20);
             this.gridWidthBox.TabIndex = 0;
+            this.gridWidthBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // gridHeightBox
             // 
@@ -60,9 +70,19 @@
             0,
             0,
             0});
+            this.gridHeightBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.gridHeightBox.Name = "gridHeightBox";
             this.gridHeightBox.Size = new System.Drawing.Size(120, 20);
             this.gridHeightBox.TabIndex = 1;
+            this.gridHeightBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // inMetersCheck
             // 
