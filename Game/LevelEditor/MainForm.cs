@@ -69,6 +69,7 @@ namespace LevelEditor
             this.shapeParametersControl.SelectedTab = this.emptyTab;
 
             levelScreen.DrawCurrentGameObject = false;
+            objectScreen.DrawCurrentGameObject = false;
 
             InitializeStatusStrip();
 
@@ -634,7 +635,7 @@ namespace LevelEditor
                 case MouseToolState.PlaceObject:
                     if (mouseEvent == MouseEvents.Click)
                     {
-                        _commandManager.Execute(new AddPreviewObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, levelScreen.MousePosition));
+                        _commandManager.Execute(new AddObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.GameLevel, levelScreen.MousePosition));
                     }
                     break;
                     
@@ -647,7 +648,9 @@ namespace LevelEditor
                     if (mouseEvent == MouseEvents.Down)
                     {
                         previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
-                        movingObject = CommonHelpers.FindGameObject(previousPosition, _objectLevelManager.GameLevel);
+                        GameObject foundObject = CommonHelpers.FindGameObject(previousPosition, _objectLevelManager.GameLevel);
+                        if (foundObject == propertyGrid.SelectedObject)
+                            movingObject = foundObject;
                     }
                     if (mouseEvent == MouseEvents.Move)
                     {
@@ -676,7 +679,9 @@ namespace LevelEditor
                     if (mouseEvent == MouseEvents.Down)
                     {
                         previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix())));
-                        movingPart = CommonHelpers.FindGameObjectPart(previousPosition, _objectLevelManager.GameLevel);
+                        GameObjectPart foundPart = CommonHelpers.FindGameObjectPart(previousPosition, _objectLevelManager.GameLevel);
+                        if (foundPart == propertyGrid.SelectedObject)
+                            movingPart = foundPart;
                     }
                     if (mouseEvent == MouseEvents.Move)
                     {
@@ -790,7 +795,7 @@ namespace LevelEditor
                 case MouseToolState.PlaceObject:
                     if (mouseEvent == MouseEvents.Click)
                     {
-                        _commandManager.Execute(new AddObjectPartsToObjectCommand(_objectLevelManager.PreviewObject, _objectLevelManager.SeparateEditObject, ConvertUnits.ToSimUnits(objectScreen.MousePosition)));
+                        _commandManager.Execute(new AddObjectPartCommand(_objectLevelManager.PreviewObject, _objectLevelManager.SeparateEditObject, ConvertUnits.ToSimUnits(objectScreen.MousePosition)));
                     }
                     break;
 
@@ -801,7 +806,8 @@ namespace LevelEditor
                     }
                     if (mouseEvent == MouseEvents.Down)
                     {
-                        movingObject = objectScreen.GameObject;
+                        if(objectScreen.GameObject == propertyGrid.SelectedObject)
+                            movingObject = objectScreen.GameObject;
                         previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
                     }
                     if (mouseEvent == MouseEvents.Move)
@@ -832,7 +838,9 @@ namespace LevelEditor
                     if (mouseEvent == MouseEvents.Down)
                     {
                         previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
-                        movingPart = CommonHelpers.FindGameObjectPart(previousPosition, _objectLevelManager.SeparateEditObject);
+                        GameObjectPart foundPart = CommonHelpers.FindGameObjectPart(previousPosition, _objectLevelManager.SeparateEditObject);
+                        if (foundPart == propertyGrid.SelectedObject)
+                            movingPart = foundPart;
                     }
                     if (mouseEvent == MouseEvents.Move)
                     {
@@ -860,7 +868,7 @@ namespace LevelEditor
                             ShowTooltipStatus(_jointHelper.CurrentStateMessage);
                             if (_jointHelper.CreatedJoint != null)
                             {
-                                _commandManager.Execute(new Commands.AddGameObjectJointCommand(_objectLevelManager.SeparateEditObject, _jointHelper.CreatedJoint));
+                                _commandManager.Execute(new Commands.AddObjectJointCommand(_objectLevelManager.SeparateEditObject, _jointHelper.CreatedJoint));
                                 UpdateCreatedJointList(false);
                                 createdJointsList.SelectedIndex = 0;
                                 propertyGrid.SelectedObject = createdJointsList.Items[0];
@@ -1102,6 +1110,7 @@ namespace LevelEditor
         private void redoAction_Execute(object sender, EventArgs e)
         {
             _commandManager.Redo();
+            UpdateCreatedJointList(false);
         }
 
         private void redoAction_Update(object sender, EventArgs e)
@@ -1220,7 +1229,6 @@ namespace LevelEditor
                 CreatePreview();
             }
         }
-        #endregion
 
         private void setGridSnapAction_Execute(object sender, EventArgs e)
         {
@@ -1235,6 +1243,19 @@ namespace LevelEditor
         private void switchGridSnapAction_Execute(object sender, EventArgs e)
         {
             _gridSnap.Enabled = switchGridSnapAction.Checked;
+        }
+        #endregion
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if(propertyGrid.SelectedObject is GameObject)
+                {
+                    levelScreen.SelectedItemsDisplay.SelectedItem = null;
+                    _commandManager.Execute(new RemoveObjectCommand((GameObject)propertyGrid.SelectedObject, _objectLevelManager.GameLevel));
+                }
+            }
         }
     }
 }

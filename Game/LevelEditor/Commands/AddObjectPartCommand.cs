@@ -8,14 +8,14 @@ using FarseerTools;
 
 namespace LevelEditor.Commands
 {
-    public class AddObjectPartsToObjectCommand : ICommand, IUndoRedoCommand
+    public class AddObjectPartCommand : ICommand, IUndoRedoCommand
     {
         private GameObject _objectToAdd;
         private List<GameObjectPart> _addedObjects;
         private GameObject _goalObject;
         private Vector2 _position;
 
-        public AddObjectPartsToObjectCommand(GameObject objectToAdd, GameObject goalObject, Vector2 position)
+        public AddObjectPartCommand(GameObject objectToAdd, GameObject goalObject, Vector2 position)
         {
             _objectToAdd = objectToAdd;
             _goalObject = goalObject;
@@ -25,7 +25,7 @@ namespace LevelEditor.Commands
 
         public string Name
         {
-            get { return "AddObjectPartsToObjectCommand"; }
+            get { return "AddObjectPartCommand"; }
         }
 
         public void Execute()

@@ -59,9 +59,13 @@
     <Compile Include="Commands\AddLevelJointCommand.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\AttachFixtureCommand.cs" />
-    <Compile Include="Commands\AddObjectPartsToObjectCommand.cs" />
-    <Compile Include="Commands\AddGameObjectJointCommand.cs" />
+    <Compile Include="Commands\AddObjectPartCommand.cs" />
+    <Compile Include="Commands\AddObjectJointCommand.cs" />
     <Compile Include="Commands\AttachGameObjectFixtureCommand.cs" />
+    <Compile Include="Commands\RemoveObjectJointCommand.cs" />
+    <Compile Include="Commands\RemoveLevelJointCommand.cs" />
+    <Compile Include="Commands\RemoveObjectPartCommand.cs" />
+    <Compile Include="Commands\RemoveObjectCommand.cs" />
     <Compile Include="Commands\SaveLevelCommand.cs" />
     <Compile Include="Commands\OpenLevelCommand.cs" />
     <Compile Include="Commands\PropertyGridChangeParamCommand.cs" />
@@ -70,7 +74,7 @@
     <Compile Include="Commands\SimulationSpeedDoubleCommand.cs" />
     <Compile Include="Commands\SimulationSpeedHalfCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\AddPreviewObjectCommand.cs" />
+    <Compile Include="Commands\AddObjectCommand.cs" />
     <Compile Include="Commands\PauseSimulationCommand.cs" />
     <Compile Include="Commands\SimulationSpeedNormalCommand.cs" />
     <Compile Include="Commands\StartSimulationCommand.cs" />

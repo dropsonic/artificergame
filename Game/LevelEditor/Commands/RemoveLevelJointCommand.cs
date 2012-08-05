@@ -7,7 +7,7 @@ using FarseerPhysics.Dynamics.Joints;
 
 namespace LevelEditor.Commands
 {
-    public class AddLevelJointCommand : ICommand, IUndoRedoCommand
+    public class RemoveLevelJointCommand : ICommand, IUndoRedoCommand
     {
         private GameLevel _gameLevel;
         private Joint _joint;
@@ -19,7 +19,7 @@ namespace LevelEditor.Commands
         /// <param name="objectToAdd">Объект для добавления.</param>
         /// <param name="level">Уровень, в который необходимо добавить объект.</param>
         /// <param name="position">Позиция точки Origin объекта в уровне.</param>
-        public AddLevelJointCommand(GameLevel gameLevel, Joint joint)
+        public RemoveLevelJointCommand(GameLevel gameLevel, Joint joint)
         {
             _gameLevel = gameLevel;
             _joint = joint;
@@ -27,7 +27,7 @@ namespace LevelEditor.Commands
 
         public string Name
         {
-            get { return "AddLevelJoint"; }
+            get { return "AddJoint"; }
         }
 
         public void Execute()
