@@ -122,7 +122,21 @@ namespace GameLogic
         public void RemoveObject(GameObject gameObject)
         {
             foreach (GameObjectPart part in gameObject)
+            {
+                JointEdge iterator = part.Body.JointList;
+                while (iterator != null)
+                {
+                    List<Joint> jointsToRemove = new List<Joint>();
+                    foreach (Joint joint in _joints)
+                        if (joint == iterator.Joint)
+                            jointsToRemove.Add(joint);
+                    foreach (Joint joint in jointsToRemove)
+                        _joints.Remove(joint);
+                    iterator = iterator.Next;
+                }
+
                 part.RemoveBody(World);
+            }
             _objects.Remove(gameObject);
             
         }

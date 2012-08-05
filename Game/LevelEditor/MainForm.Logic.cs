@@ -89,7 +89,7 @@ namespace LevelEditor
                     }
                 }
 
-                if (wasSelected)
+                if (wasSelected&&createdJointsList.Items.Count!=0)
                     createdJointsList.SelectedIndex = selectedIndex;
             
         }

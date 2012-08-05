@@ -131,6 +131,8 @@ namespace LevelEditor
                 }
                 if (!sameList) associatedJointsList.Items.Clear();
             }
+            else if(propertyGrid.SelectedObject == null)
+                associatedJointsList.Items.Clear();
         }
 
         private void InitializeCommandManager()
@@ -1252,10 +1254,12 @@ namespace LevelEditor
             {
                 if(propertyGrid.SelectedObject is GameObject)
                 {
-                    levelScreen.SelectedItemsDisplay.SelectedItem = null;
                     _commandManager.Execute(new RemoveObjectCommand((GameObject)propertyGrid.SelectedObject, _objectLevelManager.GameLevel));
+                    propertyGrid.SelectedObject = null;
                 }
             }
+
+            UpdateCreatedJointList(false);
         }
     }
 }
