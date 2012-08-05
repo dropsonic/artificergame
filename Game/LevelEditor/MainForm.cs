@@ -1266,11 +1266,12 @@ namespace LevelEditor
 
         private void setGridSnapAction_Execute(object sender, EventArgs e)
         {
-            GridSnapOptions options = new GridSnapOptions(_gridSnap.GridWidth, _gridSnap.GridHeight);
+            GridSnapOptions options = new GridSnapOptions(_gridSnap.GridWidth, _gridSnap.GridHeight, _gridSnap.InMeters);
             if (options.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 _gridSnap.GridWidth = options.GridWidth;
                 _gridSnap.GridHeight = options.GridHeight;
+                _gridSnap.InMeters = options.InMeters;
             }
         }
 

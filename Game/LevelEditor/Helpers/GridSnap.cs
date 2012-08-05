@@ -26,6 +26,8 @@ namespace LevelEditor.Helpers
 
         public bool Enabled { get; set; }
 
+        public bool InMeters { get; set; }
+
         private Point _gridTile;
         public Point GridTile
         {
