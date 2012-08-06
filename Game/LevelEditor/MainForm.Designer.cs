@@ -203,6 +203,7 @@ namespace LevelEditor
             this.setGridSnapAction = new Crad.Windows.Forms.Actions.Action();
             this.switchGridSnapAction = new Crad.Windows.Forms.Actions.Action();
             this.setLevelParametersAction = new Crad.Windows.Forms.Actions.Action();
+            this.changeLevelPropertiesAction = new Crad.Windows.Forms.Actions.Action();
             this.clearLevelAction = new Crad.Windows.Forms.Actions.Action();
             this.simulateAction = new Crad.Windows.Forms.Actions.Action();
             this.pauseSimulationAction = new Crad.Windows.Forms.Actions.Action();
@@ -219,7 +220,6 @@ namespace LevelEditor
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
-            this.changeLevelPropertiesAction = new Crad.Windows.Forms.Actions.Action();
             this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveLevelDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -1625,6 +1625,7 @@ namespace LevelEditor
             this.jointsBox.Location = new System.Drawing.Point(5, 19);
             this.jointsBox.Name = "jointsBox";
             this.jointsBox.Size = new System.Drawing.Size(293, 21);
+            this.jointsBox.Sorted = true;
             this.jointsBox.TabIndex = 0;
             this.jointsBox.SelectedValueChanged += new System.EventHandler(this.jointsBox_SelectedValueChanged);
             // 
@@ -2446,6 +2447,12 @@ namespace LevelEditor
             this.setLevelParametersAction.ToolTipText = "Set level size, meter to pixel rate";
             this.setLevelParametersAction.Execute += new System.EventHandler(this.setLevelParametersAction_Execute);
             // 
+            // changeLevelPropertiesAction
+            // 
+            this.changeLevelPropertiesAction.Text = "Change level properties";
+            this.changeLevelPropertiesAction.ToolTipText = "Change level properties in property grid";
+            this.changeLevelPropertiesAction.Execute += new System.EventHandler(this.changeLevelPropertiesAction_Execute);
+            // 
             // clearLevelAction
             // 
             this.clearLevelAction.Text = "Clear Level";
@@ -2577,12 +2584,6 @@ namespace LevelEditor
             this.useMouseJointAction.Text = "Use mouse joint";
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
-            // 
-            // changeLevelPropertiesAction
-            // 
-            this.changeLevelPropertiesAction.Text = "Change level properties";
-            this.changeLevelPropertiesAction.ToolTipText = "Change level properties in property grid";
-            this.changeLevelPropertiesAction.Execute += new System.EventHandler(this.changeLevelPropertiesAction_Execute);
             // 
             // openLevelDialog
             // 

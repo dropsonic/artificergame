@@ -218,10 +218,12 @@ namespace LevelEditor
                 _gameLevel.Draw(GameTimer.GameTime);
 
 
-            Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
-            _selectedItemsDisplay.DrawSelectedItems(ref proj);
+            Matrix simProj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
+            Matrix simView = _camera.GetSimViewMatrix();
+
+            _selectedItemsDisplay.DrawSelectedItems(ref simProj, ref simView);
             if (_debugView != null)
-                _debugView.RenderDebugData(ref proj);
+                _debugView.RenderDebugData(ref simProj, ref simView);
 
 
             

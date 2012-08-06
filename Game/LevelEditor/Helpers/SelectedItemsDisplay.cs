@@ -405,10 +405,8 @@ namespace LevelEditor.Helpers
 			_primitiveBatch.AddVertex(vertices[0], color, PrimitiveType.LineList);
 		}
 
-		public void DrawSelectedItems(ref Matrix projection)
+		public void DrawSelectedItems(ref Matrix projection, ref Matrix view)
 		{
-			Matrix view = Matrix.Identity;
-			
 			_primitiveBatch.Begin(ref projection,ref view);
 			foreach (Joint joint in _selectedJoints)
 				DrawJoint(joint,Color.Red);

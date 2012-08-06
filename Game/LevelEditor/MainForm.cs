@@ -1303,6 +1303,31 @@ namespace LevelEditor
             }
 
             
+            if (e.KeyCode == Keys.Left)
+                _objectLevelManager.GameLevel.Camera.Move(new Vector2(-5.0f, 0));
+            if (e.KeyCode==Keys.Right)
+                _objectLevelManager.GameLevel.Camera.Move(new Vector2(5.0f, 0));
+            if (e.KeyCode==Keys.Up)
+                _objectLevelManager.GameLevel.Camera.Move(new Vector2(0, -5.0f));
+            if (e.KeyCode==Keys.Down)
+                _objectLevelManager.GameLevel.Camera.Move(new Vector2(0, 5.0f));
+
+            if (e.KeyCode==Keys.W)
+                _objectLevelManager.GameLevel.Camera.Zoom += 0.01f;
+            if (e.KeyCode==Keys.S)
+                _objectLevelManager.GameLevel.Camera.Zoom -= 0.01f;
+
+            if (e.KeyCode==Keys.D)
+                _objectLevelManager.GameLevel.Camera.Rotation += 0.01f;
+            if (e.KeyCode==Keys.A)
+                _objectLevelManager.GameLevel.Camera.Rotation -= 0.01f;
+
+            if (e.KeyCode==Keys.Space)
+            {
+                _objectLevelManager.GameLevel.Camera.Zoom = 1.0f;
+                _objectLevelManager.GameLevel.Camera.Rotation = 0;
+            }
+            
         }
     }
 }

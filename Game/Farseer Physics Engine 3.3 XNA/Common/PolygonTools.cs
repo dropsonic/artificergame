@@ -199,7 +199,7 @@ namespace FarseerPhysics.Common
                 vertices.Rotate(MathHelper.PiOver2 - radians / 2);
                 double b = Math.Sqrt(2 * radius * radius * (1 - Math.Cos(radians))) / 2;
                 double x = b / Math.Tan(MathHelper.PiOver2 - radians / 4);
-                float offset = radius - (float)x / 2;
+                float offset = (radius - (float)x / 2);
                 vertices.Translate(new Vector2(0, -offset));
             }
             return vertices;

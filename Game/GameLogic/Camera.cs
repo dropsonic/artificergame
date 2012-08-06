@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FarseerTools;
 
 namespace GameLogic
 {
@@ -28,6 +29,7 @@ namespace GameLogic
         protected bool _changed; //Определяет, были ли изменения параметров камеры с момента последнего расчёта View.
 
         protected Matrix _viewMatrix; //Сохраняет сюда матрицу вида с предыдущего вычисления
+        protected Matrix _simViewMatrix;
  
         public Camera(Viewport viewport)
         {
@@ -148,6 +150,17 @@ namespace GameLogic
                        Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
 
             return _viewMatrix;
+        }
+
+        public Matrix GetSimViewMatrix()
+        {
+            if(_changed)
+                _simViewMatrix = Matrix.CreateTranslation(new Vector3(-ConvertUnits.ToSimUnits(Position), 0.0f)) *
+                                 Matrix.CreateTranslation(new Vector3(-ConvertUnits.ToSimUnits(Origin), 0.0f)) *
+                                 Matrix.CreateRotationZ(Rotation) *
+                                 Matrix.CreateScale(Zoom, Zoom, 1) *
+                                 Matrix.CreateTranslation(new Vector3(ConvertUnits.ToSimUnits(Origin), 0.0f));
+            return _simViewMatrix;
         }
 
         public Matrix GetViewMatrix()

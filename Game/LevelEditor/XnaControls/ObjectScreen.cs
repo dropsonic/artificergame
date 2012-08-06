@@ -162,9 +162,11 @@ namespace LevelEditor
             if (_gameObject != null)
                 _gameObject.Draw(GameTimer.GameTime);
 
-            Matrix proj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
-            _selectedItemsDisplay.DrawSelectedItems(ref proj);
-            _jointView.RenderDebugData(ref proj);
+            Matrix simProj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
+            Matrix simView = _camera.GetSimViewMatrix();
+
+            _selectedItemsDisplay.DrawSelectedItems(ref simProj, ref simView);
+            _jointView.RenderDebugData(ref simProj, ref simView);
           
         }
 

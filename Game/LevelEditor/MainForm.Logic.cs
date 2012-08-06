@@ -187,7 +187,7 @@ namespace LevelEditor
                             FixtureFactory.AttachCircle(float.Parse(circleRadius.Value.ToString()), previousDensity == null ? 1f : (float)previousDensity, _objectLevelManager.PreviewObject[0].Body);
                             break;
                         default:
-                            FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices),
+                            FixtureFactory.AttachCompoundPolygon(BayazitDecomposer.ConvexPartition(shapeVertices),
                                                              previousDensity == null ? 1f : (float)previousDensity,
                                                              _objectLevelManager.PreviewObject[0].Body);
                             break;
