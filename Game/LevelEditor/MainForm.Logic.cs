@@ -181,9 +181,17 @@ namespace LevelEditor
                     {
 
                     }
-                    FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices), 
-                                                         previousDensity == null ? 1f : (float)previousDensity, 
-                                                         _objectLevelManager.PreviewObject[0].Body);
+                    switch((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
+                    {
+                        case ObjectType.Circle:
+                            FixtureFactory.AttachCircle(float.Parse(circleRadius.Value.ToString()), previousDensity == null ? 1f : (float)previousDensity, _objectLevelManager.PreviewObject[0].Body);
+                            break;
+                        default:
+                            FixtureFactory.AttachCompoundPolygon(EarclipDecomposer.ConvexPartition(shapeVertices),
+                                                             previousDensity == null ? 1f : (float)previousDensity,
+                                                             _objectLevelManager.PreviewObject[0].Body);
+                            break;
+                    }
                     _objectLevelManager.PreviewObject[0].Sprites[0] = new Sprite(previewTexture);
 
                     _objectLevelManager.PreviewVertices = shapeVertices;
