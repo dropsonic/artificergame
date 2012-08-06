@@ -186,7 +186,7 @@ namespace LevelEditor
         private void InitializeAfterLoad()
         {
             _mouseToolState = MouseToolState.Default;
-            _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+            _objectLevelManager = new ObjectLevelManager(new Viewport(0, 0, levelScreen.Size.Width, levelScreen.Size.Height), new Viewport(0, 0, objectScreen.Size.Width, objectScreen.Size.Height), levelScreen.GraphicsDevice);
             _objectLevelManager.Simulator.SimulateChanged += new EventHandler(Simulator_SimulateChanged);
             levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
             levelScreen.GameLevel = _objectLevelManager.GameLevel;
@@ -846,13 +846,13 @@ namespace LevelEditor
                     {
                         if(objectScreen.GameObject == propertyGrid.SelectedObject)
                             movingObject = objectScreen.GameObject;
-                        previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                        previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                     }
                     if (mouseEvent == MouseEvents.Move)
                     {
                         if (movingObject != null)
                         {
-                            Vector2 currentPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            Vector2 currentPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                             Vector2 delta = currentPosition - previousPosition;
                             previousPosition = currentPosition;
                             foreach (GameObjectPart gop in movingObject)
@@ -871,11 +871,11 @@ namespace LevelEditor
                 case MouseToolState.SelectObjectPart:
                     if (mouseEvent == MouseEvents.Click)
                     {
-                        propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix()))), _objectLevelManager.SeparateEditObject);
+                        propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix()))), _objectLevelManager.SeparateEditObject);
                     }
                     if (mouseEvent == MouseEvents.Down)
                     {
-                        previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                        previousPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                         GameObjectPart foundPart = CommonHelpers.FindGameObjectPart(previousPosition, _objectLevelManager.SeparateEditObject);
                         if (foundPart == propertyGrid.SelectedObject)
                             movingPart = foundPart;
@@ -884,7 +884,7 @@ namespace LevelEditor
                     {
                         if (movingPart != null)
                         {
-                            Vector2 currentPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            Vector2 currentPosition = ConvertUnits.ToSimUnits(Vector2.Transform(objectScreen.MousePosition, Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                             Vector2 delta = currentPosition - previousPosition;
                             previousPosition = currentPosition;
                             movingPart.Body.Position += delta;
@@ -901,7 +901,7 @@ namespace LevelEditor
                     {
                         if (_jointHelper != null)
                         {
-                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                             _jointHelper.NextStep(simPosition);
                             ShowTooltipStatus(_jointHelper.CurrentStateMessage);
                             if (_jointHelper.CreatedJoint != null)
@@ -919,7 +919,7 @@ namespace LevelEditor
                     {
                         if (_attachmentHelper != null)
                         {
-                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(objectScreen.Camera.GetViewMatrix())));
+                            Vector2 simPosition = ConvertUnits.ToSimUnits(Vector2.Transform(new Vector2(args.X, args.Y), Matrix.Invert(_objectLevelManager.SeparateEditObject.Camera.GetViewMatrix())));
                             _attachmentHelper.NextStep(simPosition);
                             HandlePreviewDisplay();
                             ShowTooltipStatus(_attachmentHelper.StatusMessage);
@@ -1259,7 +1259,7 @@ namespace LevelEditor
         {
             if (MessageBox.Show("Do you want to clear level?", "Level Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                _objectLevelManager = new ObjectLevelManager(levelScreen.Camera, levelScreen.GraphicsDevice);
+                _objectLevelManager = new ObjectLevelManager(new Viewport(0, 0, levelScreen.Size.Width, levelScreen.Size.Height), new Viewport(0, 0, objectScreen.Size.Width, objectScreen.Size.Height), levelScreen.GraphicsDevice);
                 _objectLevelManager.Simulator.SimulateChanged += new EventHandler(Simulator_SimulateChanged);
                 levelScreen.UpdateSubscriber = _objectLevelManager.Simulator.Update;
                 levelScreen.GameLevel = _objectLevelManager.GameLevel;

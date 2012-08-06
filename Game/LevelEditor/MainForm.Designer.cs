@@ -1676,7 +1676,6 @@ namespace LevelEditor
             // levelScreen
             // 
             this.levelScreen.AbsoluteULPoint = new Microsoft.Xna.Framework.Vector2(0F, 0F);
-            this.levelScreen.Camera = null;
             this.levelScreen.DrawCurrentGameObject = false;
             this.levelScreen.GameLevel = null;
             this.levelScreen.GridSnap = null;
@@ -1707,7 +1706,6 @@ namespace LevelEditor
             // 
             // objectScreen
             // 
-            this.objectScreen.Camera = null;
             this.objectScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectScreen.DrawCurrentGameObject = false;
             this.objectScreen.GameObject = null;

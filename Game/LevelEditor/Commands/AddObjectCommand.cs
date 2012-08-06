@@ -39,6 +39,7 @@ namespace LevelEditor.Commands
                 if (part.Sprites[0].Texture == null)
                     throw new NullReferenceException("Texture cannot be null.");
             _addedObject = _objectToAdd.CopyObjectToWorld(_level.World, ConvertUnits.ToSimUnits(_position));
+            _addedObject.Camera = _level.Camera;
             _level.AddObject(_addedObject);
             _level.World.ProcessChanges();
         }

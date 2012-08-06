@@ -22,7 +22,6 @@ namespace LevelEditor
     {
         SpriteBatch _spriteBatch;
         GameObject _gameObject;
-        Camera _camera;
         SpriteFont _font;
         SelectedItemsDisplay _selectedItemsDisplay;
         GridSnap _gridSnap;
@@ -60,12 +59,6 @@ namespace LevelEditor
             set { _gameObject = value; }
         }
 
-        public Camera Camera
-        {
-            get { return _camera; }
-            set { _camera = value; }
-        }
-
         private GameObject _previewGameObject;
 
         [Browsable(false)]
@@ -78,7 +71,7 @@ namespace LevelEditor
                 else
                 {
                     _previewGameObject = value;
-                    _previewGameObject.Camera = _camera;
+                    _previewGameObject.Camera = new Camera(new Viewport(0,0,this.Size.Width,this.Size.Height));
                     _previewGameObject.SpriteBatch = _spriteBatch;
                 }
             }
@@ -103,8 +96,6 @@ namespace LevelEditor
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _font = Content.Load<SpriteFont>("Fonts/Segoe14");
-
-            _camera = new Camera(new Viewport(0, 0, ClientSize.Width, ClientSize.Height));
 
             _mousePosition = Vector2.Zero;
             DrawCurrentGameObject = false;
@@ -163,7 +154,7 @@ namespace LevelEditor
                 _gameObject.Draw(GameTimer.GameTime);
 
             Matrix simProj = Matrix.CreateOrthographicOffCenter(0, ConvertUnits.ToSimUnits(this.Size.Width), ConvertUnits.ToSimUnits(this.Size.Height), 0, 0, 1);
-            Matrix simView = _camera.GetSimViewMatrix();
+            Matrix simView = _gameObject.Camera.GetSimViewMatrix();
 
             _selectedItemsDisplay.DrawSelectedItems(ref simProj, ref simView);
             _jointView.RenderDebugData(ref simProj, ref simView);
