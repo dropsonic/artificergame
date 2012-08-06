@@ -112,7 +112,7 @@
     <Compile Include="TabHiddenHeadersControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TypeConverters\ExpandableListConverter.cs" />
+    <Compile Include="TypeConverters\ExpandableConverters.cs" />
     <Compile Include="XnaControls\ObjectScreen.cs">
       <SubType>Component</SubType>
     </Compile>

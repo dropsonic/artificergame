@@ -59,6 +59,10 @@ namespace GameLogic
             get { return _joints.AsReadOnly(); }
         }
 
+        public ReadOnlyCollection<GameObjectPart> Parts
+        {
+            get { return _parts.AsReadOnly(); }
+        }
         public GameObjectPart this[int index]
         {
             get { return _parts[index]; }

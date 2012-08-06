@@ -107,8 +107,11 @@ namespace LevelEditor
             TypeDescriptor.AddAttributes(typeof(Body), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter))});
             TypeDescriptor.AddAttributes(typeof(Joint), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
             TypeDescriptor.AddAttributes(typeof(List<Sprite>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Sprite>)) });
-            //TypeDescriptor.AddAttributes(typeof(Sprite), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
             TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<Joint>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Joint>)) });
+            TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<GameObjectPart>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<GameObjectPart>)) });
+            TypeDescriptor.AddAttributes(typeof(GameObjectPart), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
+            TypeDescriptor.AddAttributes(typeof(GameObject), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
+            TypeDescriptor.AddAttributes(typeof(JointEdge), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableJointEdgeConverter)) });
         }
 
         private void associatedJointsList_SelectedValueChanged(object sender, EventArgs e)

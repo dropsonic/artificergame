@@ -6,10 +6,11 @@ using System.ComponentModel;
 using System.Collections;
 using FarseerTools;
 using System.Windows.Forms;
+using FarseerPhysics.Dynamics.Joints;
 
 namespace LevelEditor.TypeConverters
 {
-	internal class ExpandableListConverter<T> : System.ComponentModel.ExpandableObjectConverter
+	internal class ExpandableListConverter<T> : ExpandableObjectConverter
 	{
 		public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
 		{
@@ -25,7 +26,36 @@ namespace LevelEditor.TypeConverters
 
 		public override bool GetPropertiesSupported(ITypeDescriptorContext context)
 		{
-			return base.GetPropertiesSupported(context);
+			//return base.GetPropertiesSupported(context);
+			return true;
+		}
+	}
+
+	internal class ExpandableJointEdgeConverter: ExpandableObjectConverter
+	{
+		public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
+		{
+			PropertyDescriptorCollection pds = new PropertyDescriptorCollection(null);
+
+			List<Joint> jointList = new List<Joint>();
+			JointEdge iterator = (JointEdge)value;
+			while (iterator != null)
+			{
+				jointList.Add(iterator.Joint);
+				iterator = iterator.Next;
+			}
+
+			foreach (Joint element in jointList)
+			{
+				ListDescriptor<Joint> desc = new ListDescriptor<Joint>(jointList.IndexOf(element), jointList);
+				pds.Add(desc);
+			}
+			return pds;
+		}
+
+		public override bool GetPropertiesSupported(ITypeDescriptorContext context)
+		{
+			return true;
 		}
 	}
 
@@ -109,7 +139,7 @@ namespace LevelEditor.TypeConverters
 
 		public override void SetValue(object component, object value)
 		{
-
+			_collection[_index] = (T)value;
 		}
 	}
 }
