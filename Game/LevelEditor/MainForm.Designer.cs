@@ -144,6 +144,7 @@ namespace LevelEditor
             this.bToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.levelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeLevelPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resoursesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadMaterialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -218,6 +219,7 @@ namespace LevelEditor
             this.selectObjectPartAction = new Crad.Windows.Forms.Actions.Action();
             this.selectObjectAction = new Crad.Windows.Forms.Actions.Action();
             this.useMouseJointAction = new Crad.Windows.Forms.Actions.Action();
+            this.changeLevelPropertiesAction = new Crad.Windows.Forms.Actions.Action();
             this.openLevelDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveLevelDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
@@ -1866,6 +1868,7 @@ namespace LevelEditor
             // 
             this.levelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createLevelToolStripMenuItem,
+            this.changeLevelPropertiesToolStripMenuItem,
             this.clearLevelToolStripMenuItem});
             this.levelToolStripMenuItem.Name = "levelToolStripMenuItem";
             this.levelToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -1875,14 +1878,21 @@ namespace LevelEditor
             // 
             this.actionList.SetAction(this.createLevelToolStripMenuItem, this.setLevelParametersAction);
             this.createLevelToolStripMenuItem.Name = "createLevelToolStripMenuItem";
-            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.createLevelToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.createLevelToolStripMenuItem.Text = "Set level parameters";
+            // 
+            // changeLevelPropertiesToolStripMenuItem
+            // 
+            this.actionList.SetAction(this.changeLevelPropertiesToolStripMenuItem, this.changeLevelPropertiesAction);
+            this.changeLevelPropertiesToolStripMenuItem.Name = "changeLevelPropertiesToolStripMenuItem";
+            this.changeLevelPropertiesToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.changeLevelPropertiesToolStripMenuItem.Text = "Change level properties";
             // 
             // clearLevelToolStripMenuItem
             // 
             this.actionList.SetAction(this.clearLevelToolStripMenuItem, this.clearLevelAction);
             this.clearLevelToolStripMenuItem.Name = "clearLevelToolStripMenuItem";
-            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.clearLevelToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.clearLevelToolStripMenuItem.Text = "Clear Level";
             // 
             // resoursesToolStripMenuItem
@@ -2355,6 +2365,7 @@ namespace LevelEditor
             this.actionList.Actions.Add(this.setLevelParametersAction);
             this.actionList.Actions.Add(this.setGridSnapAction);
             this.actionList.Actions.Add(this.switchGridSnapAction);
+            this.actionList.Actions.Add(this.changeLevelPropertiesAction);
             this.actionList.ContainerControl = this;
             // 
             // openLevelAction
@@ -2566,6 +2577,12 @@ namespace LevelEditor
             this.useMouseJointAction.Text = "Use mouse joint";
             this.useMouseJointAction.ToolTipText = "Use mouse joint in simulation";
             this.useMouseJointAction.Execute += new System.EventHandler(this.useMouseJointAction_Execute);
+            // 
+            // changeLevelPropertiesAction
+            // 
+            this.changeLevelPropertiesAction.Text = "Change level properties";
+            this.changeLevelPropertiesAction.ToolTipText = "Change level properties in property grid";
+            this.changeLevelPropertiesAction.Execute += new System.EventHandler(this.changeLevelPropertiesAction_Execute);
             // 
             // openLevelDialog
             // 
@@ -2862,6 +2879,8 @@ namespace LevelEditor
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem aToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bToolStripMenuItem;
+        private Crad.Windows.Forms.Actions.Action changeLevelPropertiesAction;
+        private System.Windows.Forms.ToolStripMenuItem changeLevelPropertiesToolStripMenuItem;
 
     }
 }

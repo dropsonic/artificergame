@@ -72,6 +72,11 @@ namespace GameLogic
             }
         }
 
+        public ReadOnlyCollection<GameObject> Objects
+        {
+            get { return _objects.AsReadOnly(); }
+        }
+
         /// <summary>
         /// Количество объектов GameObject, которые содержит уровень.
         /// </summary>

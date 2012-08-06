@@ -176,7 +176,7 @@
 </value>
   </data>
   <metadata name="simulationSpeedDoubleAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>244, 56</value>
+    <value>453, 56</value>
   </metadata>
   <data name="simulationSpeedDoubleAction.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -257,73 +257,76 @@
 </value>
   </data>
   <metadata name="simulationSpeedHalfAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>461, 56</value>
+    <value>670, 56</value>
   </metadata>
   <metadata name="simulationSpeedIncreaseAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1135, 56</value>
+    <value>17, 95</value>
   </metadata>
   <metadata name="simulationSpeedDecreaseAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 95</value>
+    <value>239, 95</value>
   </metadata>
   <metadata name="addPreviewObjectAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1021, 17</value>
   </metadata>
   <metadata name="selectObjectPartAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>529, 95</value>
+    <value>751, 95</value>
   </metadata>
   <metadata name="resetSettingsAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>864, 17</value>
   </metadata>
   <metadata name="useMouseJointAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>704, 95</value>
+    <value>926, 95</value>
   </metadata>
   <metadata name="selectObjectAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>872, 95</value>
+    <value>1094, 95</value>
   </metadata>
   <metadata name="editCurrentObjectAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>660, 56</value>
+    <value>869, 56</value>
   </metadata>
   <metadata name="undoAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>129, 56</value>
+    <value>338, 56</value>
   </metadata>
   <metadata name="redoAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>226, 56</value>
   </metadata>
   <metadata name="addNewJointAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>844, 56</value>
+    <value>1053, 56</value>
   </metadata>
   <metadata name="attachFixture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1002, 56</value>
+    <value>1211, 56</value>
   </metadata>
   <metadata name="drawAssociatedJoints.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1026, 95</value>
+    <value>1248, 95</value>
   </metadata>
   <metadata name="openLevelAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>26, 134</value>
+    <value>17, 134</value>
   </metadata>
   <metadata name="saveLevelAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>168, 134</value>
+    <value>159, 134</value>
   </metadata>
   <metadata name="exportLevelAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>306, 134</value>
+    <value>297, 134</value>
   </metadata>
   <metadata name="saveAsLevelAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>455, 134</value>
+    <value>446, 134</value>
   </metadata>
   <metadata name="clearLevelAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>888, 134</value>
+    <value>879, 134</value>
   </metadata>
   <metadata name="setLevelParametersAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1028, 134</value>
+    <value>1019, 134</value>
   </metadata>
   <metadata name="setGridSnapAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1219, 134</value>
+    <value>1210, 134</value>
   </metadata>
   <metadata name="switchGridSnapAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1372, 134</value>
+    <value>17, 173</value>
+  </metadata>
+  <metadata name="changeLevelPropertiesAction.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>78</value>
+    <value>122</value>
   </metadata>
   <data name="simulationSpeedNormalMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -446,7 +449,7 @@
     <value>1206, 17</value>
   </metadata>
   <metadata name="simulationToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>372, 95</value>
+    <value>594, 95</value>
   </metadata>
   <data name="toolStripButton4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -566,12 +569,12 @@
 </value>
   </data>
   <metadata name="toolsToolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>244, 95</value>
+    <value>466, 95</value>
   </metadata>
   <metadata name="openLevelDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>606, 134</value>
+    <value>597, 134</value>
   </metadata>
   <metadata name="saveLevelDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>749, 134</value>
+    <value>740, 134</value>
   </metadata>
 </root>

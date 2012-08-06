@@ -109,6 +109,7 @@ namespace LevelEditor
             TypeDescriptor.AddAttributes(typeof(List<Sprite>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Sprite>)) });
             TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<Joint>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<Joint>)) });
             TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<GameObjectPart>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<GameObjectPart>)) });
+            TypeDescriptor.AddAttributes(typeof(ReadOnlyCollection<GameObject>), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableListConverter<GameObject>)) });
             TypeDescriptor.AddAttributes(typeof(GameObjectPart), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
             TypeDescriptor.AddAttributes(typeof(GameObject), new Attribute[] { new TypeConverterAttribute(typeof(ExpandableObjectConverter)) });
             TypeDescriptor.AddAttributes(typeof(JointEdge), new Attribute[] { new TypeConverterAttribute(typeof(TypeConverters.ExpandableJointEdgeConverter)) });
@@ -1281,6 +1282,11 @@ namespace LevelEditor
         private void switchGridSnapAction_Execute(object sender, EventArgs e)
         {
             _gridSnap.Enabled = switchGridSnapAction.Checked;
+        }
+
+        private void changeLevelPropertiesAction_Execute(object sender, EventArgs e)
+        {
+            propertyGrid.SelectedObject = _objectLevelManager.GameLevel;
         }
         #endregion
 
