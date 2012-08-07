@@ -17,7 +17,7 @@ namespace GameLogic
     /// <remarks>
     /// Все положения и размеры задаются в метрах.
     /// </remarks>
-    public class ParallaxBackground : IDrawable
+    public class ParallaxBackground : IDrawable, IEnumerable
     {
         private List<ParallaxBackgroundItem> _backgrounds;
         private bool _sorted; //показывает, отсортированы ли элементы фона по DrawOrder

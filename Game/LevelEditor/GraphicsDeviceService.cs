@@ -81,7 +81,7 @@ namespace LevelEditor
                 singletonInstance = new GraphicsDeviceService(windowHandle,
                                                               width, height);
             }
-
+            
             return singletonInstance;
         }
 
