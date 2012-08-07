@@ -50,7 +50,9 @@ namespace LevelEditor.Commands
             XDocument doc;
             try
             {
-                doc = XMLSerializerEx.Serialize(_level, "GameLevel"); //сохраняет текстуры в temp-папку
+                XMLSerializerEx serializer = new XMLSerializerEx(new List<IXMLCustomSerializer> { 
+                    new Texture2DXMLSerializer(), new WorldXMLSerializer(), new BodyXMLSerializer(), new FixtureXMLSerializer() });
+                doc = serializer.Serialize(_level, "GameLevel"); //сохраняет текстуры в temp-папку
             }
             catch (Exception ex)
             {

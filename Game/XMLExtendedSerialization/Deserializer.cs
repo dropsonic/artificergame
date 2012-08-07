@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace XMLExtendedSerialization
 {
-    internal class Deserializer
+    public class Deserializer
     {
         private XDocument _doc;
         private Assembly[] _assemblies;
@@ -20,11 +20,17 @@ namespace XMLExtendedSerialization
         private List<string> _refListContent;
 #endif
 
+        private Dictionary<string, object> _refList;
+
         /// <summary>
         /// Список из всех десериализованных reference-type объектов.
         /// Ключ - hash-код объекта, значение - ссылка на объект.
         /// </summary>
-        private Dictionary<string, object> _refList;
+        public Dictionary<string, object> RefList
+        {
+            get { return _refList; }
+            set { _refList = value; }
+        }
 
         internal Deserializer(XDocument doc)
         {
@@ -126,59 +132,127 @@ namespace XMLExtendedSerialization
         /// </summary>
         /// <param name="root">XML-элемент для чтения.</param>
         /// <param name="rootObject">Объект, в который необходимо записать метаданные.</param>
-        private void DeserializeMetadata(XElement root, object rootObject)
+        public void DeserializeMetadata(XElement root, object rootObject)
         {
             Type rootType = rootObject.GetType();
             if (rootType.IsClass && root.FirstNode is XComment)
                 rootObject.SetXMLMetadata((root.FirstNode as XComment).Value.FromXMLComment());
         }
 
-        private string DeserializeTypeName(XElement root)
+        public string DeserializeTypeName(XElement root)
         {
             return root.Attribute(Settings.TypeNameTag).Value.FromXMLValue();
         }
 
         /// <summary>
-        /// Рекурсивно десериализует объект.
+        /// Возвращает новый экземпляр объекта (для класса - новый объект, созданный конструктором по умолчанию, для структуры - пустая структура).
         /// </summary>
-        private object DeserializeObject(XElement root)
+        /// <param name="type">Тип объекта.</param>
+        /// <returns></returns>
+        public object GetEmptyObject(Type type)
+        {
+            return type.IsClass ? CreateInstance(type) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(type);
+        }
+
+        /// <summary>
+        /// Возвращает объект из списка уже сериализованных объектов, если он там есть.
+        /// </summary>
+        /// <returns>Объект; null в случае, если подходящего объекта нет.</returns>
+        public object GetCRObject(XElement root)
         {
             if (root.Attribute(Settings.TypeNameTag) == null)
-                return null;
+            {
+                string hashCode;
+                object crObject;
+                hashCode = root.Value.FromXMLValue();
+                if (_refList.TryGetValue(hashCode, out crObject))
+                    return crObject;
+                else
+                    throw new FormatException("Incorrect CR references structure.");
+            }
 
-            string typeName = DeserializeTypeName(root);
-            Type rootType = GetTypeByName(typeName, _assemblies);
+            return null;
+        }
 
-            if (rootType == typeof(string))
-                return root.Value.FromXMLValue();
+        /// <summary>
+        /// Получает значение хеш-кода кольцевой ссылки объекта.
+        /// </summary>
+        private string GetCRIndex(XElement root)
+        {
+            XAttribute crIndexAttribute = root.Attribute(Settings.CRIndexAttributeName);
+            if (crIndexAttribute == null)
+                throw new System.Xml.XmlException("CRIndex attribute not found.");
 
-            //Если это массив, то десериализуем его в отдельном методе
-            if (rootType.IsArray)
-                return DeserializeArray(root, rootType);
+            return crIndexAttribute.Value.FromXMLValue();
+        }
 
-            if (rootType.GetInterface(typeof(IDictionary).Name) != null)
-                return DeserializeDictionary(root, rootType);
-
-            //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
-            object rootObject = rootType.IsClass ? CreateInstance(rootType) : System.Runtime.Serialization.FormatterServices.GetUninitializedObject(rootType);
+        /// <summary>
+        /// Добавляет объект в список уже десериализованных объектов (для контроля кольцевых ссылок).
+        /// </summary>
+        public void AddToCRList(XElement root, object rootObject)
+        {
+            Type rootType = rootObject.GetType();
 
             //Если reference-type, то добавляем объект в список
             if (!rootType.IsValueType)
             {
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
-                if (!_refList.ContainsValue(rootObject))
-                {
-                    XAttribute crIndexAttribute = root.Attribute(Settings.CRIndexAttributeName);
-                    if (crIndexAttribute == null)
-                        throw new System.Xml.XmlException("CRIndex attribute not found.");
-
-                    string hashCode = crIndexAttribute.Value.FromXMLValue();
-                    _refList.Add(hashCode, rootObject);
+                string newHashCode = GetCRIndex(root);
+                _refList.Add(newHashCode, rootObject);
 #if SAVEDEBUGINFO
-                    _refListContent.Add(rootType.FullName);
+                _refListContent.Add(rootType.FullName);
 #endif
-                }
             }
+        }
+
+        /// <summary>
+        /// Рекурсивно десериализует объект.
+        /// </summary>
+        public object DeserializeObject(XElement root)
+        {
+            //Пытаемся получить объект из списка уже сериализованных объектов
+            object rootObject = GetCRObject(root);
+            if (rootObject != null)
+                return rootObject;
+
+            string typeName = DeserializeTypeName(root);
+            Type rootType = GetTypeByName(typeName, _assemblies);
+
+            //Проверяем наличие custom-сериализатора для данного типа
+            XAttribute csAttribute = root.Attribute(Settings.CustomSerializerNameTag);
+            //Если он есть
+            if (csAttribute != null)
+            {
+                Type csType = GetTypeByName(csAttribute.Value.FromXMLValue(), _assemblies);
+                IXMLCustomSerializer serializer = (IXMLCustomSerializer)CreateInstance(csType);
+                rootObject = serializer.Deserialize(root, this);
+            }
+
+            else if (rootType == typeof(string))
+                rootObject = root.Value.FromXMLValue();
+
+            //Если это Enum, то он сохраняет своё значение как int в атрибут "value__"
+            else if (rootType.IsEnum)
+                rootObject = _converters[typeof(int)](root.Attribute(Settings.EnumValueAttributeName).Value);
+
+            //Если это массив, то десериализуем его в отдельном методе
+            else if (rootType.IsArray)
+                rootObject = DeserializeArray(root, rootType);
+
+            else if (rootType.GetInterface(typeof(IDictionary).Name) != null)
+                rootObject = DeserializeDictionary(root, rootType);
+
+            if (rootObject != null)
+            {
+                DeserializeMetadata(root, rootObject);
+                return rootObject;
+            }
+
+            //Создаём корневой объект. Для класса создаём новый объект данного типа, для структуры получаем пустой экземпляр.
+            rootObject = GetEmptyObject(rootType);
+
+            //Добавляем объект в список кольцевых ссылок
+            AddToCRList(root, rootObject);
 
             DeserializeMetadata(root, rootObject);
 
@@ -206,52 +280,19 @@ namespace XMLExtendedSerialization
                         fieldType = field.FieldType;
                         XAttribute attribute = root.Attribute(xname);
                         if (attribute == null)
-                            //throw new MissingMemberException(rootType.Name, field.Name);
-                            value = null;
+                            fieldValue = null;
                         else
+                        {
                             value = attribute.Value;
-                    }
-                    else
-                    {
-                        //Проверяем, если объект с таким хеш-кодом есть в списке ссылок, то возвращаем его из списка
-                        string hashCode;
-                        if (!element.HasElements)
-                        {
-                            hashCode = element.Value.FromXMLValue();
-                            if (_refList.TryGetValue(hashCode, out fieldValue))
-                            {
-                                field.SetValue(rootObject, fieldValue);
-                                continue;
-                            }
-                        }
-
-                        fieldType = GetTypeByName(DeserializeTypeName(element), _assemblies);
-                        //Если это Enum, то он сохраняет своё значение как int в атрибут "value__"
-                        if (fieldType.IsEnum)
-                        {
-                            value = element.Attribute(Settings.EnumValueAttributeName).Value;
-                            fieldType = typeof(int);
-                        }
-                        else
-                            value = element.Value;
-                    }
-
-                    //Конвертируем значение
-                    if (value == null)
-                        fieldValue = null;
-                    else
-                    {
-                        Func<string, object> converter;
-                        if (_converters.TryGetValue(fieldType, out converter)) //если есть такой конвертер
-                            fieldValue = converter(value.FromXMLValue()); //то это простой тип данных
-                        else
-                        {
-                            if (element != null)
-                                fieldValue = DeserializeObject(element); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
+                            Func<string, object> converter;
+                            if (_converters.TryGetValue(fieldType, out converter)) //если есть такой конвертер
+                                fieldValue = converter(value.FromXMLValue()); //то это простой тип данных
                             else
-                                throw new System.Xml.XmlException(String.Format("Element {0} not found.", field.Name));
+                                throw new System.Xml.XmlException(String.Format("Converter for {0} not found.", fieldType));
                         }
                     }
+                    else
+                        fieldValue = DeserializeObject(element); //если конвертера нет, то это сложный составной класс - рекурсивно десериализуем его
 
                     //Если null, то ничего не присваиваем, чтобы не сбивать значения по умолчанию
                     if (fieldValue != null)
@@ -281,7 +322,7 @@ namespace XMLExtendedSerialization
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsValue(rootObject))
                 {
-                    _refList.Add(_refList.Count.ToString(), rootObject);
+                    _refList.Add(GetCRIndex(root), rootObject);
 #if SAVEDEBUGINFO
                     _refListContent.Add(rootType.FullName);
 #endif
@@ -321,7 +362,7 @@ namespace XMLExtendedSerialization
                 //Если в списке ссылок на объекты этого объекта ещё нет, то добавляем его
                 if (!_refList.ContainsValue(rootObject))
                 {
-                    _refList.Add(_refList.Count.ToString(), rootObject);
+                    _refList.Add(GetCRIndex(root), rootObject);
 #if SAVEDEBUGINFO
                     _refListContent.Add(rootType.FullName);
 #endif
@@ -350,13 +391,13 @@ namespace XMLExtendedSerialization
             return rootObject;
         }
 
-        public object Deserialize()
+        internal object Deserialize()
         {
             string s;
             return Deserialize(false, out s);
         }
 
-        public object Deserialize(out string metadata)
+        internal object Deserialize(out string metadata)
         {
             return Deserialize(true, out metadata);
         }

@@ -13,6 +13,6 @@ namespace XMLExtendedSerialization
     {
         Type TargetType { get; }
         XElement Serialize(string name, object rootObject, Serializer serializer);
-        object Deserialize(XElement element);
+        object Deserialize(XElement root, Deserializer deserializer);
     }
 }

@@ -52,10 +52,10 @@
     <Compile Include="Extension Classes\StringXMLExtensions.cs" />
     <Compile Include="Extension Classes\TypeXMLExtensions.cs" />
     <Compile Include="Attributes\XMLCustomConverterAttribute.cs" />
-    <Compile Include="Attributes\XMLCustomSerializerAttribute.cs" />
     <Compile Include="Attributes\XMLDoNotSerializeAttribute.cs" />
     <Compile Include="Attributes\XMLMetadataAttribute.cs" />
     <Compile Include="SerializerException.cs" />
+    <Compile Include="SerializerHelpers.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="XMLSerializerEx.cs" />
   </ItemGroup>

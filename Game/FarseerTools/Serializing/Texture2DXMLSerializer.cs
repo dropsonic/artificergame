@@ -51,8 +51,7 @@ namespace FarseerTools
             }
             root.Add(new XAttribute(FileNameTag, fileName.ToXMLValue()));
             //Сохраняем все метаданные текстуры как элемент тега
-            XDocument doc = XMLSerializerEx.Serialize(metaDict, TextureMetadataTag);
-            root.Add(doc.Root);
+            root.Add(serializer.SerializeObject(TextureMetadataTag, metaDict));
 
             //Записываем метаданные объекта
             Serializer.SerializeMetadata(root, rootObject);
@@ -60,13 +59,11 @@ namespace FarseerTools
             return root;
         }
 
-        public object Deserialize(XElement element)
+        public object Deserialize(XElement element, Deserializer deserializer)
         {
             object root;
 
-            XDocument doc = new XDocument();
-            doc.Add(element);
-            root = XMLSerializerEx.Deserialize(doc);
+            root = deserializer.DeserializeObject(element);
 
             return root;
         }

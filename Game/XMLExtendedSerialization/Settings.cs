@@ -40,6 +40,8 @@ namespace XMLExtendedSerialization
 
         internal const string CRIndexAttributeName = "CRIndex-";
 
+        internal const string CustomSerializerNameTag = "CustomSerializer-";
+
         /// <summary>
         /// Содержит настройки работы сериализатора/десериализатора в режиме отладки.
         /// </summary>

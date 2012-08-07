@@ -19,8 +19,10 @@ namespace XMLExtendedSerialization
         private List<string> _refListContent;
 #endif
         private Dictionary<Type, Func<object, string>> _converters;
-        
+
         private Dictionary<object, string> _refList;
+
+        private Dictionary<object, IXMLCustomSerializer> _customSerializers;
 
         /// <summary>
         /// Список из всех сериализованных reference-type объектов.
@@ -61,6 +63,7 @@ namespace XMLExtendedSerialization
         internal Serializer()
         {
             _refList = new Dictionary<object, string>(Settings.DefaultRefListSize);
+            _customSerializers = new Dictionary<object, IXMLCustomSerializer>();
 
             InitializeConverters();
 
@@ -69,6 +72,13 @@ namespace XMLExtendedSerialization
             _document.Add(new XElement("Root"));
             _refListContent = new List<string>(Settings.DefaultRefListSize);
 #endif
+        }
+
+        internal Serializer(List<IXMLCustomSerializer> customSerializers)
+            : this()
+        {
+            foreach (var serializer in customSerializers)
+                _customSerializers.Add(serializer.TargetType, serializer);
         }
 
         public static void SerializeMetadata(XElement root, object rootObject)
@@ -84,6 +94,11 @@ namespace XMLExtendedSerialization
         public static void SerializeTypeName(XElement root, Type rootType)
         {
             root.Add(new XAttribute(Settings.TypeNameTag, rootType.FullName.ToXMLValue()));
+        }
+
+        public static void SerializeCustomSerializerName(XElement root, IXMLCustomSerializer serializer)
+        {
+            root.Add(new XAttribute(Settings.CustomSerializerNameTag, serializer.GetType().FullName.ToXMLValue()));
         }
 
         /// <summary>
@@ -102,18 +117,6 @@ namespace XMLExtendedSerialization
                     _converters.Add(converter.TargetType, converter.ConvertBack);
                 }
             }
-        }
-
-        private IXMLCustomSerializer GetCustomSerializer(FieldInfo field)
-        {
-            Attribute[] attributes = Attribute.GetCustomAttributes(field);
-            foreach (Attribute attribute in attributes)
-            {
-                if (attribute.GetType().SameType(typeof(XMLCustomSerializerAttribute)))
-                    return (attribute as XMLCustomSerializerAttribute).Serializer;
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -154,13 +157,23 @@ namespace XMLExtendedSerialization
         /// <summary>
         /// Рекурсивно сериализует объект.
         /// </summary>
-        internal XElement SerializeObject(string name, object rootObject)
+        public XElement SerializeObject(string name, object rootObject)
         {
 #if SAVEDEBUGINFO
             _recursionDepth++;
             if (_recursionDepth > Settings.Debug.MaxRecursionDepth)
                 throw new ApplicationException("DEBUG: Max recursion depth.");
 #endif
+            Type rootType = rootObject.GetType();
+            XElement element;
+            //Проверяем наличие custom-сериализатора для данного типа
+            IXMLCustomSerializer serializer;
+            if (_customSerializers.TryGetValue(rootType, out serializer))
+            {
+                element = serializer.Serialize(name, rootObject, this);
+                SerializeCustomSerializerName(element, serializer); //сохраняем имя типа сериализатора
+                return element;
+            }
 
             if (rootObject == null)
                 return new XElement(name, null);
@@ -173,16 +186,7 @@ namespace XMLExtendedSerialization
             if (rootObject is Pointer)
                 return null;
 
-            XElement element = new XElement(name);
-
-            Type rootType = rootObject.GetType();
-
-            if (rootObject is string)
-            {
-                element.Add(((string)rootObject).ToXMLValue());
-                SerializeTypeName(element, rootType);
-                return element;
-            }
+            element = new XElement(name);
 
             //Обрабатывает кольцевые ссылки
             if (CheckCircularReferences(element, rootObject))
@@ -192,6 +196,12 @@ namespace XMLExtendedSerialization
             SerializeTypeName(element, rootType);
             //Записываем метаданные
             SerializeMetadata(element, rootObject);
+
+            if (rootObject is string)
+            {
+                element.Add(((string)rootObject).ToXMLValue());
+                return element;
+            }
 
             //Если объект - словарь, то сериализуем его в отдельном методе. В принципе, работает и без этого, но XML тогда не такой читаемый и больше по объему.
             if (rootObject is IDictionary)
@@ -237,25 +247,10 @@ namespace XMLExtendedSerialization
                     if (_converters.TryGetValue(field.FieldType, out converter))
                         //то записываем значение поля как атрибут
                         element.SetAttributeValue(xmlFieldName, converter(fieldValue).ToXMLValue());
-                    //Если конвертера для данного типа данных нет
+                    //Если конвертера для данного типа данных нет, то сериализуем его как сложный тип
                     else
                     {
-                        //то проверяем наличие custom-сериализатора для данного типа
-                        XElement child;
-
-                        //Если он есть
-                        if (field.HasAttribute(typeof(XMLCustomSerializerAttribute)))
-                        {
-                            //то сериализуем с помощью него
-                            IXMLCustomSerializer serializer = GetCustomSerializer(field);
-                            child = serializer.Serialize(xmlFieldName, fieldValue, this);
-                        }
-                        else
-                        {
-                            // иначе рекурсивно сериализуем значение поля
-                            child = SerializeObject(xmlFieldName, fieldValue);
-                        }
-
+                        XElement child = SerializeObject(xmlFieldName, fieldValue);
                         element.Add(child);
                     }
                 }

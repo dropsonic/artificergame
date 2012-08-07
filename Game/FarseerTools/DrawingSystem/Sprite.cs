@@ -15,7 +15,6 @@ namespace FarseerTools
         /// </summary>
         public Vector2 Offset;
 
-        [XMLExtendedSerialization.XMLCustomSerializer(typeof(Texture2DXMLSerializer))]
         public Texture2D Texture;
 
         public Sprite(Texture2D texture)

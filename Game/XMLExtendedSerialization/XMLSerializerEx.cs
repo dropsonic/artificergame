@@ -8,10 +8,23 @@ using System.Reflection;
 
 namespace XMLExtendedSerialization
 {
-    public static class XMLSerializerEx
+    public class XMLSerializerEx
     {
         private const string SerializeErrorMessage = "Cannot serialize object.";
         private const string DeserializeErrorMessage = "Cannot deserialize object.";
+
+        private List<IXMLCustomSerializer> _customSerializers;
+
+        public XMLSerializerEx() { }
+
+        /// <summary>
+        /// Создаёт новый объект XML-сериализатора.
+        /// </summary>
+        /// <param name="customSerializers">Custom-сериализаторы для указанных типов</param>
+        public XMLSerializerEx(List<IXMLCustomSerializer> customSerializers)
+        {
+            _customSerializers = customSerializers;
+        }
 
         #region Сериализация
         /// <summary>
@@ -20,11 +33,11 @@ namespace XMLExtendedSerialization
         /// <param name="obj">Объект для сериализации.</param>
         /// <param name="stream">Поток, в который будет сохранён XML-документ.</param>
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
-        public static void Serialize(object obj, Stream stream, string rootName = Settings.DefaultRootName)
+        public void Serialize(object obj, Stream stream, string rootName = Settings.DefaultRootName)
         {
             try
             {
-                Serializer serializer = new Serializer();
+                Serializer serializer = _customSerializers == null ? new Serializer() : new Serializer(_customSerializers);
                 XDocument document = serializer.Serialize(obj, rootName);
                 document.Save(stream);
             }
@@ -41,11 +54,11 @@ namespace XMLExtendedSerialization
         /// <param name="metadata">Метаданные для сохранения в XML-документ.</param>
         /// <param name="stream">Поток, в который будет сохранён XML-документ.</param>
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
-        public static void Serialize(object obj, string metadata, Stream stream, string rootName = Settings.DefaultRootName)
+        public void Serialize(object obj, string metadata, Stream stream, string rootName = Settings.DefaultRootName)
         {
             try
             {
-                Serializer serializer = new Serializer();
+                Serializer serializer = _customSerializers == null ? new Serializer() : new Serializer(_customSerializers);
                 XDocument document = serializer.Serialize(obj, metadata, rootName);
                 document.Save(stream);
             }
@@ -61,11 +74,11 @@ namespace XMLExtendedSerialization
         /// <param name="obj">Объект для сериализации.</param>
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         /// <returns>XML-документ.</returns>
-        public static XDocument Serialize(object obj, string rootName = Settings.DefaultRootName)
+        public XDocument Serialize(object obj, string rootName = Settings.DefaultRootName)
         {
             try
             {
-                Serializer serializer = new Serializer();
+                Serializer serializer = _customSerializers == null ? new Serializer() : new Serializer(_customSerializers);
                 return serializer.Serialize(obj, rootName);
             }
             catch (Exception ex)
@@ -81,11 +94,11 @@ namespace XMLExtendedSerialization
         /// <param name="metadata">Метаданные для сохранения в XML-документ.</param>
         /// <param name="rootName">Имя корневого тега XML-документа.</param>
         /// <returns>XML-документ.</returns>
-        public static XDocument Serialize(object obj, string metadata, string rootName = Settings.DefaultRootName)
+        public XDocument Serialize(object obj, string metadata, string rootName = Settings.DefaultRootName)
         {
             try
             {
-                Serializer serializer = new Serializer();
+                Serializer serializer = _customSerializers == null ? new Serializer() : new Serializer(_customSerializers);
                 return serializer.Serialize(obj, metadata, rootName);
             }
             catch (Exception ex)
@@ -96,7 +109,7 @@ namespace XMLExtendedSerialization
         #endregion
 
         #region Десериализация
-        public static object Deserialize(Stream stream)
+        public object Deserialize(Stream stream)
         {
             try
             {
@@ -110,7 +123,7 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public static object Deserialize(Stream stream, out string metadata)
+        public object Deserialize(Stream stream, out string metadata)
         {
             try
             {
@@ -125,7 +138,7 @@ namespace XMLExtendedSerialization
             }
         }
 
-        public static object Deserialize(XDocument doc)
+        public object Deserialize(XDocument doc)
         {
             try
             {

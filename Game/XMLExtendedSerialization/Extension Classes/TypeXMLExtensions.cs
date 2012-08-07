@@ -44,5 +44,37 @@ namespace XMLExtendedSerialization
 
             return t.GetFields(flags).Union(GetFieldsIncludingBase(t.BaseType, flags));
         }
+
+        /// <summary>
+        /// Возвращает FieldInfo для поля с указанным именем, включая определённое в типах-предках.
+        /// </summary>
+        /// <returns>FieldInfo для поля; null, если поле с указанным именем не найдено.</returns>
+        public static FieldInfo GetFieldIncludingBase(this Type t, string fieldName, BindingFlags flags)
+        {
+            if (t == null)
+                return null;
+
+            FieldInfo field = t.GetField(fieldName, flags);
+            if (field == null)
+                return GetFieldIncludingBase(t.BaseType, fieldName, flags);
+            else
+                return field;
+        }
+
+        /// <summary>
+        /// Возвращает PropertyInfo для свойства с указанным именем, включая определённое в типах-предках.
+        /// </summary>
+        /// <returns>PropertyInfo для свойства; null, если свойство с указанным именем не найдено.</returns>
+        public static PropertyInfo GetPropertyIncludingBase(this Type t, string propertyName, BindingFlags flags)
+        {
+            if (t == null)
+                return null;
+
+            PropertyInfo property = t.GetProperty(propertyName, flags);
+            if (property == null)
+                return GetPropertyIncludingBase(t.BaseType, propertyName, flags);
+            else
+                return property;
+        }
     }
 }

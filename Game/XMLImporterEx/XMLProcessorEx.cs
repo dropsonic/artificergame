@@ -27,7 +27,8 @@ namespace XMLImporterEx
     {
         public override object Process(XDocument input, ContentProcessorContext context)
         {
-            return XMLSerializerEx.Deserialize(input);
+            XMLSerializerEx serializer = new XMLSerializerEx();
+            return serializer.Deserialize(input);
         }
     }
 }

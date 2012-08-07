@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using XMLExtendedSerialization;
 using GameLogic;
+using FarseerTools;
 
 namespace LevelEditor.Commands
 {
@@ -25,7 +26,9 @@ namespace LevelEditor.Commands
             {
                 try
                 {
-                    _objectLevelManager.GameLevel = (GameLevel)XMLSerializerEx.Deserialize(stream);
+                    XMLSerializerEx serializer = new XMLSerializerEx(new List<IXMLCustomSerializer> { 
+                    new Texture2DXMLSerializer(), new WorldXMLSerializer(), new BodyXMLSerializer(), new FixtureXMLSerializer() });
+                    _objectLevelManager.GameLevel = (GameLevel)serializer.Deserialize(stream);
                 }
                 catch (Exception ex)
                 {
