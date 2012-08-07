@@ -17,6 +17,7 @@ namespace GameLogic
 
         private World _world;
         private Camera _camera;
+        private ParallaxBackground _background;
 
         [XMLExtendedSerialization.XMLDoNotSerialize]
         private SpriteBatch _spriteBatch;
@@ -47,6 +48,11 @@ namespace GameLogic
                 if (_spriteBatch != null)
                     Visible = true;
             }
+        }
+
+        public ParallaxBackground Background
+        {
+            get { return _background; }
         }
 
         public SpriteBatch SpriteBatch
@@ -86,36 +92,37 @@ namespace GameLogic
         }
 
         public GameLevel()
+            : this(null,null,new World(defaultGravity),false)
+        { }
+
+        public GameLevel(Camera camera, SpriteBatch spriteBatch)
+            : this(camera,spriteBatch,new World(defaultGravity),true)
+        { }
+
+        public GameLevel(Camera camera, SpriteBatch spriteBatch, Vector2 gravity)
+            : this(camera,spriteBatch,new World(gravity),true)
+        { }
+
+        public GameLevel(Camera camera, SpriteBatch spriteBatch, World world)
+            : this(camera, spriteBatch,world,true)
+        { }
+
+        public GameLevel(Camera camera, SpriteBatch spriteBatch, World world, bool visible)
         {
             _objects = new List<GameObject>();
             _sorted = true;
 
             _joints = new List<Joint>();
 
-            _world = new World(defaultGravity);
+            _world = world;
 
-            Enabled = true;
-            Visible = false;
-        }
-
-        public GameLevel(Camera camera, SpriteBatch spriteBatch)
-            : this()
-        {
             _camera = camera;
             _spriteBatch = spriteBatch;
-            Visible = true;
-        }
 
-        public GameLevel(Camera camera, SpriteBatch spriteBatch, Vector2 gravity)
-            : this(camera, spriteBatch)
-        {
-            _world.Gravity = gravity;
-        }
+            _background = new ParallaxBackground(_world, _camera, _spriteBatch);
 
-        public GameLevel(Camera camera, SpriteBatch spriteBatch, World world)
-            : this(camera, spriteBatch)
-        {
-            _world = world;
+            Enabled = true;
+            Visible = visible;
         }
 
         public void AddObject(GameObject gameObject)
@@ -175,6 +182,10 @@ namespace GameLogic
             //Создаём новый GameLevel
             GameLevel result = new GameLevel(_camera, _spriteBatch, _world.Gravity);
 
+            foreach (ParallaxBackgroundItem item in this.Background)
+            {
+                //TODO:сделать копирование бэкграунда
+            }
             //Копируем все joint'ы
             foreach (Joint joint in _joints)
             {
@@ -212,6 +223,7 @@ namespace GameLogic
         {
             if (_visible)
             {
+                _background.Draw(gameTime);
                 if (_sorted)
                 {
                     foreach (var gameObject in _objects)

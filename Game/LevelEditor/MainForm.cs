@@ -234,6 +234,8 @@ namespace LevelEditor
             _gridSnap = new GridSnap();
             objectScreen.GridSnap = _gridSnap;
             levelScreen.GridSnap = _gridSnap;
+
+            
         }
 
         /// <summary>

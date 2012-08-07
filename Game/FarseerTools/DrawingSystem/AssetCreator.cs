@@ -125,11 +125,6 @@ namespace FarseerTools
             if (!verts.IsConvex())
             {
                 decomposedVerts = EarclipDecomposer.ConvexPartition(verts);
-                //decomposedVerts = SeidelDecomposer.ConvexPartition(verts,0.01f);
-                //decomposedVerts = SeidelDecomposer.ConvexPartitionTrapezoid(verts,0.01f);
-                //decomposedVerts = FlipcodeDecomposer.ConvexPartition(verts);
-                //decomposedVerts = CDTDecomposer.ConvexPartition(verts);
-                //decomposedVerts = BayazitDecomposer.ConvexPartition(verts);
             }
             else
             {
@@ -545,10 +540,6 @@ namespace FarseerTools
             shapeTexture.GetData(data);
             Vertices textureVertices = PolygonTools.CreatePolygon(data, shapeTexture.Width, false);
 
-           /* Vector2 centroid = -textureVertices.GetCentroid();
-            textureVertices.Translate(ref centroid);
-            Vector2 origin = -centroid;*/
-
             AABB vertsBounds = textureVertices.GetCollisionBox();
             Vector2 origin = vertsBounds.Center;
             textureVertices.Translate(-origin);
@@ -562,12 +553,6 @@ namespace FarseerTools
 
         public Texture2D CreateRotatedTexture(Sprite sprite, float radians)
         {
-            /*
-            radians = MathHelper.ToRadians(MathHelper.ToDegrees(radians) - (((int)MathHelper.ToDegrees(radians)) / (int)90) * 90);
-            width = (int)(Math.Cos(radians) * sprite.Texture.Width);
-            height = (int)(Math.Sqrt(sprite.Texture.Width * sprite.Texture.Width + sprite.Texture.Height * sprite.Texture.Height)*Math.Cos(MathHelper.ToRadians(90)-radians-Math.Atan(sprite.Texture.Height/sprite.Texture.Width)));
-             */
-
             Vector2 boundsHelper = Vector2.Transform(new Vector2(sprite.Texture.Width / 2, sprite.Texture.Height / 2), Matrix.CreateRotationZ(radians));
             double angleOffset = Math.Sqrt(2)*Math.Min(sprite.Texture.Height, sprite.Texture.Width)+1;
             int width = (int)(Math.Abs(boundsHelper.X * 2) + angleOffset);

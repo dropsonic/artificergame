@@ -56,7 +56,7 @@ namespace WindowsGame1
             _height = GraphicsDevice.Viewport.Height;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(_width / 2.0f, 0), Limits = new Rectangle(0, 0, _width, _height) };
+            _camera = new Camera(GraphicsDevice.Viewport) { Position = new Vector2(0, 0), Limits = new Rectangle(0, 0, _width, _height) };
             _background = new ParallaxBackground(_world, _camera, _spriteBatch);
             
             base.Initialize();
@@ -82,8 +82,8 @@ namespace WindowsGame1
 
             //Формируем фон
             //Самый задний фон - картинка
-            int skyWidth = 1000;
-            int skyHeight = 512;
+            int skyWidth = 1200;
+            int skyHeight = 480;
             _background.AddBackground(new Sprite(sky), 0.1f, 0, ConvertUnits.ToSimUnits(skyWidth/2, skyHeight/2), ConvertUnits.ToSimUnits(skyWidth, skyHeight));
 
             Random random = new Random();
@@ -106,7 +106,7 @@ namespace WindowsGame1
                 for (int j = 1; j <= 4; j++)
                 {
                     Vector2 cloudPos = new Vector2(random.Next(_width), random.Next(200)) + clouds[j - 1].Origin / 2;
-                    _background.AddDynamicBackground(0f, new Vector2((float)random.NextDouble() * 4, 0), clouds[j - 1], (float)random.NextDouble() / 3, 10 + 4 * i + j, ConvertUnits.ToSimUnits(cloudPos), (float)random.NextDouble() * MathHelper.Pi);
+                    _background.AddDynamicBackground(1f, new Vector2((float)random.NextDouble() * 4, 0), clouds[j - 1], (float)random.NextDouble() / 3, 10 + 4 * i + j, ConvertUnits.ToSimUnits(cloudPos), (float)random.NextDouble() * MathHelper.Pi);
                 }
             }
         }

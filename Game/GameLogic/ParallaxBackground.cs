@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
 using FarseerTools;
+using System.Collections;
 
 namespace GameLogic
 {
@@ -51,6 +52,10 @@ namespace GameLogic
                 _sorted = false;
             }
         }
+        #region IEnumerable
+        public IEnumerator<ParallaxBackgroundItem> GetEnumerator() { return _backgrounds.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        #endregion
 
         public World World
         {
