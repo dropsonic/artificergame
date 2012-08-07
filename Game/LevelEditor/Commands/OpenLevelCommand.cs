@@ -26,8 +26,7 @@ namespace LevelEditor.Commands
             {
                 try
                 {
-                    XMLSerializerEx serializer = new XMLSerializerEx(new List<IXMLCustomSerializer> { 
-                    new Texture2DXMLSerializer(), new WorldXMLSerializer(), new BodyXMLSerializer(), new FixtureXMLSerializer() });
+                    XMLSerializerEx serializer = new XMLSerializerEx();
                     _objectLevelManager.GameLevel = (GameLevel)serializer.Deserialize(stream);
                 }
                 catch (Exception ex)

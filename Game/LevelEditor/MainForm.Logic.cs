@@ -23,7 +23,6 @@ namespace LevelEditor
     using Path = System.IO.Path;
     using FarseerPhysics.Dynamics.Joints;
     using GameLogic;
-    using FarseerTools.Serializing;
 
     public partial class MainForm : Form
     {

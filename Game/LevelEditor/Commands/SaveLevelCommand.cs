@@ -51,7 +51,7 @@ namespace LevelEditor.Commands
             try
             {
                 XMLSerializerEx serializer = new XMLSerializerEx(new List<IXMLCustomSerializer> { 
-                    new Texture2DXMLSerializer(), new WorldXMLSerializer(), new BodyXMLSerializer(), new FixtureXMLSerializer() });
+                    new RenderTarget2DXMLSerializer(), new WorldXMLSerializer(), new BodyXMLSerializer(), new FixtureXMLSerializer() });
                 doc = serializer.Serialize(_level, "GameLevel"); //сохраняет текстуры в temp-папку
             }
             catch (Exception ex)

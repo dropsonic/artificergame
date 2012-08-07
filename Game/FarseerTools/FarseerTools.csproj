@@ -72,8 +72,7 @@
     <Compile Include="Serializing\FixtureXMLSerializer.cs" />
     <Compile Include="Serializing\ObjectMetadataDictionary.cs" />
     <Compile Include="Serializing\ShapeParametersKeys.cs" />
-    <Compile Include="Serializing\Texture2DHelpers.cs" />
-    <Compile Include="Serializing\Texture2DXMLSerializer.cs" />
+    <Compile Include="Serializing\RenderTarget2DXMLSerializer.cs" />
     <Compile Include="Serializing\TextureMetadataKeys.cs" />
     <Compile Include="Serializing\TextureSerializerSettings.cs" />
     <Compile Include="Serializing\WorldXMLSerializer.cs" />

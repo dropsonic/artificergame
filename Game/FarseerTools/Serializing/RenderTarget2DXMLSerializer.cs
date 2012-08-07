@@ -9,7 +9,7 @@ using System.IO;
 
 namespace FarseerTools
 {
-    public class Texture2DXMLSerializer : IXMLCustomSerializer
+    public class RenderTarget2DXMLSerializer : IXMLCustomSerializer
     {
         private const string TextureFileExtension = ".png";
 
@@ -19,7 +19,7 @@ namespace FarseerTools
 
         public Type TargetType
         {
-            get { return typeof(Texture2D); }
+            get { return typeof(RenderTarget2D); }
         }
 
         public XElement Serialize(string name, object rootObject, Serializer serializer)

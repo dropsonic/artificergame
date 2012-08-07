@@ -98,7 +98,8 @@ namespace XMLExtendedSerialization
 
         public static void SerializeCustomSerializerName(XElement root, IXMLCustomSerializer serializer)
         {
-            root.Add(new XAttribute(Settings.CustomSerializerNameTag, serializer.GetType().FullName.ToXMLValue()));
+            if (root != null)
+                root.Add(new XAttribute(Settings.CustomSerializerNameTag, serializer.GetType().FullName.ToXMLValue()));
         }
 
         /// <summary>
