@@ -715,6 +715,7 @@ namespace LevelEditor
                     if (mouseEvent == MouseEvents.Click)
                     {
                         propertyGrid.SelectedObject = CommonHelpers.FindGameObjectPart(ConvertUnits.ToSimUnits(Vector2.Transform(levelScreen.MousePosition, Matrix.Invert(levelScreen.GameLevel.Camera.GetViewMatrix()))), _objectLevelManager.GameLevel);
+                        var test = ((GameObjectPart)propertyGrid.SelectedObject).Sprites[0].Texture.GetMetadataDictionary() ;
                     }
                     if (mouseEvent == MouseEvents.Down)
                     {

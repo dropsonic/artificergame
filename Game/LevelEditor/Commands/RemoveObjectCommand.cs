@@ -35,6 +35,7 @@ namespace LevelEditor.Commands
 
         public void Execute()
         {
+            //объект удален - потом мы пытаемся отменить его создание, что неверно
             _deletedObject = _objectToDelete.CopyObjectToWorld(new World(Vector2.Zero), Vector2.Zero);
             _level.RemoveObject(_objectToDelete);
             _level.World.ProcessChanges();

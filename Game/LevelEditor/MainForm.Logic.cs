@@ -176,10 +176,6 @@ namespace LevelEditor
 
                     _objectLevelManager.PreviewObject[0].Body.FixtureList.Clear();
 
-                    if ((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()) == ObjectType.Arc)
-                    {
-
-                    }
                     switch((ObjectType)Enum.Parse(typeof(ObjectType), shapeBox.SelectedItem.ToString()))
                     {
                         case ObjectType.Circle:
